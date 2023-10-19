@@ -1,0 +1,25 @@
+@import '../color-variables.scss';
+@import '../mixins.scss';
+
+.main-accordion {
+  .chakra-accordion__button {
+    &:focus {
+      box-shadow: unset;
+    }
+  }
+
+  .chakra-accordion__item {
+    border: 1px solid $Line;
+    border-radius: 6px;
+
+    &:focus {
+      background-color: red;
+    }
+  }
+
+  .description {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}

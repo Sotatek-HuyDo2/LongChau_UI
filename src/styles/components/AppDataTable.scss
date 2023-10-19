@@ -1,0 +1,36 @@
+@import '../appStyles.scss';
+@import '../color-variables.scss';
+@import '../_mixins.scss';
+
+.paginationWrap {
+  display: flex;
+  justify-content: flex-end;
+  margin: 32px 32px 10px 42px;
+}
+
+.load-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+
+  .btn-load-more {
+    border-radius: 4px;
+  }
+}
+
+.data-loading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 360px;
+  font-size: 14px;
+}
+.pagination__show-records {
+  @include text-small-regular;
+  color: $Paragraph1;
+}
+
+table {
+  z-index: 2;
+}

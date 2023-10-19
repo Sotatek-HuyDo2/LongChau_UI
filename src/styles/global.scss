@@ -1,0 +1,202 @@
+@import './Icon.scss';
+@import './color-variables.scss';
+@import './mixins.scss';
+
+@font-face {
+  font-family: Inter;
+  src: url('../assets/fonts/Inter-Regular.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url('../assets/fonts/Inter-ExtraLight.ttf');
+  font-style: italic;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url('../assets/fonts/Inter-Medium.ttf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url('../assets/fonts/Inter-SemiBold.ttf');
+  font-style: italic;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url('../assets/fonts/Inter-Bold.ttf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url('../assets/fonts/Inter-ExtraBold.ttf');
+  font-style: italic;
+  font-weight: 700;
+}
+
+.text-error {
+  font-weight: 400;
+  color: #ee5d50;
+  font-size: 14px;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 30%);
+  background-color: $Border;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+}
+
+.react-datepicker-popper {
+  z-index: 1000 !important;
+}
+
+.chakra-portal {
+  .chakra-modal {
+    &__overlay {
+      z-index: 1699 !important;
+    }
+
+    &__content-container {
+      z-index: 1699 !important;
+    }
+  }
+}
+
+.label-select {
+  color: $Paragraph1;
+}
+
+input::placeholder {
+  color: $Paragraph2 !important;
+}
+
+.explorer-table {
+  padding-inline-start: unset !important;
+  padding-inline-end: unset !important;
+}
+
+.box-loading {
+  min-height: calc(100vh - 515px);
+  justify-content: center;
+  padding-top: 50px;
+  font-size: 14px;
+}
+
+wcm-modal {
+  position: relative;
+  z-index: 99999;
+}
+
+.table-select--filtered {
+  color: $Title;
+}
+
+.table-select {
+  cursor: pointer;
+
+  .app-select__btn-select {
+    border: none;
+    padding: 0 !important;
+
+    &__content {
+      display: none;
+    }
+  }
+  .app-select__menu-label {
+    line-height: 20px;
+  }
+
+  .app-select__menu {
+    width: auto;
+    padding: 0;
+    top: 32px;
+    right: 0;
+  }
+}
+
+.tooltip-app {
+  padding: 9px 12px !important;
+  border-radius: 6px !important;
+  background: $Border !important;
+
+  .chakra-tooltip__arrow {
+    background: $Border !important;
+  }
+}
+
+.ql-container,
+.ql-toolbar {
+  border-color: $Line !important;
+}
+
+.ql-container {
+  min-height: 300px;
+}
+
+.text-error {
+  font-size: 12px;
+  color: #f6465d;
+}
+
+.quill {
+  font-size: 1rem;
+  .ql-toolbar.ql-snow {
+    background: $Paragraph1;
+  }
+  .ql-editor.ql-blank::before {
+    color: currentColor;
+    opacity: 0.5;
+  }
+}
+
+.react-datepicker-wrapper {
+  input {
+    background-color: transparent;
+    border: 1px solid $Line;
+    border-radius: 6px;
+    height: 32px;
+    color: $Title;
+    font-size: 12px;
+    padding-left: 10px;
+
+    &:focus {
+      outline: 1px solid $Paragraph1;
+    }
+  }
+}
+
+.custom-tooltip-explorer-chart {
+  padding: 12px 14px;
+  color: $Paragraph1;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  border: none;
+  box-shadow: none;
+  background-color: $Line;
+  border-radius: 6px;
+  b {
+    color: white;
+  }
+}

@@ -1,0 +1,75 @@
+@import '../color-variables.scss';
+@import '../_mixins.scss';
+
+$headerHeight: 80px;
+
+.header {
+  width: 100vw;
+  background-color: $BackMain;
+  height: $headerHeight;
+  margin-bottom: 4px;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  align-items: center;
+  padding: 0 60px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.menu-header {
+  background-color: $Card2 !important;
+  border: 0 !important;
+
+  .user-info {
+    background-color: $Card2 !important;
+
+    &.logout {
+      color: #ee5d50 !important;
+    }
+
+    &:hover {
+      background-color: $Title !important;
+    }
+
+    span {
+      &:last-child {
+        transform: translateX(-5px);
+      }
+
+      &:first-child {
+        transform: translateX(5px);
+      }
+    }
+
+    .arrow-logout {
+      transform: translateX(-70%);
+      transition: all linear 0.5s;
+    }
+
+    &:hover {
+      .arrow-logout {
+        transform: translateX(-50%);
+      }
+    }
+  }
+}
+
+.container-page {
+  margin-top: 84px;
+  height: 100%;
+
+  &__content {
+    margin-left: 4px;
+    background-color: $Title;
+    width: calc(100% - 304px);
+    padding: 30px 40px;
+    min-height: calc(100vh - 84px);
+  }
+}
+
+.guest-page {
+  &__container {
+    margin-top: 84px;
+  }
+}

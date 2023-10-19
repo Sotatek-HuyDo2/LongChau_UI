@@ -1,0 +1,81 @@
+@import '../color-variables.scss';
+@import '../mixins.scss';
+
+.slider-comp {
+  &-thumb {
+    width: 8px;
+    height: 8px;
+    z-index: 10;
+  }
+  &__mark {
+    width: 10px;
+    height: 10px;
+    border-radius: 99px;
+    margin-left: -5px;
+    margin-top: -5px;
+
+    /* Card2 */
+
+    background: $Card2;
+    /* Line */
+
+    border: 2px solid $Line;
+  }
+  &__mark-active {
+    border: 2px solid $Main;
+  }
+
+  &__mark-value {
+    display: none;
+    border-radius: 6px;
+    color: $Title;
+    background: $Main;
+    padding: 0 2px;
+    @include display-regular-tiny;
+    text-align: center;
+    line-height: 20px;
+    min-width: 33px;
+    margin-left: -11px;
+    margin-top: -38px;
+  }
+
+  &:hover {
+    .slider-comp__mark-value {
+      display: block;
+    }
+  }
+
+  &__thumb {
+    &:active {
+      transform: translateY(-50%) !important;
+    }
+    &:focus {
+      box-shadow: none !important;
+      transform: translateY(-50%) !important;
+    }
+  }
+}
+
+.disable-slider {
+  .chakra-slider__track {
+    background-color: #414558 !important;
+  }
+}
+
+[aria-disabled='true'] {
+  opacity: 1 !important;
+
+  .slider-comp__thumb-radio {
+    opacity: 0.6;
+  }
+}
+
+.box-msg {
+  top: -14px;
+
+  &:focus {
+    box-shadow: none !important;
+    outline: none !important;
+    outline-offset: unset !important;
+  }
+}

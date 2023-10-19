@@ -1,0 +1,160 @@
+@import '../color-variables';
+@import '../_mixins.scss';
+
+.user-management {
+  &__description {
+    @include display-regular-small;
+    .show_record {
+      color: $Paragraph2;
+    }
+  }
+
+  &__info-box {
+    width: 280px;
+    border-radius: 6px;
+    background: rgba(33, 35, 47, 0.5);
+    padding: 26px 24px;
+  }
+
+  &__info-box-label {
+    color: $Paragraph1;
+    @include display-regular-medium;
+  }
+
+  &--id {
+    width: 7%;
+  }
+
+  &--address {
+    width: 18%;
+  }
+
+  &--time {
+    width: 18%;
+  }
+
+  &--total-order {
+    width: 13%;
+  }
+
+  &--total-volume {
+    width: 20%;
+  }
+
+  &--balance {
+    width: 15%;
+  }
+  &--view-detail {
+    flex: 1;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &--cell-body {
+    @include display-regular-small;
+
+    color: $Paragraph1;
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: $Border 1px solid;
+    &:last-child {
+      justify-content: end;
+    }
+  }
+  &--proof-hash,
+  &--id {
+    color: $Main;
+  }
+
+  &--header-cell-body {
+    @include display-regular-small;
+
+    color: $Paragraph2;
+    display: flex;
+    text-transform: uppercase;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: $Border 1px solid;
+    font-size: 12px;
+    &:last-child {
+      justify-content: end;
+    }
+  }
+
+  &--row-wrap {
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+      background-color: $Card2;
+    }
+  }
+
+  &--arrow-icon,
+  &--arrow-icon-active {
+    margin-left: 30px;
+  }
+
+  &--completed,
+  &--submitted {
+    color: $Green;
+    background-color: rgba(14, 203, 129, 10%);
+    border-radius: 50px;
+    padding: 4px 10px;
+  }
+
+  &--submitting {
+    color: $Pastel;
+    background: rgba(3, 203, 247, 0.1);
+
+    border-radius: 50px;
+    padding: 4px 10px;
+  }
+
+  &--pending {
+    background: rgba(230, 168, 15, 10%);
+    color: $Yellow;
+    border-radius: 50px;
+    padding: 4px 10px;
+  }
+
+  &--failed {
+    background: rgba(234, 84, 85, 14%);
+    color: red;
+    border-radius: 50px;
+    padding: 4px 10px;
+  }
+
+  &--deposit,
+  &--addliquidity,
+  &--buy {
+    color: $Green;
+  }
+
+  &--withdraw,
+  &--removeliquidity,
+  &--sell {
+    color: $Red;
+  }
+
+  &--view-detail.link {
+    color: $Main;
+  }
+}
+
+.app-pagination {
+  margin-right: 0;
+}
+
+.copy-icon {
+  margin: 0 12px;
+  cursor: pointer;
+  color: $Paragraph2;
+
+  &:hover {
+    color: $Title;
+  }
+}

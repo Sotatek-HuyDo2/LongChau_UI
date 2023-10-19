@@ -1,0 +1,39 @@
+@import '../color-variables';
+
+.marketing {
+  &__action {
+    border-bottom: 1px solid $Border;
+    padding-bottom: 30px;
+
+    &-title {
+      font-size: 16px;
+      color: $Paragraph1;
+    }
+  }
+
+  &__title {
+    margin-top: 50px;
+    font-size: 18px;
+  }
+
+  &__field {
+    margin-top: 30px;
+
+    .chakra-text {
+      font-size: 12px !important;
+    }
+
+    &-title {
+      margin-bottom: 4px;
+      font-size: 14px;
+      color: $Paragraph1;
+
+      width: 150px;
+    }
+
+    textarea {
+      width: 70%;
+      font-size: 12px;
+    }
+  }
+}

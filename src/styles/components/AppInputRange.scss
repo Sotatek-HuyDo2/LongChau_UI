@@ -1,0 +1,84 @@
+@import '../color-variables.scss';
+@import '../mixins.scss';
+
+.slider-mark,
+.slider-mark-active {
+  border-radius: 999px;
+  width: 10px;
+  height: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .decor-slider,
+  .decor-slider-active {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+  }
+}
+
+.slider-mark {
+  background: $Border;
+
+  .decor-slider {
+    background: $Card;
+  }
+}
+
+.slider-mark-active {
+  background: $Title;
+
+  .decor-slider-active {
+    background: $Main;
+  }
+}
+
+.decor-slider-thumb {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: $Main;
+}
+
+.percent-slider {
+  font-size: 10px;
+  transform: translate(-50%, -30px);
+  width: 29px;
+  height: 16px;
+  background-color: $Border;
+  z-index: 104;
+}
+
+.slider-thumb {
+  &::after {
+    position: absolute;
+    content: '';
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background-color: white;
+    right: 0;
+    top: 0;
+    transform: translate(50%, -50%);
+    z-index: 102;
+  }
+
+  &::before {
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background-color: $Main;
+    right: 0;
+    top: 0;
+    transform: translate(50%, -50%);
+    z-index: 103;
+  }
+}
+
+.chakra-slider {
+  padding-top: 7px !important;
+  padding-bottom: 7px !important;
+}
