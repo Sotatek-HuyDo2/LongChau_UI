@@ -6,7 +6,7 @@ import LoginPage from '../src/pages/LoginPage';
 import DashboardPage from '../src/pages/DashboardPage';
 import React from 'react';
 import { PrivateRoute } from 'src/components';
-import DelistPage from './pages/DelistPage';
+import DelistPage from './pages/Admin/DelistPage';
 import ListingPage from './pages/ListingPage';
 import UserManagement from './pages/UserManagement';
 import UserInformationDetail from './pages/UserInfoDetail';
@@ -55,7 +55,7 @@ const RouterCustom = () => {
 
   return (
     <Routes>
-      <Route path={'/'} element={<PrivateRoute />}>
+      {/* <Route path={'/'} element={<PrivateRoute />}>
         <Route index element={<DashboardPage />} />
       </Route>
 
@@ -91,7 +91,11 @@ const RouterCustom = () => {
 
       <Route path={'/insight'} element={<PrivateRoute />}>
         <Route index element={<InsightPage />} />
-      </Route>
+      </Route> */}
+
+      <Route path={'/'} element={<DashboardPage />} />
+      <Route path={'/medication-management'} element={<DelistPage />} />
+      <Route path={'/medication-management1'} element={<DelistPage />} />
     </Routes>
   );
 };

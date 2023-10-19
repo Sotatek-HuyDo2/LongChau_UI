@@ -14,7 +14,7 @@
 
   &__search-title {
     font-size: 14px;
-    color: $Paragraph1;
+    color: $Black;
     margin-right: 30px;
   }
 
@@ -51,40 +51,24 @@
 
 .delist-container {
   .delist {
-    &__description {
-      @include display-regular-small;
-      .show_record {
-        color: $Paragraph2;
-      }
-    }
-
-    &__info-box {
-      width: 400px;
-      border-radius: 6px;
-      background: rgba(33, 35, 47, 0.5);
-      padding: 26px 24px;
-    }
-
-    &__info-box-label {
-      color: $Paragraph1;
-      @include display-regular-medium;
-    }
-  }
-  .delist {
     &--id,
     &--type {
+      width: 10%;
+    }
+
+    &--name {
       width: 15%;
     }
 
-    &--pair {
-      width: 20%;
+    &--quality {
+      width: 10%;
+    }
+
+    &--visit {
+      width: 15%;
     }
 
     &--time {
-      width: 30%;
-    }
-
-    &--status {
       width: 20%;
     }
 
@@ -99,15 +83,16 @@
     &--cell-body {
       @include display-regular-small;
 
-      color: $Paragraph1;
+      color: $Black;
       display: flex;
       align-items: center;
       padding: 12px 0;
-      border-bottom: $Border 1px solid;
+      border-bottom: $Black 1px solid;
       &:last-child {
         justify-content: end;
       }
     }
+
     &--proof-hash,
     &--id,
     &--address {
@@ -116,7 +101,7 @@
     &--header-cell-body {
       @include display-regular-small;
 
-      color: $Paragraph2;
+      color: $Black;
       display: flex;
       text-transform: uppercase;
       align-items: center;
@@ -133,7 +118,7 @@
       flex-direction: column;
 
       &:hover {
-        background-color: $Card2;
+        background-color: $Hover;
       }
     }
 

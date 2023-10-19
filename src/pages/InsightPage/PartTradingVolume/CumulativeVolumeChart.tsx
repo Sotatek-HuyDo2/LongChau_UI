@@ -15,9 +15,7 @@ const CumulativeVolumeChart = () => {
       <Flex justifyContent={'flex-end'}>
         <AppDateRangePicker params={params} setParams={setParams} />
       </Flex>
-      <Box height={'300px'}>
-
-      </Box>
+      <Box height={'300px'}></Box>
       <Flex justifyContent={'center'}>Cumulative Volume</Flex>
     </Box>
   );

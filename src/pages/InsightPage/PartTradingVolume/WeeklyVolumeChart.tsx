@@ -15,9 +15,7 @@ const WeeklyVolumeChart = () => {
       <Flex justifyContent={'flex-end'}>
         <AppDateRangePicker params={params} setParams={setParams} />
       </Flex>
-      <Box height={'300px'}>
-
-      </Box>
+      <Box height={'300px'}></Box>
       <Flex justifyContent={'center'}>Weekly Volume</Flex>
     </Box>
   );

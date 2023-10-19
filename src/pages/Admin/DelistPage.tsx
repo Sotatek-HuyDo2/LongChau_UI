@@ -11,11 +11,11 @@ import { AppDataTable, AppButton } from 'src/components';
 import ModalDelistConfirm from 'src/components/Modals/ModalDelistConfirm';
 
 interface IDelist {
-  pairID: number;
-  currencyId: number;
-  networkId: number;
+  medicineID: string;
+  name: string;
+  quality: number;
+  visit: string;
   timestamp: number;
-  status: string;
 }
 
 const DelistPage = () => {
@@ -42,10 +42,13 @@ const DelistPage = () => {
   const _renderHeaderTable = () => {
     return (
       <Flex>
-        <Box className="delist--header-cell-body delist--id">Pair ID</Box>
-        <Box className="delist--header-cell-body delist--pair">Pair</Box>
-        <Box className="delist--header-cell-body delist--time">Time</Box>
-        <Box className="delist--header-cell-body delist--status">Status</Box>
+        <Box className="delist--header-cell-body delist--id">ID</Box>
+        <Box className="delist--header-cell-body delist--name">Tên</Box>
+        <Box className="delist--header-cell-body delist--quality">số lượng</Box>
+        <Box className="delist--header-cell-body delist--visit">Vị trí</Box>
+        <Box className="delist--header-cell-body delist--time">
+          Thời gian nhập
+        </Box>
         <Box className="delist--header-cell-body delist--action">Action</Box>
       </Flex>
     );
@@ -70,18 +73,40 @@ const DelistPage = () => {
       <Flex className="delist--row-wrap" direction={'column'}>
         <Flex>
           <Flex className="delist--cell-body delist--id">
-            <Box cursor={'pointer'}>{data.pairID}</Box>
+            <Box cursor={'pointer'}>{data.medicineID}</Box>
           </Flex>
-          <Box className="delist--cell-body delist--pair">BTC/USDT</Box>
+          <Box className="delist--cell-body delist--name">
+            {data.name ? data.name : '--'}
+          </Box>
+          <Flex
+            flexDirection="row"
+            className="delist--cell-body delist--quality"
+          >
+            {data?.quality ? data?.quality : '--'}
+          </Flex>
+          <Box className="delist--cell-body delist--visit">
+            <Box>{data.visit}</Box>
+          </Box>
           <Flex flexDirection="row" className="delist--cell-body delist--time">
             {formatTimestamp(data?.timestamp, 'MMM DD YYYY HH:mm:ss')}
           </Flex>
-          <Box className="delist--cell-body delist--status">
-            <Box>{data.status}</Box>
-          </Box>
           <Box className="delist--cell-body delist--action" cursor={'pointer'}>
             <AppButton size={'sm'} onClick={onToggleOpenModalDelistConfirm}>
-              Delist
+              Edit
+            </AppButton>
+            <AppButton
+              ml={'3px'}
+              size={'sm'}
+              onClick={onToggleOpenModalDelistConfirm}
+            >
+              Del
+            </AppButton>
+            <AppButton
+              ml={'3px'}
+              size={'sm'}
+              onClick={onToggleOpenModalDelistConfirm}
+            >
+              View
             </AppButton>
           </Box>
         </Flex>
@@ -104,7 +129,7 @@ const DelistPage = () => {
 
         <Box className={'delist__search'}>
           <Flex alignItems={'center'}>
-            <Box className={'delist__search-title'}>Listed pair:</Box>
+            <Box className={'delist__search-title'}>Danh sách thuốc:</Box>
             <Box className="delist__search-input">
               <InputGroup>
                 <AppInput

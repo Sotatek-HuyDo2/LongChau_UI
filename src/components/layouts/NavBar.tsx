@@ -13,7 +13,7 @@ const MENUS = [
   },
   {
     name: 'Quản lí thuốc1',
-    path: '/insight',
+    path: '/medication-management1',
     icon: <Overview />,
   },
   {
@@ -23,7 +23,7 @@ const MENUS = [
   },
   {
     name: 'Quản lí thuốc',
-    path: '/delist',
+    path: '/medication-management',
     icon: <Overview />,
   },
   {

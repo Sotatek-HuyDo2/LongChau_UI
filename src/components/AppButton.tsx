@@ -93,6 +93,22 @@ export const appButtonStyles = {
         opacity: 1,
       },
     }),
+    main2: (props: StyleProps) => ({
+      bg: mode('main.100', 'main.100')(props),
+      color: 'white.100',
+      fontSize: '16px',
+      _hover: {
+        bg: mode('pressed.100', 'pressed.100')(props),
+        _disabled: {
+          bg: mode('border.300', 'border.300')(props),
+        },
+      },
+      _disabled: {
+        bg: mode('border.300', 'border.300')(props),
+        color: 'paragraph.200',
+        opacity: 1,
+      },
+    }),
     transparent: (props: StyleProps) => ({
       bg: 'transparent',
       color: 'main.100',

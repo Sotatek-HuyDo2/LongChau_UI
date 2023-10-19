@@ -52,7 +52,9 @@ const PartAddPair = () => {
     let listCurrency = _.uniqBy(currencies, 'id');
 
     if (dataForm.quoteToken) {
-      listCurrency = listCurrency.filter((item) => item.id !== +dataForm.quoteToken);
+      listCurrency = listCurrency.filter(
+        (item) => item.id !== +dataForm.quoteToken,
+      );
     }
 
     return listCurrency.map((item) => {
@@ -68,7 +70,9 @@ const PartAddPair = () => {
     let listCurrency = _.uniqBy(currencies, 'id');
 
     if (dataForm.baseToken) {
-      listCurrency = listCurrency.filter((item) => item.id !== +dataForm.baseToken);
+      listCurrency = listCurrency.filter(
+        (item) => item.id !== +dataForm.baseToken,
+      );
     }
 
     return listCurrency.map((item) => {
