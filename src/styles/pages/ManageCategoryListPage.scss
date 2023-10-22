@@ -1,6 +1,6 @@
 @import '../color-variables';
 @import '../_mixins.scss';
-.delist {
+.category {
   &__title {
     font-size: 24px;
     font-style: normal;
@@ -13,7 +13,8 @@
   }
 
   &__search-title {
-    font-size: 14px;
+    font-size: 20px;
+    font-weight: 700;
     color: $Black;
     margin-right: 30px;
   }
@@ -49,27 +50,19 @@
   }
 }
 
-.delist-container {
-  .delist {
+.category-container {
+  .category {
     &--id,
     &--type {
-      width: 10%;
+      width: 15%;
     }
 
     &--name {
-      width: 15%;
+      width: 40%;
     }
 
     &--quality {
       width: 10%;
-    }
-
-    &--visit {
-      width: 15%;
-    }
-
-    &--time {
-      width: 20%;
     }
 
     &--action {
@@ -97,6 +90,7 @@
     &--id,
     &--address {
       color: $Main;
+      font-weight: bold;
     }
     &--header-cell-body {
       @include display-regular-small;
@@ -119,6 +113,7 @@
 
       &:hover {
         background-color: $Hover;
+        color: $Title !important;
       }
     }
 

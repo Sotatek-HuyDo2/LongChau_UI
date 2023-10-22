@@ -1,0 +1,35 @@
+@import '../color-variables';
+@import '../_mixins.scss';
+
+.infor-name {
+  &__label {
+    margin-top: 5px;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #b8bfcc;
+  }
+
+  &__value {
+    font-family: InTer, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: $Black;
+    margin-bottom: 5px;
+  }
+
+  &__border {
+    border-top: 1px solid $Line2;
+  }
+}
+
+.info-list {
+  border: 1px solid $Line2;
+  border-radius: 8px;
+}

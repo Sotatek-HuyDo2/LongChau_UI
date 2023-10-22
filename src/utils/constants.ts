@@ -84,31 +84,6 @@ export const MOCK_Statistical_BOX = [
   },
 ];
 
-export const MOCK_DeList = [
-  {
-    medicineID: '1223',
-    name: 'Thuốc đau bụng',
-    quality: 20,
-    visit: '10/20',
-    timestamp: 1697151091000,
-  },
-  {
-    medicineID: '12234',
-    name: 'Thuốc đau lưng',
-    quality: 20,
-    visit: '10/20',
-    timestamp: 1697151091000,
-  },
-  {
-    medicineID: '1223',
-    name: 'Thuốc đau tai',
-    quality: 20,
-    visit: '10/20',
-    timestamp: 1697151091000,
-    status: 'Delisted',
-  },
-];
-
 export const MOCK_MAKETING = [
   {
     type: 'Notification',
@@ -130,6 +105,61 @@ export const MOCK_MAKETING = [
     fromTime: 1697151091000,
     toTime: 1697151091000,
     status: 'Scheduled',
+  },
+];
+
+export const MOCK_MEDICAL_LIST = [
+  {
+    medicineID: '1223',
+    name: 'Viên uống Calcium Premium JpanWell bổ sung canxi, vitamin và khoáng chất (120 viên)',
+    quality: 20,
+    visit: '10/20',
+    timestamp: 1697151091000,
+    price: 120000,
+  },
+  {
+    medicineID: '12234',
+    name: 'Thuốc đau lưng',
+    quality: 20,
+    visit: '10/20',
+    timestamp: 1697151091000,
+    price: 12000000,
+  },
+  {
+    medicineID: '1223',
+    name: 'Thuốc đau tai',
+    quality: 20,
+    visit: '10/20',
+    timestamp: 1697151091000,
+    price: 170000,
+  },
+];
+
+export const MOCK_CATEGORY_MEDICINE = [
+  {
+    categoryID: '1223',
+    name: 'Hệ tim mạch & tạo máu',
+    quality: 20,
+  },
+  {
+    categoryID: '1223',
+    name: 'Thuốc kháng sinh',
+    quality: 20,
+  },
+  {
+    categoryID: '1223',
+    name: 'Thuốc chống ung thư',
+    quality: 20,
+  },
+  {
+    categoryID: '1223',
+    name: 'Hệ thần kinh trung ương',
+    quality: 20,
+  },
+  {
+    categoryID: '1223',
+    name: 'Hệ tiêu hóa & gan mật',
+    quality: 20,
   },
 ];
 

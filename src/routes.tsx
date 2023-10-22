@@ -6,7 +6,6 @@ import LoginPage from '../src/pages/LoginPage';
 import DashboardPage from '../src/pages/DashboardPage';
 import React from 'react';
 import { PrivateRoute } from 'src/components';
-import DelistPage from './pages/Admin/DelistPage';
 import ListingPage from './pages/ListingPage';
 import UserManagement from './pages/UserManagement';
 import UserInformationDetail from './pages/UserInfoDetail';
@@ -18,6 +17,9 @@ import { useEffectUnsafe } from './hooks/useEffectUnsafe';
 import { initMetadata } from './store/metadata';
 import { useDispatch } from 'react-redux';
 import Storage from './utils/storage';
+import MedicalManagementPage from './pages/Admin/MedicalManagementPage';
+import MedicalDetailPage from './pages/MedicalDetailPage';
+import ManageCategoryList from './pages/Admin/ManageCategoryListPage';
 
 /**
  * Main App routes.
@@ -59,7 +61,6 @@ const RouterCustom = () => {
         <Route index element={<DashboardPage />} />
       </Route>
 
-      <Route path={'/login'} element={<LoginPage />} />
 
       <Route path={'/delist'} element={<PrivateRoute />}>
         <Route index element={<DelistPage />} />
@@ -92,10 +93,15 @@ const RouterCustom = () => {
       <Route path={'/insight'} element={<PrivateRoute />}>
         <Route index element={<InsightPage />} />
       </Route> */}
+      <Route path={'/login'} element={<LoginPage />} />
 
       <Route path={'/'} element={<DashboardPage />} />
-      <Route path={'/medication-management'} element={<DelistPage />} />
-      <Route path={'/medication-management1'} element={<DelistPage />} />
+      <Route
+        path={'/medication-management'}
+        element={<MedicalManagementPage />}
+      />
+      <Route path={'/medical/:id'} element={<MedicalDetailPage />} />
+      <Route path={'/manage-category'} element={<ManageCategoryList />} />
     </Routes>
   );
 };

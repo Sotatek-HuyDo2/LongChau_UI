@@ -7,33 +7,45 @@ import { useLocation } from 'react-router-dom';
 
 const MENUS = [
   {
-    name: 'Quản lí',
+    name: 'Quản lý nhà cung cấp',
     path: '/',
     icon: <Overview />,
   },
   {
-    name: 'Quản lí thuốc1',
+    name: 'Quản lí chi nhánh',
     path: '/medication-management1',
     icon: <Overview />,
   },
   {
-    name: 'Listing',
+    name: 'Quản lý branch Admin',
     path: '/listing',
     icon: <Overview />,
   },
   {
-    name: 'Quản lí thuốc',
+    name: 'Quản lý thuốc',
     path: '/medication-management',
     icon: <Overview />,
   },
   {
-    name: 'User Management',
-    path: '/user',
+    name: 'Quản lý danh mục thuốc',
+    path: '/manage-category',
     icon: <Overview />,
     pathChild: ['/user'],
   },
   {
-    name: 'Marketing',
+    name: 'Quản lý tổng kho',
+    path: '/marketing',
+    icon: <Overview />,
+    pathChild: ['/create-notification', '/create-push-notification'],
+  },
+  {
+    name: 'Quản lý người dùng',
+    path: '/marketing',
+    icon: <Overview />,
+    pathChild: ['/create-notification', '/create-push-notification'],
+  },
+  {
+    name: 'Thống kê',
     path: '/marketing',
     icon: <Overview />,
     pathChild: ['/create-notification', '/create-push-notification'],
