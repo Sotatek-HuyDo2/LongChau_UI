@@ -44,7 +44,7 @@ const ManageCategoryList = () => {
       <Box>
         <Box>
           <Text fontSize="24px" as="b" mr={'30px'} color={'#2167df'}>
-            Quản Lý Danh Mục
+            Quản lý Danh Mục
           </Text>
         </Box>
         <Box mt={10}>

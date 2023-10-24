@@ -1,6 +1,6 @@
 import { Box, Flex } from '@chakra-ui/layout';
 import React, { FC, ReactNode } from 'react';
-import { GuestPage, NavBar } from 'src/components/layouts';
+import { GuestPage, NavBarAdmin } from 'src/components/layouts';
 
 interface IBasePage {
   className?: string;
@@ -12,7 +12,7 @@ const BasePage: FC<IBasePage> = ({ className, children }) => {
     <GuestPage>
       <Flex className="container-page">
         <Box w="300px">
-          <NavBar />
+          <NavBarAdmin />
         </Box>
         <Box className="container-page__content">{children}</Box>
       </Flex>

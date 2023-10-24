@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 import { Box } from '@chakra-ui/react';
 import 'src/styles/components/Layout.scss';
-import Header from './Header';
+import HeaderAdmin from './HeaderAdmin';
 
 interface IGuestPage {
   className?: string;
@@ -11,7 +11,7 @@ interface IGuestPage {
 const GuestPage: FC<IGuestPage> = (props) => {
   return (
     <Box className="guest-page">
-      <Header />
+      <HeaderAdmin />
       <Box className="guest-page__container">{props.children}</Box>
     </Box>
   );
