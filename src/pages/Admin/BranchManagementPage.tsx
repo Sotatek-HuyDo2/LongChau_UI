@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
 import {
@@ -12,26 +12,27 @@ import { useNavigate } from 'react-router-dom';
 import { MOCK_CATEGORY_MEDICINE } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import { BasePage } from 'src/components/layouts';
 
-interface ICategory {
+interface IBranch {
   categoryID: string;
   name: string;
   quality: number;
 }
 
-const CategoryMedicalEquipment = () => {
+const BranchManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [dataSearch, setDataSearch] = useState<ICategory[]>(
+  const [dataSearch, setDataSearch] = useState<IBranch[]>(
     MOCK_CATEGORY_MEDICINE,
   );
 
-  const dataRef = useRef<ICategory[]>([]);
+  const dataRef = useRef<IBranch[]>([]);
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
 
     if (valueSearch) {
-      dataFilter = dataFilter.filter((item: ICategory) =>
+      dataFilter = dataFilter.filter((item: IBranch) =>
         item.name.toLowerCase().includes(valueSearch.toLowerCase()),
       );
 
@@ -72,10 +73,10 @@ const CategoryMedicalEquipment = () => {
     );
   };
 
-  const _renderContentTable = (data: ICategory[]) => {
+  const _renderContentTable = (data: IBranch[]) => {
     return (
       <Box>
-        {dataSearch.map((data: ICategory, id: number) => {
+        {dataSearch.map((data: IBranch, id: number) => {
           return (
             <RowAddressTransactionTable data={data} key={`${id}-coin-table`} />
           );
@@ -85,7 +86,7 @@ const CategoryMedicalEquipment = () => {
   };
 
   const RowAddressTransactionTable: React.FC<{
-    data: ICategory;
+    data: IBranch;
   }> = ({ data }) => {
     return (
       <Flex className="category--row-wrap" direction={'column'}>
@@ -139,37 +140,50 @@ const CategoryMedicalEquipment = () => {
   };
 
   return (
-    <Box className="category" w="full">
-      <Box className={'category__search'}>
-        <Flex alignItems={'center'}>
-          <Box className={'category__search-title'}>Thiết bị y tế:</Box>
-          <Box className="category__search-input">
-            <InputGroup>
-              <AppInput
-                color={'black'}
-                placeholder="Nhập để tìm kiếm..."
-                size="sm"
-                value={valueSearch}
-                onChange={(e: any) => setValueSearch(e.target.value)}
-              />
-              <InputRightElement paddingBottom={2}>
-                <SearchExplorer />
-              </InputRightElement>
-            </InputGroup>
-          </Box>
+    <BasePage>
+      <Box className="category" w="full">
+        <Flex
+          fontSize="24px"
+          as="b"
+          mr={'30px'}
+          alignItems={'center'}
+          gap={3}
+          color={'#2167df'}
+        >
+          Quản lý chi nhánh
         </Flex>
-      </Box>
+        <Box className={'category__search'}>
+          <Flex alignItems={'center'}>
+            <Box className={'category__search-title'}>Chi nhánh:</Box>
+            <Box className="category__search-input">
+              <InputGroup>
+                <AppInput
+                  color={'black'}
+                  placeholder="Nhập chi nhánh để tìm kiếm..."
+                  size="sm"
+                  value={valueSearch}
+                  onChange={(e: any) => setValueSearch(e.target.value)}
+                />
+                <InputRightElement paddingBottom={2}>
+                  <SearchExplorer />
+                </InputRightElement>
+              </InputGroup>
+            </Box>
+          </Flex>
+        </Box>
 
-      <Box mt={10} className="category-container">
-        <AppDataTable
+        <Box mt={10} className="category-container">
+          table
+          {/* <AppDataTable
           fetchData={getCategory}
           renderBody={_renderContentTable}
           renderHeader={_renderHeaderTable}
           size={10}
-        />
+        /> */}
+        </Box>
       </Box>
-    </Box>
+    </BasePage>
   );
 };
 
-export default CategoryMedicalEquipment;
+export default BranchManagementPage;

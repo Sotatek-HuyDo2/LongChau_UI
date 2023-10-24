@@ -13,12 +13,12 @@ const MENUS = [
   },
   {
     name: 'Quản lí chi nhánh',
-    path: '/medication-management1',
+    path: '/branch-management',
     icon: <Overview />,
   },
   {
     name: 'Quản lý branch Admin',
-    path: '/listing',
+    path: '/branch-admin-management',
     icon: <Overview />,
   },
   {
@@ -28,25 +28,25 @@ const MENUS = [
   },
   {
     name: 'Quản lý danh mục thuốc',
-    path: '/manage-category',
+    path: '/category-management',
     icon: <Overview />,
     pathChild: ['/user'],
   },
   {
     name: 'Quản lý tổng kho',
-    path: '/marketing',
+    path: '/general-warehouse-management',
     icon: <Overview />,
     pathChild: ['/create-notification', '/create-push-notification'],
   },
   {
     name: 'Quản lý người dùng',
-    path: '/marketing',
+    path: '/user-management',
     icon: <Overview />,
     pathChild: ['/create-notification', '/create-push-notification'],
   },
   {
     name: 'Thống kê',
-    path: '/marketing',
+    path: '/statistical',
     icon: <Overview />,
     pathChild: ['/create-notification', '/create-push-notification'],
   },

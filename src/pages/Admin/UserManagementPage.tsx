@@ -12,26 +12,25 @@ import { useNavigate } from 'react-router-dom';
 import { MOCK_CATEGORY_MEDICINE } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import { BasePage } from 'src/components/layouts';
 
-interface ICategory {
+interface IUser {
   categoryID: string;
   name: string;
   quality: number;
 }
 
-const CategoryMedicalEquipment = () => {
+const UserManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [dataSearch, setDataSearch] = useState<ICategory[]>(
-    MOCK_CATEGORY_MEDICINE,
-  );
+  const [dataSearch, setDataSearch] = useState<IUser[]>(MOCK_CATEGORY_MEDICINE);
 
-  const dataRef = useRef<ICategory[]>([]);
+  const dataRef = useRef<IUser[]>([]);
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
 
     if (valueSearch) {
-      dataFilter = dataFilter.filter((item: ICategory) =>
+      dataFilter = dataFilter.filter((item: IUser) =>
         item.name.toLowerCase().includes(valueSearch.toLowerCase()),
       );
 
@@ -72,10 +71,10 @@ const CategoryMedicalEquipment = () => {
     );
   };
 
-  const _renderContentTable = (data: ICategory[]) => {
+  const _renderContentTable = (data: IUser[]) => {
     return (
       <Box>
-        {dataSearch.map((data: ICategory, id: number) => {
+        {dataSearch.map((data: IUser, id: number) => {
           return (
             <RowAddressTransactionTable data={data} key={`${id}-coin-table`} />
           );
@@ -85,7 +84,7 @@ const CategoryMedicalEquipment = () => {
   };
 
   const RowAddressTransactionTable: React.FC<{
-    data: ICategory;
+    data: IUser;
   }> = ({ data }) => {
     return (
       <Flex className="category--row-wrap" direction={'column'}>
@@ -139,37 +138,50 @@ const CategoryMedicalEquipment = () => {
   };
 
   return (
-    <Box className="category" w="full">
-      <Box className={'category__search'}>
-        <Flex alignItems={'center'}>
-          <Box className={'category__search-title'}>Thiết bị y tế:</Box>
-          <Box className="category__search-input">
-            <InputGroup>
-              <AppInput
-                color={'black'}
-                placeholder="Nhập để tìm kiếm..."
-                size="sm"
-                value={valueSearch}
-                onChange={(e: any) => setValueSearch(e.target.value)}
-              />
-              <InputRightElement paddingBottom={2}>
-                <SearchExplorer />
-              </InputRightElement>
-            </InputGroup>
-          </Box>
+    <BasePage>
+      <Box className="category" w="full">
+        <Flex
+          fontSize="24px"
+          as="b"
+          mr={'30px'}
+          alignItems={'center'}
+          gap={3}
+          color={'#2167df'}
+        >
+          Quản lý người dùng
         </Flex>
-      </Box>
+        <Box className={'category__search'}>
+          <Flex alignItems={'center'}>
+            <Box className={'category__search-title'}>Người dùng:</Box>
+            <Box className="category__search-input">
+              <InputGroup>
+                <AppInput
+                  color={'black'}
+                  placeholder="Nhập để tìm kiếm..."
+                  size="sm"
+                  value={valueSearch}
+                  onChange={(e: any) => setValueSearch(e.target.value)}
+                />
+                <InputRightElement paddingBottom={2}>
+                  <SearchExplorer />
+                </InputRightElement>
+              </InputGroup>
+            </Box>
+          </Flex>
+        </Box>
 
-      <Box mt={10} className="category-container">
-        <AppDataTable
+        <Box mt={10} className="category-container">
+          table
+          {/* <AppDataTable
           fetchData={getCategory}
           renderBody={_renderContentTable}
           renderHeader={_renderHeaderTable}
           size={10}
-        />
+        /> */}
+        </Box>
       </Box>
-    </Box>
+    </BasePage>
   );
 };
 
-export default CategoryMedicalEquipment;
+export default UserManagementPage;

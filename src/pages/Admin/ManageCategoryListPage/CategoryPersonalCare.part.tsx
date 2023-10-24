@@ -147,7 +147,7 @@ const CategoryPersonalCare = () => {
             <InputGroup>
               <AppInput
                 color={'black'}
-                placeholder="Nhập dịch vụ để tìm kiếm..."
+                placeholder="Nhập để tìm kiếm..."
                 size="sm"
                 value={valueSearch}
                 onChange={(e: any) => setValueSearch(e.target.value)}
