@@ -22,7 +22,6 @@ import MedicalDetailPage from './pages/MedicalDetailPage';
 import ManageCategoryList from './pages/Admin/ManageCategoryListPage';
 import UserManagementPage from './pages/Admin/UserManagementPage';
 import GeneralWarehouseManagementPage from './pages/Admin/GeneralWarehouseManagementPage';
-import BranchAdminManagementPage from './pages/Admin/BranchAdminManagementPage';
 import BranchManagementPage from './pages/Admin/BranchManagementPage';
 import SupplierManagementPage from './pages/Admin/SupplierManagementPage';
 import Statistical from './pages/Admin/Statistical';
@@ -103,10 +102,6 @@ const RouterCustom = () => {
 
       <Route path={'/'} element={<SupplierManagementPage />} />
       <Route path={'/branch-management'} element={<BranchManagementPage />} />
-      <Route
-        path={'/branch-admin-management'}
-        element={<BranchAdminManagementPage />}
-      />
 
       <Route
         path={'/medication-management'}
