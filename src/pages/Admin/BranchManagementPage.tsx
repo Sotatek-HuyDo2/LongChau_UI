@@ -159,12 +159,12 @@ const BranchManagementPage = () => {
               <InputGroup>
                 <AppInput
                   color={'black'}
-                  placeholder="Nhập chi nhánh để tìm kiếm..."
-                  size="sm"
+                  placeholder="Nhập để tìm kiếm..."
+                  size="md"
                   value={valueSearch}
                   onChange={(e: any) => setValueSearch(e.target.value)}
                 />
-                <InputRightElement paddingBottom={2}>
+                <InputRightElement>
                   <SearchExplorer />
                 </InputRightElement>
               </InputGroup>

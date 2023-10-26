@@ -48,22 +48,30 @@ interface IMedicalDetail {
   };
 }
 
-export const InforName = (
-  label: string,
-  value: any,
-  border: boolean,
-  styles?: object,
-) => {
+interface CustomLabelBoxProps {
+  label: string;
+  value: any;
+  borderShow?: boolean;
+  styles?: object;
+}
+
+const CustomLabelBox = ({
+  label,
+  value,
+  borderShow,
+  styles,
+}: CustomLabelBoxProps) => {
   return (
-    <Flex className="infor-name" flexDirection="column" style={styles}>
+    <Flex className="infor-name" flexDirection="column">
       <Box className="infor-name__label">{label}</Box>
       <Box className="infor-name__value" style={styles}>
         {value}
       </Box>
-      {border && <Divider />}
+      {borderShow && <Divider />}
     </Flex>
   );
 };
+
 const MedicalDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -99,49 +107,60 @@ const MedicalDetailPage = () => {
 
     return (
       <Flex px={'40px'} mt={10} className="explorer-table">
-        <Flex color="red">
+        <Flex>
           <Box pr={5}>
             <Image src={medicalDetail.img} />
           </Box>
           <Flex className="info-list" gap={'10px'} flexDirection={'column'}>
             <Box padding={5}>
-              <Box>Thông tin sản phẩm</Box>
-              {InforName('Thương hiệu', medicalDetail.brand, true)}
-              {InforName('Tên sản phẩm', medicalDetail.name, true)}
-              {InforName(
-                'Giá bán',
-                `${medicalDetail.price}đ / ${medicalDetail.detail.unit}`,
-                true,
-                {
-                  fontSize: 26,
+              <Box fontSize="24px" color="#1250dc" fontWeight="700">
+                Thông tin sản phẩm
+              </Box>
+              <CustomLabelBox
+                label="Thương hiệu"
+                value={medicalDetail.brand}
+                borderShow
+              />
+              <CustomLabelBox
+                label="Tên sản phẩm"
+                value={medicalDetail.name}
+                borderShow
+              />
+              <CustomLabelBox
+                label="Giá bán"
+                value={`${medicalDetail.price}đ / ${medicalDetail.detail.unit}`}
+                borderShow
+                styles={{
+                  fontSize: 22,
                   fontWeight: 600,
                   color: '#1250dc',
                   marginTop: '4px',
-                },
-              )}
-              {InforName('Danh mục', medicalDetail.detail.category, true)}
-              {InforName(
-                'Dạng bào chế',
-                medicalDetail.detail.dosageForms,
-                true,
-              )}
-              {InforName('Quy cách', medicalDetail.detail.specifications, true)}
-              {InforName(
-                'Xuất xứ thương hiệu',
-                medicalDetail.detail.manufacturingCountry,
-                true,
-              )}
-              {InforName('Nhà sản xuất', medicalDetail.detail.Producer, true)}
-
-              {/* {InforName(
-                'Nước sản xuất',
-                medicalDetail.detail.manufacturingCountry,
-                true,
-              )} */}
-
-              {InforName('Thành phần', medicalDetail.detail.ingredient, false)}
-
-              {/* {InforName('Quy cách', medicalDetail.detail.shortDescription, true)} */}
+                }}
+              />
+              <CustomLabelBox
+                label="Danh mục"
+                value={medicalDetail.detail.category}
+                borderShow
+              />
+              <CustomLabelBox
+                label="Dạng bào chế"
+                value={medicalDetail.detail.dosageForms}
+                borderShow
+              />
+              <CustomLabelBox
+                label="Quy cách"
+                value={medicalDetail.detail.specifications}
+                borderShow
+              />
+              <CustomLabelBox
+                label="Xuất xứ thương hiệu"
+                value={medicalDetail.detail.manufacturingCountry}
+                borderShow
+              />
+              <CustomLabelBox
+                label="Nhà sản xuất"
+                value={medicalDetail.detail.Producer}
+              />
             </Box>
           </Flex>
         </Flex>

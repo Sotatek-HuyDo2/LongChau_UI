@@ -13,8 +13,9 @@
   }
 
   &__search-title {
-    font-size: 14px;
+    font-size: 18px;
     color: $Black;
+    font-weight: 700;
     margin-right: 30px;
   }
 
@@ -53,11 +54,11 @@
   .delist {
     &--id,
     &--type {
-      width: 10%;
+      width: 7%;
     }
 
     &--name {
-      width: 15%;
+      width: 17%;
     }
 
     &--quality {
@@ -109,6 +110,7 @@
       color: $Black;
       display: flex;
       text-transform: uppercase;
+      font-weight: bold;
       align-items: center;
       padding: 10px 0;
       border-bottom: $Border 1px solid;
