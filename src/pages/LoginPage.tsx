@@ -89,6 +89,7 @@ const LoginPage = () => {
           flexDirection={'column'}
           alignItems={'center'}
           gap={'20px'}
+          color="black"
         >
           <Box mt={'50px'}>
             <Text className="login__title">Sign in</Text>

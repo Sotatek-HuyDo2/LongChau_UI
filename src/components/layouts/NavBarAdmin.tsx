@@ -4,6 +4,28 @@ import { Box, Flex } from '@chakra-ui/layout';
 import { useNavigate } from 'react-router';
 import { Overview } from 'src/assets/icons';
 import { useLocation } from 'react-router-dom';
+import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import { ChevronRightIcon } from '@chakra-ui/icons';
+
+interface MenuDropProps {
+  dropTitle: string;
+  dropItem?: object;
+}
+
+const MenuDrop = ({ dropTitle, dropItem }: MenuDropProps) => {
+  return (
+    <Flex className="sidebar-drop" flexDirection="column" gap="10px">
+      <Flex className="sidebar-drop__title">
+        {dropTitle}
+        <ChevronRightIcon className="sidebar-drop__icon" />
+      </Flex>
+
+      <Box className="sidebar-drop__item">Test</Box>
+      <Box className="sidebar-drop__item">Test</Box>
+      <Box className="sidebar-drop__item">Test</Box>
+    </Flex>
+  );
+};
 
 const MENUS = [
   {
@@ -17,20 +39,16 @@ const MENUS = [
     icon: <Overview />,
   },
   {
-    name: 'Quản lý branch Admin',
-    path: '/branch-admin-management',
-    icon: <Overview />,
-  },
-  {
     name: 'Quản lý thuốc',
     path: '/medication-management',
     icon: <Overview />,
   },
   {
+    component: <MenuDrop dropTitle="Quản lý danh mục thuốc" />,
     name: 'Quản lý danh mục thuốc',
     path: '/category-management',
     icon: <Overview />,
-    pathChild: ['/user'],
+    // pathChild: ['/user'],
   },
   {
     name: 'Quản lý tổng kho',
@@ -76,7 +94,7 @@ const NavBar = () => {
               }}
             >
               <Box>{menu.icon}</Box>
-              <Box>{menu.name}</Box>
+              <Box>{menu.component ? menu.component : menu.name}</Box>
             </Flex>
           );
         })}

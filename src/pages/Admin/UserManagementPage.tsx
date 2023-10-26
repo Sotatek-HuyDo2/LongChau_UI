@@ -9,20 +9,29 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_CATEGORY_MEDICINE } from 'src/utils/constants';
+import { MOCK_DATA_USER } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BasePage } from 'src/components/layouts';
+import '../../styles/pages/UserManagementPage.scss';
+import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
+import { toastError, toastSuccess } from 'src/utils/notify';
 
 interface IUser {
-  categoryID: string;
-  name: string;
-  quality: number;
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  brandID: number;
+  phone: string;
+  status: string;
 }
 
 const UserManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [dataSearch, setDataSearch] = useState<IUser[]>(MOCK_CATEGORY_MEDICINE);
+  const [dataSearch, setDataSearch] = useState<IUser[]>(MOCK_DATA_USER);
+  const [status, setStatus] = useState('block');
 
   const dataRef = useRef<IUser[]>([]);
 
@@ -31,7 +40,7 @@ const UserManagementPage = () => {
 
     if (valueSearch) {
       dataFilter = dataFilter.filter((item: IUser) =>
-        item.name.toLowerCase().includes(valueSearch.toLowerCase()),
+        item.firstName.toLowerCase().includes(valueSearch.toLowerCase()),
       );
 
       setDataSearch(dataFilter);
@@ -44,10 +53,10 @@ const UserManagementPage = () => {
 
   const navigate = useNavigate();
 
-  const getCategory = async () => {
+  const getUser = async () => {
     try {
-      dataRef.current = MOCK_CATEGORY_MEDICINE;
-      setDataSearch(MOCK_CATEGORY_MEDICINE);
+      dataRef.current = MOCK_DATA_USER;
+      setDataSearch(MOCK_DATA_USER);
       return {
         docs: dataSearch,
       };
@@ -56,17 +65,25 @@ const UserManagementPage = () => {
     }
   };
 
+  const handleSetStatus = () => {
+    if (status === 'block') {
+      toastSuccess('Welcome to LongChau!');
+      setStatus('unlock');
+    } else {
+      setStatus('block');
+    }
+  };
+
   const _renderHeaderTable = () => {
     return (
       <Flex>
-        <Box className="category--header-cell-body category--id">ID</Box>
-        <Box className="category--header-cell-body category--name">Tên</Box>
-        <Box className="category--header-cell-body category--quality">
-          số lượng(thuốc)
-        </Box>
-        <Box className="category--header-cell-body category--action">
-          Action
-        </Box>
+        <Box className="user--header-cell-body user--id">ID</Box>
+        <Box className="user--header-cell-body user--email">Email</Box>
+        <Box className="user--header-cell-body user--name">Tên</Box>
+        <Box className="user--header-cell-body user--role">Quyền</Box>
+        <Box className="user--header-cell-body user--phone">SDT</Box>
+        <Box className="user--header-cell-body user--status">Trạng thái</Box>
+        <Box className="user--header-cell-body user--action">Chức năng</Box>
       </Flex>
     );
   };
@@ -87,39 +104,33 @@ const UserManagementPage = () => {
     data: IUser;
   }> = ({ data }) => {
     return (
-      <Flex className="category--row-wrap" direction={'column'}>
+      <Flex className="user--row-wrap" direction={'column'}>
         <Flex>
-          <Flex className="category--cell-body category--id">
-            <Box cursor={'pointer'}>{data.categoryID}</Box>
+          <Flex className="user--cell-body user--id">
+            <Box cursor={'pointer'}>{data?.id}</Box>
           </Flex>
-          <Box className="category--cell-body category--name">
-            <Tooltip
-              hasArrow
-              className="tooltip-app"
-              label={data.name ? data.name : ''}
-              placement="top"
-            >
-              <Box
-                whiteSpace="nowrap"
-                overflow="hidden"
-                textOverflow="ellipsis"
-                maxW="550px"
-                cursor="pointer"
-              >
-                {data.name ? data.name : '--'}
-              </Box>
-            </Tooltip>
+          <Box className="user--cell-body user--email">
+            {data?.email ? data?.email : '--'}
           </Box>
-          <Flex
-            flexDirection="row"
-            className="category--cell-body category--quality"
-          >
-            {data?.quality ? data?.quality : '--'}
+          <Flex flexDirection="row" className="user--cell-body user--name">
+            {data?.firstName} {data?.lastName}
           </Flex>
-          <Box
-            className="category--cell-body category--action"
-            cursor={'pointer'}
-          >
+          <Box className="user--cell-body user--role">
+            {data?.role ? data?.role : '--'}
+          </Box>
+          <Box className="user--cell-body user--phone">
+            {data?.phone ? data?.phone : '--'}
+          </Box>
+          <Box className="user--cell-body user--phone">
+            <Box className={`user--${data?.status.toLowerCase()}`}>
+              {data?.status === status ? (
+                <LockIcon onClick={handleSetStatus} />
+              ) : (
+                <UnlockIcon onClick={handleSetStatus} />
+              )}
+            </Box>
+          </Box>
+          <Box className="user--cell-body user--action" cursor={'pointer'}>
             <AppButton size={'sm'}>Edit</AppButton>
             <AppButton ml={'3px'} size={'sm'}>
               Del
@@ -127,7 +138,7 @@ const UserManagementPage = () => {
             <AppButton
               ml={'3px'}
               size={'sm'}
-              onClick={() => navigate(`/medical/${data.categoryID}`)}
+              // onClick={() => navigate(`/medical/${data?.userID}`)}
             >
               View
             </AppButton>
@@ -139,7 +150,7 @@ const UserManagementPage = () => {
 
   return (
     <BasePage>
-      <Box className="category" w="full">
+      <Box className="user" w="full">
         <Flex
           fontSize="24px"
           as="b"
@@ -150,10 +161,10 @@ const UserManagementPage = () => {
         >
           Quản lý người dùng
         </Flex>
-        <Box className={'category__search'}>
+        <Box className={'user__search'}>
           <Flex alignItems={'center'}>
-            <Box className={'category__search-title'}>Người dùng:</Box>
-            <Box className="category__search-input">
+            <Box className={'user__search-title'}>Người dùng:</Box>
+            <Box className="user__search-input">
               <InputGroup>
                 <AppInput
                   color={'black'}
@@ -170,14 +181,14 @@ const UserManagementPage = () => {
           </Flex>
         </Box>
 
-        <Box mt={10} className="category-container">
+        <Box mt={10} className="user-container">
           table
-          {/* <AppDataTable
-          fetchData={getCategory}
-          renderBody={_renderContentTable}
-          renderHeader={_renderHeaderTable}
-          size={10}
-        /> */}
+          <AppDataTable
+            fetchData={getUser}
+            renderBody={_renderContentTable}
+            renderHeader={_renderHeaderTable}
+            size={10}
+          />
         </Box>
       </Box>
     </BasePage>

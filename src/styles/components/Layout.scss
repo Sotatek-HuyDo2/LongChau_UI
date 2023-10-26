@@ -5,7 +5,7 @@ $headerHeight: 80px;
 
 .header {
   width: 100vw;
-  background-color: $BackMain;
+  background: linear-gradient(to bottom, #1e72ff, #0250be);
   height: $headerHeight;
   margin-bottom: 4px;
   position: fixed;
@@ -61,7 +61,7 @@ $headerHeight: 80px;
 
   &__content {
     margin-left: 4px;
-    background-color: $Title;
+    background-color: $BackGround;
     width: calc(100% - 304px);
     padding: 30px 40px;
     min-height: calc(100vh - 84px);

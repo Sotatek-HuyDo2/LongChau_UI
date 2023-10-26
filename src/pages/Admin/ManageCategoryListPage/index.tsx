@@ -1,4 +1,12 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+} from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
 import { BasePage } from 'src/components/layouts';
 import { AppTabs } from 'src/components';
@@ -48,11 +56,17 @@ const ManageCategoryList = () => {
           </Text>
         </Box>
         <Box mt={10}>
-          {/* <AppTabs tabs={tabs} /> */}
           {tabs.map((item, index) => {
             return <Flex>{item.content}</Flex>;
           })}
         </Box>
+        <Menu>
+          <MenuButton>Quản lý Danh Mục</MenuButton>
+          <MenuList>
+            <MenuItem></MenuItem>
+            <MenuItem></MenuItem>
+          </MenuList>
+        </Menu>
       </Box>
     </BasePage>
   );

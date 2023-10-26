@@ -4,14 +4,14 @@
   display: flex;
   align-items: center;
   height: calc(100vh - 84px);
-  background-color: $Card;
+  background-color: $BackGround;
 
   &__container {
     margin: auto;
     width: 460px;
     height: 500px;
     border-radius: 16px;
-    background-color: $Card2;
+    background-color: $Title;
   }
 
   &__title {
@@ -21,7 +21,7 @@
     line-height: 26px;
     letter-spacing: 0;
     text-align: center;
-    color: $Title;
+    color: $Black;
   }
 
   &__text {
@@ -31,7 +31,7 @@
     line-height: 26px;
     letter-spacing: 0;
     text-align: center;
-    color: $Title;
+    color: $Black;
   }
 
   &__btn {
@@ -43,7 +43,7 @@
     border: 1px solid $Line;
     border-radius: 6px;
     transition: background-color 0.5s ease;
-    color: $Title;
+    color: $Black;
 
     &:hover {
       background-color: $Main;

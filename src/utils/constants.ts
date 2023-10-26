@@ -163,4 +163,37 @@ export const MOCK_CATEGORY_MEDICINE = [
   },
 ];
 
+export const MOCK_DATA_USER = [
+  {
+    id: 1,
+    email: 'dohuycg12345@gmail.com',
+    firstName: 'Huy',
+    lastName: 'Đỗ',
+    role: 'user',
+    brandID: 1,
+    phone: '0363043454',
+    status: 'block',
+  },
+  {
+    id: 2,
+    email: 'huydo8x@gmail.com',
+    firstName: 'Nguyen',
+    lastName: 'Tan',
+    role: 'admin',
+    brandID: 1,
+    phone: '0978654321',
+    status: 'unlock',
+  },
+  {
+    id: 3,
+    email: 'huydonhang@gmail.com',
+    firstName: 'Don',
+    lastName: 'Hang',
+    role: 'staff',
+    brandID: 1,
+    phone: '0987654321',
+    status: 'unlock',
+  },
+];
+
 export const TO_BE_ANNOUCED_TEXT = 'TBA';

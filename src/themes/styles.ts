@@ -3,7 +3,7 @@ import { mode, StyleFunctionProps } from '@chakra-ui/theme-tools';
 export const globalStyles = {
   colors: {
     main: {
-      100: '#5367FE',
+      100: '#1E72FF',
       800: '#5367fecc',
     },
     paragraph: {
@@ -19,7 +19,7 @@ export const globalStyles = {
       200: '#1A203B',
     },
     pressed: {
-      100: '#3346D4',
+      100: '#0250BE',
     },
     border: {
       100: '#272D52',
