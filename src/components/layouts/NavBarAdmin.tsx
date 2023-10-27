@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'src/styles/components/Navbar.scss';
 import { Box, Flex } from '@chakra-ui/layout';
 import { useNavigate } from 'react-router';
@@ -9,20 +9,39 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 
 interface MenuDropProps {
   dropTitle: string;
-  dropItem?: object;
+  dropItem?: IlistItem[];
 }
 
-const MenuDrop = ({ dropTitle, dropItem }: MenuDropProps) => {
+const LIST_ITEM = [
+  { name: 'Thực phẩm chức năng', path: '/' },
+  { name: 'Thực phẩm chức năng', path: '/' },
+];
+
+interface IlistItem {
+  name: string;
+  path: string;
+}
+
+const MenuDrop = ({ dropTitle, dropItem = LIST_ITEM }: MenuDropProps) => {
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleOpen = () => {
+    setOpen(!open);
+  };
   return (
-    <Flex className="sidebar-drop" flexDirection="column" gap="10px">
-      <Flex className="sidebar-drop__title">
+    <Flex className="sidebar-drop" flexDirection="column">
+      <Flex className="sidebar-drop__title" onClick={handleOpen} align="center">
+        <Overview />
         {dropTitle}
         <ChevronRightIcon className="sidebar-drop__icon" />
       </Flex>
-
-      <Box className="sidebar-drop__item">Test</Box>
-      <Box className="sidebar-drop__item">Test</Box>
-      <Box className="sidebar-drop__item">Test</Box>
+      <Flex flexDirection="column" justifyContent={'end'} alignItems="end">
+        {dropItem.map((item, index) => (
+          <Box className={`sidebar-drop__item ${open ? 'active' : ''}`}>
+            {item.name}
+          </Box>
+        ))}
+      </Flex>
     </Flex>
   );
 };
@@ -44,7 +63,9 @@ const MENUS = [
     icon: <Overview />,
   },
   {
-    component: <MenuDrop dropTitle="Quản lý danh mục thuốc" />,
+    component: (
+      <MenuDrop dropTitle="Quản lý danh mục thuốc" dropItem={LIST_ITEM} />
+    ),
     name: 'Quản lý danh mục thuốc',
     path: '/category-management',
     icon: <Overview />,
@@ -93,7 +114,7 @@ const NavBar = () => {
                 navigate(menu.path || '/');
               }}
             >
-              <Box>{menu.icon}</Box>
+              <Box>{menu.component ? null : menu.icon}</Box>
               <Box>{menu.component ? menu.component : menu.name}</Box>
             </Flex>
           );
