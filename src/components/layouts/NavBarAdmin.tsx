@@ -3,42 +3,76 @@ import 'src/styles/components/Navbar.scss';
 import { Box, Flex } from '@chakra-ui/layout';
 import { useNavigate } from 'react-router';
 import { Overview } from 'src/assets/icons';
-import { useLocation } from 'react-router-dom';
-import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import { Link, useLocation } from 'react-router-dom';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 
 interface MenuDropProps {
   dropTitle: string;
-  dropItem?: IlistItem[];
+  dropItem?: Array<{ name: string; path: string }> | undefined;
 }
 
 const LIST_ITEM = [
-  { name: 'Thực phẩm chức năng', path: '/' },
-  { name: 'Thực phẩm chức năng', path: '/' },
+  {
+    name: 'Thực phẩm chức năng',
+    path: '/category-management/category-functional-foods',
+  },
+  { name: 'Thuốc', path: '/category-management/category-medicine' },
+  {
+    name: 'Chăm sóc cá nhân',
+    path: '/category-management/category-personal-care',
+  },
+  {
+    name: 'Thiết bị y tế',
+    path: '/category-management/category-medical-equipment',
+  },
 ];
-
-interface IlistItem {
-  name: string;
-  path: string;
-}
 
 const MenuDrop = ({ dropTitle, dropItem = LIST_ITEM }: MenuDropProps) => {
   const [open, setOpen] = useState<boolean>(false);
-
+  const navigate2 = useNavigate();
   const handleOpen = () => {
     setOpen(!open);
   };
+
   return (
     <Flex className="sidebar-drop" flexDirection="column">
-      <Flex className="sidebar-drop__title" onClick={handleOpen} align="center">
+      <Flex
+        className="sidebar-drop__title"
+        onClick={handleOpen}
+        align="center"
+        gap="20px"
+      >
         <Overview />
         {dropTitle}
-        <ChevronRightIcon className="sidebar-drop__icon" />
+        <ChevronRightIcon
+          className={`sidebar-drop__icon ${open ? 'active' : ''}`}
+        />
       </Flex>
-      <Flex flexDirection="column" justifyContent={'end'} alignItems="end">
+      <Flex
+        pt={'3px'}
+        flexDirection="column"
+        justifyContent={'end'}
+        zIndex={'1111'}
+        ml="45px"
+      >
         {dropItem.map((item, index) => (
-          <Box className={`sidebar-drop__item ${open ? 'active' : ''}`}>
-            {item.name}
+          <Box
+            pt={'3px'}
+            key={index}
+            className={`sidebar-drop__item ${open ? 'active' : ''}`}
+            onClick={() => {
+              navigate2(item?.path);
+            }}
+          >
+            <Flex
+              alignItems="center"
+              height={'100%'}
+              className={`sidebar-drop__item-title ${
+                location.pathname.includes(item.path) ? 'active' : ''
+              }`}
+            >
+              {item.name}
+            </Flex>
           </Box>
         ))}
       </Flex>
@@ -66,10 +100,8 @@ const MENUS = [
     component: (
       <MenuDrop dropTitle="Quản lý danh mục thuốc" dropItem={LIST_ITEM} />
     ),
-    name: 'Quản lý danh mục thuốc',
     path: '/category-management',
     icon: <Overview />,
-    // pathChild: ['/user'],
   },
   {
     name: 'Quản lý tổng kho',
@@ -87,7 +119,7 @@ const MENUS = [
     name: 'Thống kê',
     path: '/statistical',
     icon: <Overview />,
-    pathChild: ['/create-notification', '/create-push-notification'],
+    component: <MenuDrop dropTitle="Thống kê" dropItem={LIST_ITEM} />,
   },
 ];
 
@@ -101,17 +133,22 @@ const NavBar = () => {
         {MENUS.map((menu, index) => {
           return (
             <Flex
+              userSelect="none"
               key={index}
-              className={`nav-bar__menu-item ${
-                location.pathname === menu.path ||
-                menu?.pathChild?.some((item) =>
-                  location.pathname.includes(item),
-                )
-                  ? 'active'
-                  : ''
-              }`}
+              className={
+                !menu.component
+                  ? `nav-bar__menu-item ${
+                      location.pathname === menu.path ||
+                      menu?.pathChild?.some((item) =>
+                        location.pathname.includes(item),
+                      )
+                        ? 'active'
+                        : ''
+                    }`
+                  : 'nav-bar__menu-drop'
+              }
               onClick={() => {
-                navigate(menu.path || '/');
+                menu.component ? '' : navigate(menu.path || '/');
               }}
             >
               <Box>{menu.component ? null : menu.icon}</Box>

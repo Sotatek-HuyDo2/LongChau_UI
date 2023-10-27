@@ -25,6 +25,10 @@ import GeneralWarehouseManagementPage from './pages/Admin/GeneralWarehouseManage
 import BranchManagementPage from './pages/Admin/BranchManagementPage';
 import SupplierManagementPage from './pages/Admin/SupplierManagementPage';
 import Statistical from './pages/Admin/Statistical';
+import CategoryFunctionalFoods from './pages/Admin/ManageCategoryListPage/CategoryFunctionalFoods.part';
+import CategoryMedicalEquipment from './pages/Admin/ManageCategoryListPage/CategoryMedicalEquipment.part';
+import CategoryMedicine from './pages/Admin/ManageCategoryListPage/CategoryMedicine.part';
+import CategoryPersonalCare from './pages/Admin/ManageCategoryListPage/CategoryPersonalCare.part';
 
 /**
  * Main App routes.
@@ -109,6 +113,22 @@ const RouterCustom = () => {
       />
       <Route path={'/medical/:id'} element={<MedicalDetailPage />} />
 
+      <Route
+        path={'/category-management/category-functional-foods'}
+        element={<CategoryFunctionalFoods />}
+      />
+      <Route
+        path={'/category-management/category-medicine'}
+        element={<CategoryMedicine />}
+      />
+      <Route
+        path={'/category-management/category-personal-care'}
+        element={<CategoryPersonalCare />}
+      />
+      <Route
+        path={'/category-management/category-medical-equipment'}
+        element={<CategoryMedicalEquipment />}
+      />
       <Route path={'/category-management'} element={<ManageCategoryList />} />
 
       <Route

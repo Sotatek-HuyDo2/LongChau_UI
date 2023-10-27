@@ -196,4 +196,19 @@ export const MOCK_DATA_USER = [
   },
 ];
 
+export const MOCK_SUPPELIER = [
+  {
+    supplierID: '1234',
+    supplierName: 'Công ty cổ phần dược phẩm Hà Nội',
+    supplierEmail: 'a@gmail.com',
+    supplierPhone: '0987654321',
+  },
+  {
+    supplierID: '1234',
+    supplierName: 'Công ty cổ phần dược phẩm Hà Đông',
+    supplierEmail: 'ab@gmail.com',
+    supplierPhone: '0987652321',
+  },
+];
+
 export const TO_BE_ANNOUCED_TEXT = 'TBA';
