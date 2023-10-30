@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
-import { BasePage } from 'src/components/layouts';
+import { BaseAdminPage } from 'src/components/layouts';
 import 'src/styles/pages/MarketingPage.scss';
 import {
   AppTextArea,
@@ -44,7 +44,7 @@ const CreatePushNotificationPage = () => {
   }, [dataForm]);
 
   return (
-    <BasePage>
+    <BaseAdminPage>
       <Box className="marketing">
         <Box pb="30px">
           <Text fontSize="24px" as="b" mr={'30px'}>
@@ -144,7 +144,7 @@ const CreatePushNotificationPage = () => {
           </AppButton>
         </Flex>
       </Box>
-    </BasePage>
+    </BaseAdminPage>
   );
 };
 

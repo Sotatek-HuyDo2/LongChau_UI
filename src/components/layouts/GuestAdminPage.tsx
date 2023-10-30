@@ -9,7 +9,7 @@ interface IGuestPage {
   children: ReactNode;
 }
 
-const GuestPage: FC<IGuestPage> = (props) => {
+const GuestAdminPage: FC<IGuestPage> = (props) => {
   return (
     <Box className="guest-page">
       <HeaderAdmin />
@@ -18,4 +18,4 @@ const GuestPage: FC<IGuestPage> = (props) => {
   );
 };
 
-export default GuestPage;
+export default GuestAdminPage;

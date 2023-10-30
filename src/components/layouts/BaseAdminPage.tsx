@@ -1,23 +1,23 @@
 import { Box, Flex } from '@chakra-ui/layout';
 import React, { FC, ReactNode } from 'react';
-import { GuestPage, NavBarAdmin } from 'src/components/layouts';
+import { GuestAdminPage, SidebarAdmin } from 'src/components/layouts';
 
 interface IBasePage {
   className?: string;
   children: ReactNode;
 }
 
-const BasePage: FC<IBasePage> = ({ className, children }) => {
+const BaseAdminPage: FC<IBasePage> = ({ className, children }) => {
   return (
-    <GuestPage>
+    <GuestAdminPage>
       <Flex className="container-page">
         <Box w="300px">
-          <NavBarAdmin />
+          <SidebarAdmin />
         </Box>
         <Box className="container-page__content">{children}</Box>
       </Flex>
-    </GuestPage>
+    </GuestAdminPage>
   );
 };
 
-export default BasePage;
+export default BaseAdminPage;

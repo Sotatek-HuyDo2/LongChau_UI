@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
-import { BasePage } from 'src/components/layouts';
+import { BaseAdminPage } from 'src/components/layouts';
 import AppButton from '../components/AppButton';
 import 'src/styles/pages/MarketingPage.scss';
 import 'src/styles/pages/DelistPage.scss';
@@ -96,7 +96,7 @@ const MarketingPage = () => {
     );
   };
   return (
-    <BasePage>
+    <BaseAdminPage>
       <Box className="marketing">
         <Box pb="30px">
           <Text fontSize="24px" as="b" mr={'30px'}>
@@ -157,7 +157,7 @@ const MarketingPage = () => {
           />
         </Box>
       </Box>
-    </BasePage>
+    </BaseAdminPage>
   );
 };
 

@@ -9,7 +9,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { GuestPage } from 'src/components/layouts';
+import { GuestAdminPage } from 'src/components/layouts';
 import '../styles/pages/LoginPage.scss';
 import { GoogleIcon } from 'src/assets/icons';
 import { GoogleLogin } from 'react-google-login';
@@ -82,7 +82,7 @@ const LoginPage = () => {
   };
 
   return (
-    <GuestPage>
+    <GuestAdminPage>
       <Box className="login">
         <Flex
           className="login__container"
@@ -143,7 +143,7 @@ const LoginPage = () => {
           />
         </Flex>
       </Box>
-    </GuestPage>
+    </GuestAdminPage>
   );
 };
 

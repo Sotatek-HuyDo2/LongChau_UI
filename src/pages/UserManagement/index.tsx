@@ -1,13 +1,13 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
-import { BasePage } from 'src/components/layouts';
+import { BaseAdminPage } from 'src/components/layouts';
 import 'src/styles/pages/UserManagement.scss';
 import UserList from './UserList';
 import UserStatistic from './UserStatistic';
 
 const UserManagementPage = () => {
   return (
-    <BasePage>
+    <BaseAdminPage>
       <Box>
         <Box pb="10px" className="user-management-container">
           <Flex
@@ -27,7 +27,7 @@ const UserManagementPage = () => {
           <UserList />
         </Box>
       </Box>
-    </BasePage>
+    </BaseAdminPage>
   );
 };
 

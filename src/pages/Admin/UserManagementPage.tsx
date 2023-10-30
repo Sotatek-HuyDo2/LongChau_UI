@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { MOCK_DATA_USER } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import { BasePage } from 'src/components/layouts';
+import { BaseAdminPage } from 'src/components/layouts';
 import '../../styles/pages/UserManagementPage.scss';
 import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { toastError, toastSuccess } from 'src/utils/notify';
@@ -149,7 +149,7 @@ const UserManagementPage = () => {
   };
 
   return (
-    <BasePage>
+    <BaseAdminPage>
       <Box className="user" w="full">
         <Flex
           fontSize="24px"
@@ -191,7 +191,7 @@ const UserManagementPage = () => {
           />
         </Box>
       </Box>
-    </BasePage>
+    </BaseAdminPage>
   );
 };
 

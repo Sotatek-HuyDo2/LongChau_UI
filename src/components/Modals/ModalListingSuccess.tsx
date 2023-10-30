@@ -29,7 +29,7 @@ const ModalListingSuccess: React.FC<IModalListingSuccesProps> = (props) => {
           <Box className="delist-confirm--para">
             The token pair has been successfully listed. Please double-check on{' '}
             <Text as="span" className="delist-confirm--para-bold">
-              Lagom
+              Pharmacy
             </Text>{' '}
             for updates.
           </Box>

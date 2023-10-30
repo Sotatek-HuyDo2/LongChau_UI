@@ -1,4 +1,4 @@
-# Bunicorn Lagom Interface Page 
+# Bunicorn Pharmacy Interface Page 
 
 ## Environment
 ```

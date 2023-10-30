@@ -52,7 +52,7 @@ const ModalListingConfirm: React.FC<IModalListingConfirmProps> = (props) => {
             </Text>{' '}
             on{' '}
             <Text as="span" className="delist-confirm--para-bold">
-              Lagom exchange
+              Pharmacy exchange
             </Text>{' '}
             . Please review carefully before selecting{' '}
             <Text as="span" className="delist-confirm--para-bold">

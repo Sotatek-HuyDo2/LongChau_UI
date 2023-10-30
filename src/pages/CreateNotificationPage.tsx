@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { BasePage } from 'src/components/layouts';
+import { BaseAdminPage } from 'src/components/layouts';
 import { AppInput, AppButton, AppDatePicker } from 'src/components';
 import { createValidator } from 'src/utils/validator';
 import ReactQuill from 'react-quill';
@@ -57,7 +57,7 @@ const CreateNotificationPage = () => {
   }, [dataForm]);
 
   return (
-    <BasePage>
+    <BaseAdminPage>
       <Box className="marketing">
         <Box pb="30px">
           <Text fontSize="24px" as="b" mr={'30px'}>
@@ -145,7 +145,7 @@ const CreateNotificationPage = () => {
           </AppButton>
         </Flex>
       </Box>
-    </BasePage>
+    </BaseAdminPage>
   );
 };
 

@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { MOCK_CATEGORY_MEDICINE } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import { BasePage } from 'src/components/layouts';
+import { BaseAdminPage } from 'src/components/layouts';
 
 interface IBranch {
   categoryID: string;
@@ -140,7 +140,7 @@ const BranchManagementPage = () => {
   };
 
   return (
-    <BasePage>
+    <BaseAdminPage>
       <Box className="category" w="full">
         <Flex
           fontSize="24px"
@@ -182,7 +182,7 @@ const BranchManagementPage = () => {
         /> */}
         </Box>
       </Box>
-    </BasePage>
+    </BaseAdminPage>
   );
 };
 

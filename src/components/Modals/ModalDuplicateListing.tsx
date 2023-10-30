@@ -47,7 +47,7 @@ const ModalDuplicateListing: React.FC<IModalDuplicateListingProps> = (
             </Text>{' '}
             on the{' '}
             <Text as="span" className="delist-confirm--para-bold">
-              Lagom exchange{' '}
+              Pharmacy exchange{' '}
             </Text>
             . Please double-check and select a different token pair or network
             for the listing process.

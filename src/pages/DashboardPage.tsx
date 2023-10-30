@@ -1,14 +1,14 @@
 import React from 'react';
-import { BasePage } from 'src/components/layouts';
+import { BaseAdminPage } from 'src/components/layouts';
 import { Box } from '@chakra-ui/react';
 
 const DashboardPage = () => {
   return (
-    <BasePage>
+    <BaseAdminPage>
       <Box fontSize="24px" as="b" mr={'30px'}>
         Dashboard
       </Box>
-    </BasePage>
+    </BaseAdminPage>
   );
 };
 

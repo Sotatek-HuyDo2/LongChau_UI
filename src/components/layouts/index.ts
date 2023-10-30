@@ -1,5 +1,6 @@
-export { default as BasePage } from './BasePage';
-export { default as NavBarAdmin } from './NavBarAdmin';
-export { default as GuestPage } from './GuestPage';
+export { default as BaseAdminPage } from './BaseAdminPage';
+export { default as SidebarAdmin } from './SidebarAdmin';
+export { default as GuestAdminPage } from './GuestAdminPage';
 export { default as HeaderHomePage } from './HeaderHomePage';
 export { default as FooterHomePage } from './FooterHomePage';
+export { default as SidebarInformation } from './SidebarInformation';

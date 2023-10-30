@@ -8,7 +8,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
-import { BasePage } from 'src/components/layouts';
+import { BaseAdminPage } from 'src/components/layouts';
 import { AppTabs } from 'src/components';
 // import 'src/styles/pages/UserManagement.scss';
 import 'src/styles/pages/ManageCategoryListPage.scss';
@@ -48,7 +48,7 @@ const tabs: ITabs[] = [
 
 const ManageCategoryList = () => {
   return (
-    <BasePage>
+    <BaseAdminPage>
       <Box>
         <Box>
           <Text fontSize="24px" as="b" mr={'30px'} color={'#2167df'}>
@@ -68,7 +68,7 @@ const ManageCategoryList = () => {
           </MenuList>
         </Menu>
       </Box>
-    </BasePage>
+    </BaseAdminPage>
   );
 };
 

@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
-import { BasePage } from 'src/components/layouts';
+import { BaseAdminPage } from 'src/components/layouts';
 import { AppTabs } from 'src/components';
 import 'src/styles/pages/ManageCategoryListPage.scss';
 // import CategoryPersonalCare from './CategoryPersonalCare.part';
@@ -39,7 +39,7 @@ const tabs: IStatistical[] = [
 
 const Statistical = () => {
   return (
-    <BasePage>
+    <BaseAdminPage>
       <Box>
         <Box>
           <Text fontSize="24px" as="b" mr={'30px'} color={'#2167df'}>
@@ -53,7 +53,7 @@ const Statistical = () => {
           })}
         </Box>
       </Box>
-    </BasePage>
+    </BaseAdminPage>
   );
 };
 

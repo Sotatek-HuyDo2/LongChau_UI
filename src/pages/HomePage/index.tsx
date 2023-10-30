@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseHomePage from 'src/components/layouts/BaseHomePage';
 
-const Intro = () => {
+const HomePage = () => {
   return (
     <>
       <BaseHomePage>
@@ -11,4 +11,4 @@ const Intro = () => {
   );
 };
 
-export default Intro;
+export default HomePage;

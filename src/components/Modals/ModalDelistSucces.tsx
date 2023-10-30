@@ -30,7 +30,7 @@ const ModalDelistSuccess: React.FC<IModalDelistSuccessProps> = (props) => {
             The token pair has been successfully delisted. Please double-check
             on{' '}
             <Text as="span" className="delist-confirm--para-bold">
-              Lagom
+              Pharmacy
             </Text>{' '}
             for updates.
           </Box>

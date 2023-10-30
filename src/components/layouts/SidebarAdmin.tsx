@@ -123,7 +123,7 @@ const MENUS = [
   },
 ];
 
-const NavBar = () => {
+const SidebarAdmin = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -161,4 +161,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default SidebarAdmin;

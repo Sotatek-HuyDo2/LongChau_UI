@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { MOCK_SUPPELIER } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import { BasePage } from 'src/components/layouts';
+import { BaseAdminPage } from 'src/components/layouts';
 
 interface ISupplier {
   supplierID: string;
@@ -162,7 +162,7 @@ const SupplierManagementPage = () => {
   };
 
   return (
-    <BasePage>
+    <BaseAdminPage>
       <Box className="category" w="full">
         <Flex
           fontSize="24px"
@@ -204,7 +204,7 @@ const SupplierManagementPage = () => {
           />
         </Box>
       </Box>
-    </BasePage>
+    </BaseAdminPage>
   );
 };
 

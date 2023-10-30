@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
-import { BasePage } from 'src/components/layouts';
+import { BaseAdminPage } from 'src/components/layouts';
 import { AppTabs } from 'src/components';
 import 'src/styles/pages/UserManagement.scss';
 import PartTVL from './PartTVL';
@@ -39,7 +39,7 @@ const tabs: ITabs[] = [
 
 const InsightPage = () => {
   return (
-    <BasePage>
+    <BaseAdminPage>
       <Box>
         <Box>
           <Text fontSize="24px" as="b" mr={'30px'}>
@@ -50,7 +50,7 @@ const InsightPage = () => {
           <AppTabs tabs={tabs} />
         </Box>
       </Box>
-    </BasePage>
+    </BaseAdminPage>
   );
 };
 

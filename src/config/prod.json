@@ -130,7 +130,7 @@
           "mobile": true,
           "options": {
             "url": "https://kovan.infura.io/v3/b725ba2b44f64faa9dd4781d4c0a8ab0",
-            "appName": "Lagom",
+            "appName": "Pharmacy",
             "supportedChainIds": [42]
           }
         }
@@ -265,7 +265,7 @@
           "mobile": true,
           "options": {
             "url": "https://data-seed-prebsc-1-s1.binance.org:8545/",
-            "appName": "Lagom",
+            "appName": "Pharmacy",
             "supportedChainIds": [56]
           }
         }
@@ -376,7 +376,7 @@
           "mobile": true,
           "options": {
             "url": "https://rpc-mumbai.maticvigil.com/",
-            "appName": "Lagom",
+            "appName": "Pharmacy",
             "supportedChainIds": [137]
           }
         }

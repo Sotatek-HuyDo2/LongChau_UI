@@ -2,7 +2,7 @@ import { Box, Divider, Flex, Image, Text } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeftIcon, CopyIcon } from 'src/assets/icons';
-import { BasePage } from 'src/components/layouts';
+import { BaseAdminPage } from 'src/components/layouts';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { formatTimestamp } from 'src/utils/format';
 import { copyToClipboard } from 'src/utils/helpers';
@@ -168,7 +168,7 @@ const MedicalDetailPage = () => {
     );
   };
   return (
-    <BasePage>
+    <BaseAdminPage>
       <Box>
         <Box className="container-explorer">
           <Flex fontSize="24px" flexDirection="row" alignItems="center">
@@ -197,7 +197,7 @@ const MedicalDetailPage = () => {
           {_renderContent()}
         </Box>
       </Box>
-    </BasePage>
+    </BaseAdminPage>
   );
 };
 

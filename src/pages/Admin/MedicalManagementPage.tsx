@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BasePage } from 'src/components/layouts';
+import { BaseAdminPage } from 'src/components/layouts';
 import { AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
 import 'src/styles/pages/MedicalManagementPage.scss';
@@ -160,7 +160,7 @@ const MedicalManagementPage = () => {
   };
 
   return (
-    <BasePage>
+    <BaseAdminPage>
       <Box className="delist">
         <Flex
           fontSize="24px"
@@ -202,7 +202,7 @@ const MedicalManagementPage = () => {
           />
         </Box>
       </Box>
-    </BasePage>
+    </BaseAdminPage>
   );
 };
 
