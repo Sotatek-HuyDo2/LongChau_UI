@@ -10,131 +10,185 @@ import {
   InputGroup,
   InputRightElement,
 } from '@chakra-ui/react';
-import React from 'react';
 import {
   ArrowLogout,
   CartIcon,
   DoorLogout,
   SearchExplorer,
 } from 'src/assets/icons';
-import { useDispatch } from 'react-redux';
-import { clearUser } from 'src/store/user';
 import { useNavigate } from 'react-router-dom';
-import Storage from 'src/utils/storage';
-import AppInput from '../AppInput';
-import { SearchIcon } from '@chakra-ui/icons';
+import { ArrowUpIcon } from '@chakra-ui/icons';
 
+const Mock_FOOTER1 = [
+  {
+    title: 'Về chúng tôi',
+    content: [
+      {
+        title: 'Giới thiệu',
+        link: '#',
+      },
+      {
+        title: 'Hệ thống cửa hàng',
+        link: '#',
+      },
+      {
+        title: 'Giấy phép kinh doanh',
+        link: '#',
+      },
+      {
+        title: 'Quy chế hoạt động',
+        link: '#',
+      },
+    ],
+  },
+  {
+    title: 'Danh Mục',
+    content: [
+      {
+        title: 'Thực phẩm chức năng',
+        link: '#',
+      },
+      {
+        title: 'Dược mỹ phẩm',
+        link: '#',
+      },
+      {
+        title: 'Chăm sóc cá nhân',
+        link: '#',
+      },
+      {
+        title: 'Thuốc',
+        link: '#',
+      },
+    ],
+  },
+  {
+    title: 'Tìm hiểu thêm',
+    content: [
+      {
+        title: 'Góc sức khỏe',
+        link: '#',
+      },
+      {
+        title: 'Tra cứu thuốc',
+        link: '#',
+      },
+      {
+        title: 'Tra cứu dược chất',
+        link: '#',
+      },
+      {
+        title: 'Tra cứu dược liệu',
+        link: '#',
+      },
+    ],
+  },
+  {
+    title: 'Tổng đài',
+    content: [
+      {
+        title: 'Tư vấn mua hàng',
+        link: '#',
+      },
+      {
+        title: 'Tư vấn vaccine',
+        link: '#',
+      },
+      {
+        title: 'Góp ý, khiếu nại',
+        link: '#',
+      },
+    ],
+  },
+];
 const FooterHomePage = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onLogout = () => {
-    dispatch(clearUser());
-    navigate('/login');
-  };
-
-  const accessToken = Storage.getAccessToken();
-  const email = Storage.getEmail();
-
   return (
-    <Flex className="header" h={'120px'} flexDirection={'column'}>
-      <Flex className="sub-header">
-        <Flex
-          className="header-hotline"
-          justifyContent={'space-between'}
-          alignItems={'start'}
-          w={'full'}
-          h={'0px'}
-          fontSize={14}
-        >
-          <Box>
-            Trung tâm tiêm chủng Long Châu{' '}
-            <Text as={'a'} href="#" textDecoration={'underline'}>
-              Xem chi tiết
-            </Text>
-          </Box>
-          <Box>Tư vấn ngay: 1800 6928</Box>
-        </Flex>
-        <Flex
-          borderTop={'1px solid #dadfec'}
-          pt={'10px'}
-          justifyContent={'space-between'}
-          alignItems={'center'}
-          w={'full'}
-          h={'full'}
-          fontSize={14}
-        >
-          <Flex flexDirection={'column'}>
-            <Text>Nhà Thuốc</Text> <Text fontSize={20}>Long Châu</Text>
-          </Flex>
-          <Box className={''}>
-            <Flex alignItems={'center'}>
-              <Box w={900}>
-                <InputGroup borderRadius="20px">
-                  <AppInput
-                    backgroundColor={'#f4f6f9'}
-                    color={'black'}
-                    placeholder="Nhập thực để tìm kiếm..."
-                    size="lg"
-                    // value={valueSearch}
-                    // onChange={(e: any) => setValueSearch(e.target.value)}
-                  />
-                  <InputRightElement
-                    top="4px"
-                    right="7px"
-                    backgroundColor={'#c1d0f6'}
-                    borderRadius={'20px'}
-                    color="#1250dc"
-                    cursor={'pointer'}
+    <Flex backgroundColor={'#f4f6f9'} id="">
+      <Flex maxW={'1440px'} margin={'auto'} flexDirection={'column'}>
+        <Flex p={'20px 0 30px 0'}>
+          {Mock_FOOTER1.map((item) => (
+            <Flex
+              flexDirection={'column'}
+              pt={'10px'}
+              w={'full'}
+              h={'full'}
+              fontSize={14}
+              gap={'10px'}
+            >
+              <Text fontSize={16} fontWeight={'bold'} color={'#657384'}>
+                {item.title}
+              </Text>
+              {item.content.map((subItem) => (
+                <Flex>
+                  <Text
+                    as={'a'}
+                    href={subItem.link}
+                    color={'#1e72ff'}
+                    transition={'color 0.3s ease, padding-left 0.3s ease'} // Thêm transition cho color và padding-left
                     _hover={{
-                      backgroundColor: '#1250dc',
-                      color: '#f4f6f9',
+                      color: '#0250be',
+                      paddingLeft: '10px',
                     }}
                   >
-                    <SearchExplorer />
-                  </InputRightElement>
-                </InputGroup>
-              </Box>
+                    {subItem.title}
+                  </Text>
+                </Flex>
+              ))}
             </Flex>
+          ))}
+        </Flex>
+        <Flex
+          flexDirection={'column'}
+          justifyContent={'center'}
+          alignItems={'center'}
+          p={'15px 0 30px 0'}
+          borderTop={'1px solid #dadfec'}
+          color={'#4a4f63'}
+        >
+          <Box>
+            © 2007 - 2022 Công ty Cổ Phần Dược Phẩm FPT Long Châu Số ĐKKD
+            0315275368 cấp ngày 17/09/2018 tại Sở Kế hoạch Đầu tư TPHCM
           </Box>
-          <Box>Đăng Nhập</Box>
-          <Flex
-            gap={2}
-            padding={'10px'}
-            backgroundColor="#1250dc"
-            borderRadius="20px"
-            alignItems={'center'}
-          >
-            <CartIcon />
-            Giỏ Hàng
+          <Flex gap={'10px'}>
+            <li>Địa chỉ: 379-381 Hai Bà Trưng, P. Võ Thị Sáu, Q.3, TP. HCM</li>
+            <li>
+              Số điện thoại:{' '}
+              <a href="#" style={{ color: '#1250dc' }}>
+                (028)73023456
+              </a>
+            </li>
+            <li>
+              Email:{' '}
+              <a href="#" style={{ color: '#1250dc' }}>
+                sale@nhathuoclongchau.com.vn
+              </a>
+            </li>
+            <li>Người quản lý nội dung: Nguyễn Bạch Điệp</li>
           </Flex>
         </Flex>
+        <Flex
+          zIndex={1000}
+          backgroundColor={'#1e72ff'}
+          position={'absolute'}
+          bottom={50}
+          right={5}
+          w={'40px'}
+          h={'40px'}
+          alignItems={'center'}
+          justifyContent={'center'}
+          borderRadius={'50%'}
+          cursor={'pointer'}
+          transition="background-color 0.3s"
+          _hover={{
+            backgroundColor: '#0250be',
+            color: '#f4f6f9',
+          }}
+        >
+          <ArrowUpIcon style={{ width: '20px' }} />
+        </Flex>
       </Flex>
-
-      {/* <Box>LongChau Dashboard</Box>
-  
-        {accessToken && (
-          <Box>
-            <Menu>
-              <MenuButton>
-                <Avatar name={email} size="sm" />
-              </MenuButton>
-              <MenuList className="menu-header">
-                <MenuItem className="user-info">{email}</MenuItem>
-  
-                <MenuItem className="user-info logout" onClick={onLogout}>
-                  <span className="door-logout">
-                    <DoorLogout />
-                  </span>
-                  <span className="arrow-logout">
-                    <ArrowLogout />
-                  </span>{' '}
-                  Logout
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          </Box>
-        )} */}
     </Flex>
   );
 };

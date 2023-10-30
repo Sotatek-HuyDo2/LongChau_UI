@@ -9,9 +9,9 @@ interface IBaseHomePage {
 
 const BaseHomePage: FC<IBaseHomePage> = ({ className, children }) => {
   return (
-    <Flex className="container-page">
+    <Flex className="container-page" flexDirection={'column'}>
       <HeaderHomePage />
-      <Box className="container-page__content">{children}</Box>
+      <Box>{children}</Box>
       <FooterHomePage />
     </Flex>
   );

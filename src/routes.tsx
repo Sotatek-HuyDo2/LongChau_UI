@@ -29,6 +29,8 @@ import CategoryFunctionalFoods from './pages/Admin/ManageCategoryListPage/Catego
 import CategoryMedicalEquipment from './pages/Admin/ManageCategoryListPage/CategoryMedicalEquipment.part';
 import CategoryMedicine from './pages/Admin/ManageCategoryListPage/CategoryMedicine.part';
 import CategoryPersonalCare from './pages/Admin/ManageCategoryListPage/CategoryPersonalCare.part';
+import HomePage from './pages/HomePage';
+import Intro from './pages/HomePage';
 
 /**
  * Main App routes.
@@ -105,6 +107,11 @@ const RouterCustom = () => {
       <Route path={'/login'} element={<LoginPage />} />
 
       <Route path={'/'} element={<SupplierManagementPage />} />
+
+      <Route path={'/home'} element={<HomePage />} />
+
+      <Route path={'/intro'} element={<Intro />} />
+
       <Route path={'/branch-management'} element={<BranchManagementPage />} />
 
       <Route

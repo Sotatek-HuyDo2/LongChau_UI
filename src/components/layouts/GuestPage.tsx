@@ -12,9 +12,7 @@ interface IGuestPage {
 const GuestPage: FC<IGuestPage> = (props) => {
   return (
     <Box className="guest-page">
-      <HeaderHomePage />
-      {/* <HeaderAdmin /> */}
-
+      <HeaderAdmin />
       <Box className="guest-page__container">{props.children}</Box>
     </Box>
   );
