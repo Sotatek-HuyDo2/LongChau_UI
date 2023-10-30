@@ -16,6 +16,24 @@ $headerHeight: 80px;
   font-size: 24px;
   font-weight: 700;
 }
+.sub-header {
+  width: 100vw;
+  height: $headerHeight;
+  margin-bottom: 4px;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  align-items: center;
+  padding: 0 60px;
+  font-size: 24px;
+  font-weight: 700;
+  flex-direction: column;
+  max-width: 1440px;
+  gap: 30px;
+  .chakra-input {
+    border-radius: 40px;
+  }
+}
 
 .menu-header {
   background-color: $Card2 !important;

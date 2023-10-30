@@ -78,6 +78,7 @@ import { ReactComponent as ClaimBoxIcon } from './ClaimBoxIcon.svg';
 import { ReactComponent as GoogleIcon } from './GoogleIcon.svg';
 import { ReactComponent as DoorLogout } from './DoorLogout.svg';
 import { ReactComponent as ArrowLogout } from './ArrowLogout.svg';
+import { ReactComponent as CartIcon } from './CartIcon.svg';
 
 export {
   LogoIcon,
@@ -160,4 +161,5 @@ export {
   GoogleIcon,
   DoorLogout,
   ArrowLogout,
+  CartIcon,
 };

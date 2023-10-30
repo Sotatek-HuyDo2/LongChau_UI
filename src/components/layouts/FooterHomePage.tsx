@@ -24,7 +24,7 @@ import Storage from 'src/utils/storage';
 import AppInput from '../AppInput';
 import { SearchIcon } from '@chakra-ui/icons';
 
-const HeaderHomePage = () => {
+const FooterHomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -112,31 +112,31 @@ const HeaderHomePage = () => {
       </Flex>
 
       {/* <Box>LongChau Dashboard</Box>
-
-      {accessToken && (
-        <Box>
-          <Menu>
-            <MenuButton>
-              <Avatar name={email} size="sm" />
-            </MenuButton>
-            <MenuList className="menu-header">
-              <MenuItem className="user-info">{email}</MenuItem>
-
-              <MenuItem className="user-info logout" onClick={onLogout}>
-                <span className="door-logout">
-                  <DoorLogout />
-                </span>
-                <span className="arrow-logout">
-                  <ArrowLogout />
-                </span>{' '}
-                Logout
-              </MenuItem>
-            </MenuList>
-          </Menu>
-        </Box>
-      )} */}
+  
+        {accessToken && (
+          <Box>
+            <Menu>
+              <MenuButton>
+                <Avatar name={email} size="sm" />
+              </MenuButton>
+              <MenuList className="menu-header">
+                <MenuItem className="user-info">{email}</MenuItem>
+  
+                <MenuItem className="user-info logout" onClick={onLogout}>
+                  <span className="door-logout">
+                    <DoorLogout />
+                  </span>
+                  <span className="arrow-logout">
+                    <ArrowLogout />
+                  </span>{' '}
+                  Logout
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </Box>
+        )} */}
     </Flex>
   );
 };
 
-export default HeaderHomePage;
+export default FooterHomePage;
