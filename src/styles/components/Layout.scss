@@ -5,7 +5,7 @@ $headerHeight: 80px;
 
 .header {
   width: 100vw;
-  background: linear-gradient(to bottom, #1e72ff, #0250be);
+  background: linear-gradient(to bottom, #2976fc, #0250be);
   height: $headerHeight;
   margin-bottom: 4px;
   position: fixed;
@@ -16,11 +16,22 @@ $headerHeight: 80px;
   font-size: 24px;
   font-weight: 700;
 }
-.sub-header {
+
+.header-homepage {
+  width: 100vw;
+  background: linear-gradient(to bottom, #2976fc, #0250be);
+  margin-bottom: 4px;
+  top: 0;
+  align-items: center;
+  padding: 0 60px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.sub-header-homepage {
   width: 100vw;
   height: $headerHeight;
   margin-bottom: 4px;
-  position: fixed;
   z-index: 1000;
   top: 0;
   align-items: center;
@@ -74,7 +85,7 @@ $headerHeight: 80px;
 }
 
 .container-page {
-  margin-top: 84px;
+  // margin-top: 84px;
   height: 100%;
 
   &__content {

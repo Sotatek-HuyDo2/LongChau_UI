@@ -210,5 +210,202 @@ export const MOCK_SUPPELIER = [
     supplierPhone: '0987652321',
   },
 ];
-
+export const MOCK_MEDICAL_PRODUCT_LIST = [
+  {
+    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/636x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_09985_6ae3f52230.jpg',
+    medicineID: '1223',
+    name: 'Viên uống Calcium Premium JpanWell bổ sung canxi, vitamin và khoáng chất (120 viên)',
+    brand: 'Jpanwell',
+    quality: 20,
+    price: 120000,
+    detail: {
+      unit: 'Hộp',
+      category: 'Cơ xương khớp',
+      dosageForms: 'Viên nang cứng',
+      specifications: 'Hộp 120 Viên',
+      manufacturingCountry: 'Nhật Bản',
+      Producer: 'Have fun Factory Co., Ltd',
+      ingredient:
+        'Canxi từ vỏ sò, Chất xơ hòa tan, Vi khuẩn acid lactic, Magie, Sắt, Vitamin B2, Vitamin B1, Vitamin D3, Vitamin K2',
+      shortDescription:
+        'Calcium Premium bổ sung canxi, một số các vitamin (vitamin B1, vitamin B2, vitamin D3, vitamin K2) và khoáng chất (magie, sắt) cho cơ thể; giúp tăng khả năng hấp thụ canxi; hỗ trợ giảm nguy cơ loãng xương.',
+    },
+  },
+  {
+    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/373x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_09754_782bfebbbf.jpg',
+    medicineID: '173',
+    name: 'Dầu Húng Chanh Lábebé hỗ trợ lợi phế trừ đờm, giảm ho (30ml)',
+    brand: 'LÁBEBÉ',
+    quality: 20,
+    price: 144000,
+    detail: {
+      unit: 'Hộp',
+      category: 'Tinh dầu các loại',
+      manufacturingCountry: 'Việt Nam',
+      Producer: 'Have fun Factory Co., Ltd',
+      shortDescription:
+        'Dầu Húng Chanh Lábebé hỗ trợ lợi phế trừ đờm, giảm ho. Thành phần chứa các thảo dược thiên nhiên an toàn và lành tính với người dùng như húng chanh, quả cơm cháy, quế, bạc hà, gừng. Sản phẩm dùng được cho trẻ sơ sinh từ 1 tháng tuổi, trẻ nhỏ, phụ nữ mang thai và cho con bú.',
+    },
+  },
+  {
+    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/636x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_09985_6ae3f52230.jpg',
+    medicineID: '1223',
+    name: 'Viên uống Calcium Premium JpanWell bổ sung canxi, vitamin và khoáng chất (120 viên)',
+    brand: 'Jpanwell',
+    quality: 20,
+    price: 120000,
+    detail: {
+      unit: 'Hộp',
+      category: 'Cơ xương khớp',
+      dosageForms: 'Viên nang cứng',
+      specifications: 'Hộp 120 Viên',
+      manufacturingCountry: 'Nhật Bản',
+      Producer: 'Have fun Factory Co., Ltd',
+      ingredient:
+        'Canxi từ vỏ sò, Chất xơ hòa tan, Vi khuẩn acid lactic, Magie, Sắt, Vitamin B2, Vitamin B1, Vitamin D3, Vitamin K2',
+      shortDescription:
+        'Calcium Premium bổ sung canxi, một số các vitamin (vitamin B1, vitamin B2, vitamin D3, vitamin K2) và khoáng chất (magie, sắt) cho cơ thể; giúp tăng khả năng hấp thụ canxi; hỗ trợ giảm nguy cơ loãng xương.',
+    },
+  },
+  {
+    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/636x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_09985_6ae3f52230.jpg',
+    medicineID: '1223',
+    name: 'Viên uống Calcium Premium JpanWell bổ sung canxi, vitamin và khoáng chất (120 viên)',
+    brand: 'Jpanwell',
+    quality: 20,
+    price: 120000,
+    detail: {
+      unit: 'Hộp',
+      category: 'Cơ xương khớp',
+      dosageForms: 'Viên nang cứng',
+      specifications: 'Hộp 120 Viên',
+      manufacturingCountry: 'Nhật Bản',
+      Producer: 'Have fun Factory Co., Ltd',
+      ingredient:
+        'Canxi từ vỏ sò, Chất xơ hòa tan, Vi khuẩn acid lactic, Magie, Sắt, Vitamin B2, Vitamin B1, Vitamin D3, Vitamin K2',
+      shortDescription:
+        'Calcium Premium bổ sung canxi, một số các vitamin (vitamin B1, vitamin B2, vitamin D3, vitamin K2) và khoáng chất (magie, sắt) cho cơ thể; giúp tăng khả năng hấp thụ canxi; hỗ trợ giảm nguy cơ loãng xương.',
+    },
+  },
+  {
+    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/636x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_09985_6ae3f52230.jpg',
+    medicineID: '1223',
+    name: 'Viên uống Calcium Premium JpanWell bổ sung canxi, vitamin và khoáng chất (120 viên)',
+    brand: 'Jpanwell',
+    quality: 20,
+    price: 120000,
+    detail: {
+      unit: 'Hộp',
+      category: 'Cơ xương khớp',
+      dosageForms: 'Viên nang cứng',
+      specifications: 'Hộp 120 Viên',
+      manufacturingCountry: 'Nhật Bản',
+      Producer: 'Have fun Factory Co., Ltd',
+      ingredient:
+        'Canxi từ vỏ sò, Chất xơ hòa tan, Vi khuẩn acid lactic, Magie, Sắt, Vitamin B2, Vitamin B1, Vitamin D3, Vitamin K2',
+      shortDescription:
+        'Calcium Premium bổ sung canxi, một số các vitamin (vitamin B1, vitamin B2, vitamin D3, vitamin K2) và khoáng chất (magie, sắt) cho cơ thể; giúp tăng khả năng hấp thụ canxi; hỗ trợ giảm nguy cơ loãng xương.',
+    },
+  },
+  {
+    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/636x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_09985_6ae3f52230.jpg',
+    medicineID: '1223',
+    name: 'Viên uống Calcium Premium JpanWell bổ sung canxi, vitamin và khoáng chất (120 viên)',
+    brand: 'Jpanwell',
+    quality: 20,
+    price: 120000,
+    detail: {
+      unit: 'Hộp',
+      category: 'Cơ xương khớp',
+      dosageForms: 'Viên nang cứng',
+      specifications: 'Hộp 120 Viên',
+      manufacturingCountry: 'Nhật Bản',
+      Producer: 'Have fun Factory Co., Ltd',
+      ingredient:
+        'Canxi từ vỏ sò, Chất xơ hòa tan, Vi khuẩn acid lactic, Magie, Sắt, Vitamin B2, Vitamin B1, Vitamin D3, Vitamin K2',
+      shortDescription:
+        'Calcium Premium bổ sung canxi, một số các vitamin (vitamin B1, vitamin B2, vitamin D3, vitamin K2) và khoáng chất (magie, sắt) cho cơ thể; giúp tăng khả năng hấp thụ canxi; hỗ trợ giảm nguy cơ loãng xương.',
+    },
+  },
+  {
+    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/636x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_09985_6ae3f52230.jpg',
+    medicineID: '1223',
+    name: 'Viên uống Calcium Premium JpanWell bổ sung canxi, vitamin và khoáng chất (120 viên)',
+    brand: 'Jpanwell',
+    quality: 20,
+    price: 120000,
+    detail: {
+      unit: 'Hộp',
+      category: 'Cơ xương khớp',
+      dosageForms: 'Viên nang cứng',
+      specifications: 'Hộp 120 Viên',
+      manufacturingCountry: 'Nhật Bản',
+      Producer: 'Have fun Factory Co., Ltd',
+      ingredient:
+        'Canxi từ vỏ sò, Chất xơ hòa tan, Vi khuẩn acid lactic, Magie, Sắt, Vitamin B2, Vitamin B1, Vitamin D3, Vitamin K2',
+      shortDescription:
+        'Calcium Premium bổ sung canxi, một số các vitamin (vitamin B1, vitamin B2, vitamin D3, vitamin K2) và khoáng chất (magie, sắt) cho cơ thể; giúp tăng khả năng hấp thụ canxi; hỗ trợ giảm nguy cơ loãng xương.',
+    },
+  },
+  {
+    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/636x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_09985_6ae3f52230.jpg',
+    medicineID: '1223',
+    name: 'Viên uống Calcium Premium JpanWell bổ sung canxi, vitamin và khoáng chất (120 viên)',
+    brand: 'Jpanwell',
+    quality: 20,
+    price: 120000,
+    detail: {
+      unit: 'Hộp',
+      category: 'Cơ xương khớp',
+      dosageForms: 'Viên nang cứng',
+      specifications: 'Hộp 120 Viên',
+      manufacturingCountry: 'Nhật Bản',
+      Producer: 'Have fun Factory Co., Ltd',
+      ingredient:
+        'Canxi từ vỏ sò, Chất xơ hòa tan, Vi khuẩn acid lactic, Magie, Sắt, Vitamin B2, Vitamin B1, Vitamin D3, Vitamin K2',
+      shortDescription:
+        'Calcium Premium bổ sung canxi, một số các vitamin (vitamin B1, vitamin B2, vitamin D3, vitamin K2) và khoáng chất (magie, sắt) cho cơ thể; giúp tăng khả năng hấp thụ canxi; hỗ trợ giảm nguy cơ loãng xương.',
+    },
+  },
+  {
+    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/636x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_09985_6ae3f52230.jpg',
+    medicineID: '1223',
+    name: 'Viên uống Calcium Premium JpanWell bổ sung canxi, vitamin và khoáng chất (120 viên)',
+    brand: 'Jpanwell',
+    quality: 20,
+    price: 120000,
+    detail: {
+      unit: 'Hộp',
+      category: 'Cơ xương khớp',
+      dosageForms: 'Viên nang cứng',
+      specifications: 'Hộp 120 Viên',
+      manufacturingCountry: 'Nhật Bản',
+      Producer: 'Have fun Factory Co., Ltd',
+      ingredient:
+        'Canxi từ vỏ sò, Chất xơ hòa tan, Vi khuẩn acid lactic, Magie, Sắt, Vitamin B2, Vitamin B1, Vitamin D3, Vitamin K2',
+      shortDescription:
+        'Calcium Premium bổ sung canxi, một số các vitamin (vitamin B1, vitamin B2, vitamin D3, vitamin K2) và khoáng chất (magie, sắt) cho cơ thể; giúp tăng khả năng hấp thụ canxi; hỗ trợ giảm nguy cơ loãng xương.',
+    },
+  },
+  {
+    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/636x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_09985_6ae3f52230.jpg',
+    medicineID: '1223',
+    name: 'Viên uống Calcium Premium JpanWell bổ sung canxi, vitamin và khoáng chất (120 viên)',
+    brand: 'Jpanwell',
+    quality: 20,
+    price: 120000,
+    detail: {
+      unit: 'Hộp',
+      category: 'Cơ xương khớp',
+      dosageForms: 'Viên nang cứng',
+      specifications: 'Hộp 120 Viên',
+      manufacturingCountry: 'Nhật Bản',
+      Producer: 'Have fun Factory Co., Ltd',
+      ingredient:
+        'Canxi từ vỏ sò, Chất xơ hòa tan, Vi khuẩn acid lactic, Magie, Sắt, Vitamin B2, Vitamin B1, Vitamin D3, Vitamin K2',
+      shortDescription:
+        'Calcium Premium bổ sung canxi, một số các vitamin (vitamin B1, vitamin B2, vitamin D3, vitamin K2) và khoáng chất (magie, sắt) cho cơ thể; giúp tăng khả năng hấp thụ canxi; hỗ trợ giảm nguy cơ loãng xương.',
+    },
+  },
+];
 export const TO_BE_ANNOUCED_TEXT = 'TBA';
