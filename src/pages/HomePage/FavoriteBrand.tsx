@@ -1,11 +1,10 @@
 import { Box, Flex, Image } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import { MOCK_MEDICAL_PRODUCT_LIST } from 'src/utils/constants';
 import '../../styles/components/FavoriteBrand.scss';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { useRef } from 'react';
 
 const MOCK_BRAND_DEMO = [
   {
@@ -51,13 +50,24 @@ const MOCK_BRAND_DEMO = [
 ];
 
 const FavoriteBrand = () => {
+  const sliderRef = useRef<any>(null);
+
+  const next = () => {
+    sliderRef.current.slickNext();
+  };
+
+  const previous = () => {
+    sliderRef.current.slickPrev();
+  };
   const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
+    infinite: true,
+    speed: 1000,
     slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToScroll: 2,
     initialSlide: 0,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    cssEase: 'linear',
     responsive: [
       {
         breakpoint: 1024,
@@ -104,72 +114,81 @@ const FavoriteBrand = () => {
 
   return (
     <Box backgroundColor={'#fcf2ea'} py={'20px'}>
-      <Box w={'1340px'} margin={'auto'} flexDirection={'row'}>
-        <Slider {...settings}>
+      <Box
+        position={'relative'}
+        w={'1340px'}
+        margin={'auto'}
+        flexDirection={'row'}
+      >
+        <Slider ref={sliderRef} {...settings}>
           {MOCK_BRAND_DEMO.map((item) => {
             return (
-              <Flex paddingLeft={'10px'}>
-                <Box
-                  className=""
-                  border={'1px solid #a4a7b7'}
-                  borderRadius={'10px'}
-                  padding={'10px'}
-                >
-                  <Image src={item.img} alt="brand" />
-                </Box>
-                <Box>{item?.branchName ? item.branchName : '--'} </Box>
+              <Flex className="slider-item">
+                <Flex className="slider-item--image" flexDirection={'column'}>
+                  <Image
+                    w={'200px'}
+                    margin={'auto'}
+                    src={item.img}
+                    alt="brand"
+                  />
+                  <Box className="slider-item--name">
+                    {item?.branchName ? item.branchName : '--'}{' '}
+                  </Box>
+                </Flex>
               </Flex>
             );
           })}
         </Slider>
+        <Box>
+          <Flex
+            backgroundColor={'white'}
+            borderRadius={'50%'}
+            w={'35px'}
+            h={'35px'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            onClick={previous}
+            position={'absolute'}
+            top={'30px'}
+            left={'-8px'}
+            zIndex={100000}
+            cursor={'pointer'}
+            border={'1px solid #dadfec'}
+            _hover={{
+              background: '#a4a7b7',
+            }}
+            style={{
+              transition: 'background-color 0.3s, color 0.3s',
+            }}
+          >
+            <ChevronLeftIcon w={'20px'} h={'30px'} color={'#1250dc'} />
+          </Flex>
+          <Flex
+            backgroundColor={'white'}
+            borderRadius={'50%'}
+            w={'35px'}
+            h={'35px'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            onClick={next}
+            position={'absolute'}
+            top={'30px'}
+            right={'-18px'}
+            zIndex={100000}
+            cursor={'pointer'}
+            border={'1px solid #dadfec'}
+            _hover={{
+              background: '#a4a7b7',
+            }}
+            style={{
+              transition: 'background-color 0.3s, color 0.3s',
+            }}
+          >
+            <ChevronRightIcon w={'20px'} h={'30px'} color={'#1250dc'} />
+          </Flex>
+        </Box>
       </Box>
     </Box>
-    // <Flex className="product-container">
-    //   <Image
-    //     className="product-image"
-    //     src="https://nhathuoclongchau.com.vn/static/images/san-pham-ban-chay.svg"
-    //   />
-    //   <Box className="product-title">Sản phẩm bán chạy</Box>
-    //   <Flex
-    //     w={'1440px'}
-    //     margin={'auto'}
-    //     flexWrap={'wrap'}
-    //     gap={'20px'}
-    //     justifyContent={'center'}
-    //   >
-    //     {products.map((product) => {
-    //       return (
-    //         <Flex
-    //           className="product--card"
-    //           flexDirection={'column'}
-    //           gap={'10px'}
-    //         >
-    //           <Box className="product--card-image" w={128} height={128}>
-    //             <Image src={product.img} alt="hello" />
-    //           </Box>
-    //           <Box className="product--card-name">
-    //             {product?.name ? product.name : '--'}
-    //           </Box>
-    //           <Box className="product--card-price">
-    //             {product?.price ? product.price : '--'} /{' '}
-    //             {product?.detail?.unit ? product?.detail?.unit : '--'}
-    //           </Box>
-    //           <Box className="product--card-unit">
-    //             <Box
-    //               backgroundColor={'blackAlpha.200'}
-    //               display={'inline'}
-    //               padding={'5px'}
-    //               color={'black'}
-    //               borderRadius={'45%'}
-    //             >
-    //               {product?.detail?.unit ? product?.detail?.unit : '--'}
-    //             </Box>
-    //           </Box>
-    //         </Flex>
-    //       );
-    //     })}
-    //   </Flex>
-    // </Flex>
   );
 };
 

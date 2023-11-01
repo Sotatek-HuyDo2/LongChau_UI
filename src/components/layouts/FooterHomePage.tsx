@@ -4,6 +4,8 @@ import { ArrowUpIcon } from '@chakra-ui/icons';
 import AppButton from '../AppButton';
 import subFooter from '../../assets/icons/sub-footer.png';
 import { MapIcon } from 'src/assets/icons';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import { useState } from 'react';
 
 const Mock_FOOTER1 = [
   {
@@ -89,14 +91,42 @@ const Mock_FOOTER1 = [
 ];
 const FooterHomePage = () => {
   const navigate = useNavigate();
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  const handleScroll = () => {
+    if (window.pageYOffset > 700) {
+      setShowBackToTop(true);
+    } else {
+      setShowBackToTop(false);
+    }
+  };
+
+  useEffectUnsafe(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   const handleNavigate = (path: '/') => {
     navigate(path);
   };
 
   return (
     <>
-      <Box w={'full'} backgroundColor={'#eaeffb'} pb={'30px'}>
+      <Box
+        w={'full'}
+        backgroundColor={'#eaeffb'}
+        pb={'30px'}
+        userSelect={'none'}
+      >
         <Image margin={'auto'} src={subFooter} />
       </Box>
       <Flex
@@ -199,23 +229,10 @@ const FooterHomePage = () => {
               <li>Người quản lý nội dung: Nguyễn Bạch Điệp</li>
             </Flex>
           </Flex>
+
           <Flex
-            zIndex={1000}
-            backgroundColor={'#1e72ff'}
-            position={'absolute'}
-            bottom={50}
-            right={5}
-            w={'40px'}
-            h={'40px'}
-            alignItems={'center'}
-            justifyContent={'center'}
-            borderRadius={'50%'}
-            cursor={'pointer'}
-            transition="background-color 0.3s"
-            _hover={{
-              backgroundColor: '#0250be',
-              color: '#f4f6f9',
-            }}
+            onClick={scrollToTop}
+            className={`back-to-top-button${showBackToTop ? ' active' : ''}`}
           >
             <ArrowUpIcon style={{ width: '20px' }} />
           </Flex>
