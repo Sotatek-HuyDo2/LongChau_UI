@@ -105,44 +105,50 @@ const RouterCustom = () => {
       </Route> */}
       <Route path={'/login'} element={<LoginPage />} />
 
-      <Route path={'/'} element={<SupplierManagementPage />} />
+      <Route path={'/admin'} element={<SupplierManagementPage />} />
 
-      <Route path={'/home'} element={<HomePage />} />
-
-      <Route path={'/branch-management'} element={<BranchManagementPage />} />
+      <Route path={'/'} element={<HomePage />} />
 
       <Route
-        path={'/medication-management'}
+        path={'admin/branch-management'}
+        element={<BranchManagementPage />}
+      />
+
+      <Route
+        path={'admin/medication-management'}
         element={<MedicalManagementPage />}
       />
       <Route path={'/medical/:id'} element={<MedicalDetailPage />} />
 
       <Route
-        path={'/category-management/category-functional-foods'}
+        path={'admin/category-management/category-functional-foods'}
         element={<CategoryFunctionalFoods />}
       />
       <Route
-        path={'/category-management/category-medicine'}
+        path={'admin/category-management/category-medicine'}
         element={<CategoryMedicine />}
       />
       <Route
-        path={'/category-management/category-personal-care'}
+        path={'admin/category-management/category-personal-care'}
         element={<CategoryPersonalCare />}
       />
       <Route
-        path={'/category-management/category-medical-equipment'}
+        path={'admin/category-management/category-medical-equipment'}
         element={<CategoryMedicalEquipment />}
       />
-      <Route path={'/category-management'} element={<ManageCategoryList />} />
+      <Route
+        path={'admin/category-management'}
+        element={<ManageCategoryList />}
+      />
 
       <Route
-        path={'/general-warehouse-management'}
+        path={'admin/general-warehouse-management'}
         element={<GeneralWarehouseManagementPage />}
       />
 
-      <Route path={'/user-management'} element={<UserManagementPage />} />
+      <Route path={'admin/user-management'} element={<UserManagementPage />} />
 
-      <Route path={'/statistical'} element={<Statistical />} />
+      <Route path={'admin/statistical'} element={<Statistical />} />
     </Routes>
   );
 };

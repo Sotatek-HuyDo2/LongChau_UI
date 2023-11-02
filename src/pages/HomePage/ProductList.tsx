@@ -1,8 +1,9 @@
 import { Box, Flex, Image } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { MOCK_MEDICAL_PRODUCT_LIST } from 'src/utils/constants';
 import '../../styles/components/ProductList.scss';
+import { useNavigate } from 'react-router';
 
 interface IMedicalProduct {
   img: string;
@@ -24,6 +25,7 @@ interface IMedicalProduct {
 }
 
 const ProductList = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState<IMedicalProduct[]>([]);
 
   const getAllProduct = async () => {
@@ -61,6 +63,7 @@ const ProductList = () => {
               className="product--card"
               flexDirection={'column'}
               gap={'10px'}
+              onClick={() => navigate(`/medical/${product.medicineID}`)}
             >
               <Box className="product--card-image" w={128} height={128}>
                 <Image src={product.img} alt="hello" />

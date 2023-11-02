@@ -11,21 +11,18 @@ import {
   InputRightElement,
   Image,
 } from '@chakra-ui/react';
-import React from 'react';
-import {
-  ArrowLogout,
-  CartIcon,
-  DoorLogout,
-  SearchExplorer,
-} from 'src/assets/icons';
+import { useState } from 'react';
+import { CartIcon, SearchExplorer } from 'src/assets/icons';
 import { useDispatch } from 'react-redux';
 import { clearUser } from 'src/store/user';
 import { useNavigate } from 'react-router-dom';
 import Storage from 'src/utils/storage';
 import AppInput from '../AppInput';
-import { SearchIcon } from '@chakra-ui/icons';
+import AppButton from '../AppButton';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
 const HeaderHomePage = () => {
+  const [valueSearch, setValueSearch] = useState<string>('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -36,6 +33,10 @@ const HeaderHomePage = () => {
 
   const accessToken = Storage.getAccessToken();
   const email = Storage.getEmail();
+
+  // useEffectUnsafe(() => {
+  //   alert('hello');
+  // }, [valueSearch]);
 
   return (
     <Flex
@@ -55,7 +56,7 @@ const HeaderHomePage = () => {
           fontSize={14}
         >
           <Box>
-            <Text as={'a'} href="#">
+            <Text as={'a'} href="https://www.hust.edu.vn/">
               Hanoi University of Science & Technology
             </Text>
           </Box>
@@ -70,7 +71,13 @@ const HeaderHomePage = () => {
           h={'full'}
           fontSize={14}
         >
-          <Flex flexDirection={'row'} gap={'10px'} alignItems={'end'}>
+          <Flex
+            flexDirection={'row'}
+            gap={'10px'}
+            alignItems={'end'}
+            onClick={() => navigate('/')}
+            cursor={'pointer'}
+          >
             <Box>
               <Image
                 w={'56px'}
@@ -96,11 +103,11 @@ const HeaderHomePage = () => {
                     color={'black'}
                     placeholder="Nhập thực để tìm kiếm..."
                     size="lg"
-                    // value={valueSearch}
-                    // onChange={(e: any) => setValueSearch(e.target.value)}
+                    value={valueSearch}
+                    onChange={(e: any) => setValueSearch(e.target.value)}
                   />
                   <InputRightElement
-                    top="7px"
+                    top="5px"
                     right="7px"
                     backgroundColor={'#c1d0f6'}
                     borderRadius={'20px'}
@@ -117,8 +124,14 @@ const HeaderHomePage = () => {
               </Box>
             </Flex>
           </Box>
-          <Box>Đăng Nhập</Box>
-          <Flex
+          <AppButton
+            onClick={() => navigate('/login')}
+            borderRadius={'20px'}
+            background={'none'}
+          >
+            Đăng Nhập
+          </AppButton>
+          <AppButton
             gap={2}
             padding={'10px'}
             backgroundColor="#1250dc"
@@ -127,7 +140,7 @@ const HeaderHomePage = () => {
           >
             <CartIcon />
             Giỏ Hàng
-          </Flex>
+          </AppButton>
         </Flex>
       </Flex>
 

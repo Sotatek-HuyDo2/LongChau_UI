@@ -13,19 +13,27 @@ const Mock_FOOTER1 = [
     content: [
       {
         title: 'Giới thiệu',
-        link: '#',
+        link: 'https://pharmacy-documentation.vercel.app/docs/intro',
       },
       {
-        title: 'Hệ thống cửa hàng',
-        link: '#',
+        title: 'Chính sách giao hàng',
+        link: 'https://pharmacy-documentation.vercel.app/docs/about-me/delivery-policy',
       },
       {
-        title: 'Giấy phép kinh doanh',
-        link: '#',
+        title: 'Chính sách bảo mật',
+        link: 'https://pharmacy-documentation.vercel.app/docs/about-me/privacy-policy',
       },
       {
-        title: 'Quy chế hoạt động',
-        link: '#',
+        title: 'Chính sách đặt cọc',
+        link: 'https://pharmacy-documentation.vercel.app/docs/about-me/deposit-policy',
+      },
+      {
+        title: 'Chính sách thanh toán',
+        link: 'https://pharmacy-documentation.vercel.app/docs/about-me/payment-policy',
+      },
+      {
+        title: 'Thu nhập và xử lý dữ liệu',
+        link: 'https://pharmacy-documentation.vercel.app/docs/about-me/data-personal-policy',
       },
     ],
   },
@@ -210,7 +218,7 @@ const FooterHomePage = () => {
               © 2007 - 2022 Công ty Cổ Phần Dược Phẩm FPT Long Châu Số ĐKKD
               0315275368 cấp ngày 17/09/2018 tại Sở Kế hoạch Đầu tư TPHCM
             </Box>
-            <Flex gap={'10px'}>
+            <Flex flexWrap={'nowrap'} gap={'3px'}>
               <li>
                 Địa chỉ: 379-381 Hai Bà Trưng, P. Võ Thị Sáu, Q.3, TP. HCM
               </li>

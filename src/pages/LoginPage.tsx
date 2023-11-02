@@ -82,68 +82,68 @@ const LoginPage = () => {
   };
 
   return (
-    <GuestAdminPage>
-      <Box className="login">
-        <Flex
-          className="login__container"
-          flexDirection={'column'}
-          alignItems={'center'}
-          gap={'20px'}
-          color="black"
-        >
-          <Box mt={'50px'}>
-            <Text className="login__title">Sign in</Text>
-            <Text className="login__text">to continue to admin page</Text>
-          </Box>
-          <Flex flexDirection={'column'} gap="20px" w="80%" alignItems="center">
-            <FormControl isInvalid={isError}>
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <Input id="email" value={email} onChange={handleEmailChange} />
-              <FormLabel htmlFor="password" mt="10px">
-                Mật khẩu
-              </FormLabel>
-              <Input
-                id="password"
-                value={password}
-                onChange={handlePasswordChange}
-              />
-              {!isError ? (
-                <FormHelperText>
-                  Enter the input you'd like to receive the newsletter on.
-                </FormHelperText>
-              ) : (
-                <FormErrorMessage>Input is required.</FormErrorMessage>
-              )}
-            </FormControl>
-            <Flex flexDirection="row" w="100%" gap="10px">
-              <AppButton
-                onClick={onSubmit}
-                size="md"
-                w="100%"
-                variant="formTrade"
-              >
-                Đăng nhập
-              </AppButton>
-              <AppButton onClick={onSubmit} size="md" w="100%">
-                Đăng ký
-              </AppButton>
-            </Flex>
-          </Flex>
-          Or
-          <GoogleLogin
-            clientId={clientId}
-            onSuccess={onSuccess}
-            onFailure={onFailure}
-            render={(renderProps) => (
-              <Box className="login__btn" onClick={renderProps.onClick}>
-                <GoogleIcon /> <Text>Sign in with Google</Text>
-              </Box>
+    // <GuestAdminPage>
+    <Box className="login">
+      <Flex
+        className="login__container"
+        flexDirection={'column'}
+        alignItems={'center'}
+        gap={'20px'}
+        color="black"
+      >
+        <Box mt={'50px'}>
+          <Text className="login__title">Sign in</Text>
+          <Text className="login__text">to continue to admin page</Text>
+        </Box>
+        <Flex flexDirection={'column'} gap="20px" w="80%" alignItems="center">
+          <FormControl isInvalid={isError}>
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <Input id="email" value={email} onChange={handleEmailChange} />
+            <FormLabel htmlFor="password" mt="10px">
+              Mật khẩu
+            </FormLabel>
+            <Input
+              id="password"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+            {!isError ? (
+              <FormHelperText>
+                Enter the input you'd like to receive the newsletter on.
+              </FormHelperText>
+            ) : (
+              <FormErrorMessage>Input is required.</FormErrorMessage>
             )}
-            cookiePolicy={'single_host_origin'}
-          />
+          </FormControl>
+          <Flex flexDirection="row" w="100%" gap="10px">
+            <AppButton
+              onClick={onSubmit}
+              size="md"
+              w="100%"
+              variant="formTrade"
+            >
+              Đăng nhập
+            </AppButton>
+            <AppButton onClick={onSubmit} size="md" w="100%">
+              Đăng ký
+            </AppButton>
+          </Flex>
         </Flex>
-      </Box>
-    </GuestAdminPage>
+        Or
+        <GoogleLogin
+          clientId={clientId}
+          onSuccess={onSuccess}
+          onFailure={onFailure}
+          render={(renderProps) => (
+            <Box className="login__btn" onClick={renderProps.onClick}>
+              <GoogleIcon /> <Text>Sign in with Google</Text>
+            </Box>
+          )}
+          cookiePolicy={'single_host_origin'}
+        />
+      </Flex>
+    </Box>
+    // </GuestAdminPage>
   );
 };
 

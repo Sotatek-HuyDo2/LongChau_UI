@@ -63,7 +63,7 @@ const FavoriteBrand = () => {
     infinite: true,
     speed: 1000,
     slidesToShow: 4,
-    slidesToScroll: 2,
+    slidesToScroll: 1,
     initialSlide: 0,
     autoplay: true,
     autoplaySpeed: 4000,

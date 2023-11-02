@@ -14,16 +14,16 @@ interface MenuDropProps {
 const LIST_ITEM = [
   {
     name: 'Thực phẩm chức năng',
-    path: '/category-management/category-functional-foods',
+    path: '/admin/category-management/category-functional-foods',
   },
-  { name: 'Thuốc', path: '/category-management/category-medicine' },
+  { name: 'Thuốc', path: '/admin/category-management/category-medicine' },
   {
     name: 'Chăm sóc cá nhân',
-    path: '/category-management/category-personal-care',
+    path: '/admin/category-management/category-personal-care',
   },
   {
     name: 'Thiết bị y tế',
-    path: '/category-management/category-medical-equipment',
+    path: '/admin/category-management/category-medical-equipment',
   },
 ];
 
@@ -83,41 +83,47 @@ const MenuDrop = ({ dropTitle, dropItem = LIST_ITEM }: MenuDropProps) => {
 const MENUS = [
   {
     name: 'Quản lý nhà cung cấp',
-    path: '/',
+    path: '/admin',
     icon: <Overview />,
   },
   {
     name: 'Quản lí chi nhánh',
-    path: '/branch-management',
+    path: '/admin/branch-management',
     icon: <Overview />,
   },
   {
     name: 'Quản lý thuốc',
-    path: '/medication-management',
+    path: '/admin/medication-management',
     icon: <Overview />,
   },
   {
     component: (
       <MenuDrop dropTitle="Quản lý danh mục thuốc" dropItem={LIST_ITEM} />
     ),
-    path: '/category-management',
+    path: '/admin/category-management',
     icon: <Overview />,
   },
   {
     name: 'Quản lý tổng kho',
-    path: '/general-warehouse-management',
+    path: '/admin/general-warehouse-management',
     icon: <Overview />,
-    pathChild: ['/create-notification', '/create-push-notification'],
+    pathChild: [
+      '/admin/create-notification',
+      '/admin/create-push-notification',
+    ],
   },
   {
     name: 'Quản lý người dùng',
-    path: '/user-management',
+    path: '/admin/user-management',
     icon: <Overview />,
-    pathChild: ['/create-notification', '/create-push-notification'],
+    pathChild: [
+      '/admin/create-notification',
+      '/admin/create-push-notification',
+    ],
   },
   {
     name: 'Thống kê',
-    path: '/statistical',
+    path: '/admin/statistical',
     icon: <Overview />,
     component: <MenuDrop dropTitle="Thống kê" dropItem={LIST_ITEM} />,
   },
@@ -148,7 +154,7 @@ const SidebarAdmin = () => {
                   : 'nav-bar__menu-drop'
               }
               onClick={() => {
-                menu.component ? '' : navigate(menu.path || '/');
+                menu.component ? '' : navigate(menu.path || '/admin');
               }}
             >
               <Box>{menu.component ? null : menu.icon}</Box>

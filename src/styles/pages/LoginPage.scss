@@ -3,8 +3,11 @@
 .login {
   display: flex;
   align-items: center;
-  height: calc(100vh - 84px);
-  background-color: $BackGround;
+  height: calc(100vh);
+  background-image: url(https://storage.googleapis.com/hust-files/2021-11-15/5807675312963584/background-new-page_.9m.jpeg);
+  background-size: cover; /* Để hình nền bao phủ toàn bộ phần nền */
+  background-repeat: no-repeat; /* Không lặp lại hình nền */
+  background-position: center center;
 
   &__container {
     margin: auto;
