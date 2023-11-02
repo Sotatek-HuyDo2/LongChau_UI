@@ -159,7 +159,7 @@ const CategoryFunctionalFoods = () => {
               <InputGroup>
                 <AppInput
                   color={'black'}
-                  placeholder="Nhập thực để tìm kiếm..."
+                  placeholder="Nhập để tìm kiếm..."
                   size="sm"
                   value={valueSearch}
                   onChange={(e: any) => setValueSearch(e.target.value)}

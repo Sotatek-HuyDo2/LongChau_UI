@@ -30,6 +30,7 @@ import CategoryMedicalEquipment from './pages/Admin/ManageCategoryListPage/Categ
 import CategoryMedicine from './pages/Admin/ManageCategoryListPage/CategoryMedicine.part';
 import CategoryPersonalCare from './pages/Admin/ManageCategoryListPage/CategoryPersonalCare.part';
 import HomePage from './pages/HomePage';
+import PharmacySystemPage from './pages/PharmacySystemPage';
 
 /**
  * Main App routes.
@@ -108,6 +109,8 @@ const RouterCustom = () => {
       <Route path={'/admin'} element={<SupplierManagementPage />} />
 
       <Route path={'/'} element={<HomePage />} />
+
+      <Route path={'/pharmacy-system'} element={<PharmacySystemPage />} />
 
       <Route
         path={'admin/branch-management'}

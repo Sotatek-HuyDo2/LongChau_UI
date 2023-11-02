@@ -1,15 +1,13 @@
-import { Box, Flex, Image } from '@chakra-ui/react';
-import { useState } from 'react';
-import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import { MOCK_MEDICAL_PRODUCT_LIST } from 'src/utils/constants';
-import '../../styles/components/PharmacySystemPage.scss';
-import { useNavigate } from 'react-router';
+// import '../../styles/components/PharmacySystemPage.scss';
 import BaseHomePage from 'src/components/layouts/BaseHomePage';
+import PharmacySystemSearch from './PharmacySystemSearch.part';
 
 const PharmacySystemPage = () => {
-  <BaseHomePage>
-    <>hello</>
-  </BaseHomePage>;
+  return (
+    <BaseHomePage>
+      <PharmacySystemSearch />
+    </BaseHomePage>
+  );
 };
 
 export default PharmacySystemPage;

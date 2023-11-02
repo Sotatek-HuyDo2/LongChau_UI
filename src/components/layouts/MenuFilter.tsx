@@ -165,7 +165,7 @@ const MenuFilter = () => {
   const navigate = useNavigate();
 
   return (
-    <Flex backgroundColor={'#f4f6f9'} color={'black'} h={'70px'}>
+    <Flex backgroundColor={'white'} color={'black'} h={'50px'}>
       <Flex
         w={'1440px'}
         margin={'auto'}

@@ -97,12 +97,12 @@ const HeaderHomePage = () => {
           <Box className={''}>
             <Flex alignItems={'center'}>
               <Box w={900}>
-                <InputGroup borderRadius="20px">
+                <InputGroup>
                   <AppInput
                     h={'60px'}
                     backgroundColor={'#f4f6f9'}
                     color={'black'}
-                    placeholder="Nhập thực để tìm kiếm..."
+                    placeholder="Nhập để tìm kiếm..."
                     _placeholder={{
                       color: '#1250dc',
                       fontSize: '18px',

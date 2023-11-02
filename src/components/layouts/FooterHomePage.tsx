@@ -131,7 +131,7 @@ const FooterHomePage = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  const handleNavigate = (path: '/') => {
+  const handleNavigate = (path: string) => {
     navigate(path);
   };
 
@@ -161,7 +161,7 @@ const FooterHomePage = () => {
           <Flex
             gap={'10px'}
             cursor={'pointer'}
-            onClick={() => handleNavigate('/')}
+            onClick={() => handleNavigate(`/pharmacy-system`)}
           >
             <MapIcon />
             Xem hệ thống {1413} nhà thuốc trên toàn quốc
@@ -175,6 +175,7 @@ const FooterHomePage = () => {
               color: 'white',
               backgroundColor: '#2976fc',
             }}
+            onClick={() => handleNavigate('/pharmacy-system')}
           >
             Xem danh sách nhà thuốc
           </AppButton>
