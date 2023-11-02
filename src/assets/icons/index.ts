@@ -80,6 +80,7 @@ import { ReactComponent as DoorLogout } from './DoorLogout.svg';
 import { ReactComponent as ArrowLogout } from './ArrowLogout.svg';
 import { ReactComponent as CartIcon } from './CartIcon.svg';
 import { ReactComponent as MapIcon } from './MapIcon.svg';
+import { ReactComponent as LoginIcon } from './LoginIcon.svg';
 
 export {
   LogoIcon,
@@ -164,4 +165,5 @@ export {
   ArrowLogout,
   CartIcon,
   MapIcon,
+  LoginIcon,
 };

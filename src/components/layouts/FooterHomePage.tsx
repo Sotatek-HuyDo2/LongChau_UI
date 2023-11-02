@@ -16,16 +16,24 @@ const Mock_FOOTER1 = [
         link: 'https://pharmacy-documentation.vercel.app/docs/intro',
       },
       {
+        title: 'Giấy phép kinh doanh',
+        link: 'https://pharmacy-documentation.vercel.app/docs/about-me/business-license',
+      },
+      {
+        title: 'Quy chế hoạt động website',
+        link: 'https://pharmacy-documentation.vercel.app/docs/about-me/website-operations',
+      },
+      {
+        title: 'Chính sách đặt cọc',
+        link: 'https://pharmacy-documentation.vercel.app/docs/about-me/deposit-policy',
+      },
+      {
         title: 'Chính sách giao hàng',
         link: 'https://pharmacy-documentation.vercel.app/docs/about-me/delivery-policy',
       },
       {
         title: 'Chính sách bảo mật',
         link: 'https://pharmacy-documentation.vercel.app/docs/about-me/privacy-policy',
-      },
-      {
-        title: 'Chính sách đặt cọc',
-        link: 'https://pharmacy-documentation.vercel.app/docs/about-me/deposit-policy',
       },
       {
         title: 'Chính sách thanh toán',

@@ -12,7 +12,7 @@ import {
   Image,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { CartIcon, SearchExplorer } from 'src/assets/icons';
+import { CartIcon, LoginIcon, SearchExplorer } from 'src/assets/icons';
 import { useDispatch } from 'react-redux';
 import { clearUser } from 'src/store/user';
 import { useNavigate } from 'react-router-dom';
@@ -40,20 +40,21 @@ const HeaderHomePage = () => {
 
   return (
     <Flex
+      w={'100%'}
       className="header-homepage"
-      h={'140px'}
+      // h={'140px'}
       flexDirection={'column'}
-      backgroundColor={'#458fec'}
+      // backgroundColor={'#458fec'}
     >
       <Flex className="sub-header-homepage">
         <Flex
-          pt={'10px'}
+          py={'8px'}
           className="header-hotline"
           justifyContent={'space-between'}
           alignItems={'start'}
           w={'full'}
           h={'0px'}
-          fontSize={14}
+          fontSize={18}
         >
           <Box>
             <Text as={'a'} href="https://www.hust.edu.vn/">
@@ -64,16 +65,16 @@ const HeaderHomePage = () => {
         </Flex>
         <Flex
           borderTop={'1px solid #dadfec'}
-          pt={'10px'}
+          py={'15px'}
           justifyContent={'space-between'}
           alignItems={'center'}
           w={'full'}
           h={'full'}
-          fontSize={14}
+          fontSize={18}
         >
           <Flex
             flexDirection={'row'}
-            gap={'10px'}
+            gap={'15px'}
             alignItems={'end'}
             onClick={() => navigate('/')}
             cursor={'pointer'}
@@ -89,8 +90,8 @@ const HeaderHomePage = () => {
               />
             </Box>
             <Flex flexDirection={'column'}>
-              <Text fontSize={22}>HUST</Text>
-              <Text fontSize={14}>PHARMACY</Text>
+              <Text fontSize={24}>HUST</Text>
+              <Text fontSize={16}>PHARMACY</Text>
             </Flex>
           </Flex>
           <Box className={''}>
@@ -98,10 +99,15 @@ const HeaderHomePage = () => {
               <Box w={900}>
                 <InputGroup borderRadius="20px">
                   <AppInput
-                    h={'50px'}
+                    h={'60px'}
                     backgroundColor={'#f4f6f9'}
                     color={'black'}
                     placeholder="Nhập thực để tìm kiếm..."
+                    _placeholder={{
+                      color: '#1250dc',
+                      fontSize: '18px',
+                    }}
+                    fontSize="18px"
                     size="lg"
                     value={valueSearch}
                     onChange={(e: any) => setValueSearch(e.target.value)}
@@ -110,7 +116,9 @@ const HeaderHomePage = () => {
                     top="5px"
                     right="7px"
                     backgroundColor={'#c1d0f6'}
-                    borderRadius={'20px'}
+                    w="50px"
+                    height="50px"
+                    borderRadius={'50%'}
                     color="#1250dc"
                     cursor={'pointer'}
                     _hover={{
@@ -125,21 +133,36 @@ const HeaderHomePage = () => {
             </Flex>
           </Box>
           <AppButton
+            size="lg"
             onClick={() => navigate('/login')}
             borderRadius={'20px'}
             background={'none'}
           >
-            Đăng Nhập
+            <Flex
+              gap={'7px'}
+              alignItems={'center'}
+              justifyContent={'space-around'}
+              fontSize={18}
+            >
+              <LoginIcon />
+              Đăng Nhập
+            </Flex>
           </AppButton>
           <AppButton
-            gap={2}
-            padding={'10px'}
+            size="lg"
+            padding={'20px'}
             backgroundColor="#1250dc"
             borderRadius="20px"
-            alignItems={'center'}
           >
-            <CartIcon />
-            Giỏ Hàng
+            <Flex
+              gap={'7px'}
+              alignItems={'center'}
+              justifyContent={'space-around'}
+              fontSize={18}
+            >
+              <CartIcon />
+              Giỏ Hàng
+            </Flex>
           </AppButton>
         </Flex>
       </Flex>

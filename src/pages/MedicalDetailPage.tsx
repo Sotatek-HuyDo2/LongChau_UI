@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeftIcon, CopyIcon } from 'src/assets/icons';
 import { BaseAdminPage } from 'src/components/layouts';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import { formatTimestamp } from 'src/utils/format';
+import { formatNumber, formatTimestamp } from 'src/utils/format';
 import { copyToClipboard } from 'src/utils/helpers';
 import '../styles/pages/MedicalDetailPage.scss';
 
@@ -128,7 +128,9 @@ const MedicalDetailPage = () => {
               />
               <CustomLabelBox
                 label="Giá bán"
-                value={`${medicalDetail.price}đ / ${medicalDetail.detail.unit}`}
+                value={`${formatNumber(medicalDetail.price)}đ / ${
+                  medicalDetail.detail.unit
+                }`}
                 borderShow
                 styles={{
                   fontSize: 22,

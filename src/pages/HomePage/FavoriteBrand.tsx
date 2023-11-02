@@ -116,7 +116,7 @@ const FavoriteBrand = () => {
     <Box backgroundColor={'#fcf2ea'} py={'20px'}>
       <Box
         position={'relative'}
-        w={'1340px'}
+        w={'1440px'}
         margin={'auto'}
         flexDirection={'row'}
       >
