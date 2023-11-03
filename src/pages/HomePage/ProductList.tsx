@@ -79,11 +79,13 @@ const ProductList = () => {
                 <Box
                   backgroundColor={'blackAlpha.200'}
                   display={'inline'}
-                  padding={'5px'}
+                  padding={'3px 5px'}
                   color={'black'}
-                  borderRadius={'45%'}
+                  borderRadius={'20px'}
                 >
-                  {product?.detail?.unit ? product?.detail?.unit : '--'}
+                  {product?.detail?.specifications
+                    ? product?.detail?.specifications
+                    : product?.detail?.unit}
                 </Box>
               </Box>
             </Flex>
