@@ -1,0 +1,207 @@
+@import '../color-variables';
+@import '../_mixins.scss';
+
+.homepage-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $BackGround;
+
+  //-----------------------------------Faverite-Brand----------------------------------------
+  .favorite-brand-container {
+    position: relative;
+    width: 1440px;
+    margin: auto;
+    flex-direction: row;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    .favorite-brand--title {
+      gap: 10px;
+      align-items: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: black;
+    }
+
+    .slider-item {
+      padding-left: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+        transform: scale(1.05);
+      }
+    }
+
+    .slider-item--image {
+      border: 1px solid $Line2;
+      background-color: $Title;
+      border-radius: 10px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    .slider-item--name {
+      margin: auto;
+      font-size: 24px;
+      font-weight: 600;
+      color: $Blue-500;
+    }
+
+    .slick-arrow {
+      display: none !important;
+    }
+
+    .slider-button {
+      background-color: white;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      z-index: 100000;
+      cursor: pointer;
+      border: 1px solid #dadfec;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .slider-button:hover {
+      background: #a4a7b7;
+    }
+
+    .slider-prev {
+      top: 87px;
+      left: -8px;
+    }
+
+    .slider-next {
+      top: 87px;
+      right: -18px;
+    }
+  }
+
+  //-------------------------------------Feature-category----------------------------------------
+  .feature-container {
+    width: 100%;
+
+    .feature-category {
+      width: 1440px;
+      margin: auto;
+      color: $Black;
+      flex-direction: column;
+      gap: 20px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+
+      &--title {
+        gap: 10px;
+        align-items: center;
+        font-size: 22px;
+        font-weight: 700;
+
+        img {
+          src: 'https://cdn.nhathuoclongchau.com.vn/unsafe/28x28/https://cms-prod.s3-sgn09.fptcloud.com/smalls/danh_muc_noi_bat_d03496597a.png';
+        }
+      }
+
+      flex-wrap: wrap;
+      gap: 30px;
+
+      .feature-category--item {
+        flex-direction: column;
+        width: calc(100% / 6 - 30px);
+        border: 1px solid $Line2;
+        height: 100px;
+        background-color: $Title;
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.8;
+          transform: scale(1.05);
+          transition: opacity 0.3s, transform 0.3s;
+        }
+      }
+    }
+  }
+
+  //-------------------------------------Product List-------------------------------------------
+
+  .product-container {
+    background: $Pink-100;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    position: relative;
+
+    .product-image {
+      position: absolute;
+      top: -11px;
+      left: calc((100% - 321px) / 2);
+    }
+
+    .product-title {
+      user-select: none;
+      position: absolute;
+      top: -8px;
+      left: calc((100% - 175px) / 2);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .product {
+      display: flex;
+      width: 1440px;
+      margin: auto;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      &--card {
+        width: calc(100% / 6 - 20px);
+        padding: 15px 30px;
+        background-color: $Title;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+
+        &:hover {
+          opacity: 0.8;
+          border: 1px solid $Paragraph1;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+          transform: scale(1.05);
+        }
+
+        &-image {
+          width: 128px;
+          height: 128px;
+          border-radius: 8px;
+        }
+
+        &-name {
+          white-space: wrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          font-size: 12px;
+          max-width: 150px;
+          cursor: pointer;
+          color: $Black;
+        }
+
+        &-price {
+          font-size: 16px;
+          font-weight: 600;
+          color: $Blue-500;
+        }
+      }
+    }
+  }
+
+  //-------------------------------------Banner-----------------------
+}

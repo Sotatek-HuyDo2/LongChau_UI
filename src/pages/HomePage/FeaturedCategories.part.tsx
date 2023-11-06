@@ -1,5 +1,4 @@
 import { Box, Flex, Image, calc } from '@chakra-ui/react';
-import '../../styles/components/FeatureCategoriesPage.scss';
 import { useNavigate } from 'react-router';
 
 const MOCK_FeatureCategories = [

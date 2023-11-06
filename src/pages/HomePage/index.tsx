@@ -2,16 +2,19 @@ import React from 'react';
 import BaseHomePage from 'src/components/layouts/BaseHomePage';
 import ProductList from './ProductList.part';
 import FavoriteBrand from './FavoriteBrand.part';
-import MenuFilter from '../../components/layouts/MenuFilter';
 import FeatureCategoriesPage from './FeaturedCategories.part';
+import { Box } from '@chakra-ui/react';
+import '../../styles/pages/HomePage.scss';
 
 const HomePage = () => {
   return (
     <>
       <BaseHomePage>
-        <ProductList />
-        <FavoriteBrand />
-        <FeatureCategoriesPage />
+        <Box className="homepage-container">
+          <ProductList />
+          <FavoriteBrand />
+          <FeatureCategoriesPage />
+        </Box>
       </BaseHomePage>
     </>
   );

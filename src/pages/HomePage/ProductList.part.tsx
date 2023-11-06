@@ -2,7 +2,6 @@ import { Box, Flex, Image } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { MOCK_MEDICAL_PRODUCT_LIST } from 'src/utils/constants';
-import '../../styles/components/ProductList.scss';
 import { useNavigate } from 'react-router';
 
 interface IMedicalProduct {
@@ -50,7 +49,7 @@ const ProductList = () => {
         src="https://nhathuoclongchau.com.vn/static/images/san-pham-ban-chay.svg"
       />
       <Box className="product-title">Sản phẩm bán chạy</Box>
-      <Flex w={'1440px'} margin={'auto'} flexWrap={'wrap'} gap={'20px'}>
+      <Box className="product">
         {products.map((product) => {
           return (
             <Flex
@@ -85,7 +84,7 @@ const ProductList = () => {
             </Flex>
           );
         })}
-      </Flex>
+      </Box>
     </Flex>
   );
 };

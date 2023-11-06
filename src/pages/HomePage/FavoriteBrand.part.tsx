@@ -1,5 +1,4 @@
 import { Box, Flex, Image } from '@chakra-ui/react';
-import '../../styles/components/FavoriteBrand.scss';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -114,54 +113,34 @@ const FavoriteBrand = () => {
   // }, []);
 
   return (
-    <Box backgroundColor={'#f4f6f9'} py={'20px'}>
-      <Flex
-        position={'relative'}
-        w={'1440px'}
-        margin={'auto'}
-        flexDirection={'row'}
-        flexDir={'column'}
-        gap={'20px'}
-      >
-        <Flex
-          gap={'10px'}
-          alignItems={'center'}
-          fontSize={'22px'}
-          fontWeight={700}
-          color={'black'}
-        >
-          <Image src="https://cdn.nhathuoclongchau.com.vn/unsafe/28x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/smalls/thuong_hieu_yeu_thich_e0c23dded6.png" />
-          Danh mục nổi bật
-        </Flex>
-        <Slider ref={sliderRef} {...settings}>
-          {MOCK_BRAND_DEMO.map((item) => {
-            return (
-              <Flex className="slider-item">
-                <Flex className="slider-item--image" flexDirection={'column'}>
-                  <Image
-                    w={'200px'}
-                    margin={'auto'}
-                    src={item.img}
-                    alt="brand"
-                  />
-                  <Box className="slider-item--name">
-                    {item?.branchName ? item.branchName : '--'}{' '}
-                  </Box>
-                </Flex>
-              </Flex>
-            );
-          })}
-        </Slider>
-        <Box>
-          <Flex className="slider-button slider-prev" onClick={previous}>
-            <ChevronLeftIcon boxSize={9} color={'#1250dc'} />
-          </Flex>
-          <Flex className="slider-button slider-next" onClick={next}>
-            <ChevronRightIcon boxSize={9} color={'#1250dc'} />
-          </Flex>
-        </Box>
+    <Flex className="favorite-brand-container">
+      <Flex className="favorite-brand--title">
+        <Image src="https://cdn.nhathuoclongchau.com.vn/unsafe/28x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/smalls/thuong_hieu_yeu_thich_e0c23dded6.png" />
+        Danh mục nổi bật
       </Flex>
-    </Box>
+      <Slider ref={sliderRef} {...settings}>
+        {MOCK_BRAND_DEMO.map((item) => {
+          return (
+            <Flex className="slider-item">
+              <Flex className="slider-item--image" flexDirection={'column'}>
+                <Image w={'200px'} margin={'auto'} src={item.img} alt="brand" />
+                <Box className="slider-item--name">
+                  {item?.branchName ? item.branchName : '--'}{' '}
+                </Box>
+              </Flex>
+            </Flex>
+          );
+        })}
+      </Slider>
+      <Box>
+        <Flex className="slider-button slider-prev" onClick={previous}>
+          <ChevronLeftIcon boxSize={9} color={'#1250dc'} />
+        </Flex>
+        <Flex className="slider-button slider-next" onClick={next}>
+          <ChevronRightIcon boxSize={9} color={'#1250dc'} />
+        </Flex>
+      </Box>
+    </Flex>
   );
 };
 
