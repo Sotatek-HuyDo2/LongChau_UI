@@ -50,13 +50,7 @@ const ProductList = () => {
         src="https://nhathuoclongchau.com.vn/static/images/san-pham-ban-chay.svg"
       />
       <Box className="product-title">Sản phẩm bán chạy</Box>
-      <Flex
-        w={'1440px'}
-        margin={'auto'}
-        flexWrap={'wrap'}
-        gap={'20px'}
-        justifyContent={'center'}
-      >
+      <Flex w={'1440px'} margin={'auto'} flexWrap={'wrap'} gap={'20px'}>
         {products.map((product) => {
           return (
             <Flex

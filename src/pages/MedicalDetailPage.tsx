@@ -1,17 +1,4 @@
-import {
-  Box,
-  Divider,
-  Flex,
-  Image,
-  Text,
-  FormControl,
-  FormLabel,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-} from '@chakra-ui/react';
+import { Box, Divider, Flex, Image, Input, Text } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeftIcon, CopyIcon } from 'src/assets/icons';
@@ -21,6 +8,13 @@ import { formatNumber, formatTimestamp } from 'src/utils/format';
 import { copyToClipboard } from 'src/utils/helpers';
 import '../styles/pages/MedicalDetailPage.scss';
 import BaseHomePage from 'src/components/layouts/BaseHomePage';
+import {
+  AddIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  MinusIcon,
+} from '@chakra-ui/icons';
+import { AppButton } from 'src/components';
 
 const MOCK_INFO_Medical = {
   img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/636x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/DSC_09985_6ae3f52230.jpg',
@@ -69,6 +63,24 @@ interface CustomLabelBoxProps {
   styles?: object;
 }
 
+const MOCK_MEDICAL_SERVICE = [
+  {
+    icon: 'https://nhathuoclongchau.com.vn/estore-images/hethongnhathuoc/trahang.svg',
+    title: 'Đổi trả trong 30 ngày',
+    subTitle: 'Kể từ ngày mua hàng',
+  },
+  {
+    icon: 'https://nhathuoclongchau.com.vn/estore-images/hethongnhathuoc/giaohang.svg',
+    title: 'Miễn phí 100%',
+    subTitle: 'Đổi thuốc',
+  },
+  {
+    icon: 'https://nhathuoclongchau.com.vn/estore-images/hethongnhathuoc/giaohang.svg',
+    title: 'Miễn phí vận chuyển',
+    subTitle: 'Theo chính sách giao hàng',
+  },
+];
+
 const CustomLabelBox = ({
   label,
   value,
@@ -90,6 +102,7 @@ const MedicalDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [amount, setAmount] = useState<number>(1);
 
   const [role, setRole] = useState<string>('user');
 
@@ -112,13 +125,12 @@ const MedicalDetailPage = () => {
     getMedicalDetail().then();
   }, [id]);
 
-  const [amount, setAmount] = useState(10); // Khởi tạo giá trị ban đầu
-
-  const handleAmountChange = (value: number) => {
-    console.log('value: ', value);
-
-    setAmount(value);
-  };
+  const [totalAmount, setTotalAmount] = useState<number>(
+    MOCK_INFO_Medical.price,
+  );
+  useEffectUnsafe(() => {
+    setTotalAmount(amount * MOCK_INFO_Medical.price);
+  }, [amount]);
 
   const _renderContent = () => {
     if (isLoading) {
@@ -190,21 +202,109 @@ const MedicalDetailPage = () => {
                 />
               </Box>
             </Flex>
-            <Flex flexDirection={'column'}>
+            <Flex
+              flexDirection={'column'}
+              color={'black'}
+              py={'10px'}
+              gap={'10px'}
+              fontWeight={700}
+            >
               <Box>Chọn số lượng</Box>
-              <Flex>
-                <FormControl>
-                  <FormLabel htmlFor="amount">Amount</FormLabel>
-                  <NumberInput max={50} min={10} value={amount}>
-                    <NumberInputField id="amount" />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper
-                        onClick={() => handleAmountChange}
-                      />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </FormControl>
+              <Flex flexDirection={'row'}>
+                <Flex flexDir={'row'} cursor={'pointer'}>
+                  <Flex
+                    px={'10px'}
+                    border={'1px solid #e5e7eb'}
+                    borderRadius={'20px 0px 0px 20px'}
+                    alignItems={'center'}
+                    onClick={() => setAmount(amount - 1)}
+                    _hover={
+                      amount !== 1
+                        ? {
+                            backgroundColor: '#a4a7b7',
+                            transition: 'background-color 0.3s',
+                          }
+                        : {}
+                    }
+                    as={'button'}
+                    disabled={amount === 1}
+                  >
+                    <MinusIcon
+                      boxSize={5}
+                      color={`${amount === 1 && '#a4a7b7'} `}
+                    />
+                  </Flex>
+                  <Input
+                    w={'50px'}
+                    borderRadius={'none'}
+                    border={'1px solid #e5e7eb'}
+                    textAlign={'center'}
+                    type="number"
+                    fontSize={18}
+                    onChange={(e) => setAmount(Number(e.target.value || 1))}
+                    value={amount || 1}
+                  />
+                  <Flex
+                    px={'10px'}
+                    border={'1px solid #e5e7eb'}
+                    borderRadius={'0 20px 20px 0px'}
+                    alignItems={'center'}
+                    onClick={() => setAmount(amount + 1)}
+                    _hover={{
+                      backgroundColor: '#a4a7b7',
+                      transition: 'background-color 0.3s',
+                    }}
+                  >
+                    <AddIcon boxSize={5} />
+                  </Flex>
+                  <Flex
+                    alignItems={'center'}
+                    gap={'10px'}
+                    pl={'30px'}
+                    fontSize={20}
+                  >
+                    Ước Chừng: <Text>{totalAmount}</Text>
+                  </Flex>
+                </Flex>
+              </Flex>
+              <Flex gap={'10px'} py={'10px'} justifyContent={'center'}>
+                <AppButton w={'80%'} h={'60px'} borderRadius={'50px'}>
+                  Chọn Mua
+                </AppButton>
+                {/* <AppButton
+                  variant="formTrade"
+                  w={'50%'}
+                  h={'60px'}
+                  borderRadius={'50px'}
+                  onClick={() => navigate('/pharmacy-system')}
+                >
+                  Tìm Nhà Thuốc
+                </AppButton> */}
+              </Flex>
+              <Flex
+                gap={'15px'}
+                py={'20px'}
+                borderTop={'1px solid #dadfec'}
+                justifyContent={'space-between'}
+              >
+                {MOCK_MEDICAL_SERVICE.map((item, index) => (
+                  <Flex
+                    flexDirection={'row'}
+                    alignItems={'center'}
+                    key={index}
+                    gap={'20px'}
+                  >
+                    <Image src={item.icon} w={'50px'} h={'50px'} />
+                    <Flex flexDir={'column'}>
+                      <Box fontSize={14} fontWeight={700}>
+                        {item.title}
+                      </Box>
+                      <Box fontSize={14} fontWeight={400}>
+                        {item.subTitle}
+                      </Box>
+                    </Flex>
+                  </Flex>
+                ))}
               </Flex>
             </Flex>
           </Flex>

@@ -135,7 +135,7 @@ const HeaderHomePage = () => {
           <AppButton
             size="lg"
             onClick={() => navigate('/login')}
-            borderRadius={'20px'}
+            borderRadius="50px"
             background={'none'}
           >
             <Flex
@@ -151,8 +151,9 @@ const HeaderHomePage = () => {
           <AppButton
             size="lg"
             padding={'20px'}
-            backgroundColor="#1250dc"
-            borderRadius="20px"
+            borderRadius="50px"
+            variant="formTrade"
+            color={'white'}
           >
             <Flex
               gap={'7px'}

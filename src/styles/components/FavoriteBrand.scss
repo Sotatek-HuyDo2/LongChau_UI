@@ -16,6 +16,8 @@
   border: 1px solid $Line2;
   background-color: $Title;
   border-radius: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .slider-item--name {
   margin: auto;
@@ -26,4 +28,32 @@
 
 .slick-arrow {
   display: none !important;
+}
+
+.slider-button {
+  background-color: white;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 100000;
+  cursor: pointer;
+  border: 1px solid #dadfec;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.slider-button:hover {
+  background: #a4a7b7;
+}
+
+.slider-prev {
+  top: 87px;
+  left: -8px;
+}
+
+.slider-next {
+  top: 87px;
+  right: -18px;
 }

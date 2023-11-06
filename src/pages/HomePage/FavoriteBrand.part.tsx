@@ -95,6 +95,7 @@ const FavoriteBrand = () => {
       },
     ],
   };
+
   // const [products, setProducts] = useState<IMedicalProduct[]>([]);
 
   // const getAllProduct = async () => {
@@ -113,13 +114,25 @@ const FavoriteBrand = () => {
   // }, []);
 
   return (
-    <Box backgroundColor={'#fcf2ea'} py={'20px'}>
-      <Box
+    <Box backgroundColor={'#f4f6f9'} py={'20px'}>
+      <Flex
         position={'relative'}
         w={'1440px'}
         margin={'auto'}
         flexDirection={'row'}
+        flexDir={'column'}
+        gap={'20px'}
       >
+        <Flex
+          gap={'10px'}
+          alignItems={'center'}
+          fontSize={'22px'}
+          fontWeight={700}
+          color={'black'}
+        >
+          <Image src="https://cdn.nhathuoclongchau.com.vn/unsafe/28x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/smalls/thuong_hieu_yeu_thich_e0c23dded6.png" />
+          Danh mục nổi bật
+        </Flex>
         <Slider ref={sliderRef} {...settings}>
           {MOCK_BRAND_DEMO.map((item) => {
             return (
@@ -140,54 +153,14 @@ const FavoriteBrand = () => {
           })}
         </Slider>
         <Box>
-          <Flex
-            backgroundColor={'white'}
-            borderRadius={'50%'}
-            w={'35px'}
-            h={'35px'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            onClick={previous}
-            position={'absolute'}
-            top={'30px'}
-            left={'-8px'}
-            zIndex={100000}
-            cursor={'pointer'}
-            border={'1px solid #dadfec'}
-            _hover={{
-              background: '#a4a7b7',
-            }}
-            style={{
-              transition: 'background-color 0.3s, color 0.3s',
-            }}
-          >
-            <ChevronLeftIcon w={'20px'} h={'30px'} color={'#1250dc'} />
+          <Flex className="slider-button slider-prev" onClick={previous}>
+            <ChevronLeftIcon boxSize={9} color={'#1250dc'} />
           </Flex>
-          <Flex
-            backgroundColor={'white'}
-            borderRadius={'50%'}
-            w={'35px'}
-            h={'35px'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            onClick={next}
-            position={'absolute'}
-            top={'30px'}
-            right={'-18px'}
-            zIndex={100000}
-            cursor={'pointer'}
-            border={'1px solid #dadfec'}
-            _hover={{
-              background: '#a4a7b7',
-            }}
-            style={{
-              transition: 'background-color 0.3s, color 0.3s',
-            }}
-          >
-            <ChevronRightIcon w={'20px'} h={'30px'} color={'#1250dc'} />
+          <Flex className="slider-button slider-next" onClick={next}>
+            <ChevronRightIcon boxSize={9} color={'#1250dc'} />
           </Flex>
         </Box>
-      </Box>
+      </Flex>
     </Box>
   );
 };

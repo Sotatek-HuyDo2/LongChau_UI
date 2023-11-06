@@ -1,8 +1,9 @@
 import React from 'react';
 import BaseHomePage from 'src/components/layouts/BaseHomePage';
-import ProductList from './ProductList';
-import FavoriteBrand from './FavoriteBrand';
+import ProductList from './ProductList.part';
+import FavoriteBrand from './FavoriteBrand.part';
 import MenuFilter from '../../components/layouts/MenuFilter';
+import FeatureCategoriesPage from './FeaturedCategories.part';
 
 const HomePage = () => {
   return (
@@ -10,6 +11,7 @@ const HomePage = () => {
       <BaseHomePage>
         <ProductList />
         <FavoriteBrand />
+        <FeatureCategoriesPage />
       </BaseHomePage>
     </>
   );
