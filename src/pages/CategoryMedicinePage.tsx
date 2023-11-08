@@ -1,5 +1,7 @@
-import { Box, Flex, Image, calc } from '@chakra-ui/react';
-import { useNavigate } from 'react-router';
+import { Box, Flex } from '@chakra-ui/react';
+// import '../styles/pages/CategoryMedicinePage.scss';
+import BaseHomePage from 'src/components/layouts/BaseHomePage';
+import AppCategories from 'src/components/AppCategories';
 
 const MOCK_FeatureCategories = [
   {
@@ -63,47 +65,19 @@ const MOCK_FeatureCategories = [
     quality: 10,
   },
 ];
-const FeatureCategories = () => {
-  const navigate = useNavigate();
 
-  //   const getAllProduct = async () => {
-  //     try {
-  //       setProducts(MOCK_MEDICAL_PRODUCT_LIST);
-  //       //   return {
-  //       //     docs: dataSearch,
-  //       //   };
-  //     } catch (error) {
-  //       return { docs: [] };
-  //     }
-  //   };
-
-  //   useEffectUnsafe(() => {
-  //     getAllProduct();
-  //   }, []);
-
+const CategoryMedicinePage = () => {
   return (
-    <Flex className="feature-container">
-      <Flex className="feature-category">
-        <Flex className="feature-category--title">
-          <Image src="https://cdn.nhathuoclongchau.com.vn/unsafe/28x28/https://cms-prod.s3-sgn09.fptcloud.com/smalls/danh_muc_noi_bat_d03496597a.png" />
-          Danh mục nổi bật
-        </Flex>
-        <Flex flexWrap={'wrap'} gap={'20px'}>
-          {MOCK_FeatureCategories.map((item) => {
-            return (
-              <Flex className="feature-category--item">
-                <Image src={item.icon} />
-                <Box className="feature-category--item-name">{item.name}</Box>
-                <Box className="feature-category--item-quality">
-                  {item.quality} sản phẩm
-                </Box>
-              </Flex>
-            );
-          })}
-        </Flex>
+    <BaseHomePage>
+      <Flex backgroundColor={'#f4f6f9'}>
+        <AppCategories
+          data={MOCK_FeatureCategories}
+          title={'Thực phẩm chức năng'}
+          numInline={4}
+        />
       </Flex>
-    </Flex>
+    </BaseHomePage>
   );
 };
 
-export default FeatureCategories;
+export default CategoryMedicinePage;

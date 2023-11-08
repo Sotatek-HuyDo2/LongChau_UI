@@ -8,6 +8,7 @@
   background-color: $BackGround;
 
   //-----------------------------------Faverite-Brand----------------------------------------
+
   .favorite-brand-container {
     position: relative;
     width: 1440px;
@@ -112,7 +113,7 @@
 
       .feature-category--item {
         flex-direction: column;
-        width: calc(100% / 6 - 30px);
+        width: calc(100% / 6 - 20px);
         border: 1px solid $Line2;
         height: 100px;
         background-color: $Title;
@@ -120,6 +121,16 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+
+        &-name {
+          font-size: 16px;
+          font-weight: 700;
+        }
+        &-quality {
+          font-size: 16px;
+          font-weight: 400;
+          color: $Paragraph1;
+        }
 
         &:hover {
           opacity: 0.8;

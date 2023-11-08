@@ -5,7 +5,6 @@ import {
   HeaderHomePage,
   MenuFilter,
 } from 'src/components/layouts';
-
 interface IBaseHomePage {
   className?: string;
   children: ReactNode;

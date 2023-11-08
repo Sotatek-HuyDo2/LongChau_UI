@@ -26,8 +26,8 @@ const MOCK_MENU = [
         link: '/admin',
       },
       {
-        title: 'test3',
-        link: '/',
+        title: 'Tắt cả',
+        link: '/category-functional-foods',
       },
     ],
   },
@@ -80,8 +80,8 @@ const MOCK_MENU = [
         link: '/',
       },
       {
-        title: 'test3',
-        link: '/',
+        title: 'Tất cả',
+        link: '/category-medicine',
       },
     ],
   },
@@ -142,7 +142,11 @@ const MenuFilter = () => {
                       <Flex alignItems={'center'} gap={'3px'}>
                         {menu.titleLabel}{' '}
                         {menu.icon &&
-                          (isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />)}
+                          (isOpen ? (
+                            <ChevronUpIcon boxSize={6} />
+                          ) : (
+                            <ChevronDownIcon boxSize={6} />
+                          ))}
                       </Flex>
                     </MenuButton>
                     {menu?.dataDrop ? (

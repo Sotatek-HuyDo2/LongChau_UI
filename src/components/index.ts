@@ -7,4 +7,6 @@ export { default as AppTabs } from './AppTabs';
 export { default as AppTextArea } from './AppTextArea';
 export { default as AppSelect } from './AppSelect';
 export { default as AppDateRangePicker } from './AppDateRangePicker';
+export { default as AppCategories } from './AppCategories';
+
 export * from './AppDatePicker';

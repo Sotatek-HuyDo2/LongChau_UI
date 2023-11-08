@@ -1,0 +1,57 @@
+@import '../color-variables';
+@import '../_mixins.scss';
+
+.feature-container {
+  width: 100%;
+
+  .feature-category {
+    width: 1440px;
+    margin: auto;
+    color: $Black;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    &--title {
+      gap: 10px;
+      align-items: center;
+      font-size: 22px;
+      font-weight: 700;
+
+      img {
+        src: 'https://cdn.nhathuoclongchau.com.vn/unsafe/28x28/https://cms-prod.s3-sgn09.fptcloud.com/smalls/danh_muc_noi_bat_d03496597a.png';
+      }
+    }
+
+    flex-wrap: wrap;
+    gap: 30px;
+
+    &--item {
+      flex-direction: column;
+      border: 1px solid $Line2;
+      height: 100px;
+      background-color: $Title;
+      border-radius: 10px;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+        transform: scale(1.05);
+        transition: opacity 0.3s, transform 0.3s;
+      }
+
+      &-name {
+        font-size: 18px;
+        font-weight: 700;
+      }
+      &-quality {
+        font-size: 16px;
+        font-weight: 400;
+        color: $Paragraph1;
+      }
+    }
+  }
+}
