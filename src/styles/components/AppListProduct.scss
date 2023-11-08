@@ -1,0 +1,110 @@
+@import '../color-variables';
+@import '../_mixins.scss';
+
+.product-container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  flex-direction: column;
+
+  .product-filter {
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    color: $Black;
+    align-items: center;
+
+    &__title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    &__text {
+      font-size: 18px;
+      font-weight: 500;
+      color: $Paragraph2;
+    }
+
+    &__button {
+      cursor: pointer;
+      font-size: 16px;
+      padding: 5px 20px;
+      background-color: $Title;
+      border-radius: 20px;
+      border: 1px solid $Paragraph1;
+
+      &:hover {
+        opacity: 0.8;
+        border: 1px solid $Blue-500;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      &.active {
+        border: 1px solid $Blue-500;
+        color: $Blue-500;
+      }
+    }
+  }
+  .product {
+    display: flex;
+    margin: auto;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    &__card {
+      width: calc(100% / 4 - 20px);
+      padding: 15px 30px;
+      background-color: $Title;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+        border: 1px solid $Paragraph1;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        transform: scale(1.05);
+      }
+
+      &-image {
+        width: 128px;
+        height: 128px;
+        border-radius: 8px;
+        margin: auto;
+      }
+
+      &-name {
+        white-space: wrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        font-size: 12px;
+        max-width: 200px;
+        color: $Black;
+      }
+
+      &-price {
+        font-size: 16px;
+        font-weight: 600;
+        color: $Blue-500;
+      }
+    }
+    &__button {
+      cursor: pointer;
+      color: $Black;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      &:hover {
+        opacity: 0.8;
+        border-radius: 20px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+      }
+    }
+  }
+}
