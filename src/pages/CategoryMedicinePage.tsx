@@ -3,70 +3,10 @@ import { Box, Flex } from '@chakra-ui/react';
 import BaseHomePage from 'src/components/layouts/BaseHomePage';
 import AppCategories from 'src/components/AppCategories';
 import AppListProduct from 'src/components/AppListProduct';
-import { MOCK_MEDICAL_PRODUCT_LIST } from 'src/utils/constants';
-
-const MOCK_FeatureCategories = [
-  {
-    icon: 'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png',
-    name: 'Thần kinh não',
-    quality: 10,
-  },
-  {
-    icon: 'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png',
-    name: 'Thần kinh não',
-    quality: 10,
-  },
-  {
-    icon: 'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png',
-    name: 'Thần kinh não',
-    quality: 10,
-  },
-  {
-    icon: 'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png',
-    name: 'Thần kinh não',
-    quality: 10,
-  },
-  {
-    icon: 'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png',
-    name: 'Thần kinh não',
-    quality: 10,
-  },
-  {
-    icon: 'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png',
-    name: 'Thần kinh não',
-    quality: 10,
-  },
-  {
-    icon: 'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png',
-    name: 'Thần kinh não',
-    quality: 10,
-  },
-  {
-    icon: 'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png',
-    name: 'Thần kinh não',
-    quality: 10,
-  },
-  {
-    icon: 'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png',
-    name: 'Thần kinh não',
-    quality: 10,
-  },
-  {
-    icon: 'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png',
-    name: 'Thần kinh não',
-    quality: 10,
-  },
-  {
-    icon: 'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png',
-    name: 'Thần kinh não',
-    quality: 10,
-  },
-  {
-    icon: 'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png',
-    name: 'Thần kinh não',
-    quality: 10,
-  },
-];
+import {
+  MOCK_FeatureCategories,
+  MOCK_MEDICAL_PRODUCT_LIST,
+} from 'src/utils/constants';
 
 const CategoryMedicinePage = () => {
   return (

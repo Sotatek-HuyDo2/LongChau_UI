@@ -1,10 +1,9 @@
-import { Box, Button, Flex, Image } from '@chakra-ui/react';
+import { Box, Flex, Image } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 import '../styles/components/AppListProduct.scss';
-import AppButton from './AppButton';
 import { useState } from 'react';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import { ArrowLeftIcon } from '@chakra-ui/icons';
+import { ArrowLeftIcon, CheckIcon } from '@chakra-ui/icons';
 
 interface IProduct {
   img: string;
@@ -35,11 +34,9 @@ const AppListProduct = (props: IAppListProductProps) => {
   const [filterType, setFilterType] = useState<string>('Tất cả');
   const [filteredProducts, setFilteredProducts] = useState(data);
   const [visibleProducts, setVisibleProducts] = useState(8);
-  const [showAllProducts, setShowAllProducts] = useState(false);
 
   const navigate = useNavigate();
 
-  // Hàm để filter sản phẩm theo giá
   const sortProducts = (products: IProduct[], sortType: string) => {
     if (sortType === 'Bán chạy') {
       // Thực hiện logic filter theo sản phẩm bán chạy
@@ -56,50 +53,34 @@ const AppListProduct = (props: IAppListProductProps) => {
   }, [filterType, data]);
 
   const handleShowMore = () => {
-    setVisibleProducts(visibleProducts + 8); // Hiển thị thêm 8 sản phẩm
+    setVisibleProducts(visibleProducts + 8);
   };
 
   const handleShowLess = () => {
-    setVisibleProducts(8); // Hiển thị lại chỉ 8 sản phẩm ban đầu
+    setVisibleProducts(8);
   };
+
   return (
     <Flex className="product-container">
       <Box className="product-filter">
         <Box className="product-filter__title">Danh sách sản phẩm</Box>
         <Flex pr={'20px'} gap={'10px'} alignItems={'center'}>
           <Box className="product-filter__text">Sắp xếp theo</Box>
-          <Box
-            className={`product-filter__button ${
-              filterType === 'Tất cả' ? 'active' : ''
-            }`}
-            onClick={() => setFilterType('Tất cả')}
-          >
-            Tất cả
-          </Box>
-          <Box
-            className={`product-filter__button ${
-              filterType === 'Bán chạy' ? 'active' : ''
-            }`}
-            onClick={() => setFilterType('Bán chạy')}
-          >
-            Bán chạy
-          </Box>
-          <Box
-            className={`product-filter__button ${
-              filterType === 'Giá thấp' ? 'active' : ''
-            }`}
-            onClick={() => setFilterType('Giá thấp')}
-          >
-            Giá thấp
-          </Box>
-          <Box
-            className={`product-filter__button ${
-              filterType === 'Giá cao' ? 'active' : ''
-            }`}
-            onClick={() => setFilterType('Giá cao')}
-          >
-            Giá cao
-          </Box>
+          {['Tất cả', 'Bán chạy', 'Giá thấp', 'Giá cao'].map((filter) => (
+            <Box
+              key={filter}
+              className={`product-filter__button ${
+                filterType === filter ? 'active' : ''
+              }`}
+              onClick={() => setFilterType(filter)}
+              position={'relative'}
+            >
+              {filter}
+              {filterType === filter && (
+                <CheckIcon boxSize={3} position={'absolute'} right={'5px'} />
+              )}
+            </Box>
+          ))}
         </Flex>
       </Box>
       <Box className="product">
@@ -139,9 +120,7 @@ const AppListProduct = (props: IAppListProductProps) => {
       <Flex justifyContent={'center'} gap={20} pt={'10px'}>
         {visibleProducts < filteredProducts.length && (
           <Box className="product__button" onClick={handleShowMore}>
-            <Box
-              transform="rotate(270deg)" // Điều chỉnh độ xoay ở đây
-            >
+            <Box transform="rotate(270deg)">
               <ArrowLeftIcon />
             </Box>
             Hiển thị thêm
@@ -149,9 +128,7 @@ const AppListProduct = (props: IAppListProductProps) => {
         )}
         {visibleProducts > 8 && (
           <Box className="product__button" onClick={handleShowLess}>
-            <Box
-              transform="rotate(90deg)" // Điều chỉnh độ xoay ở đây
-            >
+            <Box transform="rotate(90deg)">
               <ArrowLeftIcon />
             </Box>
             Ẩn

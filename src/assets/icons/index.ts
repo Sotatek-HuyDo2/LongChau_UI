@@ -81,6 +81,7 @@ import { ReactComponent as ArrowLogout } from './ArrowLogout.svg';
 import { ReactComponent as CartIcon } from './CartIcon.svg';
 import { ReactComponent as MapIcon } from './MapIcon.svg';
 import { ReactComponent as LoginIcon } from './LoginIcon.svg';
+import { ReactComponent as CheckIcon } from './CheckIcon.svg';
 
 export {
   LogoIcon,
