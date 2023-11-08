@@ -31,6 +31,7 @@ import CategoryMedicine from './pages/Admin/ManageCategoryListPage/CategoryMedic
 import CategoryPersonalCare from './pages/Admin/ManageCategoryListPage/CategoryPersonalCare.part';
 import HomePage from './pages/HomePage';
 import PharmacySystemPage from './pages/PharmacySystemPage';
+import CategoryFunctionalFoodsPage from './pages/CategoryFunctionalFoodsPage';
 
 /**
  * Main App routes.
@@ -113,6 +114,13 @@ const RouterCustom = () => {
       <Route path={'/pharmacy-system'} element={<PharmacySystemPage />} />
 
       <Route
+        path={'/category-functional-foods'}
+        element={<CategoryFunctionalFoodsPage />}
+      />
+
+      <Route path={'/pharmacy-system'} element={<PharmacySystemPage />} />
+
+      <Route
         path={'admin/branch-management'}
         element={<BranchManagementPage />}
       />
@@ -121,6 +129,7 @@ const RouterCustom = () => {
         path={'admin/medication-management'}
         element={<MedicalManagementPage />}
       />
+
       <Route path={'/medical/:id'} element={<MedicalDetailPage />} />
 
       <Route

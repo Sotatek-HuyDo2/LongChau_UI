@@ -6,18 +6,16 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  useDisclosure,
 } from '@chakra-ui/react';
-import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from '@chakra-ui/icons';
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 
 const MOCK_MENU = [
   {
     titleLabel: 'Thực phẩm chức năng',
     icon: true,
+
     dataDrop: [
       {
         title: 'test1',
@@ -52,7 +50,7 @@ const MOCK_MENU = [
     ],
   },
   {
-    titleLabel: 'Dược mỹ phẩm',
+    titleLabel: 'Chăm sóc cá nhân',
     icon: true,
     dataDrop: [
       {
@@ -70,7 +68,7 @@ const MOCK_MENU = [
     ],
   },
   {
-    titleLabel: 'Dược mỹ phẩm',
+    titleLabel: 'Thuốc',
     icon: true,
     dataDrop: [
       {
@@ -88,81 +86,20 @@ const MOCK_MENU = [
     ],
   },
   {
-    titleLabel: 'Dược mỹ phẩm',
-    icon: true,
-    dataDrop: [
-      {
-        title: 'test1',
-        link: '/',
-      },
-      {
-        title: 'test2',
-        link: '/',
-      },
-      {
-        title: 'test3',
-        link: '/',
-      },
-    ],
-  },
-  {
-    titleLabel: 'Dược mỹ phẩm',
-    icon: true,
-    dataDrop: [
-      {
-        title: 'test1',
-        link: '/',
-      },
-      {
-        title: 'test2',
-        link: '/',
-      },
-      {
-        title: 'test3',
-        link: '/',
-      },
-    ],
-  },
-  {
-    titleLabel: 'Dược mỹ phẩm',
-    icon: true,
-    dataDrop: [
-      {
-        title: 'test1',
-        link: '/',
-      },
-      {
-        title: 'test2',
-        link: '/',
-      },
-      {
-        title: 'test3',
-        link: '/',
-      },
-    ],
-  },
-  {
-    titleLabel: 'Dược mỹ phẩm',
+    titleLabel: 'Tìm kiếm địa chỉ',
+    link: '/pharmacy-system',
     icon: false,
-    dataDrop: [
-      {
-        title: 'test1',
-        link: '/',
-      },
-      {
-        title: 'test2',
-        link: '/',
-      },
-      {
-        title: 'test3',
-        link: '/',
-      },
-    ],
+  },
+  {
+    titleLabel: 'Thông tin nhà thuốc',
+    icon: false,
+    link: 'https://pharmacy-documentation.vercel.app/docs/intro',
   },
 ];
 
 const MenuFilter = () => {
   const navigate = useNavigate();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Flex backgroundColor={'white'} color={'black'} h={'50px'}>
@@ -176,35 +113,59 @@ const MenuFilter = () => {
           return (
             <Flex>
               <Menu>
-                <MenuButton
-                  userSelect={'none'}
-                  as={Flex}
-                  alignItems={'center'}
-                  fontSize={'16px'}
-                  pb="5px"
-                  _hover={{
-                    borderBottom: '1px solid #1250dc',
-                    transition: 'border-bottom 0.3s ease', // Thêm hiệu ứng transition
-                  }}
-                >
-                  <Flex alignItems={'center'} gap={'3px'}>
-                    {menu.titleLabel}{' '}
-                    {menu.icon ? <ChevronDownIcon boxSize={6} /> : null}
-                  </Flex>
-                </MenuButton>
-                <MenuList
-                  background={'#f4f6f9'}
-                  outline={'none'}
-                  border={'none'}
-                >
-                  {menu.dataDrop.map((item) => {
-                    return (
-                      <MenuItem onClick={() => navigate(`${item?.link}`)}>
-                        <Flex alignItems={'center'}>{item?.title}</Flex>
-                      </MenuItem>
-                    );
-                  })}
-                </MenuList>
+                {({ isOpen }) => (
+                  <>
+                    <MenuButton
+                      userSelect={'none'}
+                      as={Flex}
+                      alignItems={'center'}
+                      fontSize={'16px'}
+                      pb="5px"
+                      _hover={{
+                        borderBottom: '1px solid #1250dc',
+                        transition: 'border-bottom 0.3s ease', // Thêm hiệu ứng transition
+                      }}
+                      // onMouseEnter={onOpen}
+                      // onMouseLeave={onClose}
+                      onClick={() => {
+                        // Kiểm tra xem menu.link có tồn tại và có phải là đường dẫn ngoài trang web hay không
+                        if (menu.link && menu.link.startsWith('http')) {
+                          // Nếu đúng, mở liên kết trong một tab hoặc cửa sổ mới
+                          window.open(menu.link, '_blank');
+                        } else if (menu.link) {
+                          // Nếu không phải là đường dẫn ngoài trang web, thực hiện điều hướng bằng React Router hoặc cách bạn sử dụng để điều hướng trong ứng dụng của bạn.
+                          navigate(menu.link);
+                        }
+                      }}
+                      cursor="pointer"
+                    >
+                      <Flex alignItems={'center'} gap={'3px'}>
+                        {menu.titleLabel}{' '}
+                        {menu.icon &&
+                          (isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />)}
+                      </Flex>
+                    </MenuButton>
+                    {menu?.dataDrop ? (
+                      <MenuList
+                        background={'white'}
+                        outline={'none'}
+                        border={'none'}
+                        // onMouseEnter={onOpen}
+                        // onMouseLeave={onClose}
+                      >
+                        {menu?.dataDrop.map((item) => {
+                          return (
+                            <MenuItem onClick={() => navigate(`${item?.link}`)}>
+                              <Flex alignItems={'center'}>{item?.title}</Flex>
+                            </MenuItem>
+                          );
+                        })}
+                      </MenuList>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                )}
               </Menu>
             </Flex>
           );

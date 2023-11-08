@@ -129,7 +129,7 @@ const LoginPage = () => {
             </AppButton>
           </Flex>
         </Flex>
-        Or
+        {/* Or
         <GoogleLogin
           clientId={clientId}
           onSuccess={onSuccess}
@@ -140,7 +140,7 @@ const LoginPage = () => {
             </Box>
           )}
           cookiePolicy={'single_host_origin'}
-        />
+        /> */}
       </Flex>
     </Box>
     // </GuestAdminPage>
