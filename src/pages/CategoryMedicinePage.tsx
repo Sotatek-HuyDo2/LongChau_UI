@@ -7,8 +7,25 @@ import {
   MOCK_FeatureCategories,
   MOCK_MEDICAL_PRODUCT_LIST,
 } from 'src/utils/constants';
+import { AppFilter } from 'src/components';
+import { useState } from 'react';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import * as _ from 'lodash';
 
 const CategoryMedicinePage = () => {
+  const [product, setProduct] = useState(MOCK_MEDICAL_PRODUCT_LIST);
+
+  const getListBrand = () => {
+    const listBrand = _.uniqBy(product, 'brand').map((item) => {
+      return item.brand;
+    });
+    return listBrand;
+  };
+
+  useEffectUnsafe(() => {
+    getListBrand();
+  }, [product]);
+
   return (
     <BaseHomePage>
       <Flex backgroundColor={'#f4f6f9'} flexDir={'column'} w={'full'}>
@@ -17,9 +34,12 @@ const CategoryMedicinePage = () => {
           title={'Thực phẩm chức năng'}
           numInline={4}
         />
-        <Flex w={'1440px'} m={'auto'} justify={'end'}>
-          <Box w={'65%'}>
-            <AppListProduct data={MOCK_MEDICAL_PRODUCT_LIST} />
+        <Flex w={'1440px'} m={'auto'} justifyContent={'space-between'}>
+          <Box w={'25%'}>
+            <AppFilter data={getListBrand()} />
+          </Box>
+          <Box w={'70%'}>
+            <AppListProduct data={product} />
           </Box>
         </Flex>
       </Flex>
