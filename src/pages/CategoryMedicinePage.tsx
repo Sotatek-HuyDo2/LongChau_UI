@@ -14,6 +14,7 @@ import * as _ from 'lodash';
 
 const CategoryMedicinePage = () => {
   const [product, setProduct] = useState(MOCK_MEDICAL_PRODUCT_LIST);
+  const [filterType, setFilterType] = useState<string>('');
 
   const getListBrand = () => {
     const listBrand = _.uniqBy(product, 'brand').map((item) => {
@@ -22,24 +23,49 @@ const CategoryMedicinePage = () => {
     return listBrand;
   };
 
+  const getFilterType = (filterType: string) => {
+    setFilterType(filterType);
+  };
+
+  const filterByPrice = () => {
+    if (filterType === 'Dưới 100.000đ') {
+      return product.filter((product) => product.price < 100000);
+    } else if (filterType === '100.000đ đến 300.000đ') {
+      return product.filter(
+        (product) => product.price <= 300000 && product.price >= 100000,
+      );
+    } else if (filterType === '300.000đ đến 500.000đ') {
+      return product.filter(
+        (product) => product.price <= 500000 && product.price >= 300000,
+      );
+    } else if (filterType === 'Trên 500.000đ') {
+      return product.filter((product) => product.price > 500000);
+    }
+
+    return product;
+  };
+
+  const dataFilter = filterByPrice();
+
   useEffectUnsafe(() => {
     getListBrand();
-  }, [product]);
+    filterByPrice();
+  }, [product, filterType]);
 
   return (
     <BaseHomePage>
       <Flex backgroundColor={'#f4f6f9'} flexDir={'column'} w={'full'}>
         <AppCategories
           data={MOCK_FeatureCategories}
-          title={'Thực phẩm chức năng'}
+          title={'Thuốc'}
           numInline={4}
         />
         <Flex w={'1440px'} m={'auto'} justifyContent={'space-between'}>
           <Box w={'25%'}>
-            <AppFilter data={getListBrand()} />
+            <AppFilter data={getListBrand()} filterByPrice={getFilterType} />
           </Box>
           <Box w={'70%'}>
-            <AppListProduct data={product} />
+            <AppListProduct data={dataFilter} />
           </Box>
         </Flex>
       </Flex>

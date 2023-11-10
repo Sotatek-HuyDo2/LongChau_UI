@@ -29,6 +29,8 @@ interface IAppListProductProps {
   title?: string;
 }
 
+const listFilterTypes = ['Tất cả', 'Bán chạy', 'Giá thấp', 'Giá cao'];
+
 const AppListProduct = (props: IAppListProductProps) => {
   const { data } = props;
   const [filterType, setFilterType] = useState<string>('Tất cả');
@@ -66,7 +68,7 @@ const AppListProduct = (props: IAppListProductProps) => {
         <Box className="product-filter__title">Danh sách sản phẩm</Box>
         <Flex pr={'20px'} gap={'10px'} alignItems={'center'}>
           <Box className="product-filter__text">Sắp xếp theo</Box>
-          {['Tất cả', 'Bán chạy', 'Giá thấp', 'Giá cao'].map((filter) => (
+          {listFilterTypes.map((filter: string) => (
             <Box
               key={filter}
               className={`product-filter__button ${
@@ -84,38 +86,49 @@ const AppListProduct = (props: IAppListProductProps) => {
         </Flex>
       </Box>
       <Box className="product">
-        {filteredProducts.slice(0, visibleProducts).map((product) => {
-          return (
-            <Box
-              className="product__card"
-              onClick={() => navigate(`/medical/${product.medicineID}`)}
-            >
-              <Box className="product__card-image">
-                <Image src={product.img} alt="hello" />
-              </Box>
-              <Box className="product__card-name">
-                {product?.name ? product.name : '--'}
-              </Box>
-              <Box className="product__card-price">
-                {product?.price ? product.price : '--'} /{' '}
-                {product?.detail?.unit ? product?.detail?.unit : '--'}
-              </Box>
-              <Box className="product__card-unit">
-                <Box
-                  backgroundColor={'blackAlpha.200'}
-                  display={'inline'}
-                  padding={'3px 5px'}
-                  color={'black'}
-                  borderRadius={'20px'}
-                >
-                  {product?.detail?.specifications
-                    ? product?.detail?.specifications
-                    : product?.detail?.unit}
+        {filteredProducts && filteredProducts.length > 0 ? (
+          filteredProducts.slice(0, visibleProducts).map((product) => {
+            return (
+              <Box
+                className="product__card"
+                onClick={() => navigate(`/medical/${product.medicineID}`)}
+              >
+                <Box className="product__card-image">
+                  <Image src={product.img} alt="hello" />
+                </Box>
+                <Box className="product__card-name">
+                  {product?.name ? product.name : '--'}
+                </Box>
+                <Box className="product__card-price">
+                  {product?.price ? product.price : '--'} /{' '}
+                  {product?.detail?.unit ? product?.detail?.unit : '--'}
+                </Box>
+                <Box className="product__card-unit">
+                  <Box
+                    backgroundColor={'blackAlpha.200'}
+                    display={'inline'}
+                    padding={'3px 5px'}
+                    color={'black'}
+                    borderRadius={'20px'}
+                  >
+                    {product?.detail?.specifications
+                      ? product?.detail?.specifications
+                      : product?.detail?.unit}
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          );
-        })}
+            );
+          })
+        ) : (
+          <Flex
+            alignItems={'center'}
+            h={'40vh'}
+            color={'black'}
+            fontSize={'2xl'}
+          >
+            Không có sản phẩm nào
+          </Flex>
+        )}
       </Box>
       <Flex justifyContent={'center'} gap={20} pt={'10px'}>
         {visibleProducts < filteredProducts.length && (
