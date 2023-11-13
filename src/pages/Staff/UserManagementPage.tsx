@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { MOCK_DATA_USER } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import { BaseAdminPage } from 'src/components/layouts';
+import { BaseAdminPage, BaseStaffPage } from 'src/components/layouts';
 import '../../styles/pages/UserManagementPage.scss';
 import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { toastError, toastSuccess } from 'src/utils/notify';
@@ -22,7 +22,7 @@ interface IUser {
   status: string;
 }
 
-const UserManagementPage = () => {
+const StaffCustomerManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
   const [dataSearch, setDataSearch] = useState<IUser[]>(MOCK_DATA_USER);
   const [status, setStatus] = useState('block');
@@ -36,14 +36,16 @@ const UserManagementPage = () => {
       dataFilter = dataFilter.filter((item: IUser) =>
         item.firstName.toLowerCase().includes(valueSearch.toLowerCase()),
       );
-
       setDataSearch(dataFilter);
     }
+
+    setDataSearch(dataFilter);
   };
 
   useEffectUnsafe(() => {
     handleSearch();
   }, [valueSearch]);
+  console.log('valueSearch', valueSearch);
 
   const navigate = useNavigate();
 
@@ -143,7 +145,7 @@ const UserManagementPage = () => {
   };
 
   return (
-    <BaseAdminPage>
+    <BaseStaffPage>
       <Box className="user" w="full">
         <Flex
           fontSize="24px"
@@ -153,7 +155,7 @@ const UserManagementPage = () => {
           gap={3}
           color={'#2167df'}
         >
-          Quản lý người dùng
+          Quản lý khách
         </Flex>
         <Box className={'user__search'}>
           <Flex alignItems={'center'}>
@@ -185,8 +187,8 @@ const UserManagementPage = () => {
           />
         </Box>
       </Box>
-    </BaseAdminPage>
+    </BaseStaffPage>
   );
 };
 
-export default UserManagementPage;
+export default StaffCustomerManagementPage;

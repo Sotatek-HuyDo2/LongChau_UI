@@ -1,6 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react';
 // import '../styles/pages/CategoryMedicinePage.scss';
-import BaseHomePage from 'src/components/layouts/BaseHomePage';
+import BaseHomePage from 'src/components/layouts/HomePage/BaseHomePage';
 import AppCategories from 'src/components/AppCategories';
 import AppListProduct from 'src/components/AppListProduct';
 import {

@@ -19,12 +19,13 @@
 }
 
 .data-loading {
+  color: $Black;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 360px;
-  font-size: 14px;
+  font-size: 16px;
 }
 .pagination__show-records {
   @include text-small-regular;

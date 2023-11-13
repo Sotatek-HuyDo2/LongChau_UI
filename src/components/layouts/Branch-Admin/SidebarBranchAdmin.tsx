@@ -82,49 +82,32 @@ const MenuDrop = ({ dropTitle, dropItem = LIST_ITEM }: MenuDropProps) => {
 
 const MENUS = [
   {
-    name: 'Quản lý nhà cung cấp',
-    path: '/admin',
-    icon: <Overview />,
-  },
-  {
-    name: 'Quản lý thuốc',
-    path: '/admin/medication-management',
-    icon: <Overview />,
-  },
-  {
-    component: (
-      <MenuDrop dropTitle="Quản lý danh mục thuốc" dropItem={LIST_ITEM} />
-    ),
-    path: '/admin/category-management',
-    icon: <Overview />,
-  },
-  {
     name: 'Quản lý tổng kho',
-    path: '/admin/general-warehouse-management',
+    path: '/branch-admin',
     icon: <Overview />,
     pathChild: [
-      '/admin/create-notification',
-      '/admin/create-push-notification',
+      '/branch-admin/create-notification',
+      '/branch-admin/create-push-notification',
     ],
   },
   {
-    name: 'Quản lý người dùng',
-    path: '/admin/user-management',
+    name: 'Quản lý nhân sự',
+    path: '/branch-admin/personnel-management',
     icon: <Overview />,
     pathChild: [
-      '/admin/create-notification',
-      '/admin/create-push-notification',
+      '/branch-admin/create-notification',
+      '/branch-admin/create-push-notification',
     ],
   },
   {
     name: 'Thống kê',
-    path: '/admin/statistical',
+    path: '/branch-admin/statistical',
     icon: <Overview />,
     component: <MenuDrop dropTitle="Thống kê" dropItem={LIST_ITEM} />,
   },
 ];
 
-const SidebarAdmin = () => {
+const SidebarBranchAdmin = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -149,7 +132,11 @@ const SidebarAdmin = () => {
                   : 'nav-bar__menu-drop'
               }
               onClick={() => {
-                menu.component ? '' : navigate(menu.path || '/admin');
+                menu.component
+                  ? ''
+                  : navigate(
+                      menu.path || '/branch-admin/general-warehouse-management',
+                    );
               }}
             >
               <Box>{menu.component ? null : menu.icon}</Box>
@@ -162,4 +149,4 @@ const SidebarAdmin = () => {
   );
 };
 
-export default SidebarAdmin;
+export default SidebarBranchAdmin;

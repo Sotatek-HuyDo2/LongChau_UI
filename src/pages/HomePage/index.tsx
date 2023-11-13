@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseHomePage from 'src/components/layouts/BaseHomePage';
+import BaseHomePage from 'src/components/layouts/HomePage/BaseHomePage';
 import ProductList from './ProductList.part';
 import FavoriteBrand from './FavoriteBrand.part';
 import FeatureCategories from './FeaturedCategories.part';

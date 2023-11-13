@@ -7,7 +7,7 @@ import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { formatNumber, formatTimestamp } from 'src/utils/format';
 import { copyToClipboard } from 'src/utils/helpers';
 // import '../styles/pages/CategoryPersonalCarePage.scss';
-import BaseHomePage from 'src/components/layouts/BaseHomePage';
+import BaseHomePage from 'src/components/layouts/HomePage/BaseHomePage';
 import {
   AddIcon,
   ChevronDownIcon,

@@ -82,49 +82,30 @@ const MenuDrop = ({ dropTitle, dropItem = LIST_ITEM }: MenuDropProps) => {
 
 const MENUS = [
   {
-    name: 'Quản lý nhà cung cấp',
-    path: '/admin',
+    name: 'Quản lý khách hàng',
+    path: '/staff',
     icon: <Overview />,
   },
   {
-    name: 'Quản lý thuốc',
-    path: '/admin/medication-management',
+    name: 'Quản lý đơn hàng',
+    path: '/staff/order-management',
+    icon: <Overview />,
+    component: <MenuDrop dropTitle="Quản lý đơn hàng" dropItem={LIST_ITEM} />,
+  },
+  {
+    name: 'Tạo đơn hàng',
+    path: '/staff/create-order',
     icon: <Overview />,
   },
   {
-    component: (
-      <MenuDrop dropTitle="Quản lý danh mục thuốc" dropItem={LIST_ITEM} />
-    ),
-    path: '/admin/category-management',
+    name: 'Xử lý đơn hàng',
+    path: '/staff/order-processing',
     icon: <Overview />,
-  },
-  {
-    name: 'Quản lý tổng kho',
-    path: '/admin/general-warehouse-management',
-    icon: <Overview />,
-    pathChild: [
-      '/admin/create-notification',
-      '/admin/create-push-notification',
-    ],
-  },
-  {
-    name: 'Quản lý người dùng',
-    path: '/admin/user-management',
-    icon: <Overview />,
-    pathChild: [
-      '/admin/create-notification',
-      '/admin/create-push-notification',
-    ],
-  },
-  {
-    name: 'Thống kê',
-    path: '/admin/statistical',
-    icon: <Overview />,
-    component: <MenuDrop dropTitle="Thống kê" dropItem={LIST_ITEM} />,
+    // component: <MenuDrop dropTitle="Thống kê" dropItem={LIST_ITEM} />,
   },
 ];
 
-const SidebarAdmin = () => {
+const SidebarStaff = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -139,17 +120,12 @@ const SidebarAdmin = () => {
               className={
                 !menu.component
                   ? `nav-bar__menu-item ${
-                      location.pathname === menu.path ||
-                      menu?.pathChild?.some((item) =>
-                        location.pathname.includes(item),
-                      )
-                        ? 'active'
-                        : ''
+                      location.pathname === menu.path ? 'active' : ''
                     }`
                   : 'nav-bar__menu-drop'
               }
               onClick={() => {
-                menu.component ? '' : navigate(menu.path || '/admin');
+                menu.component ? '' : navigate(menu.path || '/staff');
               }}
             >
               <Box>{menu.component ? null : menu.icon}</Box>
@@ -162,4 +138,4 @@ const SidebarAdmin = () => {
   );
 };
 
-export default SidebarAdmin;
+export default SidebarStaff;

@@ -35,9 +35,10 @@ const CategoryPersonalCare = () => {
       dataFilter = dataFilter.filter((item: ICategory) =>
         item.name.toLowerCase().includes(valueSearch.toLowerCase()),
       );
-
       setDataSearch(dataFilter);
     }
+
+    setDataSearch(dataFilter);
   };
 
   useEffectUnsafe(() => {

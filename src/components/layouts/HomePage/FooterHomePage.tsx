@@ -1,8 +1,8 @@
 import { Flex, Box, Text, Image } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowUpIcon } from '@chakra-ui/icons';
-import AppButton from '../AppButton';
-import subFooter from '../../assets/icons/sub-footer.png';
+import AppButton from '../../AppButton';
+import subFooter from '../../../assets/icons/sub-footer.png';
 import { MapIcon } from 'src/assets/icons';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { useState } from 'react';

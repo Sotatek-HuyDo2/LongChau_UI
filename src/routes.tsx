@@ -33,6 +33,9 @@ import HomePage from './pages/HomePage';
 import PharmacySystemPage from './pages/PharmacySystemPage';
 import CategoryFunctionalFoodsPage from './pages/CategoryFunctionalFoodsPage';
 import CategoryMedicinePage from './pages/CategoryMedicinePage';
+import BranchAdminGeneralWarehouseManagementPage from './pages/Branch-Admin/GeneralWarehouseManagementPage';
+import StaffCustomerManagementPage from './pages/Staff/UserManagementPage';
+import BranchAdminPersonnelManagementPage from './pages/Branch-Admin/PersonnelManagementPage';
 
 /**
  * Main App routes.
@@ -108,8 +111,6 @@ const RouterCustom = () => {
       </Route> */}
       <Route path={'/login'} element={<LoginPage />} />
 
-      <Route path={'/admin'} element={<SupplierManagementPage />} />
-
       <Route path={'/'} element={<HomePage />} />
 
       <Route path={'/pharmacy-system'} element={<PharmacySystemPage />} />
@@ -133,22 +134,50 @@ const RouterCustom = () => {
 
       <Route path={'/medical/:id'} element={<MedicalDetailPage />} />
 
+      {/* Staff */}
+      <Route path={'/staff'} element={<StaffCustomerManagementPage />} />
+
+      <Route
+        path={'staff/general-warehouse-management'}
+        element={<GeneralWarehouseManagementPage />}
+      />
+
+      {/* Branch-Admin */}
+      <Route
+        path={'branch-admin'}
+        element={<BranchAdminGeneralWarehouseManagementPage />}
+      />
+
+      <Route
+        path={'branch-admin/personnel-management'}
+        element={<BranchAdminPersonnelManagementPage />}
+      />
+
+      <Route path={'branch-admin/statistical'} element={<Statistical />} />
+
+      {/* Admin */}
+      <Route path={'admin'} element={<SupplierManagementPage />} />
+
       <Route
         path={'admin/category-management/category-functional-foods'}
         element={<CategoryFunctionalFoods />}
       />
+
       <Route
         path={'admin/category-management/category-medicine'}
         element={<CategoryMedicine />}
       />
+
       <Route
         path={'admin/category-management/category-personal-care'}
         element={<CategoryPersonalCare />}
       />
+
       <Route
         path={'admin/category-management/category-medical-equipment'}
         element={<CategoryMedicalEquipment />}
       />
+
       <Route
         path={'admin/category-management'}
         element={<ManageCategoryList />}

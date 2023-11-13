@@ -9,34 +9,36 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_SUPPELIER } from 'src/utils/constants';
+import { MOCK_CATEGORY_MEDICINE } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import { BaseAdminPage } from 'src/components/layouts';
+import { BaseBranchAdminPage } from 'src/components/layouts';
 
-interface ISupplier {
-  supplierID: string;
-  supplierName: string;
-  supplierEmail: string;
-  supplierPhone: string;
+interface IGeneralWarehouse {
+  categoryID: string;
+  name: string;
+  quality: number;
 }
 
-const SupplierManagementPage = () => {
+const BranchAdminGeneralWarehouseManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [dataSearch, setDataSearch] = useState<ISupplier[]>(MOCK_SUPPELIER);
+  const [dataSearch, setDataSearch] = useState<IGeneralWarehouse[]>(
+    MOCK_CATEGORY_MEDICINE,
+  );
 
-  const dataRef = useRef<ISupplier[]>([]);
+  const dataRef = useRef<IGeneralWarehouse[]>([]);
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
 
     if (valueSearch) {
-      dataFilter = dataFilter.filter((item: ISupplier) =>
-        item.supplierName.toLowerCase().includes(valueSearch.toLowerCase()),
+      dataFilter = dataFilter.filter((item: IGeneralWarehouse) =>
+        item.name.toLowerCase().includes(valueSearch.toLowerCase()),
       );
 
       setDataSearch(dataFilter);
     }
+
     setDataSearch(dataFilter);
   };
 
@@ -48,8 +50,8 @@ const SupplierManagementPage = () => {
 
   const getCategory = async () => {
     try {
-      dataRef.current = MOCK_SUPPELIER;
-      setDataSearch(MOCK_SUPPELIER);
+      dataRef.current = MOCK_CATEGORY_MEDICINE;
+      setDataSearch(MOCK_CATEGORY_MEDICINE);
       return {
         docs: dataSearch,
       };
@@ -62,14 +64,9 @@ const SupplierManagementPage = () => {
     return (
       <Flex>
         <Box className="category--header-cell-body category--id">ID</Box>
-        <Box className="category--header-cell-body category--name">
-          Tên nhà cung cấp
-        </Box>
+        <Box className="category--header-cell-body category--name">Tên</Box>
         <Box className="category--header-cell-body category--quality">
-          Email
-        </Box>
-        <Box className="category--header-cell-body category--phone">
-          Số điện thoại
+          số lượng(thuốc)
         </Box>
         <Box className="category--header-cell-body category--action">
           Action
@@ -78,10 +75,10 @@ const SupplierManagementPage = () => {
     );
   };
 
-  const _renderContentTable = (data: ISupplier[]) => {
+  const _renderContentTable = (data: IGeneralWarehouse[]) => {
     return (
       <Box>
-        {dataSearch.map((data: ISupplier, id: number) => {
+        {dataSearch.map((data: IGeneralWarehouse, id: number) => {
           return (
             <RowAddressTransactionTable data={data} key={`${id}-coin-table`} />
           );
@@ -91,19 +88,19 @@ const SupplierManagementPage = () => {
   };
 
   const RowAddressTransactionTable: React.FC<{
-    data: ISupplier;
+    data: IGeneralWarehouse;
   }> = ({ data }) => {
     return (
       <Flex className="category--row-wrap" direction={'column'}>
         <Flex>
           <Flex className="category--cell-body category--id">
-            <Box cursor={'pointer'}>{data.supplierID}</Box>
+            <Box cursor={'pointer'}>{data.categoryID}</Box>
           </Flex>
           <Box className="category--cell-body category--name">
             <Tooltip
               hasArrow
               className="tooltip-app"
-              label={data.supplierName ? data.supplierName : ''}
+              label={data.name ? data.name : ''}
               placement="top"
             >
               <Box
@@ -113,7 +110,7 @@ const SupplierManagementPage = () => {
                 maxW="550px"
                 cursor="pointer"
               >
-                {data.supplierName ? data.supplierName : '--'}
+                {data.name ? data.name : '--'}
               </Box>
             </Tooltip>
           </Box>
@@ -121,26 +118,8 @@ const SupplierManagementPage = () => {
             flexDirection="row"
             className="category--cell-body category--quality"
           >
-            <Tooltip
-              hasArrow
-              className="tooltip-app"
-              label={data.supplierEmail ? data.supplierEmail : ''}
-              placement="top"
-            >
-              <Box
-                whiteSpace="nowrap"
-                overflow="hidden"
-                textOverflow="ellipsis"
-                maxW="550px"
-                cursor="pointer"
-              >
-                {data?.supplierEmail ? data?.supplierEmail : '--'}
-              </Box>
-            </Tooltip>
+            {data?.quality ? data?.quality : '--'}
           </Flex>
-          <Box className="category--cell-body category--phone">
-            {data.supplierPhone ? data.supplierPhone : '--'}
-          </Box>
           <Box
             className="category--cell-body category--action"
             cursor={'pointer'}
@@ -152,7 +131,7 @@ const SupplierManagementPage = () => {
             <AppButton
               ml={'3px'}
               size={'sm'}
-              // onClick={() => navigate(`/medical/${data.categoryID}`)}
+              onClick={() => navigate(`/medical/${data.categoryID}`)}
             >
               View
             </AppButton>
@@ -163,7 +142,7 @@ const SupplierManagementPage = () => {
   };
 
   return (
-    <BaseAdminPage>
+    <BaseBranchAdminPage>
       <Box className="category" w="full">
         <Flex
           fontSize="24px"
@@ -173,11 +152,11 @@ const SupplierManagementPage = () => {
           gap={3}
           color={'#2167df'}
         >
-          Quản lý nhà cung cấp
+          Quản lý tổng kho
         </Flex>
         <Box className={'category__search'}>
           <Flex alignItems={'center'}>
-            <Box className={'category__search-title'}>Nhà cung cấp:</Box>
+            <Box className={'category__search-title'}>Tổng kho:</Box>
             <Box className="category__search-input">
               <InputGroup>
                 <AppInput
@@ -187,7 +166,7 @@ const SupplierManagementPage = () => {
                   value={valueSearch}
                   onChange={(e: any) => setValueSearch(e.target.value)}
                 />
-                <InputRightElement>
+                <InputRightElement top={4}>
                   <SearchExplorer />
                 </InputRightElement>
               </InputGroup>
@@ -197,16 +176,16 @@ const SupplierManagementPage = () => {
 
         <Box mt={10} className="category-container">
           table
-          <AppDataTable
-            fetchData={getCategory}
-            renderBody={_renderContentTable}
-            renderHeader={_renderHeaderTable}
-            size={10}
-          />
+          {/* <AppDataTable
+          fetchData={getCategory}
+          renderBody={_renderContentTable}
+          renderHeader={_renderHeaderTable}
+          size={10}
+        /> */}
         </Box>
       </Box>
-    </BaseAdminPage>
+    </BaseBranchAdminPage>
   );
 };
 
-export default SupplierManagementPage;
+export default BranchAdminGeneralWarehouseManagementPage;

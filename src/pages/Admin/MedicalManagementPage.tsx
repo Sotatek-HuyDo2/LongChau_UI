@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { BaseAdminPage } from 'src/components/layouts';
 import { AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
@@ -19,6 +19,7 @@ import {
 } from 'src/utils/format';
 import { AppDataTable, AppButton } from 'src/components';
 import ModalDelistConfirm from 'src/components/Modals/ModalDelistConfirm';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
 interface IMedical {
   medicineID: string;
@@ -34,15 +35,37 @@ const MedicalManagementPage = () => {
   const [openModalDelistConfirm, setOpenModalDelistConfirm] =
     useState<boolean>(false);
 
+  const [dataSearch, setDataSearch] = useState<IMedical[]>(MOCK_MEDICAL_LIST);
+
   const onToggleOpenModalDelistConfirm = () =>
     setOpenModalDelistConfirm((prevState) => !prevState);
 
   const navigate = useNavigate();
 
+  const dataRef = useRef<IMedical[]>([]);
+
+  const handleSearch = () => {
+    let dataFilter = dataRef.current;
+
+    if (valueSearch) {
+      dataFilter = dataFilter.filter((item: IMedical) =>
+        item.name.toLowerCase().includes(valueSearch.toLowerCase()),
+      );
+
+      setDataSearch(dataFilter);
+    }
+  };
+
+  useEffectUnsafe(() => {
+    handleSearch();
+  }, [valueSearch]);
+
   const getDelist = async () => {
     try {
+      dataRef.current = MOCK_MEDICAL_LIST;
+      setDataSearch(MOCK_MEDICAL_LIST);
       return {
-        docs: MOCK_MEDICAL_LIST,
+        docs: dataSearch,
         // totalPages: 10,
       };
     } catch (error) {
@@ -69,7 +92,7 @@ const MedicalManagementPage = () => {
   const _renderContentTable = (data: IMedical[]) => {
     return (
       <Box>
-        {data.map((data: IMedical, id: number) => {
+        {dataSearch.map((data: IMedical, id: number) => {
           return (
             <RowAddressTransactionTable data={data} key={`${id}-coin-table`} />
           );
@@ -179,7 +202,7 @@ const MedicalManagementPage = () => {
             <Box className="delist__search-input">
               <InputGroup>
                 <AppInput
-                  color={'red'}
+                  color={'black'}
                   placeholder="Search for pair"
                   size="md"
                   value={valueSearch}

@@ -51,7 +51,7 @@ const GeneralWarehouseManagementPage = () => {
       dataRef.current = MOCK_CATEGORY_MEDICINE;
       setDataSearch(MOCK_CATEGORY_MEDICINE);
       return {
-        docs: dataSearch,
+        docs: [],
       };
     } catch (error) {
       return { docs: [] };
@@ -175,11 +175,11 @@ const GeneralWarehouseManagementPage = () => {
         <Box mt={10} className="category-container">
           table
           {/* <AppDataTable
-          fetchData={getCategory}
-          renderBody={_renderContentTable}
-          renderHeader={_renderHeaderTable}
-          size={10}
-        /> */}
+            fetchData={getCategory}
+            renderBody={_renderContentTable}
+            renderHeader={_renderHeaderTable}
+            size={10}
+          /> */}
         </Box>
       </Box>
     </BaseAdminPage>

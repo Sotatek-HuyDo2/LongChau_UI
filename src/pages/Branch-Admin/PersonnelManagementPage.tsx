@@ -1,12 +1,18 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
-import { Box, Flex, InputGroup, InputRightElement } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  InputGroup,
+  InputRightElement,
+  Tooltip,
+} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { MOCK_DATA_USER } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import { BaseAdminPage } from 'src/components/layouts';
+import { BaseBranchAdminPage } from 'src/components/layouts';
 import '../../styles/pages/UserManagementPage.scss';
 import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { toastError, toastSuccess } from 'src/utils/notify';
@@ -22,7 +28,7 @@ interface IUser {
   status: string;
 }
 
-const UserManagementPage = () => {
+const BranchAdminPersonnelManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
   const [dataSearch, setDataSearch] = useState<IUser[]>(MOCK_DATA_USER);
   const [status, setStatus] = useState('block');
@@ -39,6 +45,8 @@ const UserManagementPage = () => {
 
       setDataSearch(dataFilter);
     }
+
+    setDataSearch(dataFilter);
   };
 
   useEffectUnsafe(() => {
@@ -143,7 +151,7 @@ const UserManagementPage = () => {
   };
 
   return (
-    <BaseAdminPage>
+    <BaseBranchAdminPage>
       <Box className="user" w="full">
         <Flex
           fontSize="24px"
@@ -185,8 +193,8 @@ const UserManagementPage = () => {
           />
         </Box>
       </Box>
-    </BaseAdminPage>
+    </BaseBranchAdminPage>
   );
 };
 
-export default UserManagementPage;
+export default BranchAdminPersonnelManagementPage;

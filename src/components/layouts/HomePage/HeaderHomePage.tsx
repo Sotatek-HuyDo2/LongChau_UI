@@ -17,8 +17,8 @@ import { useDispatch } from 'react-redux';
 import { clearUser } from 'src/store/user';
 import { useNavigate } from 'react-router-dom';
 import Storage from 'src/utils/storage';
-import AppInput from '../AppInput';
-import AppButton from '../AppButton';
+import AppInput from '../../AppInput';
+import AppButton from '../../AppButton';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
 const HeaderHomePage = () => {
