@@ -54,6 +54,7 @@ const MedicalManagementPage = () => {
 
       setDataSearch(dataFilter);
     }
+    setDataSearch(dataFilter);
   };
 
   useEffectUnsafe(() => {

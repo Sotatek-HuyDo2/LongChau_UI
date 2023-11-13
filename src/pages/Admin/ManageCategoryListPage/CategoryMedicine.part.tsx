@@ -38,6 +38,7 @@ const CategoryMedicine = () => {
 
       setDataSearch(dataFilter);
     }
+    setDataSearch(dataFilter);
   };
 
   useEffectUnsafe(() => {

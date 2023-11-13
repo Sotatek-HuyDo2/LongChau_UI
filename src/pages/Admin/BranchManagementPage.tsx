@@ -35,9 +35,9 @@ const BranchManagementPage = () => {
       dataFilter = dataFilter.filter((item: IBranch) =>
         item.name.toLowerCase().includes(valueSearch.toLowerCase()),
       );
-
       setDataSearch(dataFilter);
     }
+    setDataSearch(dataFilter);
   };
 
   useEffectUnsafe(() => {

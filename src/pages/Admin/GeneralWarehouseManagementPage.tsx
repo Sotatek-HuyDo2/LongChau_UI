@@ -38,6 +38,7 @@ const GeneralWarehouseManagementPage = () => {
 
       setDataSearch(dataFilter);
     }
+    setDataSearch(dataFilter);
   };
 
   useEffectUnsafe(() => {

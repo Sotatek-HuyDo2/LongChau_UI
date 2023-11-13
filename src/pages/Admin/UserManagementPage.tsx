@@ -39,6 +39,7 @@ const UserManagementPage = () => {
 
       setDataSearch(dataFilter);
     }
+    setDataSearch(dataFilter);
   };
 
   useEffectUnsafe(() => {

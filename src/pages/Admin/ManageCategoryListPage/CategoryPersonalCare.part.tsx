@@ -37,7 +37,6 @@ const CategoryPersonalCare = () => {
       );
       setDataSearch(dataFilter);
     }
-
     setDataSearch(dataFilter);
   };
 

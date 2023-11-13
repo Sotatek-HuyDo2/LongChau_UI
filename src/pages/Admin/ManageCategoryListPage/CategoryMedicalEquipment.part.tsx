@@ -38,6 +38,7 @@ const CategoryMedicalEquipment = () => {
 
       setDataSearch(dataFilter);
     }
+    setDataSearch(dataFilter);
   };
 
   useEffectUnsafe(() => {
