@@ -154,22 +154,27 @@ const MedicalManagementPage = () => {
             </Tooltip>
           </Box>
           <Box className="delist--cell-body delist--action" cursor={'pointer'}>
-            <AppButton size={'sm'} onClick={onToggleOpenModalDelistConfirm}>
+            <AppButton
+              size={'sm'}
+              onClick={() => navigate(`/medical/${data.medicineID}`)}
+            >
+              View
+            </AppButton>
+            <AppButton
+              size={'sm'}
+              bg={'yellow.100'}
+              ml={'3px'}
+              onClick={onToggleOpenModalDelistConfirm}
+            >
               Edit
             </AppButton>
             <AppButton
               ml={'3px'}
               size={'sm'}
+              bg={'red.100'}
               onClick={onToggleOpenModalDelistConfirm}
             >
               Del
-            </AppButton>
-            <AppButton
-              ml={'3px'}
-              size={'sm'}
-              onClick={() => navigate(`/medical/${data.medicineID}`)}
-            >
-              View
             </AppButton>
           </Box>
         </Flex>

@@ -45,6 +45,8 @@ const LoginPage = () => {
     const res = await axios.get(
       'https://pharmacy-management-api.up.railway.app/product-public',
     );
+    // const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
+
     console.log(res);
   };
 
@@ -59,19 +61,19 @@ const LoginPage = () => {
     gapi.load('client:auth2', start);
   }, []);
 
-  const onSuccess = async (response: any) => {
-    try {
-      const res = await rf.getRequest('AuthRequest').login({
-        ggAccessToken: response.accessToken,
-      });
+  // const onSuccess = async (response: any) => {
+  //   try {
+  //     const res = await rf.getRequest('AuthRequest').login({
+  //       ggAccessToken: response.accessToken,
+  //     });
 
-      dispatch(setUserAuth(res.data));
-      toastSuccess('Welcome to LongChau!');
-      navigate('/');
-    } catch (e: any) {
-      toastError(e.message);
-    }
-  };
+  //     dispatch(setUserAuth(res.data));
+  //     toastSuccess('Welcome to LongChau!');
+  //     navigate('/');
+  //   } catch (e: any) {
+  //     toastError(e.message);
+  //   }
+  // };
 
   return (
     // <GuestAdminPage>

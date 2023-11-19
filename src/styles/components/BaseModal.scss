@@ -2,7 +2,7 @@
 @import '../mixins.scss';
 
 .modal {
-  background-color: $Card2 !important;
+  background-color: $BackGround !important;
   border-radius: 20px !important;
   padding: 8px;
   max-width: 500px !important;
@@ -32,8 +32,8 @@
     }
 
     &:hover {
-      border: 2px solid $Title;
-      color: $Title;
+      border: 2px solid $Black;
+      color: $Black;
     }
   }
 
@@ -42,6 +42,7 @@
   }
 
   &__title {
+    color: $Black;
     @include heading-5;
 
     position: relative;
@@ -62,7 +63,7 @@
 .delist-confirm {
   &--list {
     margin-left: 23px;
-    color: $Title;
+    color: $Paragraph1;
     font-family: Inter, sans-serif;
     font-size: 14px;
     font-weight: 700;

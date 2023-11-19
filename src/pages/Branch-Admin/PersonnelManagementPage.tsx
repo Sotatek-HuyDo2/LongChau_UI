@@ -16,6 +16,7 @@ import { BaseBranchAdminPage } from 'src/components/layouts';
 import '../../styles/pages/UserManagementPage.scss';
 import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { toastError, toastSuccess } from 'src/utils/notify';
+import ModalDelistConfirm from 'src/components/Modals/ModalDelistConfirm';
 
 interface IUser {
   id: number;
@@ -32,6 +33,11 @@ const BranchAdminPersonnelManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
   const [dataSearch, setDataSearch] = useState<IUser[]>(MOCK_DATA_USER);
   const [status, setStatus] = useState('block');
+  const [openModalDelistConfirm, setOpenModalDelistConfirm] =
+    useState<boolean>(false);
+
+  const onToggleOpenModalDelistConfirm = () =>
+    setOpenModalDelistConfirm((prevState) => !prevState);
 
   const dataRef = useRef<IUser[]>([]);
 
@@ -133,19 +139,36 @@ const BranchAdminPersonnelManagementPage = () => {
             </Box>
           </Box>
           <Box className="user--cell-body user--action" cursor={'pointer'}>
-            <AppButton size={'sm'}>Edit</AppButton>
-            <AppButton ml={'3px'} size={'sm'}>
-              Del
+            <AppButton
+              size={'sm'}
+              onClick={() => navigate(`/medical/${data.brandID}`)}
+            >
+              View
+            </AppButton>
+            <AppButton
+              size={'sm'}
+              bg={'yellow.100'}
+              ml={'3px'}
+              onClick={onToggleOpenModalDelistConfirm}
+            >
+              Edit
             </AppButton>
             <AppButton
               ml={'3px'}
               size={'sm'}
-              // onClick={() => navigate(`/medical/${data?.userID}`)}
+              bg={'red.100'}
+              onClick={onToggleOpenModalDelistConfirm}
             >
-              View
+              Del
             </AppButton>
           </Box>
         </Flex>
+        {openModalDelistConfirm && (
+          <ModalDelistConfirm
+            open={openModalDelistConfirm}
+            onClose={onToggleOpenModalDelistConfirm}
+          />
+        )}
       </Flex>
     );
   };

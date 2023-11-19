@@ -93,11 +93,6 @@ const MENUS = [
     component: <MenuDrop dropTitle="Quản lý đơn hàng" dropItem={LIST_ITEM} />,
   },
   {
-    name: 'Tạo đơn hàng',
-    path: '/staff/create-order',
-    icon: <Overview />,
-  },
-  {
     name: 'Xử lý đơn hàng',
     path: '/staff/order-processing',
     icon: <Overview />,

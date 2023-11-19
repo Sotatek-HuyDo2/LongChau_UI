@@ -122,16 +122,17 @@ const BranchManagementPage = () => {
             className="category--cell-body category--action"
             cursor={'pointer'}
           >
-            <AppButton size={'sm'}>Edit</AppButton>
-            <AppButton ml={'3px'} size={'sm'}>
-              Del
-            </AppButton>
             <AppButton
-              ml={'3px'}
               size={'sm'}
               onClick={() => navigate(`/medical/${data.categoryID}`)}
             >
               View
+            </AppButton>
+            <AppButton size={'sm'} bg={'yellow.100'} ml={'3px'}>
+              Edit
+            </AppButton>
+            <AppButton ml={'3px'} size={'sm'} bg={'red.100'}>
+              Del
             </AppButton>
           </Box>
         </Flex>
