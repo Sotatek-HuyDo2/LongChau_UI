@@ -11,11 +11,101 @@ import {
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 
+const MOCK_MENU_TEST = [
+  {
+    cateID: 1,
+    cateName: 'Thực phẩm chức năng',
+    icon: true,
+    productType: [
+      {
+        productTypeID: 1,
+        productTypeName: 'test1',
+        link: '/',
+      },
+      {
+        productTypeID: 2,
+        productTypeName: 'test2',
+        link: '/admin',
+      },
+      {
+        productTypeID: 3,
+        productTypeName: 'Tắt cả',
+        link: '/category-functional-foods',
+      },
+    ],
+  },
+  {
+    cateID: 2,
+    cateName: 'Thiết bị y tế',
+    icon: true,
+    productType: [
+      {
+        productTypeID: 1,
+        productTypeName: 'test1',
+        link: '/',
+      },
+      {
+        productTypeID: 2,
+        productTypeName: 'test2',
+        link: '/',
+      },
+      {
+        productTypeID: 3,
+        productTypeName: 'Tất cả',
+        link: '/',
+      },
+    ],
+  },
+  {
+    cateID: 3,
+    cateName: 'Chăm sóc cá nhân',
+    icon: true,
+    productType: [
+      {
+        productTypeID: 1,
+        productTypeName: 'test1',
+        link: '/',
+      },
+      {
+        productTypeID: 2,
+        productTypeName: 'test2',
+        link: '/',
+      },
+      {
+        productTypeID: 3,
+        productTypeName: 'Tất cả',
+        link: '/',
+      },
+    ],
+  },
+  {
+    cateID: 4,
+    cateName: 'Thuốc',
+    icon: true,
+    productType: [
+      {
+        productTypeID: 1,
+        productTypeName: 'test1',
+        link: '/',
+      },
+      {
+        productTypeID: 2,
+        productTypeName: 'test2',
+        link: '/',
+      },
+      {
+        productTypeID: 3,
+        productTypeName: 'Tất cả',
+        link: '/category-medicine',
+      },
+    ],
+  },
+];
+
 const MOCK_MENU = [
   {
     titleLabel: 'Thực phẩm chức năng',
     icon: true,
-
     dataDrop: [
       {
         title: 'test1',
@@ -32,7 +122,7 @@ const MOCK_MENU = [
     ],
   },
   {
-    titleLabel: 'Dược mỹ phẩm',
+    titleLabel: 'Thiết bị y tế',
     icon: true,
     dataDrop: [
       {
@@ -44,7 +134,7 @@ const MOCK_MENU = [
         link: '/',
       },
       {
-        title: 'test3',
+        title: 'Tất cả',
         link: '/',
       },
     ],
@@ -62,7 +152,7 @@ const MOCK_MENU = [
         link: '/',
       },
       {
-        title: 'test3',
+        title: 'Tất cả',
         link: '/',
       },
     ],

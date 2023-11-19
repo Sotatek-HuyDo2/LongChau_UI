@@ -23,6 +23,15 @@ const CategoryMedicinePage = () => {
     return listBrand;
   };
 
+  const getListProductType = () => {
+    const listProductType = _.uniqBy(product, 'detail').map((item) => {
+      return item.detail.category;
+    });
+    return _.unionBy(listProductType);
+  };
+
+  const listProductType = getListProductType();
+
   const getFilterType = (filterType: string) => {
     setFilterType(filterType);
   };
@@ -50,16 +59,13 @@ const CategoryMedicinePage = () => {
   useEffectUnsafe(() => {
     getListBrand();
     filterByPrice();
+    getListProductType();
   }, [product, filterType]);
 
   return (
     <BaseHomePage>
       <Flex backgroundColor={'#f4f6f9'} flexDir={'column'} w={'full'}>
-        <AppCategories
-          data={MOCK_FeatureCategories}
-          title={'Thuốc'}
-          numInline={4}
-        />
+        <AppCategories data={listProductType} title={'Thuốc'} numInline={4} />
         <Flex w={'1440px'} m={'auto'} justifyContent={'space-between'}>
           <Box w={'25%'}>
             <AppFilter data={getListBrand()} filterByPrice={getFilterType} />

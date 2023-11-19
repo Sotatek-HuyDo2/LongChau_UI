@@ -3,10 +3,7 @@ import { Box, Flex } from '@chakra-ui/react';
 import BaseHomePage from 'src/components/layouts/HomePage/BaseHomePage';
 import AppCategories from 'src/components/AppCategories';
 import AppListProduct from 'src/components/AppListProduct';
-import {
-  MOCK_FeatureCategories,
-  MOCK_MEDICAL_PRODUCT_LIST,
-} from 'src/utils/constants';
+import { MOCK_MEDICAL_PRODUCT_LIST } from 'src/utils/constants';
 import { AppFilter } from 'src/components';
 import { useState } from 'react';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
@@ -23,7 +20,14 @@ const CategoryFunctionalFoodsPage = () => {
     return listBrand;
   };
 
-  // const getListproductType
+  const getListProductType = () => {
+    const listProductType = _.uniqBy(product, 'detail').map((item) => {
+      return item.detail.category;
+    });
+    return _.unionBy(listProductType);
+  };
+
+  const listProductType = getListProductType();
 
   const getFilterType = (filterType: string) => {
     setFilterType(filterType);
@@ -52,14 +56,15 @@ const CategoryFunctionalFoodsPage = () => {
   useEffectUnsafe(() => {
     getListBrand();
     filterByPrice();
+    getListProductType();
   }, [product, filterType]);
 
   return (
     <BaseHomePage>
       <Flex backgroundColor={'#f4f6f9'} flexDir={'column'} w={'full'}>
         <AppCategories
-          data={MOCK_FeatureCategories}
-          title={'Thực phẩm chức năng'}
+          data={listProductType}
+          title={'Thực Phẩm Chức Năng'}
           numInline={4}
         />
         <Flex w={'1440px'} m={'auto'} justifyContent={'space-between'}>

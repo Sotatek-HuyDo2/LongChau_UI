@@ -21,6 +21,7 @@ import { useDispatch } from 'react-redux';
 import { setUserAuth } from '../store/user';
 import { useNavigate } from 'react-router-dom';
 import { AppButton } from 'src/components';
+import axios from 'axios';
 
 const clientId = config.auth.googleClientId;
 
@@ -40,20 +41,11 @@ const LoginPage = () => {
 
   const isError = email === '' || password === '';
 
-  const onSubmit = () => {
-    alert('Email: ' + email + '\nPassword: ' + password);
-    // if (!isError){
-    //   rf.post('/users/signin',{username : email , password})
-    //   .then((res)=>{
-    //     console.log("response", res);
-    //     localStorage.setItem('token', res?.data?.accessToken);
-    //     // @ts-ignore
-    //     window.location.reload();
-    //     return true;
-    //     })
-    //     .catch(()=>toastError('Invalid username or password'))
-    //     }else{
-    //       toastError('Please fill all fields')
+  const onSubmit = async () => {
+    const res = await axios.get(
+      'https://pharmacy-management-api.up.railway.app/product-public',
+    );
+    console.log(res);
   };
 
   useEffect(() => {

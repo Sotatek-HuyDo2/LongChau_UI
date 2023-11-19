@@ -2,14 +2,13 @@ import { Box, Flex, Image, calc } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 import '../styles/components/AppCategories.scss';
 
-interface IDataProps {
-  icon: string;
-  name: string;
-  quality: number;
-}
+// interface IDataProps {
+//   name: string;
+//   quality?: number;
+// }
 
 interface IAppCategoriesProps {
-  data: Array<IDataProps>;
+  data: Array<any>;
   title: string;
   numInline?: number;
   showIcon?: boolean;
@@ -36,10 +35,14 @@ const AppCategories = (props: IAppCategoriesProps) => {
                 w={`calc(100% / ${numInline} - 20px);`}
                 onClick={() => navigate(`/category-medicine/${item.name}`)}
               >
-                <Image src={item.icon} />
-                <Box className="feature-category--item-name">{item.name}</Box>
+                <Image
+                  src={
+                    'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png'
+                  }
+                />
+                <Box className="feature-category--item-name">{item}</Box>
                 <Box className="feature-category--item-quality">
-                  {item.quality} sản phẩm
+                  {item?.quality} sản phẩm
                 </Box>
               </Flex>
             );

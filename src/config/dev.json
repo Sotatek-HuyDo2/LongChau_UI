@@ -5,7 +5,7 @@
     "googleClientId": "1064145578129-vvf8cps5nnj8buvq3ef4sjtgcpg51i3c.apps.googleusercontent.com"
   },
   "api": {
-    "baseUrlApi": "https://api-staging.lagom.exchange/api/"
+    "baseUrlApi": "https://pharmacy-management-api.up.railway.app/"
   },
   "networks": {
     "GOERLI_TESTNET": {
