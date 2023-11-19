@@ -1,11 +1,7 @@
 import AuthRequest from './AuthRequest';
-import MarketDataRequest from './MarketDataRequest';
-import TradeRequest from './TradeRequest';
 
 const requestMap = {
   AuthRequest,
-  MarketDataRequest,
-  TradeRequest,
 };
 
 const instances = {};
