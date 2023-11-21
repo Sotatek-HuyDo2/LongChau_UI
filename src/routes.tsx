@@ -33,6 +33,8 @@ import CategoryMedicinePage from './pages/CategoryMedicinePage';
 import BranchAdminGeneralWarehouseManagementPage from './pages/Branch-Admin/GeneralWarehouseManagementPage';
 import StaffCustomerManagementPage from './pages/Staff/UserManagementPage';
 import BranchAdminPersonnelManagementPage from './pages/Branch-Admin/PersonnelManagementPage';
+import UserProfilePage from './pages/UserProfilePage';
+import ProfilePart from './pages/UserProfilePage/Profile.part';
 
 /**
  * Main App routes.
@@ -130,6 +132,10 @@ const RouterCustom = () => {
       />
 
       <Route path={'/medical/:id'} element={<MedicalDetailPage />} />
+
+      <Route path={'profile/:id'} element={<UserProfilePage />} />
+
+      <Route path={'profile'} element={<ProfilePart />} />
 
       {/* Staff */}
       <Route path={'/staff'} element={<StaffCustomerManagementPage />} />
