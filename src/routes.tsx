@@ -35,6 +35,7 @@ import StaffCustomerManagementPage from './pages/Staff/UserManagementPage';
 import BranchAdminPersonnelManagementPage from './pages/Branch-Admin/PersonnelManagementPage';
 import UserProfilePage from './pages/UserProfilePage';
 import ProfilePart from './pages/UserProfilePage/Profile.part';
+import Order from './pages/Order';
 
 /**
  * Main App routes.
@@ -136,6 +137,8 @@ const RouterCustom = () => {
       <Route path={'profile/:id'} element={<UserProfilePage />} />
 
       <Route path={'profile'} element={<ProfilePart />} />
+
+      <Route path={'order'} element={<Order />} />
 
       {/* Staff */}
       <Route path={'/staff'} element={<StaffCustomerManagementPage />} />

@@ -1,7 +1,15 @@
 import AuthRequest from './AuthRequest';
+import UserRequest from './UserRequest';
+import BranchAdminRequest from './BranchAdminRequest';
+import SupplierRequest from './SupplierRequest';
+import ProductRequest from './ProductRequest';
 
 const requestMap = {
   AuthRequest,
+  UserRequest,
+  BranchAdminRequest,
+  SupplierRequest,
+  ProductRequest,
 };
 
 const instances = {};

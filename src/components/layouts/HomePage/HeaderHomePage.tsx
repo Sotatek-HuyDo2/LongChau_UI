@@ -154,6 +154,7 @@ const HeaderHomePage = () => {
             borderRadius="50px"
             variant="formTrade"
             color={'white'}
+            onClick={() => navigate('/order')}
           >
             <Flex
               gap={'7px'}
