@@ -11,18 +11,26 @@ import {
   InputRightElement,
   Image,
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import { CartIcon, LoginIcon, SearchExplorer } from 'src/assets/icons';
+import { useEffect, useState } from 'react';
+import {
+  ArrowLogout,
+  CartIcon,
+  DoorLogout,
+  LoginIcon,
+  SearchExplorer,
+} from 'src/assets/icons';
 import { useDispatch } from 'react-redux';
 import { clearUser } from 'src/store/user';
 import { useNavigate } from 'react-router-dom';
 import Storage from 'src/utils/storage';
 import AppInput from '../../AppInput';
 import AppButton from '../../AppButton';
+import rf from 'src/services/RequestFactory';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
 const HeaderHomePage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
+  const [info, setInfo] = useState<any>({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -31,21 +39,23 @@ const HeaderHomePage = () => {
     navigate('/login');
   };
 
-  const accessToken = Storage.getAccessToken();
-  const email = Storage.getEmail();
+  // const accessToken = Storage.getAccessToken();
+  // const email = Storage.getEmail();
+  const accessToken = localStorage.getItem('token');
 
-  // useEffectUnsafe(() => {
-  //   alert('hello');
-  // }, [valueSearch]);
+  const getProfile = async () => {
+    try {
+      const res = await rf.getRequest('UserRequest').getProfile();
+      setInfo(res);
+    } catch (e: any) {}
+  };
+
+  useEffectUnsafe(() => {
+    getProfile().then();
+  }, []);
 
   return (
-    <Flex
-      w={'100%'}
-      className="header-homepage"
-      // h={'140px'}
-      flexDirection={'column'}
-      // backgroundColor={'#458fec'}
-    >
+    <Flex w={'100%'} className="header-homepage" flexDirection={'column'}>
       <Flex className="sub-header-homepage">
         <Flex
           py={'8px'}
@@ -132,22 +142,62 @@ const HeaderHomePage = () => {
               </Box>
             </Flex>
           </Box>
-          <AppButton
-            size="lg"
-            onClick={() => navigate('/login')}
-            borderRadius="50px"
-            background={'none'}
-          >
-            <Flex
-              gap={'7px'}
-              alignItems={'center'}
-              justifyContent={'space-around'}
-              fontSize={18}
+          {accessToken ? (
+            <Box>
+              <Menu>
+                <MenuButton>
+                  <Flex
+                    alignItems={'center'}
+                    gap={1}
+                    fontSize={20}
+                    fontWeight={700}
+                  >
+                    <Avatar name={info.lastName} size="sm" />
+                    Hi {info.lastName}
+                  </Flex>
+                </MenuButton>
+                <MenuList className="menu-header">
+                  <MenuItem
+                    onClick={() => navigate('/profile')}
+                    color={'black'}
+                    _hover={{
+                      bg: '#2167df',
+                      color: 'white',
+                    }}
+                  >
+                    Tài khoản
+                  </MenuItem>
+                  <MenuItem className="user-info logout" onClick={onLogout}>
+                    <span className="door-logout">
+                      <DoorLogout />
+                    </span>
+                    <span className="arrow-logout">
+                      <ArrowLogout />
+                    </span>{' '}
+                    Logout
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </Box>
+          ) : (
+            <AppButton
+              size="lg"
+              onClick={() => navigate('/login')}
+              borderRadius="50px"
+              background={'none'}
             >
-              <LoginIcon />
-              Đăng Nhập
-            </Flex>
-          </AppButton>
+              <Flex
+                gap={'7px'}
+                alignItems={'center'}
+                justifyContent={'space-around'}
+                fontSize={18}
+              >
+                <LoginIcon />
+                Đăng Nhập
+              </Flex>
+            </AppButton>
+          )}
+
           <AppButton
             size="lg"
             padding={'20px'}

@@ -67,7 +67,7 @@ interface Config {
   networks: { [key: string]: Network };
 }
 
-const env = process.env.REACT_APP_ENV || 'prod';
+const env = process.env.REACT_APP_ENV || 'dev';
 const configs: any = { prod, dev, staging };
 const config: Config = configs[env];
 

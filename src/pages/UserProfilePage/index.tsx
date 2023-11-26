@@ -1,19 +1,12 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Flex, Image } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { AppButton } from 'src/components';
 import AppMenu from 'src/components/AppMenu';
 import BaseHomePage from 'src/components/layouts/HomePage/BaseHomePage';
 import ProfilePart from './Profile.part';
-
-const MOCK_PROFILE = {
-  name: 'John Doe',
-  imageUrl:
-    'https://nhathuoclongchau.com.vn/estore-images/profile/v2/avatar-profile-large.svg',
-  phone: '0363043454',
-  sex: 'female',
-  DOB: '11/10/2002',
-};
+import rf from 'src/services/RequestFactory';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
 const MOCK_MENU_PROFILE = [
   {
@@ -25,6 +18,19 @@ const MOCK_MENU_PROFILE = [
 ];
 
 const UserProfilePage = () => {
+  const [dataInfo, setDataInfo] = useState<any>({});
+
+  const getProfile = async () => {
+    try {
+      const res = await rf.getRequest('UserRequest').getProfile();
+      setDataInfo(res);
+    } catch (e: any) {}
+  };
+
+  useEffectUnsafe(() => {
+    getProfile();
+  }, []);
+
   return (
     <BaseHomePage>
       <Flex
@@ -49,13 +55,13 @@ const UserProfilePage = () => {
                   w={'30%'}
                   src="https://nhathuoclongchau.com.vn/estore-images/profile/v2/avatar-profile-large.svg"
                 />
-                <Box>{MOCK_PROFILE?.name}</Box>
-                <Box>{MOCK_PROFILE?.phone}</Box>
+                <Box>{dataInfo?.firstName + ' ' + dataInfo?.lastName}</Box>
+                <Box>{dataInfo?.phone}</Box>
               </Flex>
             </Flex>
             <AppMenu menuList={MOCK_MENU_PROFILE} />
           </Flex>
-          <ProfilePart profile={MOCK_PROFILE} />
+          <ProfilePart profile={dataInfo} />
         </Flex>
       </Flex>
     </BaseHomePage>

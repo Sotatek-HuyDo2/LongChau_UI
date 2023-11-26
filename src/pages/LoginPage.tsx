@@ -21,15 +21,16 @@ import { useDispatch } from 'react-redux';
 import { setUserAuth } from '../store/user';
 import { useNavigate } from 'react-router-dom';
 import { AppButton } from 'src/components';
-import axios from 'axios';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
-const clientId = config.auth.googleClientId;
+// const clientId = config.auth.googleClientId;
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [dataInfo, setDataInfo] = useState<any>({});
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onFailure = () => {
@@ -47,48 +48,46 @@ const LoginPage = () => {
 
       // dispatch(setUserAuth(res));
       localStorage.setItem('token', res.access_token);
-      toastSuccess('Welcome to LongChau!');
-      navigate('/');
+      const getRole = await rf.getRequest('UserRequest').getProfile();
+
+      if (getRole?.role === 'admin') {
+        toastSuccess('Welcome to LongChau Admin!');
+        navigate('/admin');
+      } else {
+        toastSuccess('Welcome to LongChau!');
+        navigate('/');
+      }
+      throw new Error('No role found for this user');
     } catch (e: any) {
       toastError(e.message);
     }
   };
 
-  const onSubmit2 = async () => {
-    try {
-      const res = await rf.getRequest('UserRequest').getProfile();
-
-      toastSuccess('test to LongChau!');
-      navigate('/');
-    } catch (e: any) {
-      toastError(e.message);
-    }
-  };
-
-  useEffect(() => {
-    function start() {
-      gapi.auth2.init({
-        clientId,
-        scope: 'email',
-      });
-    }
-
-    gapi.load('client:auth2', start);
-  }, []);
-
-  // const onSuccess = async (response: any) => {
+  // const getProfile = async () => {
   //   try {
-  //     const res = await rf.getRequest('AuthRequest').login({
-  //       ggAccessToken: response.accessToken,
-  //     });
-
-  //     dispatch(setUserAuth(res.data));
-  //     toastSuccess('Welcome to LongChau!');
-  //     navigate('/');
-  //   } catch (e: any) {
-  //     toastError(e.message);
-  //   }
+  //     const res = await rf.getRequest('UserRequest').getProfile();
+  //     if (res?.role === 'admin') {
+  //       navigate('/dashboard');
+  //     } else {
+  //       navigate('/');
+  //     }
+  //   } catch (e: any) {}
   // };
+
+  // useEffectUnsafe(() => {
+  //   getProfile();
+  // }, []);
+
+  // useEffect(() => {
+  //   function start() {
+  //     gapi.auth2.init({
+  //       clientId,
+  //       scope: 'email',
+  //     });
+  //   }
+
+  //   gapi.load('client:auth2', start);
+  // }, []);
 
   return (
     // <GuestAdminPage>
@@ -133,7 +132,7 @@ const LoginPage = () => {
             >
               Đăng nhập
             </AppButton>
-            <AppButton onClick={onSubmit2} size="md" w="100%">
+            <AppButton size="md" w="100%">
               Đăng ký
             </AppButton>
           </Flex>

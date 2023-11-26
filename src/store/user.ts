@@ -34,7 +34,8 @@ const userSlice = createSlice({
     },
     clearUser: () => {
       setAuthorizationToRequest(null);
-      Storage.logout();
+      // Storage.logout();
+      localStorage.removeItem('token');
       return {
         accessToken: '',
       };

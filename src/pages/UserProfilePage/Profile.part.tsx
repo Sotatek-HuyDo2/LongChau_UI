@@ -3,11 +3,12 @@ import React from 'react';
 import { AppButton } from 'src/components';
 
 interface IProfile {
-  name: string;
-  imageUrl: string;
+  branchId: null;
+  email: string;
+  firstName: string;
+  lastName: string;
   phone: string;
-  sex: string;
-  DOB: string;
+  status: string;
 }
 
 const ProfilePart: React.FC<{ profile?: IProfile }> = ({ profile }) => {
@@ -37,7 +38,7 @@ const ProfilePart: React.FC<{ profile?: IProfile }> = ({ profile }) => {
           borderBottom={'1px solid #a4a7b7'}
         >
           <Box>Họ và tên</Box>
-          <Box>{profile?.name}</Box>
+          <Box>{profile?.firstName + ' ' + profile?.lastName}</Box>
         </Flex>
         <Flex
           w={'full'}
@@ -55,7 +56,7 @@ const ProfilePart: React.FC<{ profile?: IProfile }> = ({ profile }) => {
           borderBottom={'1px solid #a4a7b7'}
         >
           <Box>Giới tính</Box>
-          <Box>{profile?.sex === 'male' ? 'Nam' : 'Nữ'}</Box>
+          {/* <Box>{profile?.sex === 'male' ? 'Nam' : 'Nữ'}</Box> */}
         </Flex>
         <Flex
           w={'full'}
@@ -64,7 +65,7 @@ const ProfilePart: React.FC<{ profile?: IProfile }> = ({ profile }) => {
           borderBottom={'1px solid #a4a7b7'}
         >
           <Box>Ngày sinh</Box>
-          <Box>{profile?.DOB}</Box>
+          {/* <Box>{profile?.DOB}</Box> */}
         </Flex>
       </Flex>
       <AppButton borderRadius={'50px'} size="lg">

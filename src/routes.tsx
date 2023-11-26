@@ -134,9 +134,9 @@ const RouterCustom = () => {
 
       <Route path={'/medical/:id'} element={<MedicalDetailPage />} />
 
-      <Route path={'profile/:id'} element={<UserProfilePage />} />
+      <Route path={'profile'} element={<UserProfilePage />} />
 
-      <Route path={'profile'} element={<ProfilePart />} />
+      {/* <Route path={'profile'} element={<ProfilePart />} /> */}
 
       <Route path={'order'} element={<Order />} />
 

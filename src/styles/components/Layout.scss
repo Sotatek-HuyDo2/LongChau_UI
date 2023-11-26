@@ -43,18 +43,18 @@ $headerHeight: 80px;
 }
 
 .menu-header {
-  background-color: $Card2 !important;
+  background-color: $BackGround !important;
   border: 0 !important;
 
   .user-info {
-    background-color: $Card2 !important;
+    background-color: $BackGround !important;
 
     &.logout {
       color: #ee5d50 !important;
     }
 
     &:hover {
-      background-color: $Title !important;
+      background-color: $BackMain !important;
     }
 
     span {
