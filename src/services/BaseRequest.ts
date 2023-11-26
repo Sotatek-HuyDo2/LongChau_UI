@@ -7,7 +7,9 @@ import { AppBroadcast } from 'src/utils/broadcast';
 export default class BaseRequest {
   protected accessToken = '';
   constructor() {
-    const accessToken = Storage.getAccessToken();
+    const accessToken = localStorage.getItem('token');
+    console.log('Access token: ', accessToken);
+
     if (accessToken) {
       this.accessToken = accessToken;
       setAuthorizationToRequest(this.accessToken);

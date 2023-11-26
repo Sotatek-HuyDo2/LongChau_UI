@@ -42,12 +42,27 @@ const LoginPage = () => {
   const isError = email === '' || password === '';
 
   const onSubmit = async () => {
-    const res = await axios.get(
-      'https://pharmacy-management-api.up.railway.app/product-public',
-    );
-    // const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
+    try {
+      const res = await rf.getRequest('AuthRequest').login({ email, password });
 
-    console.log(res);
+      // dispatch(setUserAuth(res));
+      localStorage.setItem('token', res.access_token);
+      toastSuccess('Welcome to LongChau!');
+      navigate('/');
+    } catch (e: any) {
+      toastError(e.message);
+    }
+  };
+
+  const onSubmit2 = async () => {
+    try {
+      const res = await rf.getRequest('UserRequest').getProfile();
+
+      toastSuccess('test to LongChau!');
+      navigate('/');
+    } catch (e: any) {
+      toastError(e.message);
+    }
   };
 
   useEffect(() => {
@@ -118,7 +133,7 @@ const LoginPage = () => {
             >
               Đăng nhập
             </AppButton>
-            <AppButton onClick={onSubmit} size="md" w="100%">
+            <AppButton onClick={onSubmit2} size="md" w="100%">
               Đăng ký
             </AppButton>
           </Flex>
