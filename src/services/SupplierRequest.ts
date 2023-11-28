@@ -11,10 +11,10 @@ export default class SupplierRequest extends BaseRequest {
   //     return this.post(url, param);
   //   }
 
-  //   getSupplier() {
-  //     const url = `/supplier`;
-  //     return this.get(url);
-  //   }
+  getSupplier() {
+    const url = `supplier`;
+    return this.get(url);
+  }
 
   //   getSupplierDetail(id: number) {
   //     const url = `/supplier/${id}`;

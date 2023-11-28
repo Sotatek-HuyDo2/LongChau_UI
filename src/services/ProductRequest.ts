@@ -11,15 +11,15 @@ export default class ProductRequest extends BaseRequest {
   //   return this.post(url, param);
   // }
 
-  // getProduct() {
-  //   const url = `/product`;
-  //   return this.get(url);
-  // }
+  getProduct() {
+    const url = `product`;
+    return this.get(url);
+  }
 
-  // getProductDetail(id: number) {
-  //   const url = `/product/${id}`;
-  //   return this.get(url);
-  // }
+  getProductDetail(id: number) {
+    const url = `product/${id}`;
+    return this.get(url);
+  }
 
   // getProductByCateID(cate_id: number) {
   //   const url = `/product/category/${cate_id}`;

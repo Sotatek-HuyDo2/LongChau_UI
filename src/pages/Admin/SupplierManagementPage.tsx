@@ -13,6 +13,7 @@ import { MOCK_SUPPELIER } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
+import rf from 'src/services/RequestFactory';
 
 interface ISupplier {
   supplierID: string;
@@ -46,10 +47,11 @@ const SupplierManagementPage = () => {
 
   const navigate = useNavigate();
 
-  const getCategory = async () => {
+  const getDataTable = async () => {
     try {
-      dataRef.current = MOCK_SUPPELIER;
-      setDataSearch(MOCK_SUPPELIER);
+      const res = await rf.getRequest('SupplierRequest').getSupplier();
+
+      setDataSearch(res);
       return {
         docs: dataSearch,
       };
@@ -79,6 +81,21 @@ const SupplierManagementPage = () => {
   };
 
   const _renderContentTable = (data: ISupplier[]) => {
+    if (!dataSearch.length) {
+      return (
+        <Flex
+          justifyContent={'center'}
+          fontSize={'14px'}
+          mt={10}
+          color={'black'}
+          h={'270px'}
+          alignItems={'center'}
+        >
+          No data...
+        </Flex>
+      );
+    }
+
     return (
       <Box>
         {dataSearch.map((data: ISupplier, id: number) => {
@@ -199,7 +216,7 @@ const SupplierManagementPage = () => {
         <Box mt={10} className="category-container">
           table
           <AppDataTable
-            fetchData={getCategory}
+            fetchData={getDataTable}
             renderBody={_renderContentTable}
             renderHeader={_renderHeaderTable}
             size={10}

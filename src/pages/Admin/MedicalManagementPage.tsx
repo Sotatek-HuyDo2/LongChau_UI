@@ -20,14 +20,22 @@ import {
 import { AppDataTable, AppButton } from 'src/components';
 import ModalDelistConfirm from 'src/components/Modals/ModalDelistConfirm';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import rf from 'src/services/RequestFactory';
 
 interface IMedical {
-  medicineID: string;
+  barcode: number;
+  createdAt: string;
+  description: string;
+  dueDate: string;
+  id: number;
   name: string;
-  quality: number;
-  visit: string;
-  timestamp: number;
   price: number;
+  sensitiveIngredients: null;
+  size: number;
+  soldAsDose: false;
+  supplierId: number;
+  typeId: number;
+  unit: string;
 }
 
 const MedicalManagementPage = () => {
@@ -35,7 +43,7 @@ const MedicalManagementPage = () => {
   const [openModalDelistConfirm, setOpenModalDelistConfirm] =
     useState<boolean>(false);
 
-  const [dataSearch, setDataSearch] = useState<IMedical[]>(MOCK_MEDICAL_LIST);
+  const [dataSearch, setDataSearch] = useState<IMedical[]>([]);
 
   const onToggleOpenModalDelistConfirm = () =>
     setOpenModalDelistConfirm((prevState) => !prevState);
@@ -61,12 +69,13 @@ const MedicalManagementPage = () => {
     handleSearch();
   }, [valueSearch]);
 
-  const getDelist = async () => {
+  const getDataTable = async () => {
     try {
-      dataRef.current = MOCK_MEDICAL_LIST;
-      setDataSearch(MOCK_MEDICAL_LIST);
+      const res = await rf.getRequest('ProductRequest').getProduct();
+      dataRef.current = res;
+      setDataSearch(res);
       return {
-        docs: dataSearch,
+        docs: res,
         // totalPages: 10,
       };
     } catch (error) {
@@ -80,7 +89,7 @@ const MedicalManagementPage = () => {
         <Box className="delist--header-cell-body delist--id">ID</Box>
         <Box className="delist--header-cell-body delist--name">Tên</Box>
         <Box className="delist--header-cell-body delist--quality">số lượng</Box>
-        <Box className="delist--header-cell-body delist--visit">Vị trí</Box>
+        {/* <Box className="delist--header-cell-body delist--visit">Vị trí</Box> */}
         <Box className="delist--header-cell-body delist--time">
           Thời gian nhập
         </Box>
@@ -109,7 +118,7 @@ const MedicalManagementPage = () => {
       <Flex className="delist--row-wrap" direction={'column'}>
         <Flex>
           <Flex className="delist--cell-body delist--id">
-            <Box cursor={'pointer'}>{data.medicineID}</Box>
+            <Box cursor={'pointer'}>{data.id}</Box>
           </Flex>
           <Box className="delist--cell-body delist--name">
             <Tooltip
@@ -133,13 +142,13 @@ const MedicalManagementPage = () => {
             flexDirection="row"
             className="delist--cell-body delist--quality"
           >
-            {data?.quality ? data?.quality : '--'}
+            {data?.size ? data?.size : '--'}
           </Flex>
-          <Box className="delist--cell-body delist--visit">
+          {/* <Box className="delist--cell-body delist--visit">
             <Box>{data?.visit ? data?.visit : '--'}</Box>
-          </Box>
+          </Box> */}
           <Flex flexDirection="row" className="delist--cell-body delist--time">
-            {formatTimestamp(data?.timestamp, 'MMM DD YYYY HH:mm:ss')}
+            {/* {formatTimestamp(data?.createdAt, 'MMM DD YYYY HH:mm:ss')} */}
           </Flex>
           <Box className="delist--cell-body delist--price">
             <Tooltip
@@ -156,7 +165,7 @@ const MedicalManagementPage = () => {
           <Box className="delist--cell-body delist--action" cursor={'pointer'}>
             <AppButton
               size={'sm'}
-              onClick={() => navigate(`/medical/${data.medicineID}`)}
+              onClick={() => navigate(`/medical/${data.id}`)}
             >
               View
             </AppButton>
@@ -224,7 +233,7 @@ const MedicalManagementPage = () => {
 
         <Box mt={10} className="delist-container">
           <AppDataTable
-            fetchData={getDelist}
+            fetchData={getDataTable}
             renderBody={_renderContentTable}
             renderHeader={_renderHeaderTable}
             size={10}

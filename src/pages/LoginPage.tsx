@@ -22,9 +22,13 @@ import { setUserAuth } from '../store/user';
 import { useNavigate } from 'react-router-dom';
 import { AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import jwt_decode from 'jwt-decode';
 
 // const clientId = config.auth.googleClientId;
 
+interface IUser {
+  role: string;
+}
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -46,11 +50,11 @@ const LoginPage = () => {
     try {
       const res = await rf.getRequest('AuthRequest').login({ email, password });
 
-      // dispatch(setUserAuth(res));
+      // dispatch(setUserAuth(res.access_token));
       localStorage.setItem('token', res.access_token);
-      const getRole = await rf.getRequest('UserRequest').getProfile();
+      const userRole: IUser = jwt_decode(res.access_token);
 
-      if (getRole?.role === 'admin') {
+      if (userRole?.role === 'admin') {
         toastSuccess('Welcome to LongChau Admin!');
         navigate('/admin');
       } else {
@@ -62,21 +66,6 @@ const LoginPage = () => {
       toastError(e.message);
     }
   };
-
-  // const getProfile = async () => {
-  //   try {
-  //     const res = await rf.getRequest('UserRequest').getProfile();
-  //     if (res?.role === 'admin') {
-  //       navigate('/dashboard');
-  //     } else {
-  //       navigate('/');
-  //     }
-  //   } catch (e: any) {}
-  // };
-
-  // useEffectUnsafe(() => {
-  //   getProfile();
-  // }, []);
 
   // useEffect(() => {
   //   function start() {
