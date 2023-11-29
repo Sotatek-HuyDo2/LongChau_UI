@@ -4,7 +4,6 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { AppInput, AppButton, AppSelect } from 'src/components';
 import { isNumberDecimalAfter } from 'src/utils/helpers';
 import { createValidator } from 'src/utils/validator';
-import ModalListingConfirm from 'src/components/Modals/ModalListingConfirm';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store';
 import _ from 'lodash';
@@ -240,13 +239,13 @@ const PartAddPair = () => {
         </Box>
       </Flex>
 
-      {openModalListingConfirm && (
+      {/* {openModalListingConfirm && (
         <ModalListingConfirm
           open={openModalListingConfirm}
           onClose={() => setOpenModalListingConfirm(false)}
           data={dataForm}
         />
-      )}
+      )} */}
     </Box>
   );
 };

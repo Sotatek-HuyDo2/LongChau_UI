@@ -17,6 +17,7 @@ import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import rf from 'src/services/RequestFactory';
 import ModalChangeActiveConfirm from 'src/components/Modals/ModalChangeActiveConfirm';
+import ModalViewUser from 'src/components/Modals/ModalViewUser';
 
 interface IUser {
   id: number;
@@ -33,12 +34,15 @@ const UserManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
   const [dataSearch, setDataSearch] = useState<IUser[]>([]);
   const [status, setStatus] = useState('active');
-  const dataRef = useRef<IUser[]>([]);
   const [id, setId] = useState<number>(NaN);
   const [openModalChangeActiveConfirm, setOpenModalChangeActiveConfirm] =
     useState<boolean>(false);
-  const [params, setParams] = useState({});
+  const [openModalViewUser, setOpenModalViewUser] = useState<boolean>(false);
+
+  const dataRef = useRef<IUser[]>([]);
+  const [dataModal, setDataModal] = useState<IUser>();
   const navigate = useNavigate();
+  const [params, setParams] = useState({});
 
   const handleActive = (id: number, status: string) => {
     if (status === 'active') {
@@ -48,6 +52,11 @@ const UserManagementPage = () => {
     }
     setId(id);
     setOpenModalChangeActiveConfirm(true);
+  };
+
+  const handleOpenModalViewUser = (id: number) => {
+    setId(id);
+    setOpenModalViewUser(true);
   };
 
   const changeActive = async () => {
@@ -98,6 +107,19 @@ const UserManagementPage = () => {
       return { docs: [] };
     }
   };
+
+  // const getUserDetail = async () => {
+  //   try {
+  //     const res = await rf.getRequest('UserRequest').getProfile();
+  //     setDataModal(res);
+  //   } catch (error) {
+  //     return { docs: [] };
+  //   }
+  // };
+
+  // useEffectUnsafe(() => {
+  //   getUserDetail();
+  // }, [id]);
 
   const _renderHeaderTable = () => {
     return (
@@ -181,6 +203,7 @@ const UserManagementPage = () => {
             <AppButton
               size={'sm'}
               // onClick={() => navigate(`/medical/${data.brandID}`)}
+              onClick={() => handleOpenModalViewUser(data.id)}
             >
               View
             </AppButton>
@@ -213,6 +236,12 @@ const UserManagementPage = () => {
             open={openModalChangeActiveConfirm}
             onClose={() => setOpenModalChangeActiveConfirm(false)}
             onConfirm={changeActive}
+          />
+        )}
+        {openModalViewUser && (
+          <ModalViewUser
+            open={openModalViewUser}
+            onClose={() => setOpenModalViewUser(false)}
           />
         )}
       </Flex>

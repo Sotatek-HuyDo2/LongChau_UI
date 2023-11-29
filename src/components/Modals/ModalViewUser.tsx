@@ -4,20 +4,17 @@ import BaseModal from './BaseModal';
 import AppButton from '../AppButton';
 import { FC } from 'react';
 
-interface IModalChangeActiveConfirmProps {
+interface IModalViewUserProps {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
 }
 
-const ModalChangeActiveConfirm: FC<IModalChangeActiveConfirmProps> = (
-  props,
-) => {
-  const { open, onClose, onConfirm } = props;
+const ModalViewUser: FC<IModalViewUserProps> = (props) => {
+  const { open, onClose } = props;
   return (
     <BaseModal
       size="xl"
-      title="Change Active Confirm"
+      title="User Information"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -30,7 +27,7 @@ const ModalChangeActiveConfirm: FC<IModalChangeActiveConfirmProps> = (
           w={'full'}
         >
           <Box className="delist-confirm--para" m={'auto'} fontSize={18}>
-            Do you want to change active this User?
+            Do you want to delete?
           </Box>
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton
@@ -42,9 +39,6 @@ const ModalChangeActiveConfirm: FC<IModalChangeActiveConfirmProps> = (
             >
               Cancel
             </AppButton>
-            <AppButton flex={1} onClick={onConfirm}>
-              Confirm
-            </AppButton>
           </Flex>
         </Flex>
       </Flex>
@@ -52,4 +46,4 @@ const ModalChangeActiveConfirm: FC<IModalChangeActiveConfirmProps> = (
   );
 };
 
-export default ModalChangeActiveConfirm;
+export default ModalViewUser;
