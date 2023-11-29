@@ -18,11 +18,12 @@ import {
   formatTimestamp,
 } from 'src/utils/format';
 import { AppDataTable, AppButton } from 'src/components';
-import ModalDelistConfirm from 'src/components/Modals/ModalDelistConfirm';
+import ModalDelistConfirm from 'src/components/Modals/ModalChangeActiveConfirm';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import rf from 'src/services/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import ModalDeleteConfirm from 'src/components/Modals/ModalDeleteConfirm';
+import moment from 'moment';
 
 interface IMedical {
   barcode: number;
@@ -54,7 +55,7 @@ const MedicalManagementPage = () => {
     setOpenModalDeleteConfirm(true);
   };
 
-  const deleteNotification = async () => {
+  const deleteMedical = async () => {
     try {
       await rf.getRequest('ProductRequest').deleteProduct(id);
       toastSuccess('Delete successfully!');
@@ -161,7 +162,10 @@ const MedicalManagementPage = () => {
             <Box>{data?.visit ? data?.visit : '--'}</Box>
           </Box> */}
           <Flex flexDirection="row" className="delist--cell-body delist--time">
-            {/* {formatTimestamp(data?.createdAt, 'MMM DD YYYY HH:mm:ss')} */}
+            {formatTimestamp(
+              moment(data?.createdAt).valueOf(),
+              'DD-MM-YYYY HH:mm:ss',
+            )}
           </Flex>
           <Box className="delist--cell-body delist--price">
             <Tooltip
@@ -204,7 +208,7 @@ const MedicalManagementPage = () => {
           <ModalDeleteConfirm
             open={openModalDeleteConfirm}
             onClose={() => setOpenModalDeleteConfirm(false)}
-            onConfirm={deleteNotification}
+            onConfirm={deleteMedical}
           />
         )}
       </Flex>

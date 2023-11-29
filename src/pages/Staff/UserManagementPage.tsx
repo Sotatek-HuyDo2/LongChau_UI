@@ -10,7 +10,7 @@ import { BaseAdminPage, BaseStaffPage } from 'src/components/layouts';
 import '../../styles/pages/UserManagementPage.scss';
 import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { toastError, toastSuccess } from 'src/utils/notify';
-import ModalDelistConfirm from 'src/components/Modals/ModalDelistConfirm';
+import ModalChangeActiveConfirm from 'src/components/Modals/ModalChangeActiveConfirm';
 
 interface IUser {
   id: number;
@@ -157,12 +157,12 @@ const StaffCustomerManagementPage = () => {
             </AppButton>
           </Box>
         </Flex>
-        {openModalDelistConfirm && (
-          <ModalDelistConfirm
+        {/* {openModalDelistConfirm && (
+          <ModalChangeActiveConfirm
             open={openModalDelistConfirm}
             onClose={onToggleOpenModalDelistConfirm}
           />
-        )}
+        )} */}
       </Flex>
     );
   };

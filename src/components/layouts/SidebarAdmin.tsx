@@ -99,7 +99,7 @@ const MENUS = [
     icon: <Overview />,
   },
   {
-    name: 'Quản lý tổng kho',
+    name: 'Quản lý chi nhánh',
     path: '/admin/general-warehouse-management',
     icon: <Overview />,
     pathChild: [

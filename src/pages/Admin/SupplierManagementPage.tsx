@@ -14,6 +14,8 @@ import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
 import rf from 'src/services/RequestFactory';
+import { toastError, toastSuccess } from 'src/utils/notify';
+import ModalDeleteConfirm from 'src/components/Modals/ModalDeleteConfirm';
 
 interface ISupplier {
   supplierID: string;
@@ -25,8 +27,27 @@ interface ISupplier {
 const SupplierManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
   const [dataSearch, setDataSearch] = useState<ISupplier[]>(MOCK_SUPPELIER);
-
   const dataRef = useRef<ISupplier[]>([]);
+
+  // const [id, setId] = useState<number>(NaN);
+  // const [openModalDeleteConfirm, setOpenModalDeleteConfirm] =
+  //   useState<boolean>(false);
+
+  // const handleDelete = (id: number) => {
+  //   setId(id);
+  //   setOpenModalDeleteConfirm(true);
+  // };
+
+  // const deleteMedical = async () => {
+  //   try {
+  //     await rf.getRequest('SupplierRequest').deleteUser(id);
+  //     toastSuccess('Delete successfully!');
+  //     // setParams({ ...params });
+  //     setOpenModalDeleteConfirm(false);
+  //   } catch (e: any) {
+  //     toastError(e.message || 'Something was wrong!!');
+  //   }
+  // };
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
@@ -53,7 +74,7 @@ const SupplierManagementPage = () => {
 
       setDataSearch(res);
       return {
-        docs: dataSearch,
+        docs: res,
       };
     } catch (error) {
       return { docs: [] };
@@ -81,7 +102,7 @@ const SupplierManagementPage = () => {
   };
 
   const _renderContentTable = (data: ISupplier[]) => {
-    if (!dataSearch.length) {
+    if (!dataSearch?.length) {
       return (
         <Flex
           justifyContent={'center'}
@@ -171,11 +192,23 @@ const SupplierManagementPage = () => {
             <AppButton size={'sm'} bg={'yellow.100'} ml={'3px'}>
               Edit
             </AppButton>
-            <AppButton ml={'3px'} size={'sm'} bg={'red.100'}>
+            <AppButton
+              // onClick={() => handleDelete(data.supplierID)}
+              ml={'3px'}
+              size={'sm'}
+              bg={'red.100'}
+            >
               Del
             </AppButton>
           </Box>
         </Flex>
+        {/* {openModalDeleteConfirm && (
+          <ModalDeleteConfirm
+            open={openModalDeleteConfirm}
+            onClose={() => setOpenModalDeleteConfirm(false)}
+            onConfirm={deleteMedical}
+          />
+        )} */}
       </Flex>
     );
   };

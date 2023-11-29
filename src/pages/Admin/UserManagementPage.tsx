@@ -1,16 +1,22 @@
 import React, { useRef, useState } from 'react';
 import { AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
-import { Box, Flex, InputGroup, InputRightElement } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  InputGroup,
+  InputRightElement,
+  Tooltip,
+} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_DATA_USER } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
 import '../../styles/pages/UserManagementPage.scss';
 import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { toastError, toastSuccess } from 'src/utils/notify';
-import ModalDelistConfirm from 'src/components/Modals/ModalDelistConfirm';
+import rf from 'src/services/RequestFactory';
+import ModalChangeActiveConfirm from 'src/components/Modals/ModalChangeActiveConfirm';
 
 interface IUser {
   id: number;
@@ -18,22 +24,49 @@ interface IUser {
   firstName: string;
   lastName: string;
   role: string;
-  brandID: number;
+  branchId: number;
   phone: string;
   status: string;
 }
 
 const UserManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [dataSearch, setDataSearch] = useState<IUser[]>(MOCK_DATA_USER);
-  const [status, setStatus] = useState('block');
-  const [openModalDelistConfirm, setOpenModalDelistConfirm] =
-    useState<boolean>(false);
-
-  const onToggleOpenModalDelistConfirm = () =>
-    setOpenModalDelistConfirm((prevState) => !prevState);
-
+  const [dataSearch, setDataSearch] = useState<IUser[]>([]);
+  const [status, setStatus] = useState('active');
   const dataRef = useRef<IUser[]>([]);
+  const [id, setId] = useState<number>(NaN);
+  const [openModalChangeActiveConfirm, setOpenModalChangeActiveConfirm] =
+    useState<boolean>(false);
+  const [params, setParams] = useState({});
+  const navigate = useNavigate();
+
+  const handleActive = (id: number, status: string) => {
+    if (status === 'active') {
+      setStatus('inactive');
+    } else {
+      setStatus('active');
+    }
+    setId(id);
+    setOpenModalChangeActiveConfirm(true);
+  };
+
+  const changeActive = async () => {
+    try {
+      if (status === 'inactive') {
+        await rf.getRequest('UserRequest').deActiveUser(id);
+        toastSuccess('Inactive user successfully!');
+        setParams({ ...params });
+        setOpenModalChangeActiveConfirm(false);
+      } else {
+        await rf.getRequest('UserRequest').activeUser(id);
+        setParams({ ...params });
+        toastSuccess('Active user successfully!');
+        setOpenModalChangeActiveConfirm(false);
+      }
+    } catch (e: any) {
+      toastError(e.message || 'Something was wrong!!');
+    }
+  };
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
@@ -52,26 +85,17 @@ const UserManagementPage = () => {
     handleSearch();
   }, [valueSearch]);
 
-  const navigate = useNavigate();
-
   const getUser = async () => {
     try {
-      dataRef.current = MOCK_DATA_USER;
-      setDataSearch(MOCK_DATA_USER);
+      const res = await rf.getRequest('UserRequest').getUser();
+
+      dataRef.current = res;
+      setDataSearch(res);
       return {
-        docs: dataSearch,
+        docs: res,
       };
     } catch (error) {
       return { docs: [] };
-    }
-  };
-
-  const handleSetStatus = () => {
-    if (status === 'block') {
-      toastSuccess('Welcome to LongChau!');
-      setStatus('unlock');
-    } else {
-      setStatus('block');
     }
   };
 
@@ -123,43 +147,72 @@ const UserManagementPage = () => {
             {data?.phone ? data?.phone : '--'}
           </Box>
           <Box className="user--cell-body user--phone">
-            <Box className={`user--${data?.status.toLowerCase()}`}>
-              {data?.status === status ? (
-                <LockIcon onClick={handleSetStatus} />
+            <Box
+              className={`user--${data?.status.toLowerCase()}`}
+              cursor={'pointer'}
+              ml={'35px'}
+            >
+              {data?.status === 'active' ? (
+                <Tooltip
+                  className="tooltip-app"
+                  label={'Người dùng hoạt động bình thường'}
+                  placement="top"
+                  hasArrow
+                >
+                  <UnlockIcon
+                    onClick={() => handleActive(data.id, data?.status)}
+                  />
+                </Tooltip>
               ) : (
-                <UnlockIcon onClick={handleSetStatus} />
+                <Tooltip
+                  className="tooltip-app"
+                  label={'Người dùng bị hạn chế hoạt động'}
+                  placement="top"
+                  hasArrow
+                >
+                  <LockIcon
+                    onClick={() => handleActive(data.id, data?.status)}
+                  />
+                </Tooltip>
               )}
             </Box>
           </Box>
           <Box className="user--cell-body user--action" cursor={'pointer'}>
             <AppButton
               size={'sm'}
-              onClick={() => navigate(`/medical/${data.brandID}`)}
+              // onClick={() => navigate(`/medical/${data.brandID}`)}
             >
               View
             </AppButton>
-            <AppButton
-              size={'sm'}
-              bg={'yellow.100'}
-              ml={'3px'}
-              onClick={onToggleOpenModalDelistConfirm}
-            >
+            <AppButton size={'sm'} bg={'yellow.100'} ml={'3px'}>
               Edit
             </AppButton>
-            <AppButton
-              ml={'3px'}
-              size={'sm'}
-              bg={'red.100'}
-              onClick={onToggleOpenModalDelistConfirm}
-            >
-              Del
-            </AppButton>
+            {data?.status === 'active' ? (
+              <AppButton
+                ml={'3px'}
+                size={'sm'}
+                bg={'red.100'}
+                onClick={() => handleActive(data.id, data?.status)}
+              >
+                Inactive
+              </AppButton>
+            ) : (
+              <AppButton
+                ml={'3px'}
+                size={'sm'}
+                bg={'green.100'}
+                onClick={() => handleActive(data.id, data?.status)}
+              >
+                Active
+              </AppButton>
+            )}
           </Box>
         </Flex>
-        {openModalDelistConfirm && (
-          <ModalDelistConfirm
-            open={openModalDelistConfirm}
-            onClose={onToggleOpenModalDelistConfirm}
+        {openModalChangeActiveConfirm && (
+          <ModalChangeActiveConfirm
+            open={openModalChangeActiveConfirm}
+            onClose={() => setOpenModalChangeActiveConfirm(false)}
+            onConfirm={changeActive}
           />
         )}
       </Flex>
@@ -200,8 +253,8 @@ const UserManagementPage = () => {
         </Box>
 
         <Box mt={10} className="user-container">
-          table
           <AppDataTable
+            requestParams={params}
             fetchData={getUser}
             renderBody={_renderContentTable}
             renderHeader={_renderHeaderTable}

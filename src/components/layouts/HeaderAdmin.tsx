@@ -47,20 +47,10 @@ const Header = () => {
                 fontWeight={700}
               >
                 <Avatar name={info?.lastName} size="sm" />
-                {info?.lastName}
+                {info?.lastName}_{info?.role}!!
               </Flex>
             </MenuButton>
             <MenuList className="menu-header">
-              <MenuItem
-                onClick={() => navigate('/profile')}
-                color={'black'}
-                _hover={{
-                  bg: '#2167df',
-                  color: 'white',
-                }}
-              >
-                Tài khoản
-              </MenuItem>
               <MenuItem className="user-info logout" onClick={onLogout}>
                 <span className="door-logout">
                   <DoorLogout />

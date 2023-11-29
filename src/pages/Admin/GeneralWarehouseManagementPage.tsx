@@ -9,11 +9,12 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_CATEGORY_MEDICINE } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
 import rf from 'src/services/RequestFactory';
+import { toastError, toastSuccess } from 'src/utils/notify';
+import ModalDeleteConfirm from 'src/components/Modals/ModalDeleteConfirm';
 
 interface IBranch {
   id: string;
@@ -26,6 +27,25 @@ const GeneralWarehouseManagementPage = () => {
   const [dataSearch, setDataSearch] = useState<IBranch[]>([]);
   const dataRef = useRef<IBranch[]>([]);
   const navigate = useNavigate();
+  const [id, setId] = useState<number | string>(NaN);
+  const [openModalDeleteConfirm, setOpenModalDeleteConfirm] =
+    useState<boolean>(false);
+
+  const handleDelete = (id: number | string) => {
+    setId(id);
+    setOpenModalDeleteConfirm(true);
+  };
+
+  const deleteMedical = async () => {
+    try {
+      await rf.getRequest('UserRequest').deleteUser(id);
+      toastSuccess('Delete successfully!');
+      // setParams({ ...params });
+      setOpenModalDeleteConfirm(false);
+    } catch (e: any) {
+      toastError(e.message || 'Something was wrong!!');
+    }
+  };
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
@@ -129,11 +149,23 @@ const GeneralWarehouseManagementPage = () => {
             <AppButton size={'sm'} bg={'yellow.100'} ml={'3px'}>
               Edit
             </AppButton>
-            <AppButton ml={'3px'} size={'sm'} bg={'red.100'}>
+            <AppButton
+              onClick={() => handleDelete(data.id)}
+              ml={'3px'}
+              size={'sm'}
+              bg={'red.100'}
+            >
               Del
             </AppButton>
           </Box>
         </Flex>
+        {openModalDeleteConfirm && (
+          <ModalDeleteConfirm
+            open={openModalDeleteConfirm}
+            onClose={() => setOpenModalDeleteConfirm(false)}
+            onConfirm={deleteMedical}
+          />
+        )}
       </Flex>
     );
   };

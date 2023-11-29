@@ -21,10 +21,10 @@ export default class UserRequest extends BaseRequest {
   //     return this.post(url, params);
   //   }
 
-  //   getUser() {
-  //     const url = `/user`;
-  //     return this.get(url);
-  //   }
+  getUser() {
+    const url = `user`;
+    return this.get(url);
+  }
 
   //   getBranchAdmin() {
   //     const url = `/user/branch-admin`;
@@ -41,18 +41,18 @@ export default class UserRequest extends BaseRequest {
   //     return this.put(url, param);
   //   }
 
-  //   deleteUser(id: number) {
-  //     const url = `/user/${id}`;
-  //     return this.delete(url);
-  //   }
+  deleteUser(id: number) {
+    const url = `user/${id}`;
+    return this.delete(url);
+  }
 
-  //   activeUser(id: number) {
-  //     const url = `/user/activate/${id}`;
-  //     return this.put(url);
-  //   }
+  activeUser(id: number) {
+    const url = `user/activate/${id}`;
+    return this.put(url);
+  }
 
-  //   deActiveUser(id: number) {
-  //     const url = `/user/deactivate/${id}`;
-  //     return this.put(url);
-  //   }
+  deActiveUser(id: number) {
+    const url = `user/deactivate/${id}`;
+    return this.put(url);
+  }
 }

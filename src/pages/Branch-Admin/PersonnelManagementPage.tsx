@@ -16,7 +16,7 @@ import { BaseBranchAdminPage } from 'src/components/layouts';
 import '../../styles/pages/UserManagementPage.scss';
 import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { toastError, toastSuccess } from 'src/utils/notify';
-import ModalDelistConfirm from 'src/components/Modals/ModalDelistConfirm';
+import ModalDelistConfirm from 'src/components/Modals/ModalChangeActiveConfirm';
 
 interface IUser {
   id: number;
@@ -163,12 +163,12 @@ const BranchAdminPersonnelManagementPage = () => {
             </AppButton>
           </Box>
         </Flex>
-        {openModalDelistConfirm && (
+        {/* {openModalDelistConfirm && (
           <ModalDelistConfirm
             open={openModalDelistConfirm}
             onClose={onToggleOpenModalDelistConfirm}
           />
-        )}
+        )} */}
       </Flex>
     );
   };
