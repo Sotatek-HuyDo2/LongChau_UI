@@ -31,10 +31,10 @@ export default class ProductRequest extends BaseRequest {
   //   return this.get(url);
   // }
 
-  // deleteProduct(id: number) {
-  //   const url = `product/${id}`;
-  //   return this.delete(url);
-  // }
+  deleteProduct(id: number) {
+    const url = `product/${id}`;
+    return this.delete(url);
+  }
 
   // updateProductInfo(param: any, id: number) {
   //   const url = `/product/${id}`;

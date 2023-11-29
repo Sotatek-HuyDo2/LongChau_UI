@@ -1,7 +1,7 @@
 import BaseRequest from './BaseRequest';
 import config from 'src/config';
 
-export default class BranchAdminRequest extends BaseRequest {
+export default class BranchRequest extends BaseRequest {
   getUrlPrefix() {
     return config.api.baseUrlApi;
   }
@@ -11,10 +11,10 @@ export default class BranchAdminRequest extends BaseRequest {
   //     return this.post(url, param);
   //   }
 
-  //   getBranchAdmin() {
-  //     const url = `/branch`;
-  //     return this.get(url);
-  //   }
+  getBranchList() {
+    const url = `branch`;
+    return this.get(url);
+  }
 
   //   getBranchAdminDetail(id: number) {
   //     const url = `/branch${id}`;

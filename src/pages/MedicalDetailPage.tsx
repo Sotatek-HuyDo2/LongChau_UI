@@ -218,19 +218,6 @@ const MedicalDetailPage = () => {
                       onChange={(e) => setAmount(Number(e.target.value || 1))}
                       value={amount || 1}
                     />
-                    <Flex
-                      px={'10px'}
-                      border={'1px solid #e5e7eb'}
-                      borderRadius={'0 20px 20px 0px'}
-                      alignItems={'center'}
-                      onClick={() => setAmount(amount + 1)}
-                      _hover={{
-                        backgroundColor: '#a4a7b7',
-                        transition: 'background-color 0.3s',
-                      }}
-                    >
-                      <AddIcon boxSize={5} />
-                    </Flex>
                   </Flex>
                   <Flex
                     px={'10px'}

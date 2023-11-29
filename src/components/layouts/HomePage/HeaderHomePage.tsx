@@ -25,8 +25,7 @@ import { useNavigate } from 'react-router-dom';
 import Storage from 'src/utils/storage';
 import AppInput from '../../AppInput';
 import AppButton from '../../AppButton';
-import rf from 'src/services/RequestFactory';
-import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import jwtDecode from 'jwt-decode';
 
 const HeaderHomePage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
@@ -43,16 +42,9 @@ const HeaderHomePage = () => {
   // const email = Storage.getEmail();
   const accessToken = localStorage.getItem('token');
 
-  const getProfile = async () => {
-    try {
-      const res = await rf.getRequest('UserRequest').getProfile();
-      setInfo(res);
-    } catch (e: any) {}
-  };
-
-  useEffectUnsafe(() => {
-    getProfile().then();
-  }, []);
+  useEffect(() => {
+    if (accessToken) setInfo(jwtDecode(accessToken));
+  }, [accessToken]);
 
   return (
     <Flex w={'100%'} className="header-homepage" flexDirection={'column'}>

@@ -7,14 +7,16 @@ import {
   MenuList,
   MenuItem,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowLogout, DoorLogout } from 'src/assets/icons';
 import { useDispatch } from 'react-redux';
 import { clearUser } from 'src/store/user';
 import { useNavigate } from 'react-router-dom';
 import Storage from 'src/utils/storage';
+import jwtDecode from 'jwt-decode';
 
 const Header = () => {
+  const [info, setInfo] = useState<any>();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,22 +25,42 @@ const Header = () => {
     navigate('/login');
   };
 
-  const accessToken = Storage.getAccessToken();
+  const accessToken = localStorage.getItem('token');
   const email = Storage.getEmail();
+
+  useEffect(() => {
+    if (accessToken) setInfo(jwtDecode(accessToken));
+  }, []);
 
   return (
     <Flex className="header" justifyContent={'space-between'}>
       <Box>LongChau Dashboard</Box>
 
-      {accessToken && (
+      {accessToken ? (
         <Box>
           <Menu>
             <MenuButton>
-              <Avatar name={email} size="sm" />
+              <Flex
+                alignItems={'center'}
+                gap={1}
+                fontSize={20}
+                fontWeight={700}
+              >
+                <Avatar name={info?.lastName} size="sm" />
+                {info?.lastName}
+              </Flex>
             </MenuButton>
             <MenuList className="menu-header">
-              <MenuItem className="user-info">{email}</MenuItem>
-
+              <MenuItem
+                onClick={() => navigate('/profile')}
+                color={'black'}
+                _hover={{
+                  bg: '#2167df',
+                  color: 'white',
+                }}
+              >
+                Tài khoản
+              </MenuItem>
               <MenuItem className="user-info logout" onClick={onLogout}>
                 <span className="door-logout">
                   <DoorLogout />
@@ -51,7 +73,7 @@ const Header = () => {
             </MenuList>
           </Menu>
         </Box>
-      )}
+      ) : null}
     </Flex>
   );
 };

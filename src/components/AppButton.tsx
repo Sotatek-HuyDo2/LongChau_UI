@@ -151,7 +151,7 @@ export const appButtonStyles = {
     primary: (props: StyleProps) => ({
       borderRadius: '6px',
       bg: 'transparent',
-      color: '#ffffff',
+      color: 'black',
       borderWidth: '1px',
       borderColor: 'line.200',
       _hover: {

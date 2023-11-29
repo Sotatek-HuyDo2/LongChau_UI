@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
 import {
@@ -13,29 +13,27 @@ import { MOCK_CATEGORY_MEDICINE } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
+import rf from 'src/services/RequestFactory';
 
-interface IGeneralWarehouse {
-  categoryID: string;
+interface IBranch {
+  id: string;
   name: string;
-  quality: number;
+  address: string;
 }
 
 const GeneralWarehouseManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [dataSearch, setDataSearch] = useState<IGeneralWarehouse[]>(
-    MOCK_CATEGORY_MEDICINE,
-  );
-
-  const dataRef = useRef<IGeneralWarehouse[]>([]);
+  const [dataSearch, setDataSearch] = useState<IBranch[]>([]);
+  const dataRef = useRef<IBranch[]>([]);
+  const navigate = useNavigate();
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
 
     if (valueSearch) {
-      dataFilter = dataFilter.filter((item: IGeneralWarehouse) =>
+      dataFilter = dataFilter.filter((item: IBranch) =>
         item.name.toLowerCase().includes(valueSearch.toLowerCase()),
       );
-
       setDataSearch(dataFilter);
     }
     setDataSearch(dataFilter);
@@ -45,14 +43,13 @@ const GeneralWarehouseManagementPage = () => {
     handleSearch();
   }, [valueSearch]);
 
-  const navigate = useNavigate();
-
-  const getCategory = async () => {
+  const getDataTable = async () => {
     try {
-      dataRef.current = MOCK_CATEGORY_MEDICINE;
-      setDataSearch(MOCK_CATEGORY_MEDICINE);
+      const res = await rf.getRequest('BranchRequest').getBranchList();
+      dataRef.current = res;
+      setDataSearch(res);
       return {
-        docs: [],
+        docs: dataSearch,
       };
     } catch (error) {
       return { docs: [] };
@@ -65,7 +62,7 @@ const GeneralWarehouseManagementPage = () => {
         <Box className="category--header-cell-body category--id">ID</Box>
         <Box className="category--header-cell-body category--name">Tên</Box>
         <Box className="category--header-cell-body category--quality">
-          số lượng(thuốc)
+          Địa chỉ
         </Box>
         <Box className="category--header-cell-body category--action">
           Action
@@ -74,10 +71,10 @@ const GeneralWarehouseManagementPage = () => {
     );
   };
 
-  const _renderContentTable = (data: IGeneralWarehouse[]) => {
+  const _renderContentTable = (data: IBranch[]) => {
     return (
       <Box>
-        {dataSearch.map((data: IGeneralWarehouse, id: number) => {
+        {dataSearch.map((data: IBranch, id: number) => {
           return (
             <RowAddressTransactionTable data={data} key={`${id}-coin-table`} />
           );
@@ -87,13 +84,13 @@ const GeneralWarehouseManagementPage = () => {
   };
 
   const RowAddressTransactionTable: React.FC<{
-    data: IGeneralWarehouse;
+    data: IBranch;
   }> = ({ data }) => {
     return (
       <Flex className="category--row-wrap" direction={'column'}>
         <Flex>
           <Flex className="category--cell-body category--id">
-            <Box cursor={'pointer'}>{data.categoryID}</Box>
+            <Box cursor={'pointer'}>{data.id}</Box>
           </Flex>
           <Box className="category--cell-body category--name">
             <Tooltip
@@ -117,7 +114,7 @@ const GeneralWarehouseManagementPage = () => {
             flexDirection="row"
             className="category--cell-body category--quality"
           >
-            {data?.quality ? data?.quality : '--'}
+            {data?.address ? data?.address : '--'}
           </Flex>
           <Box
             className="category--cell-body category--action"
@@ -125,7 +122,7 @@ const GeneralWarehouseManagementPage = () => {
           >
             <AppButton
               size={'sm'}
-              onClick={() => navigate(`/medical/${data.categoryID}`)}
+              onClick={() => navigate(`/medical/${data.id}`)}
             >
               View
             </AppButton>
@@ -152,11 +149,11 @@ const GeneralWarehouseManagementPage = () => {
           gap={3}
           color={'#2167df'}
         >
-          Quản lý tổng kho
+          Quản lý chi nhánh
         </Flex>
         <Box className={'category__search'}>
           <Flex alignItems={'center'}>
-            <Box className={'category__search-title'}>Tổng kho:</Box>
+            <Box className={'category__search-title'}>Chi nhánh:</Box>
             <Box className="category__search-input">
               <InputGroup>
                 <AppInput
@@ -166,7 +163,7 @@ const GeneralWarehouseManagementPage = () => {
                   value={valueSearch}
                   onChange={(e: any) => setValueSearch(e.target.value)}
                 />
-                <InputRightElement top={4}>
+                <InputRightElement>
                   <SearchExplorer />
                 </InputRightElement>
               </InputGroup>
@@ -176,12 +173,12 @@ const GeneralWarehouseManagementPage = () => {
 
         <Box mt={10} className="category-container">
           table
-          {/* <AppDataTable
-            fetchData={getCategory}
+          <AppDataTable
+            fetchData={getDataTable}
             renderBody={_renderContentTable}
             renderHeader={_renderHeaderTable}
             size={10}
-          /> */}
+          />
         </Box>
       </Box>
     </BaseAdminPage>

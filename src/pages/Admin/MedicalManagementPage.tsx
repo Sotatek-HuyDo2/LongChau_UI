@@ -21,6 +21,8 @@ import { AppDataTable, AppButton } from 'src/components';
 import ModalDelistConfirm from 'src/components/Modals/ModalDelistConfirm';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import rf from 'src/services/RequestFactory';
+import { toastError, toastSuccess } from 'src/utils/notify';
+import ModalDeleteConfirm from 'src/components/Modals/ModalDeleteConfirm';
 
 interface IMedical {
   barcode: number;
@@ -40,17 +42,28 @@ interface IMedical {
 
 const MedicalManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [openModalDelistConfirm, setOpenModalDelistConfirm] =
+  const [openModalDeleteConfirm, setOpenModalDeleteConfirm] =
     useState<boolean>(false);
-
-  const [dataSearch, setDataSearch] = useState<IMedical[]>([]);
-
-  const onToggleOpenModalDelistConfirm = () =>
-    setOpenModalDelistConfirm((prevState) => !prevState);
-
   const navigate = useNavigate();
-
+  const [dataSearch, setDataSearch] = useState<IMedical[]>([]);
   const dataRef = useRef<IMedical[]>([]);
+  const [id, setId] = useState<number>(NaN);
+
+  const handleDelete = (id: number) => {
+    setId(id);
+    setOpenModalDeleteConfirm(true);
+  };
+
+  const deleteNotification = async () => {
+    try {
+      await rf.getRequest('ProductRequest').deleteProduct(id);
+      toastSuccess('Delete successfully!');
+      // setParams({ ...params });
+      setOpenModalDeleteConfirm(false);
+    } catch (e: any) {
+      toastError(e.message || 'Something was wrong!!');
+    }
+  };
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
@@ -173,7 +186,7 @@ const MedicalManagementPage = () => {
               size={'sm'}
               bg={'yellow.100'}
               ml={'3px'}
-              onClick={onToggleOpenModalDelistConfirm}
+              // onClick={onToggleOpenModalDelistConfirm}
             >
               Edit
             </AppButton>
@@ -181,16 +194,17 @@ const MedicalManagementPage = () => {
               ml={'3px'}
               size={'sm'}
               bg={'red.100'}
-              onClick={onToggleOpenModalDelistConfirm}
+              onClick={() => handleDelete(data.id)}
             >
               Del
             </AppButton>
           </Box>
         </Flex>
-        {openModalDelistConfirm && (
-          <ModalDelistConfirm
-            open={openModalDelistConfirm}
-            onClose={onToggleOpenModalDelistConfirm}
+        {openModalDeleteConfirm && (
+          <ModalDeleteConfirm
+            open={openModalDeleteConfirm}
+            onClose={() => setOpenModalDeleteConfirm(false)}
+            onConfirm={deleteNotification}
           />
         )}
       </Flex>

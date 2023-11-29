@@ -1,13 +1,13 @@
 import AuthRequest from './AuthRequest';
 import UserRequest from './UserRequest';
-import BranchAdminRequest from './BranchAdminRequest';
+import BranchRequest from './BranchRequest';
 import SupplierRequest from './SupplierRequest';
 import ProductRequest from './ProductRequest';
 
 const requestMap = {
   AuthRequest,
   UserRequest,
-  BranchAdminRequest,
+  BranchRequest,
   SupplierRequest,
   ProductRequest,
 };

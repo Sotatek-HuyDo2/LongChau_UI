@@ -13,18 +13,17 @@ import { MOCK_CATEGORY_MEDICINE } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
+import rf from 'src/services/RequestFactory';
 
 interface IBranch {
-  categoryID: string;
+  id: string;
   name: string;
-  quality: number;
+  address: string;
 }
 
 const BranchManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [dataSearch, setDataSearch] = useState<IBranch[]>(
-    MOCK_CATEGORY_MEDICINE,
-  );
+  const [dataSearch, setDataSearch] = useState<IBranch[]>([]);
 
   const dataRef = useRef<IBranch[]>([]);
 
@@ -46,10 +45,11 @@ const BranchManagementPage = () => {
 
   const navigate = useNavigate();
 
-  const getCategory = async () => {
+  const getDataTable = async () => {
     try {
-      dataRef.current = MOCK_CATEGORY_MEDICINE;
-      setDataSearch(MOCK_CATEGORY_MEDICINE);
+      const res = await rf.getRequest('BranchRequest').getBranchList();
+      dataRef.current = res;
+      setDataSearch(res);
       return {
         docs: dataSearch,
       };
@@ -64,7 +64,7 @@ const BranchManagementPage = () => {
         <Box className="category--header-cell-body category--id">ID</Box>
         <Box className="category--header-cell-body category--name">Tên</Box>
         <Box className="category--header-cell-body category--quality">
-          số lượng(thuốc)
+          Địa chỉ
         </Box>
         <Box className="category--header-cell-body category--action">
           Action
@@ -92,7 +92,7 @@ const BranchManagementPage = () => {
       <Flex className="category--row-wrap" direction={'column'}>
         <Flex>
           <Flex className="category--cell-body category--id">
-            <Box cursor={'pointer'}>{data.categoryID}</Box>
+            <Box cursor={'pointer'}>{data.id}</Box>
           </Flex>
           <Box className="category--cell-body category--name">
             <Tooltip
@@ -116,7 +116,7 @@ const BranchManagementPage = () => {
             flexDirection="row"
             className="category--cell-body category--quality"
           >
-            {data?.quality ? data?.quality : '--'}
+            {data?.address ? data?.address : '--'}
           </Flex>
           <Box
             className="category--cell-body category--action"
@@ -124,7 +124,7 @@ const BranchManagementPage = () => {
           >
             <AppButton
               size={'sm'}
-              onClick={() => navigate(`/medical/${data.categoryID}`)}
+              onClick={() => navigate(`/medical/${data.id}`)}
             >
               View
             </AppButton>
@@ -175,12 +175,12 @@ const BranchManagementPage = () => {
 
         <Box mt={10} className="category-container">
           table
-          {/* <AppDataTable
-          fetchData={getCategory}
-          renderBody={_renderContentTable}
-          renderHeader={_renderHeaderTable}
-          size={10}
-        /> */}
+          <AppDataTable
+            fetchData={getDataTable}
+            renderBody={_renderContentTable}
+            renderHeader={_renderHeaderTable}
+            size={10}
+          />
         </Box>
       </Box>
     </BaseAdminPage>
