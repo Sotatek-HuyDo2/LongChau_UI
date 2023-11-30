@@ -18,8 +18,9 @@ import { toastError, toastSuccess } from 'src/utils/notify';
 import rf from 'src/services/RequestFactory';
 import ModalChangeActiveConfirm from 'src/components/Modals/ModalChangeActiveConfirm';
 import ModalViewUser from 'src/components/Modals/ModalViewUser';
+import ModalEditUser from 'src/components/Modals/ModalEditUser';
 
-interface IUser {
+export interface IUser {
   id: number;
   email: string;
   firstName: string;
@@ -38,9 +39,10 @@ const UserManagementPage = () => {
   const [openModalChangeActiveConfirm, setOpenModalChangeActiveConfirm] =
     useState<boolean>(false);
   const [openModalViewUser, setOpenModalViewUser] = useState<boolean>(false);
+  const [openModalEditUser, setOpenModalEditUser] = useState<boolean>(false);
 
   const dataRef = useRef<IUser[]>([]);
-  const [dataModal, setDataModal] = useState<IUser>();
+  const [dataModal, setDataModal] = useState<IUser>({} as IUser);
   const navigate = useNavigate();
   const [params, setParams] = useState({});
 
@@ -57,6 +59,11 @@ const UserManagementPage = () => {
   const handleOpenModalViewUser = (id: number) => {
     setId(id);
     setOpenModalViewUser(true);
+  };
+
+  const handleOpenModalEditUser = (id: number) => {
+    setId(id);
+    setOpenModalEditUser(true);
   };
 
   const changeActive = async () => {
@@ -108,18 +115,18 @@ const UserManagementPage = () => {
     }
   };
 
-  // const getUserDetail = async () => {
-  //   try {
-  //     const res = await rf.getRequest('UserRequest').getProfile();
-  //     setDataModal(res);
-  //   } catch (error) {
-  //     return { docs: [] };
-  //   }
-  // };
+  const getUserDetail = async () => {
+    try {
+      const res = await rf.getRequest('UserRequest').getProfile();
+      setDataModal(res);
+    } catch (error) {
+      return { docs: [] };
+    }
+  };
 
-  // useEffectUnsafe(() => {
-  //   getUserDetail();
-  // }, [id]);
+  useEffectUnsafe(() => {
+    getUserDetail();
+  }, [id]);
 
   const _renderHeaderTable = () => {
     return (
@@ -207,7 +214,12 @@ const UserManagementPage = () => {
             >
               View
             </AppButton>
-            <AppButton size={'sm'} bg={'yellow.100'} ml={'3px'}>
+            <AppButton
+              size={'sm'}
+              bg={'yellow.100'}
+              ml={'3px'}
+              onClick={() => handleOpenModalEditUser(data.id)}
+            >
               Edit
             </AppButton>
             {data?.status === 'active' ? (
@@ -217,7 +229,7 @@ const UserManagementPage = () => {
                 bg={'red.100'}
                 onClick={() => handleActive(data.id, data?.status)}
               >
-                Inactive
+                Deactivate
               </AppButton>
             ) : (
               <AppButton
@@ -226,22 +238,30 @@ const UserManagementPage = () => {
                 bg={'green.100'}
                 onClick={() => handleActive(data.id, data?.status)}
               >
-                Active
+                Activate
               </AppButton>
             )}
           </Box>
         </Flex>
-        {openModalChangeActiveConfirm && (
-          <ModalChangeActiveConfirm
-            open={openModalChangeActiveConfirm}
-            onClose={() => setOpenModalChangeActiveConfirm(false)}
-            onConfirm={changeActive}
+        {openModalEditUser && (
+          <ModalEditUser
+            open={openModalEditUser}
+            onClose={() => setOpenModalEditUser(false)}
+            data={dataModal}
           />
         )}
         {openModalViewUser && (
           <ModalViewUser
             open={openModalViewUser}
             onClose={() => setOpenModalViewUser(false)}
+            data={dataModal}
+          />
+        )}
+        {openModalChangeActiveConfirm && (
+          <ModalChangeActiveConfirm
+            open={openModalChangeActiveConfirm}
+            onClose={() => setOpenModalChangeActiveConfirm(false)}
+            onConfirm={changeActive}
           />
         )}
       </Flex>

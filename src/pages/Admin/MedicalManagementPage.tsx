@@ -24,8 +24,9 @@ import rf from 'src/services/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import ModalDeleteConfirm from 'src/components/Modals/ModalDeleteConfirm';
 import moment from 'moment';
+import ModalEditMedical from 'src/components/Modals/ModalEditMedical';
 
-interface IMedical {
+export interface IMedical {
   barcode: number;
   createdAt: string;
   description: string;
@@ -45,21 +46,30 @@ const MedicalManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
   const [openModalDeleteConfirm, setOpenModalDeleteConfirm] =
     useState<boolean>(false);
+  const [openModalEditMedical, setOpenModalEditMedical] =
+    useState<boolean>(false);
   const navigate = useNavigate();
   const [dataSearch, setDataSearch] = useState<IMedical[]>([]);
   const dataRef = useRef<IMedical[]>([]);
   const [id, setId] = useState<number>(NaN);
+  const [params, setParams] = useState<any>();
+  const [dataModal, setDataModal] = useState<IMedical>({} as IMedical);
 
   const handleDelete = (id: number) => {
     setId(id);
     setOpenModalDeleteConfirm(true);
   };
 
+  const handleUpdate = (id: number) => {
+    setId(id);
+    setOpenModalEditMedical(true);
+  };
+
   const deleteMedical = async () => {
     try {
       await rf.getRequest('ProductRequest').deleteProduct(id);
       toastSuccess('Delete successfully!');
-      // setParams({ ...params });
+      setParams({ ...params });
       setOpenModalDeleteConfirm(false);
     } catch (e: any) {
       toastError(e.message || 'Something was wrong!!');
@@ -79,10 +89,6 @@ const MedicalManagementPage = () => {
     setDataSearch(dataFilter);
   };
 
-  useEffectUnsafe(() => {
-    handleSearch();
-  }, [valueSearch]);
-
   const getDataTable = async () => {
     try {
       const res = await rf.getRequest('ProductRequest').getProduct();
@@ -96,6 +102,26 @@ const MedicalManagementPage = () => {
       return { docs: [] };
     }
   };
+
+  const getDataByID = async () => {
+    try {
+      const res = await rf.getRequest('ProductRequest').getProductDetail(id);
+      console.log('ProductDetail', res);
+
+      setDataModal(res);
+      return res;
+    } catch (error) {
+      return [];
+    }
+  };
+
+  useEffectUnsafe(() => {
+    handleSearch();
+  }, [valueSearch]);
+
+  useEffectUnsafe(() => {
+    getDataByID();
+  }, [id]);
 
   const _renderHeaderTable = () => {
     return (
@@ -190,7 +216,7 @@ const MedicalManagementPage = () => {
               size={'sm'}
               bg={'yellow.100'}
               ml={'3px'}
-              // onClick={onToggleOpenModalDelistConfirm}
+              onClick={() => handleUpdate(data.id)}
             >
               Edit
             </AppButton>
@@ -209,6 +235,13 @@ const MedicalManagementPage = () => {
             open={openModalDeleteConfirm}
             onClose={() => setOpenModalDeleteConfirm(false)}
             onConfirm={deleteMedical}
+          />
+        )}
+        {openModalEditMedical && (
+          <ModalEditMedical
+            open={openModalEditMedical}
+            onClose={() => setOpenModalEditMedical(false)}
+            data={dataModal}
           />
         )}
       </Flex>
@@ -251,6 +284,7 @@ const MedicalManagementPage = () => {
 
         <Box mt={10} className="delist-container">
           <AppDataTable
+            requestParams={params}
             fetchData={getDataTable}
             renderBody={_renderContentTable}
             renderHeader={_renderHeaderTable}

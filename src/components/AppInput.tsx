@@ -157,7 +157,7 @@ export const appInputStyles = {
         bg: mode('transparent', 'transparent')(props),
         border: '1px solid',
         fontSize: '12px',
-        color: mode('white', 'white')(props),
+        color: mode('black', 'black')(props),
         borderColor: mode('line.100', 'line.100')(props),
         _focus: {
           borderColor: mode('border.200', 'border.200')(props),
@@ -166,7 +166,7 @@ export const appInputStyles = {
           color: mode('line.100', 'line.100')(props),
         },
         _disabled: {
-          bg: mode('card.200', 'card.200')(props),
+          bg: mode('border.200', 'border.200')(props),
           border: '1px solid transparent',
           color: mode('white.100', 'white.100')(props),
         },

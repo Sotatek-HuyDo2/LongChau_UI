@@ -4,21 +4,23 @@ import BaseModal from './BaseModal';
 import AppButton from '../AppButton';
 import { FC } from 'react';
 import AppInput from '../AppInput';
-import { IUser } from 'src/pages/Admin/UserManagementPage';
+import { IMedical } from 'src/pages/Admin/MedicalManagementPage';
+import { formatTimestamp } from 'src/utils/format';
+import moment from 'moment';
 
-interface IModalEditUserProps {
+interface IModalEditMedicalProps {
   open: boolean;
   onClose: () => void;
   // onConfirm: () => void;
-  data: IUser;
+  data: IMedical;
 }
 
-const ModalEditUser: FC<IModalEditUserProps> = (props) => {
+const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
   const { open, onClose, data } = props;
   return (
     <BaseModal
       size="xl"
-      title="Edit User Information"
+      title="Edit Medical Information"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -34,13 +36,19 @@ const ModalEditUser: FC<IModalEditUserProps> = (props) => {
             Edit User {data.firstName + ' ' + data.lastName}
           </Box> */}
           <Flex>
-            <AppInput label="Email" defaultValue={data.email} disabled />
+            <AppInput label="Tên thuốc" defaultValue={data?.name} />
           </Flex>
+          <AppInput
+            label="Thời gian nhập"
+            defaultValue={formatTimestamp(
+              moment(data?.createdAt).valueOf(),
+              'DD-MM-YYYY HH:mm:ss',
+            )}
+          />
           <Flex gap={3}>
-            <AppInput label="Tên" defaultValue={data.lastName} />
-            <AppInput label="Họ" defaultValue={data.firstName} />
+            <AppInput label="Không gian" defaultValue={data.size} />
+            <AppInput label="Giá(VND)" defaultValue={data.price} />
           </Flex>
-          <AppInput label="Số điện thoại" defaultValue={data.phone} />
 
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton
@@ -60,4 +68,4 @@ const ModalEditUser: FC<IModalEditUserProps> = (props) => {
   );
 };
 
-export default ModalEditUser;
+export default ModalEditMedical;

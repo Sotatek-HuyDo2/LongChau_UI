@@ -3,14 +3,17 @@ import 'src/styles/components/BaseModal.scss';
 import BaseModal from './BaseModal';
 import AppButton from '../AppButton';
 import { FC } from 'react';
+import { IUser } from 'src/pages/Admin/UserManagementPage';
 
 interface IModalViewUserProps {
   open: boolean;
   onClose: () => void;
+  data: IUser;
 }
 
 const ModalViewUser: FC<IModalViewUserProps> = (props) => {
   const { open, onClose } = props;
+
   return (
     <BaseModal
       size="xl"
