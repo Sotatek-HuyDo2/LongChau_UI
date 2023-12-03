@@ -33,9 +33,9 @@ import CategoryMedicinePage from './pages/CategoryMedicinePage';
 import BranchAdminGeneralWarehouseManagementPage from './pages/Branch-Admin/GeneralWarehouseManagementPage';
 import StaffCustomerManagementPage from './pages/Staff/UserManagementPage';
 import BranchAdminPersonnelManagementPage from './pages/Branch-Admin/PersonnelManagementPage';
-import UserProfilePage from './pages/UserProfilePage';
-import ProfilePart from './pages/UserProfilePage/Profile.part';
+import ProfilePart from './pages/UserProfilePage/Profile';
 import Order from './pages/Order';
+import RegisterPage from './pages/RegisterPage';
 
 /**
  * Main App routes.
@@ -110,6 +110,7 @@ const RouterCustom = () => {
         <Route index element={<InsightPage />} />
       </Route> */}
       <Route path={'/login'} element={<LoginPage />} />
+      <Route path={'/register'} element={<RegisterPage />} />
 
       <Route path={'/'} element={<HomePage />} />
 
@@ -134,7 +135,7 @@ const RouterCustom = () => {
 
       <Route path={'/medical/:id'} element={<MedicalDetailPage />} />
 
-      <Route path={'profile'} element={<UserProfilePage />} />
+      <Route path={'profile'} element={<ProfilePart />} />
 
       {/* <Route path={'profile'} element={<ProfilePart />} /> */}
 

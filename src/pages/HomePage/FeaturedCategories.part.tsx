@@ -89,9 +89,9 @@ const FeatureCategories = () => {
           Danh mục nổi bật
         </Flex>
         <Flex flexWrap={'wrap'} gap={'20px'}>
-          {MOCK_FeatureCategories.map((item) => {
+          {MOCK_FeatureCategories.map((item, index) => {
             return (
-              <Flex className="feature-category--item">
+              <Flex className="feature-category--item" key={index}>
                 <Image src={item.icon} />
                 <Box className="feature-category--item-name">{item.name}</Box>
                 <Box className="feature-category--item-quality">

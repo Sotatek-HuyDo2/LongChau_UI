@@ -8,7 +8,6 @@ export default class BaseRequest {
   protected accessToken = '';
   constructor() {
     const accessToken = localStorage.getItem('token');
-    console.log('Access token: ', accessToken);
 
     if (accessToken) {
       this.accessToken = accessToken;

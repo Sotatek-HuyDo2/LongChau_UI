@@ -35,17 +35,17 @@ const CategoryFunctionalFoodsPage = () => {
 
   const filterByPrice = () => {
     if (filterType === 'Dưới 100.000đ') {
-      return product.filter((product) => product.price < 100000);
+      return product?.filter((product) => product?.price < 100000);
     } else if (filterType === '100.000đ đến 300.000đ') {
-      return product.filter(
-        (product) => product.price <= 300000 && product.price >= 100000,
+      return product?.filter(
+        (product) => product?.price <= 300000 && product?.price >= 100000,
       );
     } else if (filterType === '300.000đ đến 500.000đ') {
-      return product.filter(
-        (product) => product.price <= 500000 && product.price >= 300000,
+      return product?.filter(
+        (product) => product?.price <= 500000 && product?.price >= 300000,
       );
     } else if (filterType === 'Trên 500.000đ') {
-      return product.filter((product) => product.price > 500000);
+      return product?.filter((product) => product?.price > 500000);
     }
 
     return product;

@@ -115,18 +115,18 @@ const UserManagementPage = () => {
     }
   };
 
-  const getUserDetail = async () => {
-    try {
-      const res = await rf.getRequest('UserRequest').getProfile();
-      setDataModal(res);
-    } catch (error) {
-      return { docs: [] };
-    }
-  };
+  // const getUserDetail = async () => {
+  //   try {
+  //     const res = await rf.getRequest('UserRequest').getProfile();
+  //     setDataModal(res);
+  //   } catch (error) {
+  //     return { docs: [] };
+  //   }
+  // };
 
-  useEffectUnsafe(() => {
-    getUserDetail();
-  }, [id]);
+  // useEffectUnsafe(() => {
+  //   getUserDetail();
+  // }, [id]);
 
   const _renderHeaderTable = () => {
     return (

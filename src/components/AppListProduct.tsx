@@ -91,16 +91,16 @@ const AppListProduct = (props: IAppListProductProps) => {
             return (
               <Box
                 className="product__card"
-                onClick={() => navigate(`/medical/${product.medicineID}`)}
+                onClick={() => navigate(`/medical/${product?.medicineID}`)}
               >
                 <Box className="product__card-image">
-                  <Image src={product.img} alt="hello" />
+                  <Image src={product?.img} alt="hello" />
                 </Box>
                 <Box className="product__card-name">
-                  {product?.name ? product.name : '--'}
+                  {product?.name ? product?.name : '--'}
                 </Box>
                 <Box className="product__card-price">
-                  {product?.price ? product.price : '--'} /{' '}
+                  {product?.price ? product?.price : '--'} /{' '}
                   {product?.detail?.unit ? product?.detail?.unit : '--'}
                 </Box>
                 <Box className="product__card-unit">

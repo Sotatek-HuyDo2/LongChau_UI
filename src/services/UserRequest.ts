@@ -6,10 +6,10 @@ export default class UserRequest extends BaseRequest {
     return config.api.baseUrlApi;
   }
 
-  //   register(params: any) {
-  //     const url = `/user-public/register`;
-  //     return this.post(url, params);
-  //   }
+  register(params: any) {
+    const url = `user-public/register`;
+    return this.post(url, params);
+  }
 
   //   branchAdminRegister(params: any) {
   //     const url = `/user/branch-admin`;
@@ -23,6 +23,11 @@ export default class UserRequest extends BaseRequest {
 
   getUser() {
     const url = `user`;
+    return this.get(url);
+  }
+
+  getUserByID(id: number | string) {
+    const url = `user${id}`;
     return this.get(url);
   }
 

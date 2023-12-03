@@ -184,8 +184,9 @@ const FooterHomePage = () => {
       <Flex backgroundColor={'#f4f6f9'}>
         <Flex w={'1440px'} margin={'auto'} flexDirection={'column'}>
           <Flex p={'20px 0 30px 0'}>
-            {Mock_FOOTER1.map((item) => (
+            {Mock_FOOTER1.map((item, index) => (
               <Flex
+                key={index}
                 flexDirection={'column'}
                 pt={'10px'}
                 w={'full'}
@@ -196,8 +197,8 @@ const FooterHomePage = () => {
                 <Text fontSize={16} fontWeight={'bold'} color={'#657384'}>
                   {item.title}
                 </Text>
-                {item.content.map((subItem) => (
-                  <Flex>
+                {item.content.map((subItem, indexItem) => (
+                  <Flex key={indexItem}>
                     <Text
                       as={'a'}
                       href={subItem.link}

@@ -199,9 +199,9 @@ const MenuFilter = () => {
         gap={'30px'}
         justifyContent={'space-between'}
       >
-        {MOCK_MENU.map((menu) => {
+        {MOCK_MENU.map((menu, index) => {
           return (
-            <Flex>
+            <Flex key={index}>
               <Menu>
                 {({ isOpen }) => (
                   <>

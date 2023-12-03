@@ -25,7 +25,7 @@ interface IMedicalProduct {
 
 const ProductList = () => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState<IMedicalProduct[]>([]);
+  const [products, setProducts] = useState<IMedicalProduct[] | null>([]);
 
   const getAllProduct = async () => {
     try {
@@ -50,22 +50,23 @@ const ProductList = () => {
       />
       <Box className="product-title">Sản phẩm bán chạy</Box>
       <Box className="product">
-        {products.map((product) => {
+        {products?.map((product, index) => {
           return (
             <Flex
+              key={index}
               className="product--card"
               flexDirection={'column'}
               gap={'10px'}
-              onClick={() => navigate(`/medical/${product.medicineID}`)}
+              onClick={() => navigate(`/medical/${product?.medicineID}`)}
             >
               <Box className="product--card-image" w={128} height={128}>
-                <Image src={product.img} alt="hello" />
+                <Image src={product?.img} alt="hello" />
               </Box>
               <Box className="product--card-name">
-                {product?.name ? product.name : '--'}
+                {product?.name ? product?.name : '--'}
               </Box>
               <Box className="product--card-price">
-                {product?.price ? product.price : '--'} /{' '}
+                {product?.price ? product?.price : '--'} /{' '}
                 {product?.detail?.unit ? product?.detail?.unit : '--'}
               </Box>
               <Box className="product--card-unit">

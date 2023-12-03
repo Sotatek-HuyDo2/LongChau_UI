@@ -185,7 +185,7 @@ const MedicalDetailPage = () => {
               </Box>
             </Flex>
             {!role ||
-              (role === 'user' && (
+              (role === 'customer' && (
                 <Flex
                   flexDirection={'column'}
                   color={'black'}
@@ -303,7 +303,7 @@ const MedicalDetailPage = () => {
   };
   return (
     <>
-      {!role || role === 'user' ? (
+      {!role || role === 'customer' ? (
         <BaseHomePage>
           <Box backgroundColor={'#f4f6f9'}>
             <Box className="container-explorer" w={'1440px'} margin={'auto'}>

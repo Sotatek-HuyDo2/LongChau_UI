@@ -119,9 +119,9 @@ const FavoriteBrand = () => {
         Danh mục nổi bật
       </Flex>
       <Slider ref={sliderRef} {...settings}>
-        {MOCK_BRAND_DEMO.map((item) => {
+        {MOCK_BRAND_DEMO.map((item, index) => {
           return (
-            <Flex className="slider-item">
+            <Flex className="slider-item" key={index}>
               <Flex className="slider-item--image" flexDirection={'column'}>
                 <Image w={'200px'} margin={'auto'} src={item.img} alt="brand" />
                 <Box className="slider-item--name">
