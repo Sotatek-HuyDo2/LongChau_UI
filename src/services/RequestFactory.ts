@@ -3,6 +3,7 @@ import UserRequest from './UserRequest';
 import BranchRequest from './BranchRequest';
 import SupplierRequest from './SupplierRequest';
 import ProductRequest from './ProductRequest';
+import CategoryRequest from './CategoryRequest';
 
 const requestMap = {
   AuthRequest,
@@ -10,6 +11,7 @@ const requestMap = {
   BranchRequest,
   SupplierRequest,
   ProductRequest,
+  CategoryRequest,
 };
 
 const instances = {};

@@ -12,12 +12,12 @@ export default class ProductRequest extends BaseRequest {
   // }
 
   getProduct() {
-    const url = `product`;
+    const url = `drugs`;
     return this.get(url);
   }
 
   getProductDetail(id: number) {
-    const url = `product/${id}`;
+    const url = `drugs/${id}`;
     return this.get(url);
   }
 

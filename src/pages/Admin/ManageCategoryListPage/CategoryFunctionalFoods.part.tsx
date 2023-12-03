@@ -13,6 +13,7 @@ import { MOCK_CATEGORY_MEDICINE } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
+import rf from 'src/services/RequestFactory';
 
 interface ICategory {
   categoryID: string;
@@ -48,6 +49,9 @@ const CategoryFunctionalFoods = () => {
 
   const getCategory = async () => {
     try {
+      const resData = await rf.getRequest('CategoryRequest').getAllCate(1);
+      console.log(resData);
+
       dataRef.current = MOCK_CATEGORY_MEDICINE;
       setDataSearch(MOCK_CATEGORY_MEDICINE);
       return {
@@ -57,6 +61,10 @@ const CategoryFunctionalFoods = () => {
       return { docs: [] };
     }
   };
+
+  useEffectUnsafe(() => {
+    getCategory();
+  }, []);
 
   const _renderHeaderTable = () => {
     return (
