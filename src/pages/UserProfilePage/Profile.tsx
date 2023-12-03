@@ -1,5 +1,6 @@
 import { Box, Flex, Image } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AppButton } from 'src/components';
 import AppMenu from 'src/components/AppMenu';
 import BaseHomePage from 'src/components/layouts/HomePage/BaseHomePage';
@@ -17,6 +18,7 @@ interface IProfile {
 
 const ProfilePart = () => {
   const [profile, setProfile] = useState<IProfile>();
+  const navigate = useNavigate();
   const getProfile = async () => {
     try {
       const res = await rf.getRequest('UserRequest').getProfile();
@@ -91,20 +93,33 @@ const ProfilePart = () => {
                 pb={'10px'}
                 borderBottom={'1px solid #a4a7b7'}
               >
-                <Box>Giới tính</Box>
-                {/* <Box>{profile?.sex === 'male' ? 'Nam' : 'Nữ'}</Box> */}
+                <Box>Email</Box>
+                <Box>{profile?.email}</Box>
               </Flex>
-              <Flex
+              {/* <Flex
+                w={'full'}
+                justifyContent={'space-between'}
+                pb={'10px'}
+                borderBottom={'1px solid #a4a7b7'}
+              >
+                <Box>Giới tính</Box>
+                <Box>{profile?.sex === 'male' ? 'Nam' : 'Nữ'}</Box>
+              </Flex> */}
+              {/* <Flex
                 w={'full'}
                 justifyContent={'space-between'}
                 pb={'10px'}
                 borderBottom={'1px solid #a4a7b7'}
               >
                 <Box>Ngày sinh</Box>
-                {/* <Box>{profile?.DOB}</Box> */}
-              </Flex>
+                <Box>{profile?.DOB}</Box>
+              </Flex> */}
             </Flex>
-            <AppButton borderRadius={'50px'} size="lg">
+            <AppButton
+              borderRadius={'50px'}
+              size="lg"
+              onClick={() => navigate('edit')}
+            >
               Chỉnh sửa thông tin
             </AppButton>
           </Flex>

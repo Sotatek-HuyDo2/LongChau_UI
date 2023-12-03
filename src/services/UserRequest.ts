@@ -41,10 +41,10 @@ export default class UserRequest extends BaseRequest {
     return this.get(url);
   }
 
-  //   updateProfile(param: any) {
-  //     const url = `/user/profile`;
-  //     return this.put(url, param);
-  //   }
+  updateProfile(param: any) {
+    const url = `user/profile`;
+    return this.put(url, param);
+  }
 
   deleteUser(id: number) {
     const url = `user/${id}`;

@@ -1,7 +1,9 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Flex, Image } from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { clearUser } from 'src/store/user';
 
 interface IAppMenu {
   icon?: string;
@@ -9,22 +11,29 @@ interface IAppMenu {
   path: string;
 }
 
-const MOCK_MENU_PROFILE = [
-  {
-    name: 'Thông tin cá nhân',
-    path: '/profile',
-  },
-  {
-    name: 'Đơn hàng của tôi',
-    path: '/order-list',
-  },
-  { name: 'Đăng xuất', path: '/logout' },
-];
-
 const AppMenu: React.FC<{ profile?: any }> = ({ profile }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const MOCK_MENU_PROFILE = [
+    {
+      name: 'Thông tin cá nhân',
+      path: '/profile',
+    },
+    {
+      name: 'Đơn hàng của tôi',
+      path: '/order-list',
+    },
+    {
+      name: 'Đăng xuất',
+      path: '/logout',
+    },
+  ];
 
+  const handleLogOut = () => {
+    dispatch(clearUser());
+    navigate('/login');
+  };
   return (
     <Flex w={'30%'} justifyContent={'center'} flexDir={'column'}>
       <Flex w={'full'} flexDir={'column'} alignItems={'center'}>
@@ -66,7 +75,12 @@ const AppMenu: React.FC<{ profile?: any }> = ({ profile }) => {
               }}
               bg={location.pathname.includes(menu?.path) ? '#f5f6fa' : ''}
               color={location.pathname.includes(menu?.path) ? '#2167df' : ''}
-              onClick={() => navigate(menu?.path || '/profile')}
+              // onClick={() => navigate(menu?.path || '/profile')}
+              onClick={
+                menu?.path === '/logout'
+                  ? () => handleLogOut()
+                  : () => navigate(menu?.path || '/profile')
+              }
             >
               <Box>{menu.name}</Box>
               <ChevronRightIcon />

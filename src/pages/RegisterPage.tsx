@@ -26,9 +26,9 @@ import jwt_decode from 'jwt-decode';
 
 // const clientId = config.auth.googleClientId;
 
-interface IDataBody {
-  email: string;
-  password: string;
+export interface IDataBody {
+  email?: string;
+  password?: string;
   firstName: string;
   lastName: string;
   phone: string;
@@ -129,15 +129,7 @@ const RegisterPage = () => {
             }}
           />
           <Flex flexDirection="row" w="100%" gap="10px">
-            <AppButton
-              onClick={onSubmit}
-              size="md"
-              w="100%"
-              variant="formTrade"
-            >
-              Đăng nhập
-            </AppButton>
-            <AppButton size="md" w="100%">
+            <AppButton size="md" w="100%" onClick={onSubmit}>
               Đăng ký
             </AppButton>
           </Flex>

@@ -8,20 +8,14 @@ import {
   Input,
   Text,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import { GuestAdminPage } from 'src/components/layouts';
+import { useState } from 'react';
 import '../styles/pages/LoginPage.scss';
-import { GoogleIcon } from 'src/assets/icons';
-import { GoogleLogin } from 'react-google-login';
-import { gapi } from 'gapi-script';
-import config from 'src/config';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import rf from 'src/services/RequestFactory';
 import { useDispatch } from 'react-redux';
 import { setUserAuth } from '../store/user';
 import { useNavigate } from 'react-router-dom';
 import { AppButton } from 'src/components';
-import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import jwt_decode from 'jwt-decode';
 
 // const clientId = config.auth.googleClientId;
@@ -32,14 +26,9 @@ interface IUser {
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [dataInfo, setDataInfo] = useState<any>({});
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const onFailure = () => {
-    toastError('Oops. Something went wrong!');
-  };
 
   const handleEmailChange = (e: any) => setEmail(e.target.value);
   const handlePasswordChange = (e: any) => setPassword(e.target.value);
@@ -50,7 +39,7 @@ const LoginPage = () => {
     try {
       const res = await rf.getRequest('AuthRequest').login({ email, password });
 
-      // dispatch(setUserAuth(res.access_token));
+      dispatch(setUserAuth({ accessToken: res.access_token }));
       localStorage.setItem('token', res.access_token);
       const userRole: IUser = jwt_decode(res.access_token);
 
@@ -66,17 +55,6 @@ const LoginPage = () => {
       toastError(e.message);
     }
   };
-
-  // useEffect(() => {
-  //   function start() {
-  //     gapi.auth2.init({
-  //       clientId,
-  //       scope: 'email',
-  //     });
-  //   }
-
-  //   gapi.load('client:auth2', start);
-  // }, []);
 
   return (
     // <GuestAdminPage>
@@ -121,7 +99,7 @@ const LoginPage = () => {
             >
               Đăng nhập
             </AppButton>
-            <AppButton size="md" w="100%">
+            <AppButton size="md" w="100%" onClick={() => navigate('/register')}>
               Đăng ký
             </AppButton>
           </Flex>
