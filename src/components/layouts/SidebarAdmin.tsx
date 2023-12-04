@@ -121,7 +121,7 @@ const MENUS = [
     name: 'Thống kê',
     path: '/admin/statistical',
     icon: <Overview />,
-    component: <MenuDrop dropTitle="Thống kê" dropItem={LIST_ITEM} />,
+    // component: <MenuDrop dropTitle="Thống kê" dropItem={LIST_ITEM} />,
   },
 ];
 
@@ -132,16 +132,16 @@ const SidebarAdmin = () => {
   return (
     <Box className="nav-bar">
       <Box className="nav-bar__menu">
-        {MENUS.map((menu, index) => {
+        {MENUS.map((menu: any, index) => {
           return (
             <Flex
               userSelect="none"
               key={index}
               className={
-                !menu.component
+                !menu?.component
                   ? `nav-bar__menu-item ${
                       location.pathname === menu.path ||
-                      menu?.pathChild?.some((item) =>
+                      menu?.pathChild?.some((item: any) =>
                         location.pathname.includes(item),
                       )
                         ? 'active'
@@ -150,11 +150,11 @@ const SidebarAdmin = () => {
                   : 'nav-bar__menu-drop'
               }
               onClick={() => {
-                menu.component ? '' : navigate(menu.path || '/admin');
+                menu?.component ? '' : navigate(menu?.path || '/admin');
               }}
             >
-              <Box>{menu.component ? null : menu.icon}</Box>
-              <Box>{menu.component ? menu.component : menu.name}</Box>
+              <Box>{menu?.component ? null : menu.icon}</Box>
+              <Box>{menu?.component ? menu?.component : menu.name}</Box>
             </Flex>
           );
         })}

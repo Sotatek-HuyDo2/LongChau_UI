@@ -3,6 +3,10 @@ import React, { ReactNode } from 'react';
 import { BaseAdminPage } from 'src/components/layouts';
 import { AppTabs } from 'src/components';
 import 'src/styles/pages/ManageCategoryListPage.scss';
+import CategoryFunctionalFoods from '../ManageCategoryListPage/CategoryFunctionalFoods.part';
+import CategoryMedicine from '../ManageCategoryListPage/CategoryMedicine.part';
+import CategoryPersonalCare from '../ManageCategoryListPage/CategoryPersonalCare.part';
+import CategoryMedicalEquipment from '../ManageCategoryListPage/CategoryMedicalEquipment.part';
 // import CategoryPersonalCare from './CategoryPersonalCare.part';
 // import CategoryFunctionalFoods from './CategoryFunctionalFoods.part';
 // import CategoryMedicine from './CategoryMedicine.part';
@@ -15,26 +19,26 @@ interface IStatistical {
 }
 
 const tabs: IStatistical[] = [
-  //   {
-  //     id: 'TVL',
-  //     name: 'TVL',
-  //     content: <CategoryFunctionalFoods />,
-  //   },
-  //   {
-  //     id: 'Trading volume',
-  //     name: 'Trading volume',
-  //     content: <CategoryMedicine />,
-  //   },
-  //   {
-  //     id: 'Trading fee',
-  //     name: 'Trading fee',
-  //     content: <CategoryPersonalCare />,
-  //   },
-  //   {
-  //     id: 'User',
-  //     name: 'User',
-  //     content: <CategoryMedicalEquipment />,
-  //   },
+  {
+    id: 'FunctionalFoods',
+    name: 'Thực phẩm chức năng',
+    content: <CategoryFunctionalFoods />,
+  },
+  {
+    id: 'Medicine',
+    name: 'Thuốc',
+    content: <CategoryMedicine />,
+  },
+  {
+    id: 'PersonalCare',
+    name: 'Chăm sóc khách hàng',
+    content: <CategoryPersonalCare />,
+  },
+  {
+    id: 'MedicalEquipment',
+    name: 'Thiết bị y tế',
+    content: <CategoryMedicalEquipment />,
+  },
 ];
 
 const Statistical = () => {
@@ -47,10 +51,10 @@ const Statistical = () => {
           </Text>
         </Box>
         <Box mt={10}>
-          {/* <AppTabs tabs={tabs} /> */}
-          {tabs.map((item, index) => {
+          <AppTabs tabs={tabs} />
+          {/* {tabs.map((item, index) => {
             return <Flex>{item.content}</Flex>;
-          })}
+          })} */}
         </Box>
       </Box>
     </BaseAdminPage>
