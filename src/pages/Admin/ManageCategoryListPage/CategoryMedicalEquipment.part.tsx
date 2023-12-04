@@ -127,13 +127,13 @@ const CategoryMedicalEquipment = () => {
               size={'sm'}
               onClick={() => navigate(`/medical/${data.categoryID}`)}
             >
-              View
+              Xem
             </AppButton>
             <AppButton size={'sm'} bg={'yellow.100'} ml={'3px'}>
-              Edit
+              Sửa
             </AppButton>
             <AppButton ml={'3px'} size={'sm'} bg={'red.100'}>
-              Del
+              Xóa
             </AppButton>
           </Box>
         </Flex>

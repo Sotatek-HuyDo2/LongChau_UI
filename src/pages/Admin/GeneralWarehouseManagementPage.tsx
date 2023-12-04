@@ -144,10 +144,10 @@ const GeneralWarehouseManagementPage = () => {
               size={'sm'}
               onClick={() => navigate(`/medical/${data.id}`)}
             >
-              View
+              Xem
             </AppButton>
             <AppButton size={'sm'} bg={'yellow.100'} ml={'3px'}>
-              Edit
+              Sửa
             </AppButton>
             <AppButton
               onClick={() => handleDelete(data.id)}
@@ -155,7 +155,7 @@ const GeneralWarehouseManagementPage = () => {
               size={'sm'}
               bg={'red.100'}
             >
-              Del
+              Xóa
             </AppButton>
           </Box>
         </Flex>

@@ -136,7 +136,7 @@ const CreatePushNotificationPage = () => {
 
         <Flex justifyContent={'flex-end'} mt={10}>
           <AppButton w={'150px'} variant="outline">
-            Cancel
+            Hủy
           </AppButton>
 
           <AppButton ml={5} w={'150px'} isDisabled={isDisableSubmit}>

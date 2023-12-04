@@ -105,9 +105,9 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
               onClick={onClose}
               w={'100%'}
             >
-              Cancel
+              Hủy
             </AppButton>
-            <AppButton flex={1}>Confirm</AppButton>
+            <AppButton flex={1}>Thêm mới</AppButton>
           </Flex>
         </Flex>
       </Flex>

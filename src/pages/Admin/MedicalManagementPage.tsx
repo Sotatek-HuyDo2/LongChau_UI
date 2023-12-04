@@ -193,7 +193,7 @@ const MedicalManagementPage = () => {
               label={!!data?.price ? formatCommaNumber(data?.price) : ''}
             >
               <Box cursor={'pointer'}>
-                {!!data?.price ? `${formatNumber(data?.price)} (VND)` : '--'}
+                {!!data?.price ? `${formatNumber(data?.price)}` : '--'}
               </Box>
             </Tooltip>
           </Box>

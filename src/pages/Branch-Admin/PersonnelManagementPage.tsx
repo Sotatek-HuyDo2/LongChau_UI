@@ -143,7 +143,7 @@ const BranchAdminPersonnelManagementPage = () => {
               size={'sm'}
               onClick={() => navigate(`/medical/${data.brandID}`)}
             >
-              View
+              Xem
             </AppButton>
             <AppButton
               size={'sm'}
@@ -151,7 +151,7 @@ const BranchAdminPersonnelManagementPage = () => {
               ml={'3px'}
               onClick={onToggleOpenModalDelistConfirm}
             >
-              Edit
+              Sửa
             </AppButton>
             <AppButton
               ml={'3px'}
@@ -159,7 +159,7 @@ const BranchAdminPersonnelManagementPage = () => {
               bg={'red.100'}
               onClick={onToggleOpenModalDelistConfirm}
             >
-              Del
+              Xóa
             </AppButton>
           </Box>
         </Flex>

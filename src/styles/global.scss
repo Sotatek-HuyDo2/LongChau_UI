@@ -171,8 +171,9 @@ wcm-modal {
 }
 
 .react-datepicker-wrapper {
+  width: 100% !important;
+
   input {
-    width: 100% !important;
     height: 40px !important;
     background-color: transparent;
     border: 1px solid $Line;

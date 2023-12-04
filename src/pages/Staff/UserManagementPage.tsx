@@ -137,7 +137,7 @@ const StaffCustomerManagementPage = () => {
               size={'sm'}
               onClick={() => navigate(`/medical/${data.brandID}`)}
             >
-              View
+              Xem
             </AppButton>
             <AppButton
               size={'sm'}
@@ -145,7 +145,7 @@ const StaffCustomerManagementPage = () => {
               ml={'3px'}
               onClick={onToggleOpenModalDelistConfirm}
             >
-              Edit
+              Sửa
             </AppButton>
             <AppButton
               ml={'3px'}
@@ -153,7 +153,7 @@ const StaffCustomerManagementPage = () => {
               bg={'red.100'}
               onClick={onToggleOpenModalDelistConfirm}
             >
-              Del
+              Xóa
             </AppButton>
           </Box>
         </Flex>

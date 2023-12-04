@@ -16,8 +16,8 @@ const ModalChangeActiveConfirm: FC<IModalChangeActiveConfirmProps> = (
   const { open, onClose, onConfirm } = props;
   return (
     <BaseModal
-      size="xl"
-      title="Change Active Confirm"
+      size="2xl"
+      title="Thay đổi trạng thái người dùng"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -29,9 +29,15 @@ const ModalChangeActiveConfirm: FC<IModalChangeActiveConfirmProps> = (
           gap={'15px'}
           w={'full'}
         >
-          <Box className="delist-confirm--para" m={'auto'} fontSize={18}>
-            Do you want to change active this User?
-          </Box>
+          <Flex
+            className="delist-confirm--para"
+            m={'auto'}
+            fontSize={18}
+            textAlign={'center'}
+          >
+            Bạn có muốn thay đổi trạng thái của người dùng này? (thay đổi này sẽ
+            ảnh hưởng tới trải nghiệm của người dùng)
+          </Flex>
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton
               className="btn-outline-hover"
@@ -40,10 +46,10 @@ const ModalChangeActiveConfirm: FC<IModalChangeActiveConfirmProps> = (
               onClick={onClose}
               w={'100%'}
             >
-              Cancel
+              Hủy
             </AppButton>
             <AppButton flex={1} onClick={onConfirm}>
-              Confirm
+              Xác nhận
             </AppButton>
           </Flex>
         </Flex>

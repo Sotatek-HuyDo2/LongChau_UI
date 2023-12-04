@@ -164,7 +164,7 @@ const AppDataTable = forwardRef((props: DataTableProps, ref: Ref<any>) => {
       return _renderLoading();
     }
 
-    if (!tableData.length && !isNotShowNoData) {
+    if (!tableData?.length && !isNotShowNoData) {
       return renderNoData ? (
         renderNoData()
       ) : (
@@ -174,7 +174,7 @@ const AppDataTable = forwardRef((props: DataTableProps, ref: Ref<any>) => {
   };
 
   const _renderBody = () => {
-    if (!tableData.length || isLoading || props.loading) {
+    if (!tableData?.length || isLoading || props.loading) {
       return;
     }
     return <>{renderBody(tableData)}</>;

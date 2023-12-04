@@ -109,9 +109,9 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
               onClick={onClose}
               w={'100%'}
             >
-              Cancel
+              Hủy
             </AppButton>
-            <AppButton flex={1}>Confirm</AppButton>
+            <AppButton flex={1}>Xác nhận</AppButton>
           </Flex>
         </Flex>
       </Flex>

@@ -40,7 +40,7 @@ const ModalViewUser: FC<IModalViewUserProps> = (props) => {
               onClick={onClose}
               w={'100%'}
             >
-              Cancel
+              Hủy
             </AppButton>
           </Flex>
         </Flex>

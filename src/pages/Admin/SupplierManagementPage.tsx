@@ -119,7 +119,7 @@ const SupplierManagementPage = () => {
 
     return (
       <Box>
-        {dataSearch.map((data: ISupplier, id: number) => {
+        {dataSearch?.map((data: ISupplier, id: number) => {
           return (
             <RowAddressTransactionTable data={data} key={`${id}-coin-table`} />
           );
@@ -187,10 +187,10 @@ const SupplierManagementPage = () => {
               size={'sm'}
               // onClick={() => navigate(`/medical/${data.categoryID}`)}
             >
-              View
+              Xem
             </AppButton>
             <AppButton size={'sm'} bg={'yellow.100'} ml={'3px'}>
-              Edit
+              Sửa
             </AppButton>
             <AppButton
               // onClick={() => handleDelete(data.supplierID)}
@@ -198,7 +198,7 @@ const SupplierManagementPage = () => {
               size={'sm'}
               bg={'red.100'}
             >
-              Del
+              Xóa
             </AppButton>
           </Box>
         </Flex>

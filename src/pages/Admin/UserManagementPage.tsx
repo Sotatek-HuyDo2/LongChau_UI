@@ -212,7 +212,7 @@ const UserManagementPage = () => {
               // onClick={() => navigate(`/medical/${data.brandID}`)}
               onClick={() => handleOpenModalViewUser(data.id)}
             >
-              View
+              Xem
             </AppButton>
             <AppButton
               size={'sm'}
@@ -220,7 +220,7 @@ const UserManagementPage = () => {
               ml={'3px'}
               onClick={() => handleOpenModalEditUser(data.id)}
             >
-              Edit
+              Sửa
             </AppButton>
             {data?.status === 'active' ? (
               <AppButton

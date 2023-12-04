@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import { MOCK_CATEGORY_MEDICINE } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import { BaseAdminPage } from 'src/components/layouts';
 import rf from 'src/services/RequestFactory';
 import { AddIcon } from '@chakra-ui/icons';
 
@@ -51,7 +50,6 @@ const CategoryFunctionalFoods = () => {
   const getCategory = async () => {
     try {
       const resData = await rf.getRequest('CategoryRequest').getAllCate(1);
-      console.log(resData);
 
       dataRef.current = MOCK_CATEGORY_MEDICINE;
       setDataSearch(MOCK_CATEGORY_MEDICINE);
@@ -135,13 +133,13 @@ const CategoryFunctionalFoods = () => {
               size={'sm'}
               onClick={() => navigate(`/medical/${data.categoryID}`)}
             >
-              View
+              Xem
             </AppButton>
             <AppButton size={'sm'} bg={'yellow.100'} ml={'3px'}>
-              Edit
+              Sửa
             </AppButton>
             <AppButton ml={'3px'} size={'sm'} bg={'red.100'}>
-              Del
+              Xóa
             </AppButton>
           </Box>
         </Flex>

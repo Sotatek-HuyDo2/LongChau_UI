@@ -18,7 +18,7 @@ const ModalEditUser: FC<IModalEditUserProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Edit User Information"
+      title="Sửa thông tin người dùng"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -50,9 +50,9 @@ const ModalEditUser: FC<IModalEditUserProps> = (props) => {
               onClick={onClose}
               w={'100%'}
             >
-              Cancel
+              Hủy
             </AppButton>
-            <AppButton flex={1}>Confirm</AppButton>
+            <AppButton flex={1}>Xác nhận</AppButton>
           </Flex>
         </Flex>
       </Flex>

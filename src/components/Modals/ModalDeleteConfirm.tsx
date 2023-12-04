@@ -38,10 +38,10 @@ const ModalDeleteConfirm: FC<IModalDeleteConfirmProps> = (props) => {
               onClick={onClose}
               w={'100%'}
             >
-              Cancel
+              Hủy
             </AppButton>
             <AppButton flex={1} onClick={onConfirm}>
-              Confirm
+              Xác nhận
             </AppButton>
           </Flex>
         </Flex>
