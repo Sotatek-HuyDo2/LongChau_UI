@@ -1,3 +1,5 @@
+import jwt_decode from 'jwt-decode';
+
 const env = process.env.REACT_APP_ENV || 'prod';
 
 const PREFERENCES = `lagom-admin-preferences-${env}`;
@@ -32,6 +34,16 @@ class Storage {
   static getEmail(): string | undefined {
     const { email } = getStorage();
     return email;
+  }
+
+  static getRole(): string | undefined {
+    const { accessToken } = getStorage();
+
+    if (accessToken) {
+      const data: any = jwt_decode(accessToken);
+      return data?.role;
+    }
+    return 'customer';
   }
 
   static getAccessToken(): string | undefined {

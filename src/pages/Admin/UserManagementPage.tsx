@@ -13,12 +13,13 @@ import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
 import '../../styles/pages/UserManagementPage.scss';
-import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
+import { AddIcon, LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import rf from 'src/services/RequestFactory';
 import ModalChangeActiveConfirm from 'src/components/Modals/ModalChangeActiveConfirm';
 import ModalViewUser from 'src/components/Modals/ModalViewUser';
 import ModalEditUser from 'src/components/Modals/ModalEditUser';
+import ModalAddNewUser from 'src/components/Modals/ModalAddNewUser';
 
 export interface IUser {
   id: number;
@@ -37,6 +38,8 @@ const UserManagementPage = () => {
   const [status, setStatus] = useState('active');
   const [id, setId] = useState<number>(NaN);
   const [openModalChangeActiveConfirm, setOpenModalChangeActiveConfirm] =
+    useState<boolean>(false);
+  const [openModalAddNewUser, setOpenModalAddNewUser] =
     useState<boolean>(false);
   const [openModalViewUser, setOpenModalViewUser] = useState<boolean>(false);
   const [openModalEditUser, setOpenModalEditUser] = useState<boolean>(false);
@@ -167,7 +170,7 @@ const UserManagementPage = () => {
             {data?.email ? data?.email : '--'}
           </Box>
           <Flex flexDirection="row" className="user--cell-body user--name">
-            {data?.firstName} {data?.lastName}
+            {data?.lastName} {data?.firstName}
           </Flex>
           <Box className="user--cell-body user--role">
             {data?.role ? data?.role : '--'}
@@ -264,6 +267,12 @@ const UserManagementPage = () => {
             onConfirm={changeActive}
           />
         )}
+        {openModalAddNewUser && (
+          <ModalAddNewUser
+            open={openModalAddNewUser}
+            onClose={() => setOpenModalAddNewUser(false)}
+          />
+        )}
       </Flex>
     );
   };
@@ -282,22 +291,30 @@ const UserManagementPage = () => {
           Quản lý người dùng
         </Flex>
         <Box className={'user__search'}>
-          <Flex alignItems={'center'}>
-            <Box className={'user__search-title'}>Người dùng:</Box>
-            <Box className="user__search-input">
-              <InputGroup>
-                <AppInput
-                  color={'black'}
-                  placeholder="Nhập để tìm kiếm..."
-                  size="md"
-                  value={valueSearch}
-                  onChange={(e: any) => setValueSearch(e.target.value)}
-                />
-                <InputRightElement top={4}>
-                  <SearchExplorer />
-                </InputRightElement>
-              </InputGroup>
-            </Box>
+          <Flex justifyContent={'space-between'}>
+            <Flex alignItems={'center'}>
+              <Box className={'user__search-title'}>Người dùng:</Box>
+              <Box className="user__search-input">
+                <InputGroup>
+                  <AppInput
+                    color={'black'}
+                    placeholder="Nhập để tìm kiếm..."
+                    size="md"
+                    value={valueSearch}
+                    onChange={(e: any) => setValueSearch(e.target.value)}
+                  />
+                  <InputRightElement top={4}>
+                    <SearchExplorer />
+                  </InputRightElement>
+                </InputGroup>
+              </Box>
+            </Flex>
+            <AppButton size={'md'} onClick={() => setOpenModalAddNewUser(true)}>
+              <Flex justify={'center'} align={'start'} gap={1}>
+                <AddIcon />
+                Thêm Branch Admin
+              </Flex>
+            </AppButton>
           </Flex>
         </Box>
 

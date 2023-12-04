@@ -15,42 +15,48 @@ interface IModalAddNewMedicalProps {
 }
 
 interface IDataForm {
-  content: string;
-  fromTimestamp: Date | null;
-  toTimestamp: Date | null;
-  repeatTimes: string;
-  timeToRepeat: string;
-  type: string;
+  name: string;
+  typeId: number;
+  supplierId: number;
+  soldAsDose: boolean;
+  sensitiveIngredients?: Array<string>;
+  description: string;
+  // unit: EDrugsUnit;
+  barcode: number;
+  price: number;
+  size: number;
 }
 
 const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
   const initData = {
-    content: '',
-    fromTimestamp: null,
-    toTimestamp: null,
-    type: 'Push Notification',
-    repeatTimes: '1',
-    timeToRepeat: '',
+    name: '',
+    typeId: NaN,
+    supplierId: NaN,
+    soldAsDose: false,
+    description: '',
+    barcode: NaN,
+    price: NaN,
+    size: NaN,
   };
 
   const { open, onClose } = props;
   const [dataForm, setDataForm] = useState<IDataForm>(initData);
 
-  const handleToChange = (date: any) => {
-    setDataForm({
-      ...dataForm,
-      toTimestamp: date,
-    });
+  // const handleToChange = (date: any) => {
+  //   setDataForm({
+  //     ...dataForm,
+  //     toTimestamp: date,
+  //   });
 
-    // if (
-    //   dataForm.fromTimestamp &&
-    //   moment(date).valueOf() < moment(dataForm.fromTimestamp).valueOf()
-    // ) {
-    //   setFromError('The end time must be greater than the start time');
-    // } else if (date < moment().add(1, 'minute').valueOf()) {
-    //   setFromError('The end time must be greater than the current time');
-    // } else setFromError('');
-  };
+  // if (
+  //   dataForm.fromTimestamp &&
+  //   moment(date).valueOf() < moment(dataForm.fromTimestamp).valueOf()
+  // ) {
+  //   setFromError('The end time must be greater than the start time');
+  // } else if (date < moment().add(1, 'minute').valueOf()) {
+  //   setFromError('The end time must be greater than the current time');
+  // } else setFromError('');
+  // };
 
   return (
     <BaseModal
@@ -73,7 +79,7 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
           <Flex>
             <AppInput label="Tên thuốc" />
           </Flex>
-          <Flex
+          {/* <Flex
             w={'100%'}
             pos={'relative'}
             pt={5}
@@ -91,7 +97,7 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
             <Text color={'border.200'} pos={'absolute'} top={'-8px'}>
               Ngày nhập
             </Text>
-          </Flex>
+          </Flex> */}
           <Flex gap={3}>
             <AppInput label="Không gian" />
             <AppInput label="Giá(VND)" />

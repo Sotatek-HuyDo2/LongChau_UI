@@ -51,6 +51,16 @@ const Header = () => {
               </Flex>
             </MenuButton>
             <MenuList className="menu-header">
+              <MenuItem
+                // onClick={() => navigate('/profile')}
+                color={'black'}
+                _hover={{
+                  bg: '#2167df',
+                  color: 'white',
+                }}
+              >
+                Tài khoản
+              </MenuItem>
               <MenuItem className="user-info logout" onClick={onLogout}>
                 <span className="door-logout">
                   <DoorLogout />

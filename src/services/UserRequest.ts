@@ -11,10 +11,10 @@ export default class UserRequest extends BaseRequest {
     return this.post(url, params);
   }
 
-  //   branchAdminRegister(params: any) {
-  //     const url = `/user/branch-admin`;
-  //     return this.post(url, params);
-  //   }
+  branchAdminRegister(params: any) {
+    const url = `user/branch-admin`;
+    return this.post(url, params);
+  }
 
   //   staffRegister(params: any) {
   //     const url = `/user/staff`;

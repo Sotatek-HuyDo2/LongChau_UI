@@ -111,6 +111,7 @@ const RouterCustom = () => {
         <Route index element={<InsightPage />} />
       </Route> */}
       <Route path={'/login'} element={<LoginPage />} />
+
       <Route path={'/register'} element={<RegisterPage />} />
 
       <Route path={'/'} element={<HomePage />} />
@@ -166,6 +167,10 @@ const RouterCustom = () => {
       <Route path={'branch-admin/statistical'} element={<Statistical />} />
 
       {/* Admin */}
+      <Route path={'admin'} element={<PrivateRoute />}>
+        <Route index element={<SupplierManagementPage />} />
+      </Route>
+
       <Route path={'admin'} element={<SupplierManagementPage />} />
 
       <Route

@@ -3,11 +3,13 @@ import { Navigate, Outlet } from 'react-router';
 import Storage from 'src/utils/storage';
 
 const PrivateRoute = () => {
-  const accessToken = Storage.getAccessToken();
-  if (!!accessToken) {
+  const role = Storage.getRole();
+
+  if (!!role && role === 'admin') {
     return <Outlet />;
   } else {
-    return <Navigate to={'/login'} />;
+    return <Navigate to={'/'} />;
   }
 };
+
 export default PrivateRoute;

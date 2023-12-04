@@ -268,7 +268,7 @@ const MedicalManagementPage = () => {
                 <InputGroup>
                   <AppInput
                     color={'black'}
-                    placeholder="Search for pair"
+                    placeholder="Nhập để tìm kiếm..."
                     size="md"
                     value={valueSearch}
                     onChange={(e: any) => setValueSearch(e.target.value.trim())}
