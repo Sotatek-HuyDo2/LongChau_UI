@@ -17,23 +17,23 @@ interface ITabs {
 
 const tabs: ITabs[] = [
   {
-    id: 'TVL',
-    name: 'TVL',
+    id: 'FunctionalFoods',
+    name: 'Thực phẩm chức năng',
     content: <CategoryFunctionalFoods />,
   },
   {
-    id: 'Trading volume',
-    name: 'Trading volume',
+    id: 'Medicine',
+    name: 'Thuốc',
     content: <CategoryMedicine />,
   },
   {
-    id: 'Trading fee',
-    name: 'Trading fee',
+    id: 'PersonalCare',
+    name: 'Chăm sóc khách hàng',
     content: <CategoryPersonalCare />,
   },
   {
-    id: 'User',
-    name: 'User',
+    id: 'MedicalEquipment',
+    name: 'Thiết bị y tế',
     content: <CategoryMedicalEquipment />,
   },
 ];
@@ -48,12 +48,24 @@ const ManageCategoryList = () => {
           </Text>
         </Box>
         <Box mt={10}>
-          {tabs.map((item, index) => {
-            return <Flex>{item.content}</Flex>;
-          })}
+          <AppTabs tabs={tabs} />
         </Box>
       </Box>
     </BaseAdminPage>
+    // <BaseAdminPage>
+    //   <Box>
+    //     <Box>
+    //       <Text fontSize="24px" as="b" mr={'30px'} color={'#2167df'}>
+    //         Quản lý Danh Mục
+    //       </Text>
+    //     </Box>
+    //     <Box mt={10}>
+    //       {tabs.map((item, index) => {
+    //         return <Flex>{item.content}</Flex>;
+    //       })}
+    //     </Box>
+    //   </Box>
+    // </BaseAdminPage>
   );
 };
 

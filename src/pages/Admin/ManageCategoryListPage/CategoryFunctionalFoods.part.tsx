@@ -14,6 +14,7 @@ import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
 import rf from 'src/services/RequestFactory';
+import { AddIcon } from '@chakra-ui/icons';
 
 interface ICategory {
   categoryID: string;
@@ -149,48 +150,44 @@ const CategoryFunctionalFoods = () => {
   };
 
   return (
-    <BaseAdminPage>
-      <Box className="category" w="full">
-        <Flex
-          fontSize="24px"
-          as="b"
-          mr={'30px'}
-          alignItems={'center'}
-          gap={3}
-          color={'#2167df'}
-        >
-          Quản lý danh mục thuốc
+    // <BaseAdminPage>
+    <Box className="category" w="full">
+      <Box className={'category__search'}>
+        <Flex alignItems={'center'} justifyContent={'end'} gap={2}>
+          {/* <Box className={'category__search-title'}>Thực phẩm chức năng:</Box> */}
+          <Box className="category__search-input">
+            <InputGroup>
+              <AppInput
+                color={'black'}
+                placeholder="Nhập để tìm kiếm..."
+                size="md"
+                value={valueSearch}
+                onChange={(e: any) => setValueSearch(e.target.value)}
+              />
+              <InputRightElement top="4px">
+                <SearchExplorer />
+              </InputRightElement>
+            </InputGroup>
+          </Box>
+          <AppButton size={'md'} onClick={() => navigate(`/medical/`)}>
+            <Flex justify={'center'} align={'start'} gap={1}>
+              <AddIcon />
+              Thêm Thuốc
+            </Flex>
+          </AppButton>
         </Flex>
-        <Box className={'category__search'}>
-          <Flex alignItems={'center'}>
-            <Box className={'category__search-title'}>Thực phẩm chức năng:</Box>
-            <Box className="category__search-input">
-              <InputGroup>
-                <AppInput
-                  color={'black'}
-                  placeholder="Nhập để tìm kiếm..."
-                  size="sm"
-                  value={valueSearch}
-                  onChange={(e: any) => setValueSearch(e.target.value)}
-                />
-                <InputRightElement top="4px">
-                  <SearchExplorer />
-                </InputRightElement>
-              </InputGroup>
-            </Box>
-          </Flex>
-        </Box>
-
-        <Box mt={10} className="category-container">
-          <AppDataTable
-            fetchData={getCategory}
-            renderBody={_renderContentTable}
-            renderHeader={_renderHeaderTable}
-            size={10}
-          />
-        </Box>
       </Box>
-    </BaseAdminPage>
+
+      <Box mt={10} className="category-container">
+        <AppDataTable
+          fetchData={getCategory}
+          renderBody={_renderContentTable}
+          renderHeader={_renderHeaderTable}
+          size={10}
+        />
+      </Box>
+    </Box>
+    // </BaseAdminPage>
   );
 };
 

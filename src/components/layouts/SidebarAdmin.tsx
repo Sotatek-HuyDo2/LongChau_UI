@@ -92,9 +92,10 @@ const MENUS = [
     icon: <Overview />,
   },
   {
-    component: (
-      <MenuDrop dropTitle="Quản lý danh mục thuốc" dropItem={LIST_ITEM} />
-    ),
+    // component: (
+    //   <MenuDrop dropTitle="Quản lý danh mục thuốc" dropItem={LIST_ITEM} />
+    // ),
+    name: 'Quản lý danh mục thuốc',
     path: '/admin/category-management',
     icon: <Overview />,
   },

@@ -9,11 +9,9 @@ import { formatTimestamp } from 'src/utils/format';
 import moment from 'moment';
 import { AppDatePicker } from '../AppDatePicker';
 
-interface IModalEditMedicalProps {
+interface IModalAddNewMedicalProps {
   open: boolean;
   onClose: () => void;
-  // onConfirm: () => void;
-  data: IMedical;
 }
 
 interface IDataForm {
@@ -25,7 +23,7 @@ interface IDataForm {
   type: string;
 }
 
-const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
+const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
   const initData = {
     content: '',
     fromTimestamp: null,
@@ -35,8 +33,7 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
     timeToRepeat: '',
   };
 
-  const { open, onClose, data } = props;
-
+  const { open, onClose } = props;
   const [dataForm, setDataForm] = useState<IDataForm>(initData);
 
   const handleToChange = (date: any) => {
@@ -74,7 +71,7 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
             Edit User {data.firstName + ' ' + data.lastName}
           </Box> */}
           <Flex>
-            <AppInput label="Tên thuốc" defaultValue={data?.name} />
+            <AppInput label="Tên thuốc" />
           </Flex>
           <Flex
             w={'100%'}
@@ -87,7 +84,6 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
           >
             <AppDatePicker
               placeholderText={'mm/dd/yyyy HH:mm:ss'}
-              selected={moment(data?.createdAt).toDate()}
               type="isoDate"
               onChange={handleToChange}
               dateFormat={'h:mm aa'}
@@ -97,8 +93,8 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
             </Text>
           </Flex>
           <Flex gap={3}>
-            <AppInput label="Không gian" defaultValue={data.size} />
-            <AppInput label="Giá(VND)" defaultValue={data.price} />
+            <AppInput label="Không gian" />
+            <AppInput label="Giá(VND)" />
           </Flex>
 
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
@@ -119,4 +115,4 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
   );
 };
 
-export default ModalEditMedical;
+export default ModalAddNewMedical;

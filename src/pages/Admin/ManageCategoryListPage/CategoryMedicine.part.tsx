@@ -142,48 +142,48 @@ const CategoryMedicine = () => {
   };
 
   return (
-    <BaseAdminPage>
-      <Box className="category" w="full">
-        <Flex
-          fontSize="24px"
-          as="b"
-          mr={'30px'}
-          alignItems={'center'}
-          gap={3}
-          color={'#2167df'}
-        >
-          Quản lý danh mục thuốc
+    // <BaseAdminPage>
+    <Box className="category" w="full">
+      {/* <Flex
+        fontSize="24px"
+        as="b"
+        mr={'30px'}
+        alignItems={'center'}
+        gap={3}
+        color={'#2167df'}
+      >
+        Quản lý danh mục thuốc
+      </Flex> */}
+      <Box className={'category__search'}>
+        <Flex alignItems={'center'}>
+          {/* <Box className={'category__search-title'}>Thiết bị y tế:</Box> */}
+          <Box className="category__search-input">
+            <InputGroup>
+              <AppInput
+                color={'black'}
+                placeholder="Nhập để tìm kiếm..."
+                size="md"
+                value={valueSearch}
+                onChange={(e: any) => setValueSearch(e.target.value)}
+              />
+              <InputRightElement top="4px">
+                <SearchExplorer />
+              </InputRightElement>
+            </InputGroup>
+          </Box>
         </Flex>
-        <Box className={'category__search'}>
-          <Flex alignItems={'center'}>
-            <Box className={'category__search-title'}>Thuốc:</Box>
-            <Box className="category__search-input">
-              <InputGroup>
-                <AppInput
-                  color={'black'}
-                  placeholder="Nhập để tìm kiếm..."
-                  size="md"
-                  value={valueSearch}
-                  onChange={(e: any) => setValueSearch(e.target.value)}
-                />
-                <InputRightElement top="4px">
-                  <SearchExplorer />
-                </InputRightElement>
-              </InputGroup>
-            </Box>
-          </Flex>
-        </Box>
-
-        <Box mt={10} className="category-container">
-          <AppDataTable
-            fetchData={getCategory}
-            renderBody={_renderContentTable}
-            renderHeader={_renderHeaderTable}
-            size={10}
-          />
-        </Box>
       </Box>
-    </BaseAdminPage>
+
+      <Box mt={10} className="category-container">
+        <AppDataTable
+          fetchData={getCategory}
+          renderBody={_renderContentTable}
+          renderHeader={_renderHeaderTable}
+          size={10}
+        />
+      </Box>
+    </Box>
+    // </BaseAdminPage>
   );
 };
 

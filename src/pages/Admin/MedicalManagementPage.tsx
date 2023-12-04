@@ -11,20 +11,20 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_MEDICAL_LIST } from 'src/utils/constants';
 import {
   formatCommaNumber,
   formatNumber,
   formatTimestamp,
 } from 'src/utils/format';
 import { AppDataTable, AppButton } from 'src/components';
-import ModalDelistConfirm from 'src/components/Modals/ModalChangeActiveConfirm';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import rf from 'src/services/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import ModalDeleteConfirm from 'src/components/Modals/ModalDeleteConfirm';
 import moment from 'moment';
 import ModalEditMedical from 'src/components/Modals/ModalEditMedical';
+import { AddIcon } from '@chakra-ui/icons';
+import ModalAddNewMedical from 'src/components/Modals/ModalAddNewMedical';
 
 export interface IMedical {
   barcode: number;
@@ -48,6 +48,8 @@ const MedicalManagementPage = () => {
     useState<boolean>(false);
   const [openModalEditMedical, setOpenModalEditMedical] =
     useState<boolean>(false);
+  const [openModalAddNewMedical, setOpenModalAddNewMedical] =
+    useState<boolean>(false);
   const navigate = useNavigate();
   const [dataSearch, setDataSearch] = useState<IMedical[]>([]);
   const dataRef = useRef<IMedical[]>([]);
@@ -60,9 +62,15 @@ const MedicalManagementPage = () => {
     setOpenModalDeleteConfirm(true);
   };
 
-  const handleUpdate = (id: number) => {
-    setId(id);
-    setOpenModalEditMedical(true);
+  const handleUpdate = async (id: number) => {
+    try {
+      const res = await rf.getRequest('ProductRequest').getProductDetail(id);
+      setDataModal(res);
+      setOpenModalEditMedical(true);
+      return res;
+    } catch (error) {
+      return [];
+    }
   };
 
   const deleteMedical = async () => {
@@ -103,25 +111,9 @@ const MedicalManagementPage = () => {
     }
   };
 
-  const getDataByID = async () => {
-    try {
-      const res = await rf.getRequest('ProductRequest').getProductDetail(id);
-      console.log('ProductDetail', res);
-
-      setDataModal(res);
-      return res;
-    } catch (error) {
-      return [];
-    }
-  };
-
   useEffectUnsafe(() => {
     handleSearch();
   }, [valueSearch]);
-
-  useEffectUnsafe(() => {
-    getDataByID();
-  }, [id]);
 
   const _renderHeaderTable = () => {
     return (
@@ -210,7 +202,7 @@ const MedicalManagementPage = () => {
               size={'sm'}
               onClick={() => navigate(`/medical/${data.id}`)}
             >
-              View
+              Xem
             </AppButton>
             <AppButton
               size={'sm'}
@@ -218,7 +210,7 @@ const MedicalManagementPage = () => {
               ml={'3px'}
               onClick={() => handleUpdate(data.id)}
             >
-              Edit
+              Sửa
             </AppButton>
             <AppButton
               ml={'3px'}
@@ -226,7 +218,7 @@ const MedicalManagementPage = () => {
               bg={'red.100'}
               onClick={() => handleDelete(data.id)}
             >
-              Del
+              Xóa
             </AppButton>
           </Box>
         </Flex>
@@ -242,6 +234,12 @@ const MedicalManagementPage = () => {
             open={openModalEditMedical}
             onClose={() => setOpenModalEditMedical(false)}
             data={dataModal}
+          />
+        )}
+        {openModalAddNewMedical && (
+          <ModalAddNewMedical
+            open={openModalAddNewMedical}
+            onClose={() => setOpenModalAddNewMedical(false)}
           />
         )}
       </Flex>
@@ -263,22 +261,33 @@ const MedicalManagementPage = () => {
         </Flex>
 
         <Box className={'delist__search'}>
-          <Flex alignItems={'center'}>
-            <Box className={'delist__search-title'}>Danh sách thuốc:</Box>
-            <Box className="delist__search-input">
-              <InputGroup>
-                <AppInput
-                  color={'black'}
-                  placeholder="Search for pair"
-                  size="md"
-                  value={valueSearch}
-                  onChange={(e: any) => setValueSearch(e.target.value.trim())}
-                />
-                <InputRightElement top="4px">
-                  <SearchExplorer />
-                </InputRightElement>
-              </InputGroup>
-            </Box>
+          <Flex justifyContent={'space-between'}>
+            <Flex alignItems={'center'}>
+              <Box className={'delist__search-title'}>Danh sách thuốc:</Box>
+              <Box className="delist__search-input">
+                <InputGroup>
+                  <AppInput
+                    color={'black'}
+                    placeholder="Search for pair"
+                    size="md"
+                    value={valueSearch}
+                    onChange={(e: any) => setValueSearch(e.target.value.trim())}
+                  />
+                  <InputRightElement top="4px">
+                    <SearchExplorer />
+                  </InputRightElement>
+                </InputGroup>
+              </Box>
+            </Flex>
+            <AppButton
+              size={'md'}
+              onClick={() => setOpenModalAddNewMedical(true)}
+            >
+              <Flex justify={'center'} align={'start'} gap={1}>
+                <AddIcon />
+                Thêm Thuốc
+              </Flex>
+            </AppButton>
           </Flex>
         </Box>
 
