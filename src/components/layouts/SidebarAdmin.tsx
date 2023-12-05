@@ -6,79 +6,79 @@ import { Overview } from 'src/assets/icons';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 
-interface MenuDropProps {
-  dropTitle: string;
-  dropItem?: Array<{ name: string; path: string }> | undefined;
-}
+// interface MenuDropProps {
+//   dropTitle: string;
+//   dropItem?: Array<{ name: string; path: string }> | undefined;
+// }
 
-const LIST_ITEM = [
-  {
-    name: 'Thực phẩm chức năng',
-    path: '/admin/category-management/category-functional-foods',
-  },
-  { name: 'Thuốc', path: '/admin/category-management/category-medicine' },
-  {
-    name: 'Chăm sóc cá nhân',
-    path: '/admin/category-management/category-personal-care',
-  },
-  {
-    name: 'Thiết bị y tế',
-    path: '/admin/category-management/category-medical-equipment',
-  },
-];
+// const LIST_ITEM = [
+//   {
+//     name: 'Thực phẩm chức năng',
+//     path: '/admin/category-management/category-functional-foods',
+//   },
+//   { name: 'Thuốc', path: '/admin/category-management/category-medicine' },
+//   {
+//     name: 'Chăm sóc cá nhân',
+//     path: '/admin/category-management/category-personal-care',
+//   },
+//   {
+//     name: 'Thiết bị y tế',
+//     path: '/admin/category-management/category-medical-equipment',
+//   },
+// ];
 
-const MenuDrop = ({ dropTitle, dropItem = LIST_ITEM }: MenuDropProps) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const navigate2 = useNavigate();
-  const handleOpen = () => {
-    setOpen(!open);
-  };
+// const MenuDrop = ({ dropTitle, dropItem = LIST_ITEM }: MenuDropProps) => {
+//   const [open, setOpen] = useState<boolean>(false);
+//   const navigate2 = useNavigate();
+//   const handleOpen = () => {
+//     setOpen(!open);
+//   };
 
-  return (
-    <Flex className="sidebar-drop" flexDirection="column">
-      <Flex
-        className="sidebar-drop__title"
-        onClick={handleOpen}
-        align="center"
-        gap="20px"
-      >
-        <Overview />
-        {dropTitle}
-        <ChevronRightIcon
-          className={`sidebar-drop__icon ${open ? 'active' : ''}`}
-        />
-      </Flex>
-      <Flex
-        pt={'3px'}
-        flexDirection="column"
-        justifyContent={'end'}
-        zIndex={'1111'}
-        ml="45px"
-      >
-        {dropItem.map((item, index) => (
-          <Box
-            pt={'3px'}
-            key={index}
-            className={`sidebar-drop__item ${open ? 'active' : ''}`}
-            onClick={() => {
-              navigate2(item?.path);
-            }}
-          >
-            <Flex
-              alignItems="center"
-              height={'100%'}
-              className={`sidebar-drop__item-title ${
-                location.pathname.includes(item.path) ? 'active' : ''
-              }`}
-            >
-              {item.name}
-            </Flex>
-          </Box>
-        ))}
-      </Flex>
-    </Flex>
-  );
-};
+//   return (
+//     <Flex className="sidebar-drop" flexDirection="column">
+//       <Flex
+//         className="sidebar-drop__title"
+//         onClick={handleOpen}
+//         align="center"
+//         gap="20px"
+//       >
+//         <Overview />
+//         {dropTitle}
+//         <ChevronRightIcon
+//           className={`sidebar-drop__icon ${open ? 'active' : ''}`}
+//         />
+//       </Flex>
+//       <Flex
+//         pt={'3px'}
+//         flexDirection="column"
+//         justifyContent={'end'}
+//         zIndex={'1111'}
+//         ml="45px"
+//       >
+//         {dropItem.map((item, index) => (
+//           <Box
+//             pt={'3px'}
+//             key={index}
+//             className={`sidebar-drop__item ${open ? 'active' : ''}`}
+//             onClick={() => {
+//               navigate2(item?.path);
+//             }}
+//           >
+//             <Flex
+//               alignItems="center"
+//               height={'100%'}
+//               className={`sidebar-drop__item-title ${
+//                 location.pathname.includes(item.path) ? 'active' : ''
+//               }`}
+//             >
+//               {item.name}
+//             </Flex>
+//           </Box>
+//         ))}
+//       </Flex>
+//     </Flex>
+//   );
+// };
 
 const MENUS = [
   {

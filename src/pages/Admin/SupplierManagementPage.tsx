@@ -16,6 +16,7 @@ import { BaseAdminPage } from 'src/components/layouts';
 import rf from 'src/services/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import ModalDeleteConfirm from 'src/components/Modals/ModalDeleteConfirm';
+import { AddIcon } from '@chakra-ui/icons';
 
 interface ISupplier {
   supplierID: string;
@@ -227,22 +228,33 @@ const SupplierManagementPage = () => {
           Quản lý nhà cung cấp
         </Flex>
         <Box className={'category__search'}>
-          <Flex alignItems={'center'}>
-            <Box className={'category__search-title'}>Nhà cung cấp:</Box>
-            <Box className="category__search-input">
-              <InputGroup>
-                <AppInput
-                  color={'black'}
-                  placeholder="Nhập để tìm kiếm..."
-                  size="md"
-                  value={valueSearch}
-                  onChange={(e: any) => setValueSearch(e.target.value)}
-                />
-                <InputRightElement>
-                  <SearchExplorer />
-                </InputRightElement>
-              </InputGroup>
-            </Box>
+          <Flex justifyContent={'space-between'}>
+            <Flex alignItems={'center'}>
+              <Box className={'category__search-title'}>Nhà cung cấp:</Box>
+              <Box className="category__search-input">
+                <InputGroup>
+                  <AppInput
+                    color={'black'}
+                    placeholder="Nhập để tìm kiếm..."
+                    size="md"
+                    value={valueSearch}
+                    onChange={(e: any) => setValueSearch(e.target.value)}
+                  />
+                  <InputRightElement>
+                    <SearchExplorer />
+                  </InputRightElement>
+                </InputGroup>
+              </Box>
+            </Flex>
+            <AppButton
+              size={'md'}
+              // onClick={() => setOpenModalAddNewUser(true)}
+            >
+              <Flex justify={'center'} align={'start'} gap={1}>
+                <AddIcon />
+                Thêm nhà cung cấp
+              </Flex>
+            </AppButton>
           </Flex>
         </Box>
 

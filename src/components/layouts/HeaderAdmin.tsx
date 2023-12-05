@@ -25,8 +25,7 @@ const Header = () => {
     navigate('/login');
   };
 
-  const accessToken = localStorage.getItem('token');
-  const email = Storage.getEmail();
+  const accessToken = Storage.getAccessToken();
 
   useEffect(() => {
     if (accessToken) setInfo(jwtDecode(accessToken));

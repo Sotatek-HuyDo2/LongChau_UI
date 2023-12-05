@@ -43,9 +43,9 @@ const UserManagementPage = () => {
     useState<boolean>(false);
   const [openModalViewUser, setOpenModalViewUser] = useState<boolean>(false);
   const [openModalEditUser, setOpenModalEditUser] = useState<boolean>(false);
-
   const dataRef = useRef<IUser[]>([]);
   const [dataModal, setDataModal] = useState<IUser>({} as IUser);
+
   const navigate = useNavigate();
   const [params, setParams] = useState({});
 

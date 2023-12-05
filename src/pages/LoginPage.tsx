@@ -17,6 +17,7 @@ import { setUserAuth } from '../store/user';
 import { useNavigate } from 'react-router-dom';
 import { AppButton } from 'src/components';
 import jwt_decode from 'jwt-decode';
+import Storage from 'src/utils/storage';
 
 // const clientId = config.auth.googleClientId;
 
@@ -40,17 +41,18 @@ const LoginPage = () => {
       const res = await rf.getRequest('AuthRequest').login({ email, password });
 
       dispatch(setUserAuth({ accessToken: res.access_token }));
-      localStorage.setItem('token', res.access_token);
-      const userRole: IUser = jwt_decode(res.access_token);
+      const role = Storage.getRole();
 
-      if (userRole?.role === 'admin') {
+      // localStorage.setItem('token', res.access_token);
+      // const userRole: IUser = jwt_decode(res.access_token);
+
+      if (role === 'admin') {
         toastSuccess('Welcome to LongChau Admin!');
         navigate('/admin');
       } else {
         toastSuccess('Welcome to LongChau!');
         navigate('/');
       }
-      throw new Error('No role found for this user');
     } catch (e: any) {
       toastError(e.message);
     }

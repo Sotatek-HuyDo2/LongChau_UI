@@ -13,6 +13,7 @@ import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
 import rf from 'src/services/RequestFactory';
+import { AddIcon } from '@chakra-ui/icons';
 
 interface IBranch {
   id: string;
@@ -154,21 +155,32 @@ const BranchManagementPage = () => {
         </Flex>
         <Box className={'category__search'}>
           <Flex alignItems={'center'}>
-            <Box className={'category__search-title'}>Chi nhánh:</Box>
-            <Box className="category__search-input">
-              <InputGroup>
-                <AppInput
-                  color={'black'}
-                  placeholder="Nhập để tìm kiếm..."
-                  size="md"
-                  value={valueSearch}
-                  onChange={(e: any) => setValueSearch(e.target.value)}
-                />
-                <InputRightElement>
-                  <SearchExplorer />
-                </InputRightElement>
-              </InputGroup>
-            </Box>
+            <Flex>
+              <Box className={'category__search-title'}>Chi nhánh:</Box>
+              <Box className="category__search-input">
+                <InputGroup>
+                  <AppInput
+                    color={'black'}
+                    placeholder="Nhập để tìm kiếm..."
+                    size="md"
+                    value={valueSearch}
+                    onChange={(e: any) => setValueSearch(e.target.value)}
+                  />
+                  <InputRightElement>
+                    <SearchExplorer />
+                  </InputRightElement>
+                </InputGroup>
+              </Box>
+            </Flex>
+            <AppButton
+              size={'md'}
+              // onClick={() => setOpenModalAddNewUser(true)}
+            >
+              <Flex justify={'center'} align={'start'} gap={1}>
+                <AddIcon />
+                Thêm Branch Admin
+              </Flex>
+            </AppButton>
           </Flex>
         </Box>
 

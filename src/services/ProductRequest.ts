@@ -7,7 +7,7 @@ export default class ProductRequest extends BaseRequest {
   }
 
   // createProduct(param: any) {
-  //   const url = `/product/create`;
+  //   const url = `/drugs/create`;
   //   return this.post(url, param);
   // }
 
@@ -22,22 +22,22 @@ export default class ProductRequest extends BaseRequest {
   }
 
   // getProductByCateID(cate_id: number) {
-  //   const url = `/product/category/${cate_id}`;
+  //   const url = `/drugs/category/${cate_id}`;
   //   return this.get(url);
   // }
 
   // getProductByProductTypeID(pro_type_id: number) {
-  //   const url = `/product/product-type/${pro_type_id}`;
+  //   const url = `/drugs/drugs-type/${pro_type_id}`;
   //   return this.get(url);
   // }
 
   deleteProduct(id: number) {
-    const url = `product/${id}`;
+    const url = `drugs/${id}`;
     return this.delete(url);
   }
 
   // updateProductInfo(param: any, id: number) {
-  //   const url = `/product/${id}`;
+  //   const url = `/drugs/${id}`;
   //   return this.put(url, param);
   // }
 }

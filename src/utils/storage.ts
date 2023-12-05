@@ -2,12 +2,12 @@ import jwt_decode from 'jwt-decode';
 
 const env = process.env.REACT_APP_ENV || 'prod';
 
-const PREFERENCES = `lagom-admin-preferences-${env}`;
+const PREFERENCES = `long-chau-pharmacity-${env}`;
 
 type StorageInterface = {
   accessToken?: string;
-  refreshToken?: string;
   email?: string;
+  role?: string;
 };
 
 const defaultPreferences: StorageInterface = {};
@@ -51,11 +51,6 @@ class Storage {
     return accessToken;
   }
 
-  static getRefreshToken(): string | undefined {
-    const { refreshToken } = getStorage();
-    return refreshToken;
-  }
-
   static setAccessToken(accessToken: string) {
     const preferences = getStorage();
     preferences.accessToken = accessToken;
@@ -68,21 +63,9 @@ class Storage {
     setStorage(PREFERENCES, preferences);
   }
 
-  static setRefreshToken(refreshToken: string) {
-    const preferences = getStorage();
-    preferences.refreshToken = refreshToken;
-    setStorage(PREFERENCES, preferences);
-  }
-
   static clearAccessToken() {
     const preferences = getStorage();
     delete preferences.accessToken;
-    setStorage(PREFERENCES, preferences);
-  }
-
-  static clearRefreshToken() {
-    const preferences = getStorage();
-    delete preferences.refreshToken;
     setStorage(PREFERENCES, preferences);
   }
 
@@ -94,7 +77,6 @@ class Storage {
 
   static logout() {
     Storage.clearAccessToken();
-    Storage.clearRefreshToken();
     Storage.clearEmail();
   }
 }

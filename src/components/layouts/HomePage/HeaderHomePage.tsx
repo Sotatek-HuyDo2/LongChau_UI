@@ -26,6 +26,8 @@ import Storage from 'src/utils/storage';
 import AppInput from '../../AppInput';
 import AppButton from '../../AppButton';
 import jwtDecode from 'jwt-decode';
+import rf from 'src/services/RequestFactory';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
 const HeaderHomePage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
@@ -38,13 +40,20 @@ const HeaderHomePage = () => {
     navigate('/login');
   };
 
-  // const accessToken = Storage.getAccessToken();
+  const accessToken = Storage.getAccessToken();
   // const email = Storage.getEmail();
-  const accessToken = localStorage.getItem('token');
+  // const accessToken = localStorage.getItem('token');
 
-  useEffect(() => {
-    if (accessToken) setInfo(jwtDecode(accessToken));
-  }, [accessToken]);
+  const getDataInfo = async () => {
+    try {
+      const res = await rf.getRequest('UserRequest').getProfile();
+      setInfo(res);
+    } catch (e: any) {}
+  };
+
+  useEffectUnsafe(() => {
+    getDataInfo();
+  }, []);
 
   return (
     <Flex w={'100%'} className="header-homepage" flexDirection={'column'}>

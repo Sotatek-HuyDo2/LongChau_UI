@@ -15,6 +15,7 @@ import { BaseAdminPage } from 'src/components/layouts';
 import rf from 'src/services/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import ModalDeleteConfirm from 'src/components/Modals/ModalDeleteConfirm';
+import { AddIcon } from '@chakra-ui/icons';
 
 interface IBranch {
   id: string;
@@ -184,22 +185,33 @@ const GeneralWarehouseManagementPage = () => {
           Quản lý chi nhánh
         </Flex>
         <Box className={'category__search'}>
-          <Flex alignItems={'center'}>
-            <Box className={'category__search-title'}>Chi nhánh:</Box>
-            <Box className="category__search-input">
-              <InputGroup>
-                <AppInput
-                  color={'black'}
-                  placeholder="Nhập để tìm kiếm..."
-                  size="md"
-                  value={valueSearch}
-                  onChange={(e: any) => setValueSearch(e.target.value)}
-                />
-                <InputRightElement>
-                  <SearchExplorer />
-                </InputRightElement>
-              </InputGroup>
-            </Box>
+          <Flex justifyContent={'space-between'}>
+            <Flex alignItems={'center'}>
+              <Box className={'category__search-title'}>Chi nhánh:</Box>
+              <Box className="category__search-input">
+                <InputGroup>
+                  <AppInput
+                    color={'black'}
+                    placeholder="Nhập để tìm kiếm..."
+                    size="md"
+                    value={valueSearch}
+                    onChange={(e: any) => setValueSearch(e.target.value)}
+                  />
+                  <InputRightElement>
+                    <SearchExplorer />
+                  </InputRightElement>
+                </InputGroup>
+              </Box>
+            </Flex>
+            <AppButton
+              size={'md'}
+              // onClick={() => setOpenModalAddNewUser(true)}
+            >
+              <Flex justify={'center'} align={'start'} gap={1}>
+                <AddIcon />
+                Thêm chi nhánh
+              </Flex>
+            </AppButton>
           </Flex>
         </Box>
 

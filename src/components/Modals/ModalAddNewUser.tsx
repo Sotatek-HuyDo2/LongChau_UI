@@ -41,15 +41,15 @@ const ModalAddNewUser: FC<IModalAddNewUserProps> = (props) => {
     setEmailValid(emailRegex.test(emailValue));
   };
 
-  const createNewUser = async () => {
-    try {
-      await rf.getRequest('UserRequest').branchAdminRegister(dataUser);
-      onClose();
-      toastSuccess('Tạo mới người dùng thành công');
-    } catch (e: any) {
-      toastError(e.message);
-    }
-  };
+  // const createNewUser = async () => {
+  //   try {
+  //     await rf.getRequest('UserRequest').branchAdminRegister(dataUser);
+  //     onClose();
+  //     toastSuccess('Tạo mới người dùng thành công');
+  //   } catch (e: any) {
+  //     toastError(e.message);
+  //   }
+  // };
 
   const { open, onClose } = props;
   return (
@@ -123,7 +123,10 @@ const ModalAddNewUser: FC<IModalAddNewUserProps> = (props) => {
             >
               Hủy
             </AppButton>
-            <AppButton flex={1} onClick={createNewUser}>
+            <AppButton
+              flex={1}
+              // onClick={createNewUser}
+            >
               Xác nhận
             </AppButton>
           </Flex>
