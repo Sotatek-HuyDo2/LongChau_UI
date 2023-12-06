@@ -13,17 +13,13 @@ import '../styles/pages/LoginPage.scss';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import rf from 'src/services/RequestFactory';
 import { useDispatch } from 'react-redux';
-import { setUserAuth } from '../store/user';
+import { setUserAuth, setUserProfile } from '../store/user';
 import { useNavigate } from 'react-router-dom';
 import { AppButton } from 'src/components';
-import jwt_decode from 'jwt-decode';
 import Storage from 'src/utils/storage';
 
 // const clientId = config.auth.googleClientId;
 
-interface IUser {
-  role: string;
-}
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,12 +35,12 @@ const LoginPage = () => {
   const onSubmit = async () => {
     try {
       const res = await rf.getRequest('AuthRequest').login({ email, password });
-
       dispatch(setUserAuth({ accessToken: res.access_token }));
       const role = Storage.getRole();
-
-      // localStorage.setItem('token', res.access_token);
-      // const userRole: IUser = jwt_decode(res.access_token);
+      if (res && res.access_token) {
+        const dataInfo = await rf.getRequest('UserRequest').getProfile();
+        dispatch(setUserProfile(dataInfo));
+      }
 
       if (role === 'admin') {
         toastSuccess('Welcome to LongChau Admin!');
@@ -59,7 +55,6 @@ const LoginPage = () => {
   };
 
   return (
-    // <GuestAdminPage>
     <Box className="login">
       <Flex
         className="login__container"
@@ -120,7 +115,6 @@ const LoginPage = () => {
         /> */}
       </Flex>
     </Box>
-    // </GuestAdminPage>
   );
 };
 

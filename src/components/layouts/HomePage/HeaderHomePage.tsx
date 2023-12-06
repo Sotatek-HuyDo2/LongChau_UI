@@ -11,7 +11,7 @@ import {
   InputRightElement,
   Image,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   ArrowLogout,
   CartIcon,
@@ -19,19 +19,18 @@ import {
   LoginIcon,
   SearchExplorer,
 } from 'src/assets/icons';
-import { useDispatch } from 'react-redux';
-import { clearUser } from 'src/store/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearUser, setUserProfile } from 'src/store/user';
 import { useNavigate } from 'react-router-dom';
 import Storage from 'src/utils/storage';
 import AppInput from '../../AppInput';
 import AppButton from '../../AppButton';
-import jwtDecode from 'jwt-decode';
 import rf from 'src/services/RequestFactory';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import { RootState } from 'src/store';
 
 const HeaderHomePage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [info, setInfo] = useState<any>({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -41,18 +40,15 @@ const HeaderHomePage = () => {
   };
 
   const accessToken = Storage.getAccessToken();
-  // const email = Storage.getEmail();
-  // const accessToken = localStorage.getItem('token');
+  const { userProfile } = useSelector((state: RootState) => state.user);
 
-  const getDataInfo = async () => {
-    try {
-      const res = await rf.getRequest('UserRequest').getProfile();
-      setInfo(res);
-    } catch (e: any) {}
+  const getUserProfile = async () => {
+    const dataInfo = await rf.getRequest('UserRequest').getProfile();
+    dispatch(setUserProfile(dataInfo));
   };
 
   useEffectUnsafe(() => {
-    getDataInfo();
+    getUserProfile();
   }, []);
 
   return (
@@ -153,8 +149,8 @@ const HeaderHomePage = () => {
                     fontSize={20}
                     fontWeight={700}
                   >
-                    <Avatar name={info.lastName} size="sm" />
-                    Hi {info.lastName}
+                    <Avatar name={userProfile?.lastName} size="sm" />
+                    Hi {userProfile?.lastName}
                   </Flex>
                 </MenuButton>
                 <MenuList className="menu-header">

@@ -7,18 +7,16 @@ import {
   MenuList,
   MenuItem,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
 import { ArrowLogout, DoorLogout } from 'src/assets/icons';
-import { useDispatch } from 'react-redux';
-import { clearUser } from 'src/store/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearUser, setUserProfile } from 'src/store/user';
 import { useNavigate } from 'react-router-dom';
 import Storage from 'src/utils/storage';
-import jwtDecode from 'jwt-decode';
+import { RootState } from 'src/store';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import rf from 'src/services/RequestFactory';
 
 const Header = () => {
-  const [info, setInfo] = useState<any>();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,18 +26,16 @@ const Header = () => {
   };
 
   const accessToken = Storage.getAccessToken();
+  const { userProfile } = useSelector((state: RootState) => state.user);
 
-  const getDataInfo = async () => {
-    try {
-      const res = await rf.getRequest('UserRequest').getProfile();
-      setInfo(res);
-    } catch (e: any) {}
+  const getUserProfile = async () => {
+    const dataInfo = await rf.getRequest('UserRequest').getProfile();
+    dispatch(setUserProfile(dataInfo));
   };
 
   useEffectUnsafe(() => {
-    getDataInfo();
+    getUserProfile();
   }, []);
-
   return (
     <Flex className="header" justifyContent={'space-between'}>
       <Box>LongChau Dashboard</Box>
@@ -54,8 +50,8 @@ const Header = () => {
                 fontSize={20}
                 fontWeight={700}
               >
-                <Avatar name={info?.lastName} size="sm" />
-                {info?.firstName}_{info?.role}!!
+                <Avatar name={userProfile?.firstName} size="sm" />
+                {userProfile?.firstName}!!
               </Flex>
             </MenuButton>
             <MenuList className="menu-header">

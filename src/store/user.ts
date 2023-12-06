@@ -5,7 +5,14 @@ import jwt_decode from 'jwt-decode';
 
 export type UserState = {
   accessToken: string;
+  userProfile: any | null;
 };
+
+// interface UserProfile {
+//   email: string;
+//   firstName: string;
+//   lastName: string;
+// }
 
 interface IJwtDecode {
   email: string;
@@ -16,6 +23,7 @@ interface IJwtDecode {
 
 const initialState: UserState = {
   accessToken: Storage.getAccessToken() || '',
+  userProfile: null,
 };
 
 const userSlice = createSlice({
@@ -27,22 +35,28 @@ const userSlice = createSlice({
       state.accessToken = accessToken;
 
       if (accessToken) {
+        setAuthorizationToRequest(accessToken);
         Storage.setAccessToken(accessToken);
         const data: IJwtDecode = jwt_decode(accessToken);
         Storage.setEmail(data.email);
       }
     },
+
+    setUserProfile: (state, action) => {
+      state.userProfile = action.payload;
+    },
+
     clearUser: () => {
       setAuthorizationToRequest(null);
       Storage.logout();
-      localStorage.removeItem('token');
       return {
         accessToken: '',
+        userProfile: null,
       };
     },
   },
 });
 
-export const { setUserAuth, clearUser } = userSlice.actions;
+export const { setUserAuth, setUserProfile, clearUser } = userSlice.actions;
 
 export default userSlice.reducer;
