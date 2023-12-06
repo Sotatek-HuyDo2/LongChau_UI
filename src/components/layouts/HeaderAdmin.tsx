@@ -14,6 +14,8 @@ import { clearUser } from 'src/store/user';
 import { useNavigate } from 'react-router-dom';
 import Storage from 'src/utils/storage';
 import jwtDecode from 'jwt-decode';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import rf from 'src/services/RequestFactory';
 
 const Header = () => {
   const [info, setInfo] = useState<any>();
@@ -27,8 +29,15 @@ const Header = () => {
 
   const accessToken = Storage.getAccessToken();
 
-  useEffect(() => {
-    if (accessToken) setInfo(jwtDecode(accessToken));
+  const getDataInfo = async () => {
+    try {
+      const res = await rf.getRequest('UserRequest').getProfile();
+      setInfo(res);
+    } catch (e: any) {}
+  };
+
+  useEffectUnsafe(() => {
+    getDataInfo();
   }, []);
 
   return (
@@ -46,7 +55,7 @@ const Header = () => {
                 fontWeight={700}
               >
                 <Avatar name={info?.lastName} size="sm" />
-                {info?.lastName}_{info?.role}!!
+                {info?.firstName}_{info?.role}!!
               </Flex>
             </MenuButton>
             <MenuList className="menu-header">

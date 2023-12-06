@@ -11,8 +11,18 @@ export default class CategoryRequest extends BaseRequest {
   //   return this.post(url, param);
   // }
 
-  getAllCate(id: number) {
-    const url = `categories/${id}`;
+  getAllCate() {
+    const url = `categories`;
+    return this.get(url);
+  }
+
+  getCateByID(categoryId: number) {
+    const url = `categories/${categoryId}`;
+    return this.get(url);
+  }
+
+  getDrugsTypeByCateID(categoryId: number) {
+    const url = `categories/${categoryId}/drug-types`;
     return this.get(url);
   }
 }

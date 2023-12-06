@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { BaseAdminPage } from 'src/components/layouts';
 import { AppTabs } from 'src/components';
 import 'src/styles/pages/ManageCategoryListPage.scss';
-import CategoryFunctionalFoods from '../ManageCategoryListPage/CategoryFunctionalFoods.part';
+import CategoryFunctionalFoods from '../ManageCategoryListPage/ProductTyByCategory.part';
 import CategoryMedicine from '../ManageCategoryListPage/CategoryMedicine.part';
 import CategoryPersonalCare from '../ManageCategoryListPage/CategoryPersonalCare.part';
 import CategoryMedicalEquipment from '../ManageCategoryListPage/CategoryMedicalEquipment.part';

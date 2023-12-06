@@ -1,13 +1,12 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { BaseAdminPage } from 'src/components/layouts';
 import { AppTabs } from 'src/components';
 // import 'src/styles/pages/UserManagement.scss';
 import 'src/styles/pages/ManageCategoryListPage.scss';
-import CategoryPersonalCare from './CategoryPersonalCare.part';
-import CategoryFunctionalFoods from './CategoryFunctionalFoods.part';
-import CategoryMedicine from './CategoryMedicine.part';
-import CategoryMedicalEquipment from './CategoryMedicalEquipment.part';
+import CategoryFunctionalFoods from './ProductTyByCategory.part';
+import rf from 'src/services/RequestFactory';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
 interface ITabs {
   id: string;
@@ -15,30 +14,41 @@ interface ITabs {
   content: ReactNode;
 }
 
-const tabs: ITabs[] = [
-  {
-    id: 'FunctionalFoods',
-    name: 'Thực phẩm chức năng',
-    content: <CategoryFunctionalFoods />,
-  },
-  {
-    id: 'Medicine',
-    name: 'Thuốc',
-    content: <CategoryMedicine />,
-  },
-  {
-    id: 'PersonalCare',
-    name: 'Chăm sóc khách hàng',
-    content: <CategoryPersonalCare />,
-  },
-  {
-    id: 'MedicalEquipment',
-    name: 'Thiết bị y tế',
-    content: <CategoryMedicalEquipment />,
-  },
-];
-
 const ManageCategoryList = () => {
+  const [cateList, setCateList] = useState<any>([]);
+
+  const getAllCate = async () => {
+    try {
+      const res = await rf.getRequest('CategoryRequest').getAllCate();
+      if (res) {
+        setCateList(res);
+      }
+    } catch (e: any) {
+      console.log(e);
+    }
+  };
+
+  const getCateByID = async () => {
+    try {
+      const res = await rf
+        .getRequest('CategoryRequest')
+        .getDrugsTypeByCateID(1);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffectUnsafe(() => {
+    getAllCate();
+    getCateByID();
+  }, []);
+
+  const tabs: ITabs[] = cateList.map((item: any) => ({
+    id: item.id,
+    name: item.name,
+    content: <CategoryFunctionalFoods id={item.id} />,
+  }));
+
   return (
     <BaseAdminPage>
       <Box>

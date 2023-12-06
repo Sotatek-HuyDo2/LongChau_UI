@@ -101,7 +101,7 @@ const MENUS = [
   },
   {
     name: 'Quản lý chi nhánh',
-    path: '/admin/general-warehouse-management',
+    path: '/admin/branch-management',
     icon: <Overview />,
     pathChild: [
       '/admin/create-notification',

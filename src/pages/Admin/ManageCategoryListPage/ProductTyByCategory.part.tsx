@@ -21,12 +21,16 @@ interface ICategory {
   quality: number;
 }
 
-const CategoryFunctionalFoods = () => {
+interface Props {
+  id?: any;
+}
+
+const ProductTyByCategory = (props: Props) => {
+  const { id } = props;
   const [valueSearch, setValueSearch] = useState<string>('');
   const [dataSearch, setDataSearch] = useState<ICategory[]>(
     MOCK_CATEGORY_MEDICINE,
   );
-
   const dataRef = useRef<ICategory[]>([]);
 
   const handleSearch = () => {
@@ -49,12 +53,13 @@ const CategoryFunctionalFoods = () => {
 
   const getCategory = async () => {
     try {
-      const resData = await rf.getRequest('CategoryRequest').getAllCate(1);
-
-      dataRef.current = MOCK_CATEGORY_MEDICINE;
-      setDataSearch(MOCK_CATEGORY_MEDICINE);
+      const res = await rf
+        .getRequest('CategoryRequest')
+        .getDrugsTypeByCateID(id);
+      dataRef.current = res;
+      setDataSearch(res);
       return {
-        docs: dataSearch,
+        docs: res,
       };
     } catch (error) {
       return { docs: [] };
@@ -68,11 +73,8 @@ const CategoryFunctionalFoods = () => {
   const _renderHeaderTable = () => {
     return (
       <Flex>
-        <Box className="category--header-cell-body category--id">ID</Box>
-        <Box className="category--header-cell-body category--name">Tên</Box>
-        <Box className="category--header-cell-body category--quality">
-          số lượng(thuốc)
-        </Box>
+        <Box className="category--header-cell-body category--id">STT</Box>
+        <Box className="category--header-cell-body category--name">Tên </Box>
         <Box className="category--header-cell-body category--action">
           Action
         </Box>
@@ -83,9 +85,13 @@ const CategoryFunctionalFoods = () => {
   const _renderContentTable = (data: ICategory[]) => {
     return (
       <Box>
-        {dataSearch.map((data: ICategory, id: number) => {
+        {dataSearch.map((data: ICategory, index: number) => {
           return (
-            <RowAddressTransactionTable data={data} key={`${id}-coin-table`} />
+            <RowAddressTransactionTable
+              data={data}
+              key={`${index}-coin-table`}
+              id={index + 1}
+            />
           );
         })}
       </Box>
@@ -94,12 +100,13 @@ const CategoryFunctionalFoods = () => {
 
   const RowAddressTransactionTable: React.FC<{
     data: ICategory;
-  }> = ({ data }) => {
+    id: number;
+  }> = ({ data, id }) => {
     return (
       <Flex className="category--row-wrap" direction={'column'}>
         <Flex>
           <Flex className="category--cell-body category--id">
-            <Box cursor={'pointer'}>{data.categoryID}</Box>
+            <Box cursor={'pointer'}>{id}</Box>
           </Flex>
           <Box className="category--cell-body category--name">
             <Tooltip
@@ -119,12 +126,7 @@ const CategoryFunctionalFoods = () => {
               </Box>
             </Tooltip>
           </Box>
-          <Flex
-            flexDirection="row"
-            className="category--cell-body category--quality"
-          >
-            {data?.quality ? data?.quality : '--'}
-          </Flex>
+
           <Box
             className="category--cell-body category--action"
             cursor={'pointer'}
@@ -189,4 +191,4 @@ const CategoryFunctionalFoods = () => {
   );
 };
 
-export default CategoryFunctionalFoods;
+export default ProductTyByCategory;

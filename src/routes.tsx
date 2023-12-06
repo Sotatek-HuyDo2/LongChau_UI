@@ -22,7 +22,7 @@ import GeneralWarehouseManagementPage from './pages/Admin/GeneralWarehouseManage
 import BranchManagementPage from './pages/Admin/BranchManagementPage';
 import SupplierManagementPage from './pages/Admin/SupplierManagementPage';
 import Statistical from './pages/Admin/Statistical';
-import CategoryFunctionalFoods from './pages/Admin/ManageCategoryListPage/CategoryFunctionalFoods.part';
+import CategoryFunctionalFoods from './pages/Admin/ManageCategoryListPage/ProductTyByCategory.part';
 import CategoryMedicalEquipment from './pages/Admin/ManageCategoryListPage/CategoryMedicalEquipment.part';
 import CategoryMedicine from './pages/Admin/ManageCategoryListPage/CategoryMedicine.part';
 import CategoryPersonalCare from './pages/Admin/ManageCategoryListPage/CategoryPersonalCare.part';

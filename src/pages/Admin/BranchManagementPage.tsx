@@ -48,10 +48,11 @@ const BranchManagementPage = () => {
   const getDataTable = async () => {
     try {
       const res = await rf.getRequest('BranchRequest').getBranchList();
+      console.log('rtes', res);
       dataRef.current = res;
       setDataSearch(res);
       return {
-        docs: dataSearch,
+        docs: res,
       };
     } catch (error) {
       return { docs: [] };
@@ -76,9 +77,13 @@ const BranchManagementPage = () => {
   const _renderContentTable = (data: IBranch[]) => {
     return (
       <Box>
-        {dataSearch.map((data: IBranch, id: number) => {
+        {dataSearch.map((data: IBranch, index: number) => {
           return (
-            <RowAddressTransactionTable data={data} key={`${id}-coin-table`} />
+            <RowAddressTransactionTable
+              data={data}
+              key={`${index}-coin-table`}
+              id={index + 1}
+            />
           );
         })}
       </Box>
@@ -87,12 +92,13 @@ const BranchManagementPage = () => {
 
   const RowAddressTransactionTable: React.FC<{
     data: IBranch;
-  }> = ({ data }) => {
+    id: number;
+  }> = ({ data, id }) => {
     return (
       <Flex className="category--row-wrap" direction={'column'}>
         <Flex>
           <Flex className="category--cell-body category--id">
-            <Box cursor={'pointer'}>{data.id}</Box>
+            <Box cursor={'pointer'}>{id}</Box>
           </Flex>
           <Box className="category--cell-body category--name">
             <Tooltip
@@ -154,7 +160,7 @@ const BranchManagementPage = () => {
           Quản lý chi nhánh
         </Flex>
         <Box className={'category__search'}>
-          <Flex alignItems={'center'}>
+          <Flex justifyContent={'space-between'}>
             <Flex>
               <Box className={'category__search-title'}>Chi nhánh:</Box>
               <Box className="category__search-input">
