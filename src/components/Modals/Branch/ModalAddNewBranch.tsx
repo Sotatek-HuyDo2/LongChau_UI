@@ -1,18 +1,16 @@
 import { Flex } from '@chakra-ui/react';
 import 'src/styles/components/BaseModal.scss';
-import BaseModal from './BaseModal';
-import AppButton from '../AppButton';
+import BaseModal from '../BaseModal';
+import AppButton from '../../AppButton';
 import { FC, useState } from 'react';
-import AppInput from '../AppInput';
+import AppInput from '../../AppInput';
 import rf from 'src/services/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
-import { useNavigate } from 'react-router-dom';
 
-interface IModalEditBranchProps {
+interface IModalAddNewBranchProps {
   open: boolean;
   onClose: () => void;
-  data: any;
-  id: number | string;
+  onReload: () => void;
 }
 
 interface IDataForm {
@@ -20,22 +18,21 @@ interface IDataForm {
   address: string;
 }
 
-const ModalEditBranch: FC<IModalEditBranchProps> = (props) => {
+const ModalAddNewBranch: FC<IModalAddNewBranchProps> = (props) => {
   const initData = {
     name: '',
     address: '',
   };
-  const navigate = useNavigate();
 
-  const { open, onClose, data, id } = props;
+  const { open, onClose, onReload } = props;
   const [dataForm, setDataForm] = useState<IDataForm>(initData);
 
-  const editBranch = async () => {
+  const createNewBranch = async () => {
     try {
-      await rf.getRequest('BranchRequest').updateBranchAdminInfo(id, dataForm);
+      await rf.getRequest('BranchRequest').createBranchAdmin(dataForm);
       onClose();
-      toastSuccess('Sửa Branch thành công');
-      navigate('/admin/branch-management');
+      onReload();
+      toastSuccess('Tạo mới Branch thành công');
     } catch (e: any) {
       toastError(e.message);
     }
@@ -44,7 +41,7 @@ const ModalEditBranch: FC<IModalEditBranchProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Edit Medical Information"
+      title="Tạo chi nhánh mới"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -56,25 +53,16 @@ const ModalEditBranch: FC<IModalEditBranchProps> = (props) => {
           gap={'15px'}
           w={'full'}
         >
-          <Flex>
-            <AppInput
-              label="Tên cở sở"
-              defaultValue={data.name}
-              onChange={(e) =>
-                setDataForm({ ...dataForm, name: e.target.value })
-              }
-            />
-          </Flex>
-          <Flex>
-            <AppInput
-              label="Địa chỉ"
-              defaultValue={data.address}
-              onChange={(e) =>
-                setDataForm({ ...dataForm, address: e.target.value })
-              }
-            />
-          </Flex>
-
+          <AppInput
+            label="Tên cở sở"
+            onChange={(e) => setDataForm({ ...dataForm, name: e.target.value })}
+          />
+          <AppInput
+            label="Địa chỉ"
+            onChange={(e) =>
+              setDataForm({ ...dataForm, address: e.target.value })
+            }
+          />
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton
               className="btn-outline-hover"
@@ -85,7 +73,7 @@ const ModalEditBranch: FC<IModalEditBranchProps> = (props) => {
             >
               Hủy
             </AppButton>
-            <AppButton flex={1} onClick={editBranch}>
+            <AppButton flex={1} onClick={createNewBranch}>
               Thêm mới
             </AppButton>
           </Flex>
@@ -95,4 +83,4 @@ const ModalEditBranch: FC<IModalEditBranchProps> = (props) => {
   );
 };
 
-export default ModalEditBranch;
+export default ModalAddNewBranch;

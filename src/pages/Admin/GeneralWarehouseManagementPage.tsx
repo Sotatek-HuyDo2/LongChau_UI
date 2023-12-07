@@ -216,7 +216,6 @@ const GeneralWarehouseManagementPage = () => {
         </Box>
 
         <Box mt={10} className="category-container">
-          table
           <AppDataTable
             fetchData={getDataTable}
             renderBody={_renderContentTable}

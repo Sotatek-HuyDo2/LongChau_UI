@@ -30,9 +30,7 @@ const ManageCategoryList = () => {
 
   const getCateByID = async () => {
     try {
-      const res = await rf
-        .getRequest('CategoryRequest')
-        .getDrugsTypeByCateID(1);
+      await rf.getRequest('CategoryRequest').getDrugsTypeByCateID(1);
     } catch (e) {
       console.log(e);
     }
@@ -46,7 +44,7 @@ const ManageCategoryList = () => {
   const tabs: ITabs[] = cateList.map((item: any) => ({
     id: item.id,
     name: item.name,
-    content: <CategoryFunctionalFoods id={item.id} />,
+    content: <CategoryFunctionalFoods categoriesID={item.id} />,
   }));
 
   return (

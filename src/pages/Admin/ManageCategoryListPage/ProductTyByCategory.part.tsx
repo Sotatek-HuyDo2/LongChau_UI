@@ -14,24 +14,35 @@ import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import rf from 'src/services/RequestFactory';
 import { AddIcon } from '@chakra-ui/icons';
+import ModalAddNewTypeProduct from 'src/components/Modals/Category_and_Type/ModalAddNewType';
+import ModalEditTypeProduct from 'src/components/Modals/Category_and_Type/ModalEditType';
+import ModalDeleteTypeProduct from 'src/components/Modals/Category_and_Type/ModalDeleteType';
+import { toastError } from 'src/utils/notify';
 
 interface ICategory {
-  categoryID: string;
+  id: any;
   name: string;
   quality: number;
 }
 
 interface Props {
-  id?: any;
+  categoriesID?: any;
 }
 
 const ProductTyByCategory = (props: Props) => {
-  const { id } = props;
+  const { categoriesID } = props;
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [dataSearch, setDataSearch] = useState<ICategory[]>(
-    MOCK_CATEGORY_MEDICINE,
-  );
+  const [dataSearch, setDataSearch] = useState<ICategory[]>([]);
+  const [params, setParams] = useState({});
+  const [openModalAddNewTypeProduct, setModalAddNewTypeProduct] =
+    useState<boolean>(false);
+  const [openModalEditTypeProduct, setModalEditTypeProduct] =
+    useState<boolean>(false);
+  const [openModalDeleteTypeProduct, setModalDeleteTypeProduct] =
+    useState<boolean>(false);
+  const [dataModal, setDataModal] = useState<any>([]);
   const dataRef = useRef<ICategory[]>([]);
+  const [id, setId] = useState<number>();
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
@@ -45,6 +56,10 @@ const ProductTyByCategory = (props: Props) => {
     setDataSearch(dataFilter);
   };
 
+  const onReload = () => {
+    setParams({ ...params });
+  };
+
   useEffectUnsafe(() => {
     handleSearch();
   }, [valueSearch]);
@@ -55,7 +70,7 @@ const ProductTyByCategory = (props: Props) => {
     try {
       const res = await rf
         .getRequest('CategoryRequest')
-        .getDrugsTypeByCateID(id);
+        .getDrugsTypeByCateID(categoriesID);
       dataRef.current = res;
       setDataSearch(res);
       return {
@@ -63,6 +78,38 @@ const ProductTyByCategory = (props: Props) => {
       };
     } catch (error) {
       return { docs: [] };
+    }
+  };
+
+  const handleEditType = async (id: number) => {
+    setId(id);
+    try {
+      setModalEditTypeProduct(true);
+      const res = await rf
+        .getRequest('CategoryRequest')
+        .getProductTypeByCateID(categoriesID, id);
+
+      setDataModal(res);
+
+      return {
+        docs: res,
+      };
+    } catch (error) {
+      return { docs: [] };
+    }
+  };
+
+  const handleDelete = (id: number) => {
+    setModalDeleteTypeProduct(true);
+    setId(id);
+  };
+
+  const deleteTypeProduct = async () => {
+    try {
+      await rf.getRequest('CategoryRequest').deleteProductTypeByID(id);
+      onReload();
+    } catch (error: any) {
+      toastError(error.message);
     }
   };
 
@@ -74,7 +121,7 @@ const ProductTyByCategory = (props: Props) => {
     return (
       <Flex>
         <Box className="category--header-cell-body category--id">STT</Box>
-        <Box className="category--header-cell-body category--name">Tên </Box>
+        <Box className="category--header-cell-body category--name">Tên</Box>
         <Box className="category--header-cell-body category--action">
           Action
         </Box>
@@ -131,16 +178,21 @@ const ProductTyByCategory = (props: Props) => {
             className="category--cell-body category--action"
             cursor={'pointer'}
           >
+            <AppButton size={'sm'}>Xem</AppButton>
             <AppButton
               size={'sm'}
-              onClick={() => navigate(`/medical/${data.categoryID}`)}
+              bg={'yellow.100'}
+              ml={'3px'}
+              onClick={() => handleEditType(data.id)}
             >
-              Xem
-            </AppButton>
-            <AppButton size={'sm'} bg={'yellow.100'} ml={'3px'}>
               Sửa
             </AppButton>
-            <AppButton ml={'3px'} size={'sm'} bg={'red.100'}>
+            <AppButton
+              ml={'3px'}
+              size={'sm'}
+              bg={'red.100'}
+              onClick={() => handleDelete(data.id)}
+            >
               Xóa
             </AppButton>
           </Box>
@@ -169,23 +221,51 @@ const ProductTyByCategory = (props: Props) => {
               </InputRightElement>
             </InputGroup>
           </Box>
-          <AppButton size={'md'} onClick={() => navigate(`/medical/`)}>
+          <AppButton
+            size={'md'}
+            onClick={() => setModalAddNewTypeProduct(true)}
+          >
             <Flex justify={'center'} align={'start'} gap={1}>
               <AddIcon />
-              Thêm Thuốc
+              Thêm
             </Flex>
           </AppButton>
         </Flex>
       </Box>
-
       <Box mt={10} className="category-container">
         <AppDataTable
+          requestParams={params}
           fetchData={getCategory}
           renderBody={_renderContentTable}
           renderHeader={_renderHeaderTable}
           size={10}
         />
       </Box>
+      {openModalAddNewTypeProduct && (
+        <ModalAddNewTypeProduct
+          open={openModalAddNewTypeProduct}
+          onClose={() => setModalAddNewTypeProduct(false)}
+          onReload={onReload}
+          categoriesID={categoriesID}
+        />
+      )}
+      {openModalEditTypeProduct && (
+        <ModalEditTypeProduct
+          open={openModalEditTypeProduct}
+          onClose={() => setModalEditTypeProduct(false)}
+          onReload={onReload}
+          categoriesID={categoriesID}
+          data={dataModal}
+          typeId={id}
+        />
+      )}
+      {openModalDeleteTypeProduct && (
+        <ModalDeleteTypeProduct
+          open={openModalDeleteTypeProduct}
+          onClose={() => setModalDeleteTypeProduct(false)}
+          onConfirm={() => deleteTypeProduct()}
+        />
+      )}
     </Box>
     // </BaseAdminPage>
   );

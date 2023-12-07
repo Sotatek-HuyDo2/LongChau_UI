@@ -1,13 +1,13 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import 'src/styles/components/BaseModal.scss';
-import BaseModal from './BaseModal';
-import AppButton from '../AppButton';
+import BaseModal from '../BaseModal';
+import AppButton from '../../AppButton';
 import { FC, useState } from 'react';
-import AppInput from '../AppInput';
+import AppInput from '../../AppInput';
 import { IMedical } from 'src/pages/Admin/MedicalManagementPage';
 import { formatTimestamp } from 'src/utils/format';
 import moment from 'moment';
-import { AppDatePicker } from '../AppDatePicker';
+import { AppDatePicker } from '../../AppDatePicker';
 
 interface IModalEditMedicalProps {
   open: boolean;

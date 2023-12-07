@@ -22,9 +22,9 @@ import rf from 'src/services/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import ModalDeleteConfirm from 'src/components/Modals/ModalDeleteConfirm';
 import moment from 'moment';
-import ModalEditMedical from 'src/components/Modals/ModalEditMedical';
+import ModalEditMedical from 'src/components/Modals/Medical/ModalEditMedical';
 import { AddIcon } from '@chakra-ui/icons';
-import ModalAddNewMedical from 'src/components/Modals/ModalAddNewMedical';
+import ModalAddNewMedical from 'src/components/Modals/Medical/ModalAddNewMedical';
 
 export interface IMedical {
   barcode: number;

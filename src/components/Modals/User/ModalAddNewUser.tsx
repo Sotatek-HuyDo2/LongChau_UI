@@ -1,9 +1,9 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import 'src/styles/components/BaseModal.scss';
-import BaseModal from './BaseModal';
-import AppButton from '../AppButton';
+import BaseModal from '../BaseModal';
+import AppButton from '../../AppButton';
 import { FC, useState } from 'react';
-import AppInput from '../AppInput';
+import AppInput from '../../AppInput';
 import rf from 'src/services/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
 

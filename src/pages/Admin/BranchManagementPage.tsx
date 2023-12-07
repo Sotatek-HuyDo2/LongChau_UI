@@ -14,8 +14,8 @@ import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
 import rf from 'src/services/RequestFactory';
 import { AddIcon } from '@chakra-ui/icons';
-import ModalAddNewBranch from 'src/components/Modals/ModalAddNewBranch';
-import ModalEditBranch from 'src/components/Modals/ModalEditBranch';
+import ModalAddNewBranch from 'src/components/Modals/Branch/ModalAddNewBranch';
+import ModalEditBranch from 'src/components/Modals/Branch/ModalEditBranch';
 
 interface IBranch {
   id: string;
@@ -31,9 +31,13 @@ const BranchManagementPage = () => {
   const [openModalEditBranch, setOpenModalEditBranch] =
     useState<boolean>(false);
   const [dataModal, setDataModal] = useState();
-  const [id, setID] = useState<number | string>();
+  const [params, setParams] = useState({});
 
   const dataRef = useRef<IBranch[]>([]);
+
+  const onReload = () => {
+    setParams({ ...params });
+  };
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
@@ -48,7 +52,6 @@ const BranchManagementPage = () => {
   };
 
   const handleUpdate = async (id: number | string) => {
-    setID(id);
     try {
       const res = await rf.getRequest('BranchRequest').getBranchAdminDetail(id);
       setDataModal(res);
@@ -170,7 +173,8 @@ const BranchManagementPage = () => {
             open={openModalEditBranch}
             onClose={() => setOpenModalEditBranch(false)}
             data={dataModal}
-            id={id}
+            id={data.id}
+            onReload={onReload}
           />
         )}
       </Flex>
@@ -211,14 +215,9 @@ const BranchManagementPage = () => {
             </Flex>
             <AppButton
               size={'md'}
-              // onClick={() => setOpenModalAddNewUser(true)}
+              onClick={() => setOpenModalAddNewBranch(true)}
             >
-              <Flex
-                justify={'center'}
-                align={'start'}
-                gap={1}
-                onClick={() => setOpenModalAddNewBranch(true)}
-              >
+              <Flex justify={'center'} align={'start'} gap={1}>
                 <AddIcon />
                 Thêm Branch
               </Flex>
@@ -227,8 +226,8 @@ const BranchManagementPage = () => {
         </Box>
 
         <Box mt={10} className="category-container">
-          table
           <AppDataTable
+            requestParams={params}
             fetchData={getDataTable}
             renderBody={_renderContentTable}
             renderHeader={_renderHeaderTable}
@@ -239,6 +238,7 @@ const BranchManagementPage = () => {
           <ModalAddNewBranch
             open={openModalAddNewBranch}
             onClose={() => setOpenModalAddNewBranch(false)}
+            onReload={onReload}
           />
         )}
       </Box>

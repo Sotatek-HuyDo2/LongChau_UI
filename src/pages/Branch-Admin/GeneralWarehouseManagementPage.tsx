@@ -176,7 +176,6 @@ const BranchAdminGeneralWarehouseManagementPage = () => {
         </Box>
 
         <Box mt={10} className="category-container">
-          table
           {/* <AppDataTable
           fetchData={getCategory}
           renderBody={_renderContentTable}

@@ -1,9 +1,9 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import 'src/styles/components/BaseModal.scss';
-import BaseModal from './BaseModal';
-import AppButton from '../AppButton';
+import BaseModal from '../BaseModal';
+import AppButton from '../../AppButton';
 import { FC } from 'react';
-import AppInput from '../AppInput';
+import AppInput from '../../AppInput';
 import { IUser } from 'src/pages/Admin/UserManagementPage';
 
 interface IModalEditUserProps {

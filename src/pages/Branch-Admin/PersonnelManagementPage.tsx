@@ -16,7 +16,7 @@ import { BaseBranchAdminPage } from 'src/components/layouts';
 import '../../styles/pages/UserManagementPage.scss';
 import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { toastError, toastSuccess } from 'src/utils/notify';
-import ModalDelistConfirm from 'src/components/Modals/ModalChangeActiveConfirm';
+import ModalDelistConfirm from 'src/components/Modals/User/ModalChangeActiveConfirm';
 
 interface IUser {
   id: number;
@@ -207,7 +207,6 @@ const BranchAdminPersonnelManagementPage = () => {
         </Box>
 
         <Box mt={10} className="user-container">
-          table
           <AppDataTable
             fetchData={getUser}
             renderBody={_renderContentTable}

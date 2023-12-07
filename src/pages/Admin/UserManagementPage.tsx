@@ -16,10 +16,10 @@ import '../../styles/pages/UserManagementPage.scss';
 import { AddIcon, LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import rf from 'src/services/RequestFactory';
-import ModalChangeActiveConfirm from 'src/components/Modals/ModalChangeActiveConfirm';
-import ModalViewUser from 'src/components/Modals/ModalViewUser';
-import ModalEditUser from 'src/components/Modals/ModalEditUser';
-import ModalAddNewUser from 'src/components/Modals/ModalAddNewUser';
+import ModalChangeActiveConfirm from 'src/components/Modals/User/ModalChangeActiveConfirm';
+import ModalViewUser from 'src/components/Modals/User/ModalViewUser';
+import ModalEditUser from 'src/components/Modals/User/ModalEditUser';
+import ModalAddNewUser from 'src/components/Modals/User/ModalAddNewUser';
 
 export interface IUser {
   id: number;

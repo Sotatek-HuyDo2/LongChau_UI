@@ -1,27 +1,29 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import 'src/styles/components/BaseModal.scss';
-import BaseModal from './BaseModal';
-import AppButton from '../AppButton';
+import BaseModal from '../BaseModal';
+import AppButton from '../../AppButton';
 import { FC } from 'react';
 
-interface IModalChangeActiveConfirmProps {
+interface IModalDeleteTypeProductProps {
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
 }
 
-const ModalChangeActiveConfirm: FC<IModalChangeActiveConfirmProps> = (
-  props,
-) => {
+const ModalDeleteTypeProduct: FC<IModalDeleteTypeProductProps> = (props) => {
   const { open, onClose, onConfirm } = props;
+
   return (
     <BaseModal
-      size="2xl"
-      title="Thay đổi trạng thái người dùng"
+      size="xl"
+      title="Xóa Phân loại thuốc"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
     >
+      <Box className="delist-confirm--para" m={'auto'} fontSize={18}>
+        Do you want to delete?
+      </Box>
       <Flex alignItems="center">
         <Flex
           className="delist-confirm"
@@ -29,15 +31,6 @@ const ModalChangeActiveConfirm: FC<IModalChangeActiveConfirmProps> = (
           gap={'15px'}
           w={'full'}
         >
-          <Flex
-            className="delist-confirm--para"
-            m={'auto'}
-            fontSize={18}
-            textAlign={'center'}
-          >
-            Bạn có muốn thay đổi trạng thái của người dùng này? (thay đổi này sẽ
-            ảnh hưởng tới trải nghiệm của người dùng)
-          </Flex>
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton
               className="btn-outline-hover"
@@ -58,4 +51,4 @@ const ModalChangeActiveConfirm: FC<IModalChangeActiveConfirmProps> = (
   );
 };
 
-export default ModalChangeActiveConfirm;
+export default ModalDeleteTypeProduct;

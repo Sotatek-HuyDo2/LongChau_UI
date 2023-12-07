@@ -9,25 +9,22 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_SUPPELIER } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
 import rf from 'src/services/RequestFactory';
-import { toastError, toastSuccess } from 'src/utils/notify';
-import ModalDeleteConfirm from 'src/components/Modals/ModalDeleteConfirm';
 import { AddIcon } from '@chakra-ui/icons';
 
 interface ISupplier {
-  supplierID: string;
-  supplierName: string;
-  supplierEmail: string;
-  supplierPhone: string;
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
 }
 
 const SupplierManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [dataSearch, setDataSearch] = useState<ISupplier[]>(MOCK_SUPPELIER);
+  const [dataSearch, setDataSearch] = useState<ISupplier[]>([]);
   const dataRef = useRef<ISupplier[]>([]);
 
   // const [id, setId] = useState<number>(NaN);
@@ -55,7 +52,7 @@ const SupplierManagementPage = () => {
 
     if (valueSearch) {
       dataFilter = dataFilter.filter((item: ISupplier) =>
-        item.supplierName.toLowerCase().includes(valueSearch.toLowerCase()),
+        item.name.toLowerCase().includes(valueSearch.toLowerCase()),
       );
 
       setDataSearch(dataFilter);
@@ -136,13 +133,13 @@ const SupplierManagementPage = () => {
       <Flex className="category--row-wrap" direction={'column'}>
         <Flex>
           <Flex className="category--cell-body category--id">
-            <Box cursor={'pointer'}>{data.supplierID}</Box>
+            <Box cursor={'pointer'}>{data.id}</Box>
           </Flex>
           <Box className="category--cell-body category--name">
             <Tooltip
               hasArrow
               className="tooltip-app"
-              label={data.supplierName ? data.supplierName : ''}
+              label={data.name ? data.name : ''}
               placement="top"
             >
               <Box
@@ -152,7 +149,7 @@ const SupplierManagementPage = () => {
                 maxW="550px"
                 cursor="pointer"
               >
-                {data.supplierName ? data.supplierName : '--'}
+                {data.name ? data.name : '--'}
               </Box>
             </Tooltip>
           </Box>
@@ -163,7 +160,7 @@ const SupplierManagementPage = () => {
             <Tooltip
               hasArrow
               className="tooltip-app"
-              label={data.supplierEmail ? data.supplierEmail : ''}
+              label={data.email ? data.email : ''}
               placement="top"
             >
               <Box
@@ -173,12 +170,12 @@ const SupplierManagementPage = () => {
                 maxW="550px"
                 cursor="pointer"
               >
-                {data?.supplierEmail ? data?.supplierEmail : '--'}
+                {data?.email ? data?.email : '--'}
               </Box>
             </Tooltip>
           </Flex>
           <Box className="category--cell-body category--phone">
-            {data.supplierPhone ? data.supplierPhone : '--'}
+            {data.phone ? data.phone : '--'}
           </Box>
           <Box
             className="category--cell-body category--action"
@@ -259,7 +256,6 @@ const SupplierManagementPage = () => {
         </Box>
 
         <Box mt={10} className="category-container">
-          table
           <AppDataTable
             fetchData={getDataTable}
             renderBody={_renderContentTable}
