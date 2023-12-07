@@ -65,8 +65,6 @@ const BranchManagementPage = () => {
     handleSearch();
   }, [valueSearch]);
 
-  const navigate = useNavigate();
-
   const getDataTable = async () => {
     try {
       const res = await rf.getRequest('BranchRequest').getBranchList();
@@ -151,7 +149,7 @@ const BranchManagementPage = () => {
           >
             <AppButton
               size={'sm'}
-              onClick={() => navigate(`/medical/${data.id}`)}
+              // onClick={() => navigate(`/medical/${data.id}`)}
             >
               Xem
             </AppButton>
@@ -163,9 +161,9 @@ const BranchManagementPage = () => {
             >
               Sửa
             </AppButton>
-            <AppButton ml={'3px'} size={'sm'} bg={'red.100'}>
+            {/* <AppButton ml={'3px'} size={'sm'} bg={'red.100'}>
               Xóa
-            </AppButton>
+            </AppButton> */}
           </Box>
         </Flex>
         {openModalEditBranch && (

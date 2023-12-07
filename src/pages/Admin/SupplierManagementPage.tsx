@@ -14,6 +14,8 @@ import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
 import rf from 'src/services/RequestFactory';
 import { AddIcon } from '@chakra-ui/icons';
+import ModalAddNewSupplier from 'src/components/Modals/Supplier/ModalAddNewSupplier';
+import ModalEditSupplier from 'src/components/Modals/Supplier/ModalEditSupplier';
 
 interface ISupplier {
   id: number;
@@ -26,26 +28,16 @@ const SupplierManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
   const [dataSearch, setDataSearch] = useState<ISupplier[]>([]);
   const dataRef = useRef<ISupplier[]>([]);
+  const [openModalAddNewSupplier, setOpenModalAddNewSupplier] =
+    useState<boolean>(false);
+  const [openModalEditSupplier, setOpenModalEditSupplier] =
+    useState<boolean>(false);
+  const [params, setParams] = useState({});
+  const [dataModal, setDataModal] = useState<any>({});
 
-  // const [id, setId] = useState<number>(NaN);
-  // const [openModalDeleteConfirm, setOpenModalDeleteConfirm] =
-  //   useState<boolean>(false);
-
-  // const handleDelete = (id: number) => {
-  //   setId(id);
-  //   setOpenModalDeleteConfirm(true);
-  // };
-
-  // const deleteMedical = async () => {
-  //   try {
-  //     await rf.getRequest('SupplierRequest').deleteUser(id);
-  //     toastSuccess('Delete successfully!');
-  //     // setParams({ ...params });
-  //     setOpenModalDeleteConfirm(false);
-  //   } catch (e: any) {
-  //     toastError(e.message || 'Something was wrong!!');
-  //   }
-  // };
+  const onReload = () => {
+    setParams({ ...params });
+  };
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
@@ -64,8 +56,6 @@ const SupplierManagementPage = () => {
     handleSearch();
   }, [valueSearch]);
 
-  const navigate = useNavigate();
-
   const getDataTable = async () => {
     try {
       const res = await rf.getRequest('SupplierRequest').getSupplier();
@@ -76,6 +66,16 @@ const SupplierManagementPage = () => {
       };
     } catch (error) {
       return { docs: [] };
+    }
+  };
+
+  const updateSupplier = async (id: number | string) => {
+    try {
+      const res = await rf.getRequest('SupplierRequest').getSupplierDetail(id);
+      setDataModal(res);
+      setOpenModalEditSupplier(true);
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -187,26 +187,33 @@ const SupplierManagementPage = () => {
             >
               Xem
             </AppButton>
-            <AppButton size={'sm'} bg={'yellow.100'} ml={'3px'}>
+            <AppButton
+              size={'sm'}
+              bg={'yellow.100'}
+              ml={'3px'}
+              onClick={() => updateSupplier(data.id)}
+            >
               Sửa
             </AppButton>
-            <AppButton
+            {/* <AppButton
               // onClick={() => handleDelete(data.supplierID)}
               ml={'3px'}
               size={'sm'}
               bg={'red.100'}
             >
               Xóa
-            </AppButton>
+            </AppButton> */}
           </Box>
         </Flex>
-        {/* {openModalDeleteConfirm && (
-          <ModalDeleteConfirm
-            open={openModalDeleteConfirm}
-            onClose={() => setOpenModalDeleteConfirm(false)}
-            onConfirm={deleteMedical}
+        {openModalEditSupplier && (
+          <ModalEditSupplier
+            open={openModalEditSupplier}
+            onClose={() => setOpenModalEditSupplier(false)}
+            onReload={onReload}
+            data={dataModal}
+            supId={data.id}
           />
-        )} */}
+        )}
       </Flex>
     );
   };
@@ -245,7 +252,7 @@ const SupplierManagementPage = () => {
             </Flex>
             <AppButton
               size={'md'}
-              // onClick={() => setOpenModalAddNewUser(true)}
+              onClick={() => setOpenModalAddNewSupplier(true)}
             >
               <Flex justify={'center'} align={'start'} gap={1}>
                 <AddIcon />
@@ -263,6 +270,13 @@ const SupplierManagementPage = () => {
             size={10}
           />
         </Box>
+        {openModalAddNewSupplier && (
+          <ModalAddNewSupplier
+            open={openModalAddNewSupplier}
+            onClose={() => setOpenModalAddNewSupplier(false)}
+            onReload={onReload}
+          />
+        )}
       </Box>
     </BaseAdminPage>
   );
