@@ -63,6 +63,7 @@ const MedicalManagementPage = () => {
   };
 
   const handleUpdate = async (id: number) => {
+    setId(id);
     try {
       const res = await rf.getRequest('ProductRequest').getProductDetail(id);
       setDataModal(res);

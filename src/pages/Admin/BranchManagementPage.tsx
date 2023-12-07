@@ -14,6 +14,8 @@ import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
 import rf from 'src/services/RequestFactory';
 import { AddIcon } from '@chakra-ui/icons';
+import ModalAddNewBranch from 'src/components/Modals/ModalAddNewBranch';
+import ModalEditBranch from 'src/components/Modals/ModalEditBranch';
 
 interface IBranch {
   id: string;
@@ -24,6 +26,12 @@ interface IBranch {
 const BranchManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
   const [dataSearch, setDataSearch] = useState<IBranch[]>([]);
+  const [openModalAddNewBranch, setOpenModalAddNewBranch] =
+    useState<boolean>(false);
+  const [openModalEditBranch, setOpenModalEditBranch] =
+    useState<boolean>(false);
+  const [dataModal, setDataModal] = useState();
+  const [id, setID] = useState<number | string>();
 
   const dataRef = useRef<IBranch[]>([]);
 
@@ -39,6 +47,17 @@ const BranchManagementPage = () => {
     setDataSearch(dataFilter);
   };
 
+  const handleUpdate = async (id: number | string) => {
+    setID(id);
+    try {
+      const res = await rf.getRequest('BranchRequest').getBranchAdminDetail(id);
+      setDataModal(res);
+      setOpenModalEditBranch(true);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffectUnsafe(() => {
     handleSearch();
   }, [valueSearch]);
@@ -48,7 +67,6 @@ const BranchManagementPage = () => {
   const getDataTable = async () => {
     try {
       const res = await rf.getRequest('BranchRequest').getBranchList();
-      console.log('rtes', res);
       dataRef.current = res;
       setDataSearch(res);
       return {
@@ -134,7 +152,12 @@ const BranchManagementPage = () => {
             >
               Xem
             </AppButton>
-            <AppButton size={'sm'} bg={'yellow.100'} ml={'3px'}>
+            <AppButton
+              size={'sm'}
+              bg={'yellow.100'}
+              ml={'3px'}
+              onClick={() => handleUpdate(data.id)}
+            >
               Sửa
             </AppButton>
             <AppButton ml={'3px'} size={'sm'} bg={'red.100'}>
@@ -142,6 +165,14 @@ const BranchManagementPage = () => {
             </AppButton>
           </Box>
         </Flex>
+        {openModalEditBranch && (
+          <ModalEditBranch
+            open={openModalEditBranch}
+            onClose={() => setOpenModalEditBranch(false)}
+            data={dataModal}
+            id={id}
+          />
+        )}
       </Flex>
     );
   };
@@ -182,9 +213,14 @@ const BranchManagementPage = () => {
               size={'md'}
               // onClick={() => setOpenModalAddNewUser(true)}
             >
-              <Flex justify={'center'} align={'start'} gap={1}>
+              <Flex
+                justify={'center'}
+                align={'start'}
+                gap={1}
+                onClick={() => setOpenModalAddNewBranch(true)}
+              >
                 <AddIcon />
-                Thêm Branch Admin
+                Thêm Branch
               </Flex>
             </AppButton>
           </Flex>
@@ -199,6 +235,12 @@ const BranchManagementPage = () => {
             size={10}
           />
         </Box>
+        {openModalAddNewBranch && (
+          <ModalAddNewBranch
+            open={openModalAddNewBranch}
+            onClose={() => setOpenModalAddNewBranch(false)}
+          />
+        )}
       </Box>
     </BaseAdminPage>
   );

@@ -6,23 +6,23 @@ export default class BranchRequest extends BaseRequest {
     return config.api.baseUrlApi;
   }
 
-  //   createBranchAdmin(param: any) {
-  //     const url = `/branch/create`;
-  //     return this.post(url, param);
-  //   }
+  createBranchAdmin(param: any) {
+    const url = `branch/create`;
+    return this.post(url, param);
+  }
 
   getBranchList() {
     const url = `branch`;
     return this.get(url);
   }
 
-  //   getBranchAdminDetail(id: number) {
-  //     const url = `/branch${id}`;
-  //     return this.get(url);
-  //   }
+  getBranchAdminDetail(id: number) {
+    const url = `branch/${id}`;
+    return this.get(url);
+  }
 
-  //   updateBranchAdminInfo(param: any, id: number) {
-  //     const url = `/branch/{id}`;
-  //     return this.put(url, param);
-  //   }
+  updateBranchAdminInfo(id: number, param: any) {
+    const url = `branch/${id}`;
+    return this.put(url, param);
+  }
 }
