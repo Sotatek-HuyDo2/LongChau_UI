@@ -15,6 +15,7 @@
     align-items: center;
     cursor: pointer;
     color: $Title;
+    position: relative;
 
     svg {
       margin-right: 20px;
@@ -24,6 +25,31 @@
     &:hover,
     &.active {
       background-color: $Title;
+      color: $BackMain;
+
+      svg {
+        color: $BackMain;
+      }
+    }
+  }
+
+  &__menu-path-child-item {
+    margin-left: 40px;
+    padding: 15px 30px;
+    margin-bottom: 5px;
+    align-items: center;
+    cursor: pointer;
+    color: $Title;
+    position: relative;
+
+    svg {
+      margin-right: 20px;
+      color: $Title;
+    }
+
+    &:hover,
+    &.active {
+      background-color: #0250be;
       color: $BackMain;
 
       svg {
