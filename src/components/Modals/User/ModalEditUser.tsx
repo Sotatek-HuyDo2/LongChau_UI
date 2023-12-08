@@ -4,7 +4,7 @@ import BaseModal from '../BaseModal';
 import AppButton from '../../AppButton';
 import { FC } from 'react';
 import AppInput from '../../AppInput';
-import { IUser } from 'src/pages/Admin/UserManagementPage';
+import { IUser } from 'src/pages/Admin/UserManagementPage/CustomerManagementPage';
 
 interface IModalEditUserProps {
   open: boolean;
@@ -30,18 +30,11 @@ const ModalEditUser: FC<IModalEditUserProps> = (props) => {
           gap={'15px'}
           w={'full'}
         >
-          {/* <Box className="delist-confirm--para" m={'auto'} fontSize={18}>
-            Edit User {data.firstName + ' ' + data.lastName}
-          </Box> */}
-          <Flex>
-            <AppInput label="Email" defaultValue={data.email} disabled />
-          </Flex>
           <Flex gap={3}>
             <AppInput label="Tên" defaultValue={data.lastName} />
             <AppInput label="Họ" defaultValue={data.firstName} />
           </Flex>
           <AppInput label="Số điện thoại" defaultValue={data.phone} />
-
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton
               className="btn-outline-hover"

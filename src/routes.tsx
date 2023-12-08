@@ -17,7 +17,6 @@ import Storage from './utils/storage';
 import MedicalManagementPage from './pages/Admin/MedicalManagementPage';
 import MedicalDetailPage from './pages/MedicalDetailPage';
 import ManageCategoryList from './pages/Admin/ManageCategoryListPage';
-import UserManagementPage from './pages/Admin/UserManagementPage';
 import GeneralWarehouseManagementPage from './pages/Admin/GeneralWarehouseManagementPage';
 import BranchManagementPage from './pages/Admin/BranchManagementPage';
 import SupplierManagementPage from './pages/Admin/SupplierManagementPage';
@@ -37,6 +36,8 @@ import ProfilePart from './pages/UserProfilePage/Profile';
 import Order from './pages/Order';
 import RegisterPage from './pages/RegisterPage';
 import ProfileEditPart from './pages/UserProfilePage/EditProfile';
+import CustomerManagementPage from './pages/Admin/UserManagementPage/CustomerManagementPage';
+import UserManagerList from './pages/Admin/UserManagementPage';
 
 /**
  * Main App routes.
@@ -171,7 +172,7 @@ const RouterCustom = () => {
         <Route index element={<SupplierManagementPage />} />
       </Route>
 
-      <Route path={'admin'} element={<SupplierManagementPage />} />
+      {/* <Route path={'admin'} element={<SupplierManagementPage />} /> */}
 
       <Route
         path={'admin/category-management/category-functional-foods'}
@@ -203,7 +204,12 @@ const RouterCustom = () => {
         element={<GeneralWarehouseManagementPage />}
       />
 
-      <Route path={'admin/user-management'} element={<UserManagementPage />} />
+      <Route
+        path={'admin/customer-management'}
+        element={<CustomerManagementPage />}
+      />
+
+      <Route path={'admin/user-management'} element={<UserManagerList />} />
 
       <Route path={'admin/statistical'} element={<Statistical />} />
     </Routes>

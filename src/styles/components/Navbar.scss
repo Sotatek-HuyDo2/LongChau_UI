@@ -24,39 +24,37 @@
 
     &:hover,
     &.active {
+      transition: all 0.5s ease;
       background-color: $Title;
       color: $BackMain;
 
       svg {
         color: $BackMain;
+        rotate: 45deg;
+        transition: rotate 0.5s ease;
+      }
+    }
+    & .sidebar-drop__icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      margin: 1px 40px 0 0;
+      transition: transform 0.3s ease;
+
+      &.active {
+        transform: rotate(45deg);
+        svg {
+          color: $BackMain;
+          rotate: 45deg !important;
+        }
       }
     }
   }
 
-  &__menu-path-child-item {
-    margin-left: 40px;
-    padding: 15px 30px;
-    margin-bottom: 5px;
-    align-items: center;
-    cursor: pointer;
-    color: $Title;
-    position: relative;
-
-    svg {
-      margin-right: 20px;
-      color: $Title;
-    }
-
-    &:hover,
-    &.active {
-      background-color: #0250be;
-      color: $BackMain;
-
-      svg {
-        color: $BackMain;
-      }
-    }
+  .dropdown-menu {
+    transition: all 0.5s ease;
   }
+
   &__menu-drop {
     padding: 15px 30px 0;
     margin-bottom: 5px;

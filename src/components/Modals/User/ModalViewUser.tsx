@@ -3,21 +3,21 @@ import 'src/styles/components/BaseModal.scss';
 import BaseModal from '../BaseModal';
 import AppButton from '../../AppButton';
 import { FC } from 'react';
-import { IUser } from 'src/pages/Admin/UserManagementPage';
+import AppInput from '../../AppInput';
+import { IUser } from 'src/pages/Admin/UserManagementPage/CustomerManagementPage';
 
-interface IModalViewUserProps {
+interface IModalEditUserProps {
   open: boolean;
   onClose: () => void;
   data: IUser;
 }
 
-const ModalViewUser: FC<IModalViewUserProps> = (props) => {
-  const { open, onClose } = props;
-
+const ModalEditUser: FC<IModalEditUserProps> = (props) => {
+  const { open, onClose, data } = props;
   return (
     <BaseModal
       size="xl"
-      title="User Information"
+      title="Xem thông tin người dùng"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -29,9 +29,11 @@ const ModalViewUser: FC<IModalViewUserProps> = (props) => {
           gap={'15px'}
           w={'full'}
         >
-          <Box className="delist-confirm--para" m={'auto'} fontSize={18}>
-            Do you want to delete?
-          </Box>
+          <Flex gap={3}>
+            <AppInput label="Tên" defaultValue={data.firstName} />
+            <AppInput label="Họ" defaultValue={data.lastName} />
+          </Flex>
+          <AppInput label="Số điện thoại" defaultValue={data.phone} />
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton
               className="btn-outline-hover"
@@ -40,7 +42,7 @@ const ModalViewUser: FC<IModalViewUserProps> = (props) => {
               onClick={onClose}
               w={'100%'}
             >
-              Hủy
+              Thoát
             </AppButton>
           </Flex>
         </Flex>
@@ -49,4 +51,4 @@ const ModalViewUser: FC<IModalViewUserProps> = (props) => {
   );
 };
 
-export default ModalViewUser;
+export default ModalEditUser;

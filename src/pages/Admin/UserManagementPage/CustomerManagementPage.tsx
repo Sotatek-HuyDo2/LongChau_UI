@@ -8,76 +8,66 @@ import {
   InputRightElement,
   Tooltip,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
 import { AppDataTable, AppButton } from 'src/components';
-import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
-import '../../styles/pages/UserManagementPage.scss';
-import { AddIcon, LockIcon, UnlockIcon } from '@chakra-ui/icons';
+import '../../../styles/pages/UserManagementPage.scss';
+import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import rf from 'src/services/RequestFactory';
 import ModalChangeActiveConfirm from 'src/components/Modals/User/ModalChangeActiveConfirm';
 import ModalViewUser from 'src/components/Modals/User/ModalViewUser';
-import ModalEditUser from 'src/components/Modals/User/ModalEditUser';
-import ModalAddNewUser from 'src/components/Modals/User/ModalAddNewUser';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
 export interface IUser {
-  id: number;
-  email: string;
+  userId: number;
   firstName: string;
   lastName: string;
-  role: string;
-  branchId: number;
   phone: string;
   status: string;
 }
 
-const UserManagementPage = () => {
+const CustomerManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
   const [dataSearch, setDataSearch] = useState<IUser[]>([]);
   const [status, setStatus] = useState('active');
-  const [id, setId] = useState<number>(NaN);
+  const [userId, setUserId] = useState<number>(NaN);
   const [openModalChangeActiveConfirm, setOpenModalChangeActiveConfirm] =
     useState<boolean>(false);
-  const [openModalAddNewUser, setOpenModalAddNewUser] =
-    useState<boolean>(false);
   const [openModalViewUser, setOpenModalViewUser] = useState<boolean>(false);
-  const [openModalEditUser, setOpenModalEditUser] = useState<boolean>(false);
   const dataRef = useRef<IUser[]>([]);
   const [dataModal, setDataModal] = useState<IUser>({} as IUser);
 
-  const navigate = useNavigate();
   const [params, setParams] = useState({});
 
-  const handleActive = (id: number, status: string) => {
+  const handleActive = (userId: number, status: string) => {
     if (status === 'active') {
       setStatus('inactive');
     } else {
       setStatus('active');
     }
-    setId(id);
+    setUserId(userId);
     setOpenModalChangeActiveConfirm(true);
   };
 
-  const handleOpenModalViewUser = (id: number) => {
-    setId(id);
-    setOpenModalViewUser(true);
-  };
-
-  const handleOpenModalEditUser = (id: number) => {
-    setId(id);
-    setOpenModalEditUser(true);
+  const handleOpenModalViewUser = async (userId: number) => {
+    try {
+      const res = await rf.getRequest('UserRequest').getCustomerByID(userId);
+      setDataModal(res);
+      setOpenModalViewUser(true);
+    } catch (e: any) {
+      console.log(e.message);
+    }
   };
 
   const changeActive = async () => {
     try {
       if (status === 'inactive') {
-        await rf.getRequest('UserRequest').deActiveUser(id);
+        await rf.getRequest('UserRequest').deActiveUser(userId);
         toastSuccess('Inactive user successfully!');
         setParams({ ...params });
         setOpenModalChangeActiveConfirm(false);
       } else {
-        await rf.getRequest('UserRequest').activeUser(id);
+        await rf.getRequest('UserRequest').activeUser(userId);
         setParams({ ...params });
         toastSuccess('Active user successfully!');
         setOpenModalChangeActiveConfirm(false);
@@ -94,7 +84,6 @@ const UserManagementPage = () => {
       dataFilter = dataFilter.filter((item: IUser) =>
         item.firstName.toLowerCase().includes(valueSearch.toLowerCase()),
       );
-
       setDataSearch(dataFilter);
     }
     setDataSearch(dataFilter);
@@ -106,8 +95,7 @@ const UserManagementPage = () => {
 
   const getUser = async () => {
     try {
-      const res = await rf.getRequest('UserRequest').getUser();
-
+      const res = await rf.getRequest('UserRequest').getCustomer();
       dataRef.current = res;
       setDataSearch(res);
       return {
@@ -118,26 +106,11 @@ const UserManagementPage = () => {
     }
   };
 
-  // const getUserDetail = async () => {
-  //   try {
-  //     const res = await rf.getRequest('UserRequest').getProfile();
-  //     setDataModal(res);
-  //   } catch (error) {
-  //     return { docs: [] };
-  //   }
-  // };
-
-  // useEffectUnsafe(() => {
-  //   getUserDetail();
-  // }, [id]);
-
   const _renderHeaderTable = () => {
     return (
       <Flex>
         <Box className="user--header-cell-body user--id">ID</Box>
-        <Box className="user--header-cell-body user--email">Email</Box>
         <Box className="user--header-cell-body user--name">Tên</Box>
-        <Box className="user--header-cell-body user--role">Quyền</Box>
         <Box className="user--header-cell-body user--phone">SDT</Box>
         <Box className="user--header-cell-body user--status">Trạng thái</Box>
         <Box className="user--header-cell-body user--action">Chức năng</Box>
@@ -148,9 +121,12 @@ const UserManagementPage = () => {
   const _renderContentTable = (data: IUser[]) => {
     return (
       <Box>
-        {dataSearch.map((data: IUser, id: number) => {
+        {dataSearch.map((data: IUser, userId: number) => {
           return (
-            <RowAddressTransactionTable data={data} key={`${id}-coin-table`} />
+            <RowAddressTransactionTable
+              data={data}
+              key={`${userId}-coin-table`}
+            />
           );
         })}
       </Box>
@@ -164,17 +140,11 @@ const UserManagementPage = () => {
       <Flex className="user--row-wrap" direction={'column'}>
         <Flex>
           <Flex className="user--cell-body user--id">
-            <Box cursor={'pointer'}>{data?.id}</Box>
+            <Box cursor={'pointer'}>{data?.userId}</Box>
           </Flex>
-          <Box className="user--cell-body user--email">
-            {data?.email ? data?.email : '--'}
-          </Box>
           <Flex flexDirection="row" className="user--cell-body user--name">
             {data?.lastName} {data?.firstName}
           </Flex>
-          <Box className="user--cell-body user--role">
-            {data?.role ? data?.role : '--'}
-          </Box>
           <Box className="user--cell-body user--phone">
             {data?.phone ? data?.phone : '--'}
           </Box>
@@ -192,7 +162,7 @@ const UserManagementPage = () => {
                   hasArrow
                 >
                   <UnlockIcon
-                    onClick={() => handleActive(data.id, data?.status)}
+                    onClick={() => handleActive(data.userId, data?.status)}
                   />
                 </Tooltip>
               ) : (
@@ -203,7 +173,7 @@ const UserManagementPage = () => {
                   hasArrow
                 >
                   <LockIcon
-                    onClick={() => handleActive(data.id, data?.status)}
+                    onClick={() => handleActive(data.userId, data?.status)}
                   />
                 </Tooltip>
               )}
@@ -212,25 +182,16 @@ const UserManagementPage = () => {
           <Box className="user--cell-body user--action" cursor={'pointer'}>
             <AppButton
               size={'sm'}
-              // onClick={() => navigate(`/medical/${data.brandID}`)}
-              onClick={() => handleOpenModalViewUser(data.id)}
+              onClick={() => handleOpenModalViewUser(data.userId)}
             >
               Xem
-            </AppButton>
-            <AppButton
-              size={'sm'}
-              bg={'yellow.100'}
-              ml={'3px'}
-              onClick={() => handleOpenModalEditUser(data.id)}
-            >
-              Sửa
             </AppButton>
             {data?.status === 'active' ? (
               <AppButton
                 ml={'3px'}
                 size={'sm'}
                 bg={'red.100'}
-                onClick={() => handleActive(data.id, data?.status)}
+                onClick={() => handleActive(data.userId, data?.status)}
               >
                 Deactivate
               </AppButton>
@@ -239,20 +200,13 @@ const UserManagementPage = () => {
                 ml={'3px'}
                 size={'sm'}
                 bg={'green.100'}
-                onClick={() => handleActive(data.id, data?.status)}
+                onClick={() => handleActive(data.userId, data?.status)}
               >
                 Activate
               </AppButton>
             )}
           </Box>
         </Flex>
-        {openModalEditUser && (
-          <ModalEditUser
-            open={openModalEditUser}
-            onClose={() => setOpenModalEditUser(false)}
-            data={dataModal}
-          />
-        )}
         {openModalViewUser && (
           <ModalViewUser
             open={openModalViewUser}
@@ -265,12 +219,6 @@ const UserManagementPage = () => {
             open={openModalChangeActiveConfirm}
             onClose={() => setOpenModalChangeActiveConfirm(false)}
             onConfirm={changeActive}
-          />
-        )}
-        {openModalAddNewUser && (
-          <ModalAddNewUser
-            open={openModalAddNewUser}
-            onClose={() => setOpenModalAddNewUser(false)}
           />
         )}
       </Flex>
@@ -309,12 +257,6 @@ const UserManagementPage = () => {
                 </InputGroup>
               </Box>
             </Flex>
-            <AppButton size={'md'} onClick={() => setOpenModalAddNewUser(true)}>
-              <Flex justify={'center'} align={'start'} gap={1}>
-                <AddIcon />
-                Thêm Branch Admin
-              </Flex>
-            </AppButton>
           </Flex>
         </Box>
 
@@ -332,4 +274,4 @@ const UserManagementPage = () => {
   );
 };
 
-export default UserManagementPage;
+export default CustomerManagementPage;
