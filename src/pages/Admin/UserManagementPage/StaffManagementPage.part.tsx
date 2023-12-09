@@ -20,6 +20,7 @@ import ModalViewUser from 'src/components/Modals/User/ModalViewUser';
 import ModalEditUser from 'src/components/Modals/User/ModalEditUser';
 import ModalAddNewUser from 'src/components/Modals/User/ModalAddNewUser';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import ModalAddNewBranchAdmin from 'src/components/Modals/User/ModalAddNewBranchAdmin';
 
 export interface IAdmin {
   id: number;
@@ -32,10 +33,11 @@ export interface IAdmin {
 
 interface Props {
   data: any;
+  showAddNew?: boolean;
 }
 
 const CustomerManagementPage = (props: Props) => {
-  const { data } = props;
+  const { data, showAddNew } = props;
 
   const [valueSearch, setValueSearch] = useState<string>('');
   const [dataSearch, setDataSearch] = useState<IAdmin[]>([]);
@@ -91,12 +93,16 @@ const CustomerManagementPage = (props: Props) => {
     }
   };
 
+  const onReload = () => {
+    setParams({ ...params });
+  };
+
   const handleSearch = () => {
     let dataFilter = dataRef.current;
 
     if (valueSearch) {
       dataFilter = dataFilter.filter((item: IAdmin) =>
-        item.firstName.toLowerCase().includes(valueSearch.toLowerCase()),
+        item?.firstName.toLowerCase().includes(valueSearch?.toLowerCase()),
       );
 
       setDataSearch(dataFilter);
@@ -136,10 +142,10 @@ const CustomerManagementPage = (props: Props) => {
   const _renderHeaderTable = () => {
     return (
       <Flex>
+        <Box className="user--header-cell-body user--id">Stt</Box>
         <Box className="user--header-cell-body user--id">ID</Box>
         <Box className="user--header-cell-body user--name">Tên</Box>
         <Box className="user--header-cell-body user--phone">SDT</Box>
-        <Box className="user--header-cell-body user--status">Trạng thái</Box>
         <Box className="user--header-cell-body user--action">Chức năng</Box>
       </Flex>
     );
@@ -148,9 +154,13 @@ const CustomerManagementPage = (props: Props) => {
   const _renderContentTable = (data: IAdmin[]) => {
     return (
       <Box>
-        {dataSearch.map((data: IAdmin, id: number) => {
+        {dataSearch.map((data: IAdmin, index: number) => {
           return (
-            <RowAddressTransactionTable data={data} key={`${id}-coin-table`} />
+            <RowAddressTransactionTable
+              data={data}
+              key={`${index}-coin-table`}
+              id={index + 1}
+            />
           );
         })}
       </Box>
@@ -159,49 +169,22 @@ const CustomerManagementPage = (props: Props) => {
 
   const RowAddressTransactionTable: React.FC<{
     data: IAdmin;
-  }> = ({ data }) => {
+    id: number;
+  }> = ({ data, id }) => {
     return (
       <Flex className="user--row-wrap" direction={'column'}>
         <Flex>
           <Flex className="user--cell-body user--id">
-            <Box cursor={'pointer'}>{data?.id}</Box>
+            <Box cursor={'pointer'}>{id}</Box>
+          </Flex>
+          <Flex className="user--cell-body user--id">
+            <Box cursor={'pointer'}>{data?.branchId}</Box>
           </Flex>
           <Flex flexDirection="row" className="user--cell-body user--name">
             {data?.lastName} {data?.firstName}
           </Flex>
           <Box className="user--cell-body user--phone">
             {data?.phone ? data?.phone : '--'}
-          </Box>
-          <Box className="user--cell-body user--phone">
-            <Box
-              className={`user--${data?.status.toLowerCase()}`}
-              cursor={'pointer'}
-              ml={'35px'}
-            >
-              {data?.status === 'active' ? (
-                <Tooltip
-                  className="tooltip-app"
-                  label={'Người dùng hoạt động bình thường'}
-                  placement="top"
-                  hasArrow
-                >
-                  <UnlockIcon
-                    onClick={() => handleActive(data.id, data?.status)}
-                  />
-                </Tooltip>
-              ) : (
-                <Tooltip
-                  className="tooltip-app"
-                  label={'Người dùng bị hạn chế hoạt động'}
-                  placement="top"
-                  hasArrow
-                >
-                  <LockIcon
-                    onClick={() => handleActive(data.id, data?.status)}
-                  />
-                </Tooltip>
-              )}
-            </Box>
           </Box>
           <Box className="user--cell-body user--action" cursor={'pointer'}>
             <AppButton
@@ -219,25 +202,6 @@ const CustomerManagementPage = (props: Props) => {
             >
               Sửa
             </AppButton>
-            {data?.status === 'active' ? (
-              <AppButton
-                ml={'3px'}
-                size={'sm'}
-                bg={'red.100'}
-                onClick={() => handleActive(data.id, data?.status)}
-              >
-                Deactivate
-              </AppButton>
-            ) : (
-              <AppButton
-                ml={'3px'}
-                size={'sm'}
-                bg={'green.100'}
-                onClick={() => handleActive(data.id, data?.status)}
-              >
-                Activate
-              </AppButton>
-            )}
           </Box>
         </Flex>
         {/* {openModalEditUser && (
@@ -261,12 +225,6 @@ const CustomerManagementPage = (props: Props) => {
             onConfirm={changeActive}
           />
         )}
-        {openModalAddNewUser && (
-          <ModalAddNewUser
-            open={openModalAddNewUser}
-            onClose={() => setOpenModalAddNewUser(false)}
-          />
-        )}
       </Flex>
     );
   };
@@ -276,7 +234,6 @@ const CustomerManagementPage = (props: Props) => {
       <Box className={'user__search'}>
         <Flex justifyContent={'space-between'}>
           <Flex alignItems={'center'}>
-            <Box className={'user__search-title'}>Nhân sự:</Box>
             <Box className="user__search-input">
               <InputGroup>
                 <AppInput
@@ -292,12 +249,14 @@ const CustomerManagementPage = (props: Props) => {
               </InputGroup>
             </Box>
           </Flex>
-          <AppButton size={'md'} onClick={() => setOpenModalAddNewUser(true)}>
-            <Flex justify={'center'} align={'start'} gap={1}>
-              <AddIcon />
-              Thêm Branch Admin
-            </Flex>
-          </AppButton>
+          {showAddNew && (
+            <AppButton size={'md'} onClick={() => setOpenModalAddNewUser(true)}>
+              <Flex justify={'center'} align={'start'} gap={1}>
+                <AddIcon />
+                Thêm Branch Admin
+              </Flex>
+            </AppButton>
+          )}
         </Flex>
       </Box>
 
@@ -310,6 +269,13 @@ const CustomerManagementPage = (props: Props) => {
           size={10}
         />
       </Box>
+      {openModalAddNewUser && (
+        <ModalAddNewBranchAdmin
+          onReload={onReload}
+          open={openModalAddNewUser}
+          onClose={() => setOpenModalAddNewUser(false)}
+        />
+      )}
     </Box>
   );
 };

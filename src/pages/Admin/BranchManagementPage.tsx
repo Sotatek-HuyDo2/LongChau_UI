@@ -17,7 +17,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import ModalAddNewBranch from 'src/components/Modals/Branch/ModalAddNewBranch';
 import ModalEditBranch from 'src/components/Modals/Branch/ModalEditBranch';
 
-interface IBranch {
+export interface IBranch {
   id: string;
   name: string;
   address: string;
@@ -81,6 +81,7 @@ const BranchManagementPage = () => {
   const _renderHeaderTable = () => {
     return (
       <Flex>
+        <Box className="category--header-cell-body category--id">Stt</Box>
         <Box className="category--header-cell-body category--id">ID</Box>
         <Box className="category--header-cell-body category--name">Tên</Box>
         <Box className="category--header-cell-body category--quality">
@@ -118,6 +119,10 @@ const BranchManagementPage = () => {
         <Flex>
           <Flex className="category--cell-body category--id">
             <Box cursor={'pointer'}>{id}</Box>
+          </Flex>
+
+          <Flex className="category--cell-body category--id">
+            <Box cursor={'pointer'}>{data.id}</Box>
           </Flex>
           <Box className="category--cell-body category--name">
             <Tooltip
@@ -195,7 +200,7 @@ const BranchManagementPage = () => {
         <Box className={'category__search'}>
           <Flex justifyContent={'space-between'}>
             <Flex>
-              <Box className={'category__search-title'}>Chi nhánh:</Box>
+              {/* <Box className={'category__search-title'}>Chi nhánh:</Box> */}
               <Box className="category__search-input">
                 <InputGroup>
                   <AppInput

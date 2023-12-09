@@ -54,6 +54,12 @@ const LoginPage = () => {
     }
   };
 
+  const handlePasswordKeyDown = (e: any) => {
+    if (e.key === 'Enter' && !isError) {
+      onSubmit();
+    }
+  };
+
   return (
     <Box className="login">
       <Flex
@@ -75,9 +81,11 @@ const LoginPage = () => {
               Mật khẩu
             </FormLabel>
             <Input
+              type="password"
               id="password"
               value={password}
               onChange={handlePasswordChange}
+              onKeyDown={handlePasswordKeyDown}
             />
             {!isError ? (
               <FormHelperText>

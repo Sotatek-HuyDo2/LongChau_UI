@@ -75,42 +75,6 @@ const RouterCustom = () => {
 
   return (
     <Routes>
-      {/* <Route path={'/'} element={<PrivateRoute />}>
-        <Route index element={<DashboardPage />} />
-      </Route>
-
-
-      <Route path={'/delist'} element={<PrivateRoute />}>
-        <Route index element={<DelistPage />} />
-      </Route>
-
-      <Route path={'/listing'} element={<PrivateRoute />}>
-        <Route index element={<ListingPage />} />
-      </Route>
-
-      <Route path={'/user'} element={<PrivateRoute />}>
-        <Route index element={<UserManagement />} />
-      </Route>
-
-      <Route path={'/user/:uid'} element={<PrivateRoute />}>
-        <Route index element={<UserInformationDetail />} />
-      </Route>
-
-      <Route path={'/marketing'} element={<PrivateRoute />}>
-        <Route index element={<MarketingPage />} />
-      </Route>
-
-      <Route path={'/create-push-notification'} element={<PrivateRoute />}>
-        <Route index element={<CreatePushNotificationPage />} />
-      </Route>
-
-      <Route path={'/create-notification'} element={<PrivateRoute />}>
-        <Route index element={<CreateNotificationPage />} />
-      </Route>
-
-      <Route path={'/insight'} element={<PrivateRoute />}>
-        <Route index element={<InsightPage />} />
-      </Route> */}
       <Route path={'/login'} element={<LoginPage />} />
 
       <Route path={'/register'} element={<RegisterPage />} />
@@ -147,33 +111,51 @@ const RouterCustom = () => {
       <Route path={'order'} element={<Order />} />
 
       {/* Staff */}
-      <Route path={'/staff'} element={<StaffCustomerManagementPage />} />
-
       <Route
-        path={'staff/general-warehouse-management'}
-        element={<GeneralWarehouseManagementPage />}
-      />
+        path={'/staff'}
+        element={<PrivateRoute allowedRoles={['staff']} />}
+      >
+        <Route index element={<StaffCustomerManagementPage />} />
+
+        <Route
+          path={'general-warehouse-management'}
+          element={<GeneralWarehouseManagementPage />}
+        />
+      </Route>
 
       {/* Branch-Admin */}
       <Route
         path={'branch-admin'}
-        element={<BranchAdminGeneralWarehouseManagementPage />}
-      />
+        element={<PrivateRoute allowedRoles={['branch-admin']} />}
+      >
+        <Route index element={<BranchAdminGeneralWarehouseManagementPage />} />
 
-      <Route
-        path={'branch-admin/personnel-management'}
-        element={<BranchAdminPersonnelManagementPage />}
-      />
+        <Route
+          path={'personnel-management'}
+          element={<BranchAdminPersonnelManagementPage />}
+        />
 
-      <Route path={'branch-admin/statistical'} element={<Statistical />} />
-
-      {/* Admin */}
-      <Route path={'admin'} element={<PrivateRoute />}>
-        <Route index element={<SupplierManagementPage />} />
+        <Route path={'statistical'} element={<Statistical />} />
       </Route>
 
-      {/* <Route path={'admin'} element={<SupplierManagementPage />} /> */}
+      {/* Admin */}
+      <Route path={'admin'} element={<PrivateRoute allowedRoles={['admin']} />}>
+        <Route index element={<SupplierManagementPage />} />
 
+        <Route path={'category-management'} element={<ManageCategoryList />} />
+
+        <Route
+          path={'customer-management'}
+          element={<CustomerManagementPage />}
+        />
+
+        <Route path={'user-management'} element={<UserManagerList />} />
+
+        <Route path={'statistical'} element={<Statistical />} />
+      </Route>
+
+      {/* 
+        <Route path={'admin'} element={<SupplierManagementPage />} />
       <Route
         path={'admin/category-management/category-functional-foods'}
         element={<CategoryFunctionalFoods />}
@@ -192,26 +174,12 @@ const RouterCustom = () => {
       <Route
         path={'admin/category-management/category-medical-equipment'}
         element={<CategoryMedicalEquipment />}
-      />
+      /> */}
 
-      <Route
-        path={'admin/category-management'}
-        element={<ManageCategoryList />}
-      />
-
-      <Route
+      {/* <Route
         path={'admin/general-warehouse-management'}
         element={<GeneralWarehouseManagementPage />}
-      />
-
-      <Route
-        path={'admin/customer-management'}
-        element={<CustomerManagementPage />}
-      />
-
-      <Route path={'admin/user-management'} element={<UserManagerList />} />
-
-      <Route path={'admin/statistical'} element={<Statistical />} />
+      /> */}
     </Routes>
   );
 };

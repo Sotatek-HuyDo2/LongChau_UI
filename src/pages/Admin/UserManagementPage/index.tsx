@@ -49,7 +49,7 @@ const UserManagerList = () => {
     {
       id: 'branch-admin',
       name: 'Branch Admin',
-      content: <CustomerManagementPage data={branchAdmin} />,
+      content: <CustomerManagementPage data={branchAdmin} showAddNew />,
     },
   ];
 

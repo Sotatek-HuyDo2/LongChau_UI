@@ -32,9 +32,10 @@
     align-items: center;
     border-radius: 6px;
     z-index: 2;
-    background-color: $Card;
+    background-color: $BackGround;
     justify-content: space-between;
     cursor: pointer;
+    color: $Black;
 
     .icon {
       margin-right: 10px;
@@ -69,7 +70,7 @@
 
   &__menu {
     position: absolute;
-    background: $Card2;
+    background: $Line2;
     border-radius: 0 0 8px 8px;
     width: 100%;
     padding-top: 30px;
@@ -86,15 +87,16 @@
     cursor: pointer;
     padding: 8px 18px;
     align-items: center;
-    color: $Paragraph1;
+    color: $Black !important;
 
     &:hover {
       background-color: rgba(18, 19, 24, 50%);
+      color: $Title !important;
     }
 
     &.selected {
-      background: $Main;
-      color: $Title;
+      background: rgba(18, 19, 24, 50%);
+      color: $Title !important;
     }
 
     .icon {
