@@ -8,28 +8,23 @@ import {
   InputRightElement,
   Tooltip,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
 import { AppDataTable, AppButton } from 'src/components';
-import { BaseAdminPage } from 'src/components/layouts';
 import '../../../styles/pages/UserManagementPage.scss';
-import { AddIcon, LockIcon, UnlockIcon } from '@chakra-ui/icons';
-import { toastError, toastSuccess } from 'src/utils/notify';
+import { AddIcon } from '@chakra-ui/icons';
 import rf from 'src/api/RequestFactory';
-import ModalChangeActiveConfirm from 'src/components/Modals/User/ModalChangeActiveConfirm';
-import ModalViewUser from 'src/components/Modals/User/ModalViewUser';
-import ModalEditUser from 'src/components/Modals/User/ModalEditUser';
-import ModalAddNewUser from 'src/components/Modals/User/ModalAddNewUser';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import ModalAddNewBranchAdmin from 'src/components/Modals/User/ModalAddNewBranchAdmin';
 import ModalViewBranchAdmin from 'src/components/Modals/User/ModalViewBranchAdmin';
 
 export interface IAdmin {
-  id: number;
+  userId: number;
   firstName: string;
   lastName: string;
   branchId: number;
   phone: string;
   status: string;
+  email: string;
+  branchName: string;
 }
 
 const BranchAdminManagementPage = () => {
@@ -43,10 +38,10 @@ const BranchAdminManagementPage = () => {
   const [dataModal, setDataModal] = useState<IAdmin>({} as IAdmin);
   const [params, setParams] = useState({});
 
-  const handleOpenModalViewBranchAdmin = async (id: number) => {
-    setOpenModalViewBranchAdmin(true);
+  const handleOpenModalViewBranchAdmin = async (userId: number) => {
     try {
-      const res = await rf.getRequest('UserRequest').getProfile();
+      const res = await rf.getRequest('UserRequest').getBranchAdminByID(userId);
+      setOpenModalViewBranchAdmin(true);
       setDataModal(res);
     } catch (error) {
       return { docs: [] };
@@ -94,6 +89,7 @@ const BranchAdminManagementPage = () => {
         <Box className="user--header-cell-body user--id">Stt</Box>
         <Box className="user--header-cell-body user--id">ID</Box>
         <Box className="user--header-cell-body user--name">Tên</Box>
+        <Box className="user--header-cell-body user--phone">Tên chi nhánh</Box>
         <Box className="user--header-cell-body user--phone">SDT</Box>
         <Box className="user--header-cell-body user--action">Chức năng</Box>
       </Flex>
@@ -132,13 +128,17 @@ const BranchAdminManagementPage = () => {
           <Flex flexDirection="row" className="user--cell-body user--name">
             {data?.lastName} {data?.firstName}
           </Flex>
+          <Flex flexDirection="row" className="user--cell-body user--phone">
+            {data?.branchName}
+          </Flex>
+
           <Box className="user--cell-body user--phone">
             {data?.phone ? data?.phone : '--'}
           </Box>
           <Box className="user--cell-body user--action" cursor={'pointer'}>
             <AppButton
               size={'sm'}
-              onClick={() => handleOpenModalViewBranchAdmin(data.id)}
+              onClick={() => handleOpenModalViewBranchAdmin(data.userId)}
             >
               Xem
             </AppButton>

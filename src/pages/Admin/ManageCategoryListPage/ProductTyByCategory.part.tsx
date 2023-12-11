@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
 import {
@@ -8,8 +8,6 @@ import {
   InputRightElement,
   Tooltip,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
-import { MOCK_CATEGORY_MEDICINE } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import rf from 'src/api/RequestFactory';
@@ -19,7 +17,7 @@ import ModalEditTypeProduct from 'src/components/Modals/Category_and_Type/ModalE
 import ModalDeleteTypeProduct from 'src/components/Modals/Category_and_Type/ModalDeleteType';
 import { toastError } from 'src/utils/notify';
 
-interface ICategory {
+export interface ICategory {
   id: any;
   name: string;
   quality: number;
@@ -64,8 +62,6 @@ const ProductTyByCategory = (props: Props) => {
     handleSearch();
   }, [valueSearch]);
 
-  const navigate = useNavigate();
-
   const getCategory = async () => {
     try {
       const res = await rf
@@ -84,16 +80,11 @@ const ProductTyByCategory = (props: Props) => {
   const handleEditType = async (id: number) => {
     setId(id);
     try {
-      setModalEditTypeProduct(true);
       const res = await rf
         .getRequest('CategoryRequest')
-        .getProductTypeByCateID(categoriesID, id);
-
+        .getProductTypeByCateID(id);
+      setModalEditTypeProduct(true);
       setDataModal(res);
-
-      return {
-        docs: res,
-      };
     } catch (error) {
       return { docs: [] };
     }

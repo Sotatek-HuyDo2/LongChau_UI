@@ -27,7 +27,6 @@ export default class CategoryRequest extends BaseRequest {
   }
 
   // TYPE PRODUCT
-
   createProductTypeByCate(param: any) {
     const url = `categories/drug-types/create`;
     return this.post(url, param);
@@ -38,8 +37,8 @@ export default class CategoryRequest extends BaseRequest {
     return this.put(url, param);
   }
 
-  getProductTypeByCateID(categoryId: number, id: number) {
-    const url = `categories/${categoryId}/drug-types${id}`;
+  getProductTypeByCateID(id: number) {
+    const url = `categories/drug-types/${id}`;
     return this.get(url);
   }
 

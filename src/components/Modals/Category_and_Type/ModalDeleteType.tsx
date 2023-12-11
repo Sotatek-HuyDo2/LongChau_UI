@@ -21,9 +21,6 @@ const ModalDeleteTypeProduct: FC<IModalDeleteTypeProductProps> = (props) => {
       onClose={onClose}
       className="modal-languages"
     >
-      <Box className="delist-confirm--para" m={'auto'} fontSize={18}>
-        Do you want to delete?
-      </Box>
       <Flex alignItems="center">
         <Flex
           className="delist-confirm"
@@ -31,6 +28,15 @@ const ModalDeleteTypeProduct: FC<IModalDeleteTypeProductProps> = (props) => {
           gap={'15px'}
           w={'full'}
         >
+          <Box
+            className="delist-confirm--para"
+            m={'auto'}
+            fontSize={18}
+            textAlign={'center'}
+          >
+            Bạn chưa thể xóa phân loại thuốc được khi chưa xóa hết thuốc(thuộc
+            phân loại thuốc này)
+          </Box>
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton
               className="btn-outline-hover"
@@ -41,9 +47,9 @@ const ModalDeleteTypeProduct: FC<IModalDeleteTypeProductProps> = (props) => {
             >
               Hủy
             </AppButton>
-            <AppButton flex={1} onClick={onConfirm}>
+            {/* <AppButton flex={1} onClick={onConfirm}>
               Xác nhận
-            </AppButton>
+            </AppButton> */}
           </Flex>
         </Flex>
       </Flex>

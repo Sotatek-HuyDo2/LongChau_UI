@@ -21,7 +21,7 @@ export default class SupplierRequest extends BaseRequest {
     return this.get(url);
   }
 
-  updateSupplier(param: any, id: number) {
+  updateSupplier(id: number, param: any) {
     const url = `supplier/${id}`;
     return this.put(url, param);
   }

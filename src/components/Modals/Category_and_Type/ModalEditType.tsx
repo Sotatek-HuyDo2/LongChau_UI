@@ -6,41 +6,64 @@ import { FC, useState } from 'react';
 import AppInput from '../../AppInput';
 import rf from 'src/api/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import AppSelect from 'src/components/AppSelect';
+import { ICategory } from 'src/pages/Admin/ManageCategoryListPage/ProductTyByCategory.part';
 
 interface IModalEditTypeProductProps {
   open: boolean;
   onClose: () => void;
   onReload: () => void;
   categoriesID: any;
-  data?: any;
+  data: ICategory;
   typeId?: any;
 }
 
 const ModalEditTypeProduct: FC<IModalEditTypeProductProps> = (props) => {
   const { open, onClose, onReload, categoriesID, data, typeId } = props;
-
-  const [typeName, setTypeName] = useState<string>('');
+  const [typeName, setTypeName] = useState<string>(data.name);
+  const [categoriesList, setCategoriesList] = useState<any>([]);
+  const [categories, setCategories] = useState<any>(categoriesID);
 
   const createNewBranch = async () => {
     try {
       await rf
         .getRequest('CategoryRequest')
         .updateProductTypeByCate(categoriesID, typeId, {
-          categoryId: categoriesID,
+          categoryId: categories,
           name: typeName,
         });
       onClose();
       onReload();
-      toastSuccess('Tạo mới Branch thành công');
+      toastSuccess('Sửa phân loại thuốc thành công');
     } catch (e: any) {
       toastError(e.message);
     }
   };
 
+  const getAllCate = async () => {
+    try {
+      const res = await rf.getRequest('CategoryRequest').getAllCate();
+      const listCate = res.map((item: any) => {
+        return {
+          value: item.id,
+          label: item.name,
+        };
+      });
+      setCategoriesList(listCate);
+    } catch (e: any) {
+      toastError(e.message);
+    }
+  };
+
+  useEffectUnsafe(() => {
+    getAllCate();
+  }, []);
+
   return (
     <BaseModal
       size="xl"
-      title="Tạo loại thuốc mới"
+      title="Sửa phân loại thuốc"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -52,10 +75,21 @@ const ModalEditTypeProduct: FC<IModalEditTypeProductProps> = (props) => {
           gap={'15px'}
           w={'full'}
         >
+          <AppSelect
+            label="Danh mục"
+            width={'full'}
+            options={categoriesList}
+            value={categories}
+            onChange={(value: string) => setCategories(value)}
+            size="medium"
+            showFullName
+          />
           <AppInput
-            label="Tên loại thuốc"
+            label="Tên phân loại thuốc"
+            value={typeName}
             onChange={(e) => setTypeName(e.target.value)}
           />
+
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton
               className="btn-outline-hover"
@@ -67,7 +101,7 @@ const ModalEditTypeProduct: FC<IModalEditTypeProductProps> = (props) => {
               Hủy
             </AppButton>
             <AppButton flex={1} onClick={createNewBranch}>
-              Thêm mới
+              Sửa
             </AppButton>
           </Flex>
         </Flex>

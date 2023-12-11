@@ -3,13 +3,7 @@ import { toastError } from './utils/notify';
 import { toast } from 'react-toastify';
 import { Route, Routes } from 'react-router';
 import LoginPage from '../src/pages/LoginPage';
-import React from 'react';
 import { PrivateRoute } from 'src/components';
-import ListingPage from './pages/ListingPage';
-import UserManagement from './pages/UserManagement';
-import InsightPage from './pages/InsightPage';
-import CreatePushNotificationPage from './pages/CreatePushNotificationPage';
-import CreateNotificationPage from './pages/CreateNotificationPage';
 import { useEffectUnsafe } from './hooks/useEffectUnsafe';
 import { initMetadata } from './store/metadata';
 import { useDispatch } from 'react-redux';
@@ -21,10 +15,6 @@ import GeneralWarehouseManagementPage from './pages/Admin/GeneralWarehouseManage
 import BranchManagementPage from './pages/Admin/BranchManagementPage';
 import SupplierManagementPage from './pages/Admin/SupplierManagementPage';
 import Statistical from './pages/Admin/Statistical';
-import CategoryFunctionalFoods from './pages/Admin/ManageCategoryListPage/ProductTyByCategory.part';
-import CategoryMedicalEquipment from './pages/Admin/ManageCategoryListPage/CategoryMedicalEquipment.part';
-import CategoryMedicine from './pages/Admin/ManageCategoryListPage/CategoryMedicine.part';
-import CategoryPersonalCare from './pages/Admin/ManageCategoryListPage/CategoryPersonalCare.part';
 import HomePage from './pages/HomePage';
 import PharmacySystemPage from './pages/PharmacySystemPage';
 import CategoryFunctionalFoodsPage from './pages/CategoryFunctionalFoodsPage';
@@ -80,7 +70,6 @@ const RouterCustom = () => {
       <Route path={'/register'} element={<RegisterPage />} />
 
       {/* Customer */}
-
       <Route path={'/'} element={<PrivateRoute allowedRoles={['customer']} />}>
         <Route index element={<HomePage />} />
 

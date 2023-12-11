@@ -15,14 +15,22 @@ import Storage from 'src/utils/storage';
 import { RootState } from 'src/store';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import rf from 'src/api/RequestFactory';
+import { useState } from 'react';
+import ModalView_EditProfile from '../Modals/ModalView-EditProfile';
+import ModalViewEditProfile from '../Modals/ModalView-EditProfile';
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const onLogout = () => {
     dispatch(clearUser());
     navigate('/login');
+  };
+
+  const handleViewEditProfile = () => {
+    setOpenModal(true);
   };
 
   const accessToken = Storage.getAccessToken();
@@ -57,7 +65,7 @@ const Header = () => {
             </MenuButton>
             <MenuList className="menu-header">
               <MenuItem
-                // onClick={() => navigate('/profile')}
+                onClick={handleViewEditProfile}
                 color={'black'}
                 _hover={{
                   bg: '#2167df',
@@ -79,6 +87,13 @@ const Header = () => {
           </Menu>
         </Box>
       ) : null}
+      {openModal && (
+        <ModalViewEditProfile
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+          data={userProfile}
+        />
+      )}
     </Flex>
   );
 };

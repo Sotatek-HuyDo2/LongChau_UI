@@ -8,7 +8,6 @@ import {
   InputRightElement,
   Tooltip,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
@@ -59,7 +58,7 @@ const SupplierManagementPage = () => {
   const getDataTable = async () => {
     try {
       const res = await rf.getRequest('SupplierRequest').getSupplier();
-
+      dataRef.current = res;
       setDataSearch(res);
       return {
         docs: res,
@@ -181,12 +180,7 @@ const SupplierManagementPage = () => {
             className="category--cell-body category--action"
             cursor={'pointer'}
           >
-            <AppButton
-              size={'sm'}
-              // onClick={() => navigate(`/medical/${data.categoryID}`)}
-            >
-              Xem
-            </AppButton>
+            <AppButton size={'sm'}>Xem</AppButton>
             <AppButton
               size={'sm'}
               bg={'yellow.100'}
@@ -195,14 +189,6 @@ const SupplierManagementPage = () => {
             >
               Sửa
             </AppButton>
-            {/* <AppButton
-              // onClick={() => handleDelete(data.supplierID)}
-              ml={'3px'}
-              size={'sm'}
-              bg={'red.100'}
-            >
-              Xóa
-            </AppButton> */}
           </Box>
         </Flex>
         {openModalEditSupplier && (
@@ -263,6 +249,7 @@ const SupplierManagementPage = () => {
 
         <Box mt={10} className="category-container">
           <AppDataTable
+            requestParams={params}
             fetchData={getDataTable}
             renderBody={_renderContentTable}
             renderHeader={_renderHeaderTable}

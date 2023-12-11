@@ -113,7 +113,7 @@ const ModalAddNewBranchAdmin: FC<IModalAddNewBranchAdminProps> = (props) => {
           />
 
           <AppSelect
-            label="test"
+            label="Chi Nhánh"
             width={'full'}
             options={listBranch}
             value={dataUser.branchId}

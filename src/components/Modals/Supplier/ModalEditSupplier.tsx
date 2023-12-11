@@ -22,21 +22,15 @@ interface IDataForm {
 }
 
 const ModalEditSupplier: FC<IModalEditSupplierProps> = (props) => {
-  const initData = {
-    name: '',
-    email: '',
-    phone: '',
-  };
-
   const { open, onClose, onReload, data, supId } = props;
-  const [dataForm, setDataForm] = useState<IDataForm>(initData);
+  const [dataForm, setDataForm] = useState<IDataForm>(data);
 
-  const createNewBranch = async () => {
+  const updateSupplier = async () => {
     try {
       await rf.getRequest('SupplierRequest').updateSupplier(supId, dataForm);
       onClose();
       onReload();
-      toastSuccess('Tạo mới nhà cung cấp thành công');
+      toastSuccess('Sửa nhà cung cấp thành công');
     } catch (e: any) {
       toastError(e.message);
     }
@@ -45,7 +39,7 @@ const ModalEditSupplier: FC<IModalEditSupplierProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Tạo nhà cung cấp mới"
+      title="Sửa nhà cung cấp mới"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -86,8 +80,8 @@ const ModalEditSupplier: FC<IModalEditSupplierProps> = (props) => {
             >
               Hủy
             </AppButton>
-            <AppButton flex={1} onClick={createNewBranch}>
-              Thêm mới
+            <AppButton flex={1} onClick={updateSupplier}>
+              Sửa
             </AppButton>
           </Flex>
         </Flex>
