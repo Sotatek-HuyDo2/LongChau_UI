@@ -4,7 +4,7 @@ import BaseModal from '../BaseModal';
 import AppButton from '../../AppButton';
 import { FC, useState } from 'react';
 import AppInput from '../../AppInput';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
 
 interface IModalEditBranchProps {

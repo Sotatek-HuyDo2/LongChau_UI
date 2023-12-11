@@ -21,6 +21,7 @@ import ModalEditUser from 'src/components/Modals/User/ModalEditUser';
 import ModalAddNewUser from 'src/components/Modals/User/ModalAddNewUser';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import ModalAddNewBranchAdmin from 'src/components/Modals/User/ModalAddNewBranchAdmin';
+import ModalViewBranchAdmin from 'src/components/Modals/User/ModalViewBranchAdmin';
 
 export interface IAdmin {
   id: number;
@@ -31,21 +32,25 @@ export interface IAdmin {
   status: string;
 }
 
-const StaffManagementPage = () => {
+const BranchAdminManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
   const [dataSearch, setDataSearch] = useState<IAdmin[]>([]);
-  const [openModalViewUser, setOpenModalViewUser] = useState<boolean>(false);
-  const [openModalEditUser, setOpenModalEditUser] = useState<boolean>(false);
+  const [openModalAddNewUser, setOpenModalAddNewUser] =
+    useState<boolean>(false);
+  const [openModalViewBranchAdmin, setOpenModalViewBranchAdmin] =
+    useState<boolean>(false);
   const dataRef = useRef<IAdmin[]>([]);
   const [dataModal, setDataModal] = useState<IAdmin>({} as IAdmin);
   const [params, setParams] = useState({});
 
-  const handleOpenModalViewUser = (id: number) => {
-    setOpenModalViewUser(true);
-  };
-
-  const handleOpenModalEditUser = (id: number) => {
-    setOpenModalEditUser(true);
+  const handleOpenModalViewBranchAdmin = async (id: number) => {
+    setOpenModalViewBranchAdmin(true);
+    try {
+      const res = await rf.getRequest('UserRequest').getProfile();
+      setDataModal(res);
+    } catch (error) {
+      return { docs: [] };
+    }
   };
 
   const onReload = () => {
@@ -71,7 +76,8 @@ const StaffManagementPage = () => {
 
   const getBranchAdmin = async () => {
     try {
-      const res = await rf.getRequest('UserRequest').getStaff();
+      const res = await rf.getRequest('UserRequest').getBranchAdmin();
+
       dataRef.current = res;
       setDataSearch(res);
       return {
@@ -81,19 +87,6 @@ const StaffManagementPage = () => {
       return { docs: [] };
     }
   };
-
-  // const getBranchAdminDetail = async () => {
-  //   try {
-  //     const res = await rf.getRequest('UserRequest').getProfile();
-  //     setDataModal(res);
-  //   } catch (error) {
-  //     return { docs: [] };
-  //   }
-  // };
-
-  // useEffectUnsafe(() => {
-  //   getBranchAdminDetail();
-  // }, [id]);
 
   const _renderHeaderTable = () => {
     return (
@@ -145,35 +138,20 @@ const StaffManagementPage = () => {
           <Box className="user--cell-body user--action" cursor={'pointer'}>
             <AppButton
               size={'sm'}
-              // onClick={() => navigate(`/medical/${data.brandID}`)}
-              onClick={() => handleOpenModalViewUser(data.id)}
+              onClick={() => handleOpenModalViewBranchAdmin(data.id)}
             >
               Xem
             </AppButton>
-            <AppButton
-              size={'sm'}
-              bg={'yellow.100'}
-              ml={'3px'}
-              onClick={() => handleOpenModalEditUser(data.id)}
-            >
-              Sửa
-            </AppButton>
           </Box>
         </Flex>
-        {/* {openModalEditUser && (
-          <ModalEditUser
-            open={openModalEditUser}
-            onClose={() => setOpenModalEditUser(false)}
+
+        {openModalViewBranchAdmin && (
+          <ModalViewBranchAdmin
+            open={openModalViewBranchAdmin}
+            onClose={() => setOpenModalViewBranchAdmin(false)}
             data={dataModal}
           />
         )}
-        {openModalViewUser && (
-          <ModalViewUser
-            open={openModalViewUser}
-            onClose={() => setOpenModalViewUser(false)}
-            data={dataModal}
-          />
-        )} */}
       </Flex>
     );
   };
@@ -198,6 +176,12 @@ const StaffManagementPage = () => {
               </InputGroup>
             </Box>
           </Flex>
+          <AppButton size={'md'} onClick={() => setOpenModalAddNewUser(true)}>
+            <Flex justify={'center'} align={'start'} gap={1}>
+              <AddIcon />
+              Thêm Branch Admin
+            </Flex>
+          </AppButton>
         </Flex>
       </Box>
 
@@ -210,8 +194,15 @@ const StaffManagementPage = () => {
           size={10}
         />
       </Box>
+      {openModalAddNewUser && (
+        <ModalAddNewBranchAdmin
+          onReload={onReload}
+          open={openModalAddNewUser}
+          onClose={() => setOpenModalAddNewUser(false)}
+        />
+      )}
     </Box>
   );
 };
 
-export default StaffManagementPage;
+export default BranchAdminManagementPage;

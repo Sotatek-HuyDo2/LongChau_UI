@@ -79,36 +79,27 @@ const RouterCustom = () => {
 
       <Route path={'/register'} element={<RegisterPage />} />
 
-      <Route path={'/'} element={<HomePage />} />
+      {/* Customer */}
 
-      <Route path={'/pharmacy-system'} element={<PharmacySystemPage />} />
+      <Route path={'/'} element={<PrivateRoute allowedRoles={['customer']} />}>
+        <Route index element={<HomePage />} />
 
-      <Route
-        path={'/category-functional-foods'}
-        element={<CategoryFunctionalFoodsPage />}
-      />
+        <Route path={'pharmacy-system'} element={<PharmacySystemPage />} />
 
-      <Route path={'/category-medicine'} element={<CategoryMedicinePage />} />
+        <Route
+          path={'category-functional-foods'}
+          element={<CategoryFunctionalFoodsPage />}
+        />
+        <Route path={'category-medicine'} element={<CategoryMedicinePage />} />
 
-      <Route
-        path={'admin/branch-management'}
-        element={<BranchManagementPage />}
-      />
+        <Route path={'medical/:id'} element={<MedicalDetailPage />} />
 
-      <Route
-        path={'admin/medication-management'}
-        element={<MedicalManagementPage />}
-      />
+        <Route path={'profile'} element={<ProfilePart />} />
 
-      <Route path={'/medical/:id'} element={<MedicalDetailPage />} />
+        <Route path={'profile/edit'} element={<ProfileEditPart />} />
 
-      <Route path={'profile'} element={<ProfilePart />} />
-
-      <Route path={'profile/edit'} element={<ProfileEditPart />} />
-
-      {/* <Route path={'profile'} element={<ProfilePart />} /> */}
-
-      <Route path={'order'} element={<Order />} />
+        <Route path={'order'} element={<Order />} />
+      </Route>
 
       {/* Staff */}
       <Route
@@ -125,8 +116,8 @@ const RouterCustom = () => {
 
       {/* Branch-Admin */}
       <Route
-        path={'branch-admin'}
-        element={<PrivateRoute allowedRoles={['branch-admin']} />}
+        path={'/branch-admin'}
+        element={<PrivateRoute allowedRoles={['branch_admin']} />}
       >
         <Route index element={<BranchAdminGeneralWarehouseManagementPage />} />
 
@@ -143,6 +134,12 @@ const RouterCustom = () => {
         <Route index element={<SupplierManagementPage />} />
 
         <Route path={'category-management'} element={<ManageCategoryList />} />
+        <Route path={'branch-management'} element={<BranchManagementPage />} />
+
+        <Route
+          path={'medication-management'}
+          element={<MedicalManagementPage />}
+        />
 
         <Route
           path={'customer-management'}

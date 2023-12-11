@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import Storage from 'src/utils/storage';
 import { RootState } from 'src/store';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -26,6 +26,7 @@ const Header = () => {
   };
 
   const accessToken = Storage.getAccessToken();
+  const role = Storage.getRole();
   const { userProfile } = useSelector((state: RootState) => state.user);
 
   const getUserProfile = async () => {
@@ -51,7 +52,7 @@ const Header = () => {
                 fontWeight={700}
               >
                 <Avatar name={userProfile?.firstName} size="sm" />
-                {userProfile?.firstName}!!
+                {userProfile?.firstName}_{role}!!
               </Flex>
             </MenuButton>
             <MenuList className="menu-header">

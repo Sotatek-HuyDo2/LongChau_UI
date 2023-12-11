@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import { AddIcon } from '@chakra-ui/icons';
 import ModalAddNewBranch from 'src/components/Modals/Branch/ModalAddNewBranch';
 import ModalEditBranch from 'src/components/Modals/Branch/ModalEditBranch';

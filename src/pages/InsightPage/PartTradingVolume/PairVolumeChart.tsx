@@ -1,7 +1,7 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { AppDateRangePicker, AppSelect } from 'src/components';
 import React, { useState } from 'react';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { fillFullResolution, filterParams } from 'src/utils/helpers';
 import moment from 'moment';

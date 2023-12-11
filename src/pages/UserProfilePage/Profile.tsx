@@ -5,7 +5,7 @@ import { AppButton } from 'src/components';
 import AppMenu from 'src/components/AppMenu';
 import BaseHomePage from 'src/components/layouts/HomePage/BaseHomePage';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 
 interface IProfile {
   branchId: null;

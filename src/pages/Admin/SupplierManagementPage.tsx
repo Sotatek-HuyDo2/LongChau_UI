@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import { AddIcon } from '@chakra-ui/icons';
 import ModalAddNewSupplier from 'src/components/Modals/Supplier/ModalAddNewSupplier';
 import ModalEditSupplier from 'src/components/Modals/Supplier/ModalEditSupplier';
@@ -234,7 +234,6 @@ const SupplierManagementPage = () => {
         <Box className={'category__search'}>
           <Flex justifyContent={'space-between'}>
             <Flex alignItems={'center'}>
-              <Box className={'category__search-title'}>Nhà cung cấp:</Box>
               <Box className="category__search-input">
                 <InputGroup>
                   <AppInput

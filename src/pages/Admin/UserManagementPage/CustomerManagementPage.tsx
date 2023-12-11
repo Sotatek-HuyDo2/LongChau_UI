@@ -13,7 +13,7 @@ import { BaseAdminPage } from 'src/components/layouts';
 import '../../../styles/pages/UserManagementPage.scss';
 import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
 import { toastError, toastSuccess } from 'src/utils/notify';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import ModalChangeActiveConfirm from 'src/components/Modals/User/ModalChangeActiveConfirm';
 import ModalViewUser from 'src/components/Modals/User/ModalViewUser';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
@@ -241,7 +241,6 @@ const CustomerManagementPage = () => {
         <Box className={'user__search'}>
           <Flex justifyContent={'space-between'}>
             <Flex alignItems={'center'}>
-              <Box className={'user__search-title'}>Người dùng:</Box>
               <Box className="user__search-input">
                 <InputGroup>
                   <AppInput

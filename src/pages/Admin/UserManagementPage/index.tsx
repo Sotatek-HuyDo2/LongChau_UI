@@ -3,9 +3,10 @@ import { ReactNode, useState } from 'react';
 import { BaseAdminPage } from 'src/components/layouts';
 import { AppTabs } from 'src/components';
 import 'src/styles/pages/ManageCategoryListPage.scss';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import CustomerManagementPage from './StaffManagementPage.part';
+import BranchAdminManagementPage from './BranchAdminManagementPage.part';
+import StaffManagementPage from './StaffManagementPage.part';
 
 interface ITabs {
   id: string;
@@ -14,42 +15,16 @@ interface ITabs {
 }
 
 const UserManagerList = () => {
-  const [staff, setStaff] = useState();
-  const [branchAdmin, setBranchAdmin] = useState();
-
-  const getStaff = async () => {
-    try {
-      const res = await rf.getRequest('UserRequest').getStaff();
-      setStaff(res);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getBranchAdmin = async () => {
-    try {
-      const res = await rf.getRequest('UserRequest').getBranchAdmin();
-      setBranchAdmin(res);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffectUnsafe(() => {
-    getStaff();
-    getBranchAdmin();
-  }, []);
-
   const tabs: ITabs[] = [
     {
       id: 'Staff',
       name: 'Staff',
-      content: <CustomerManagementPage data={staff} />,
+      content: <StaffManagementPage />,
     },
     {
       id: 'branch-admin',
       name: 'Branch Admin',
-      content: <CustomerManagementPage data={branchAdmin} showAddNew />,
+      content: <BranchAdminManagementPage />,
     },
   ];
 

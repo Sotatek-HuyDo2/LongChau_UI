@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import 'src/styles/components/BaseModal.scss';
 import BaseModal from '../BaseModal';
 import AppButton from '../../AppButton';
@@ -6,11 +6,15 @@ import { FC, useState } from 'react';
 import AppInput from '../../AppInput';
 import rf from 'src/api/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
+import AppSelect from 'src/components/AppSelect';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import { IBranch } from 'src/pages/Admin/BranchManagementPage';
+import { IAdmin } from 'src/pages/Admin/UserManagementPage/BranchAdminManagementPage.part';
 
-interface IModalAddNewUserProps {
+interface IModalViewBranchAdminProps {
   open: boolean;
   onClose: () => void;
-  // onConfirm: () => void;
+  data: IAdmin;
 }
 
 interface IDataBody {
@@ -19,19 +23,23 @@ interface IDataBody {
   firstName: string;
   lastName: string;
   phone: string;
+  branchId: number;
 }
 
-const ModalAddNewUser: FC<IModalAddNewUserProps> = (props) => {
+const ModalViewBranchAdmin: FC<IModalViewBranchAdminProps> = (props) => {
   const initDataUser = {
     email: '',
     password: '',
     firstName: '',
     lastName: '',
     phone: '',
+    branchId: 1,
   };
+  const { open, onClose } = props;
   const [dataUser, setDataUser] = useState<IDataBody>(initDataUser);
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   const [isEmailValid, setEmailValid] = useState(true);
+  const [listBranch, setListBranches] = useState<any>([]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailValue = e.target.value.trim();
@@ -41,7 +49,7 @@ const ModalAddNewUser: FC<IModalAddNewUserProps> = (props) => {
     setEmailValid(emailRegex.test(emailValue));
   };
 
-  const createNewUser = async () => {
+  const createNewBranch = async () => {
     try {
       await rf.getRequest('UserRequest').branchAdminRegister(dataUser);
       onClose();
@@ -51,7 +59,23 @@ const ModalAddNewUser: FC<IModalAddNewUserProps> = (props) => {
     }
   };
 
-  const { open, onClose } = props;
+  const getDataBranch = async () => {
+    try {
+      const res = await rf.getRequest('BranchRequest').getBranchList();
+      const formatData = res.map((r: IBranch) => ({
+        value: r.id,
+        label: r.name,
+      }));
+      setListBranches(formatData);
+    } catch (e: any) {
+      toastError(e.message);
+    }
+  };
+
+  useEffectUnsafe(() => {
+    getDataBranch();
+  }, []);
+
   return (
     <BaseModal
       size="xl"
@@ -86,6 +110,21 @@ const ModalAddNewUser: FC<IModalAddNewUserProps> = (props) => {
             onChange={(e: any) =>
               setDataUser({ ...dataUser, phone: e.target.value.trim() })
             }
+          />
+
+          <AppSelect
+            label="test"
+            width={'full'}
+            options={listBranch}
+            value={dataUser.branchId}
+            onChange={(value: string) =>
+              setDataUser({
+                ...dataUser,
+                branchId: +value,
+              })
+            }
+            size="medium"
+            showFullName
           />
 
           <AppInput
@@ -123,7 +162,7 @@ const ModalAddNewUser: FC<IModalAddNewUserProps> = (props) => {
             >
               Hủy
             </AppButton>
-            <AppButton flex={1} onClick={createNewUser}>
+            <AppButton flex={1} onClick={createNewBranch}>
               Xác nhận
             </AppButton>
           </Flex>
@@ -133,4 +172,4 @@ const ModalAddNewUser: FC<IModalAddNewUserProps> = (props) => {
   );
 };
 
-export default ModalAddNewUser;
+export default ModalViewBranchAdmin;

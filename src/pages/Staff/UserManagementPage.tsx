@@ -182,7 +182,6 @@ const StaffCustomerManagementPage = () => {
         </Flex>
         <Box className={'user__search'}>
           <Flex alignItems={'center'}>
-            <Box className={'user__search-title'}>Người dùng:</Box>
             <Box className="user__search-input">
               <InputGroup>
                 <AppInput

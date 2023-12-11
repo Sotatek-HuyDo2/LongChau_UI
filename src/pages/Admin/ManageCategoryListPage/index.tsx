@@ -5,7 +5,7 @@ import { AppTabs } from 'src/components';
 // import 'src/styles/pages/UserManagement.scss';
 import 'src/styles/pages/ManageCategoryListPage.scss';
 import CategoryFunctionalFoods from './ProductTyByCategory.part';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
 interface ITabs {

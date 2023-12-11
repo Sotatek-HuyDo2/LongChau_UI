@@ -4,7 +4,7 @@ import BaseModal from '../BaseModal';
 import AppButton from '../../AppButton';
 import { FC, useState } from 'react';
 import AppInput from '../../AppInput';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import AppSelect from 'src/components/AppSelect';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
@@ -13,7 +13,6 @@ import { IBranch } from 'src/pages/Admin/BranchManagementPage';
 interface IModalAddNewBranchAdminProps {
   open: boolean;
   onClose: () => void;
-  // onConfirm: () => void;
   onReload: () => void;
 }
 

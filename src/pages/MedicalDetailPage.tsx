@@ -9,7 +9,7 @@ import '../styles/pages/MedicalDetailPage.scss';
 import BaseHomePage from 'src/components/layouts/HomePage/BaseHomePage';
 import { AddIcon, MinusIcon } from '@chakra-ui/icons';
 import { AppButton } from 'src/components';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import jwtDecode from 'jwt-decode';
 
 interface IMedicalDetail {

@@ -18,7 +18,7 @@ import {
 } from 'src/utils/format';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
 import ModalDeleteConfirm from 'src/components/Modals/ModalDeleteConfirm';
 import moment from 'moment';
@@ -264,7 +264,6 @@ const MedicalManagementPage = () => {
         <Box className={'delist__search'}>
           <Flex justifyContent={'space-between'}>
             <Flex alignItems={'center'}>
-              <Box className={'delist__search-title'}>Danh sách thuốc:</Box>
               <Box className="delist__search-input">
                 <InputGroup>
                   <AppInput

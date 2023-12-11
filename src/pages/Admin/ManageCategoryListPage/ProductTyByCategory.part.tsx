@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { MOCK_CATEGORY_MEDICINE } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import { AddIcon } from '@chakra-ui/icons';
 import ModalAddNewTypeProduct from 'src/components/Modals/Category_and_Type/ModalAddNewType';
 import ModalEditTypeProduct from 'src/components/Modals/Category_and_Type/ModalEditType';

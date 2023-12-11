@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 
 interface IMetadataCurrencies {
   address: string;

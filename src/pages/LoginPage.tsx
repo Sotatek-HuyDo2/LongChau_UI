@@ -11,7 +11,7 @@ import {
 import { useState } from 'react';
 import '../styles/pages/LoginPage.scss';
 import { toastError, toastSuccess } from 'src/utils/notify';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import { useDispatch } from 'react-redux';
 import { setUserAuth, setUserProfile } from '../store/user';
 import { useNavigate } from 'react-router-dom';
@@ -43,8 +43,14 @@ const LoginPage = () => {
       }
 
       if (role === 'admin') {
-        toastSuccess('Welcome to LongChau Admin!');
+        toastSuccess('Welcome to LongChau Dashboard!');
         navigate('/admin');
+      } else if (role === 'branch_admin') {
+        toastSuccess('Welcome to LongChau Dashboard!');
+        navigate('/branch-admin');
+      } else if (role === 'staff') {
+        toastSuccess('Welcome to LongChau Dashboard!');
+        navigate('/staff');
       } else {
         toastSuccess('Welcome to LongChau!');
         navigate('/');

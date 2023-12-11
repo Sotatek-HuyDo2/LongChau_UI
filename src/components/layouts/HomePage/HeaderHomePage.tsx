@@ -25,7 +25,7 @@ import { useNavigate } from 'react-router-dom';
 import Storage from 'src/utils/storage';
 import AppInput from '../../AppInput';
 import AppButton from '../../AppButton';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { RootState } from 'src/store';
 

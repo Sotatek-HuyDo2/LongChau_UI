@@ -16,7 +16,7 @@ import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import config from 'src/config';
 import { toastError, toastSuccess } from 'src/utils/notify';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import { useDispatch } from 'react-redux';
 import { setUserAuth } from '../store/user';
 import { useNavigate } from 'react-router-dom';

@@ -10,7 +10,7 @@ import {
   Text,
   Tooltip,
 } from '@chakra-ui/react';
-import rf from 'src/services/RequestFactory';
+import rf from 'src/api/RequestFactory';
 import { formatTimestamp } from 'src/utils/format';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store';
