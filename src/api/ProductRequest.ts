@@ -6,10 +6,10 @@ export default class ProductRequest extends BaseRequest {
     return config.api.baseUrlApi;
   }
 
-  // createProduct(param: any) {
-  //   const url = `/drugs/create`;
-  //   return this.post(url, param);
-  // }
+  createProduct(param: any) {
+    const url = `drugs/create`;
+    return this.post(url, param);
+  }
 
   getProduct() {
     const url = `drugs`;

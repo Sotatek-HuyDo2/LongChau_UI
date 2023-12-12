@@ -163,7 +163,7 @@ const ModalAddNewBranchAdmin: FC<IModalAddNewBranchAdminProps> = (props) => {
               Hủy
             </AppButton>
             <AppButton flex={1} onClick={createNewBranch}>
-              Xác nhận
+              Tạo mới
             </AppButton>
           </Flex>
         </Flex>

@@ -9,6 +9,7 @@ import { toastError, toastSuccess } from 'src/utils/notify';
 import AppSelect from 'src/components/AppSelect';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { IBranch } from 'src/pages/Admin/BranchManagementPage';
+import { parseInt } from 'lodash';
 
 interface IModalAddNewMedicalProps {
   open: boolean;
@@ -45,16 +46,30 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
   const [dataUser, setDataUser] = useState<IDataBody>(initDataUser);
   const [listDrugsType, setListDrugsTypes] = useState<any>([]);
   const [listCate, setListCate] = useState<any>([]);
+  const [listSupplier, setListSupplier] = useState<any>([]);
   const [categoriesId, setCategoriesId] = useState<number>(1);
 
   const createNewBranch = async () => {
     try {
-      await rf.getRequest('UserRequest').branchAdminRegister(dataUser);
+      await rf.getRequest('ProductRequest').createProduct(dataUser);
       onClose();
       onReload();
-      toastSuccess('Tạo mới người dùng thành công');
+      toastSuccess('Tạo mới thuốc thành công');
     } catch (e: any) {
       toastError(e.message);
+    }
+  };
+
+  const getDataSupplier = async () => {
+    try {
+      const res = await rf.getRequest('SupplierRequest').getSupplier();
+      const formatData = res.map((r: any) => ({
+        value: r.id,
+        label: r.name,
+      }));
+      setListSupplier(formatData);
+    } catch (e: any) {
+      console.log(e.message);
     }
   };
 
@@ -122,6 +137,7 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
 
   useEffectUnsafe(() => {
     getDataCate();
+    getDataSupplier();
   }, []);
 
   useEffectUnsafe(() => {
@@ -143,93 +159,116 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
           gap={'15px'}
           w={'full'}
         >
-          <AppSelect
-            label="Bán theo đơn"
-            width={'full'}
-            options={asDoseList}
-            value={dataUser.soldAsDose + ''}
-            onChange={(value: string) => {
-              if (value === 'true') {
-                setDataUser({
-                  ...dataUser,
-                  soldAsDose: true,
-                });
-              } else {
-                setDataUser({
-                  ...dataUser,
-                  soldAsDose: false,
-                });
-              }
-            }}
-            size="medium"
-            showFullName
-          />
-
           <AppInput
-            label="Tên"
+            label="Tên thuốc"
             onChange={(e: any) =>
               setDataUser({ ...dataUser, name: e.target.value.trim() })
             }
           />
 
-          <AppSelect
-            label="Chi Nhánh"
-            width={'full'}
-            options={listUnit}
-            value={dataUser.unit}
-            onChange={(value: string) =>
-              setDataUser({
-                ...dataUser,
-                unit: value,
-              })
-            }
-            size="medium"
-            showFullName
-          />
+          <Box zIndex={2002}>
+            <AppSelect
+              label="Chi nhánh"
+              width={'full'}
+              options={listSupplier}
+              value={dataUser.supplierId}
+              onChange={(value: string) =>
+                setDataUser({
+                  ...dataUser,
+                  supplierId: +value,
+                })
+              }
+              size="medium"
+              showFullName
+            />
+          </Box>
 
-          <AppSelect
-            label="Loại"
-            width={'full'}
-            options={listCate}
-            value={categoriesId}
-            onChange={(value: string) => setCategoriesId(+value)}
-            size="medium"
-            showFullName
-          />
-
-          <AppSelect
-            label="Phân Loại"
-            width={'full'}
-            options={listDrugsType}
-            value={categoriesId}
-            onChange={(value: string) =>
-              setDataUser({
-                ...dataUser,
-                unit: value,
-              })
-            }
-            size="medium"
-            showFullName
-          />
-
+          <Box zIndex={2001}>
+            <AppSelect
+              label="Bán theo đơn"
+              width={'full'}
+              options={asDoseList}
+              value={dataUser.soldAsDose + ''}
+              onChange={(value: string) => {
+                if (value === 'true') {
+                  setDataUser({
+                    ...dataUser,
+                    soldAsDose: true,
+                  });
+                } else {
+                  setDataUser({
+                    ...dataUser,
+                    soldAsDose: false,
+                  });
+                }
+              }}
+              size="medium"
+              showFullName
+            />
+          </Box>
+          <Box zIndex={2000}>
+            <AppSelect
+              label="Chi Nhánh"
+              width={'full'}
+              options={listUnit}
+              value={dataUser.unit}
+              onChange={(value: string) =>
+                setDataUser({
+                  ...dataUser,
+                  unit: value,
+                })
+              }
+              size="medium"
+              showFullName
+            />
+          </Box>
+          <Box zIndex={1999}>
+            <AppSelect
+              label="Loại"
+              width={'full'}
+              options={listCate}
+              value={categoriesId}
+              onChange={(value: string) => setCategoriesId(+value)}
+              size="medium"
+              showFullName
+            />
+          </Box>
+          <Box zIndex={1998}>
+            <AppSelect
+              label="Phân Loại"
+              width={'full'}
+              options={listDrugsType}
+              value={dataUser.typeId}
+              onChange={(value: string) =>
+                setDataUser({
+                  ...dataUser,
+                  typeId: +value,
+                })
+              }
+              size="medium"
+              showFullName
+            />
+          </Box>
           <AppInput
             label="Bar-code"
             onChange={(e: any) =>
-              setDataUser({ ...dataUser, barcode: e.target.value.trim() })
+              setDataUser({
+                ...dataUser,
+                barcode: +e.target.value.trim(),
+              })
             }
           />
-
           <Flex gap={1}>
             <AppInput
               label="Giá (vnd)"
               onChange={(e: any) =>
-                setDataUser({ ...dataUser, price: e.target.value.trim() })
+                setDataUser({ ...dataUser, price: +e.target.value.trim() })
               }
             />
             <AppInput
               label="Kích cỡ"
               onChange={(e: any) =>
-                setDataUser({ ...dataUser, size: e.target.value.trim() })
+                setDataUser({ ...dataUser, size: +e.target.value.trim() })
               }
             />
           </Flex>
@@ -250,7 +289,7 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
               Hủy
             </AppButton>
             <AppButton flex={1} onClick={createNewBranch}>
-              Xác nhận
+              Tạo mới
             </AppButton>
           </Flex>
         </Flex>

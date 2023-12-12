@@ -48,7 +48,7 @@ const ModalDeleteTypeProduct: FC<IModalDeleteTypeProductProps> = (props) => {
               Hủy
             </AppButton>
             {/* <AppButton flex={1} onClick={onConfirm}>
-              Xác nhận
+            Tạo mới
             </AppButton> */}
           </Flex>
         </Flex>

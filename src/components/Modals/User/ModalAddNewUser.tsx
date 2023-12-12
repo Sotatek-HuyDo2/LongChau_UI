@@ -124,7 +124,7 @@ const ModalAddNewUser: FC<IModalAddNewUserProps> = (props) => {
               Hủy
             </AppButton>
             <AppButton flex={1} onClick={createNewUser}>
-              Xác nhận
+              Tạo mới
             </AppButton>
           </Flex>
         </Flex>
