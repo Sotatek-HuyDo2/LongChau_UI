@@ -16,7 +16,6 @@ import { RootState } from 'src/store';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import rf from 'src/api/RequestFactory';
 import { useState } from 'react';
-import ModalView_EditProfile from '../Modals/ModalView-EditProfile';
 import ModalViewEditProfile from '../Modals/ModalView-EditProfile';
 
 const Header = () => {

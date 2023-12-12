@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
 import { Box, Flex, InputGroup, InputRightElement } from '@chakra-ui/react';
@@ -51,7 +51,6 @@ const StaffCustomerManagementPage = () => {
   useEffectUnsafe(() => {
     handleSearch();
   }, [valueSearch]);
-  console.log('valueSearch', valueSearch);
 
   const navigate = useNavigate();
 

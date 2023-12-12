@@ -6,7 +6,7 @@ import {
   AccordionPanel,
   Box,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import 'src/styles/components/AppAccordion.scss';
 
 interface IAppAccordion {

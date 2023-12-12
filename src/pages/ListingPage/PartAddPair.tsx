@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import 'src/styles/pages/DelistPage.scss';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { AppInput, AppButton, AppSelect } from 'src/components';

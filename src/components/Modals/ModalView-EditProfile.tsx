@@ -2,7 +2,7 @@ import { Flex } from '@chakra-ui/react';
 import 'src/styles/components/BaseModal.scss';
 import BaseModal from './BaseModal';
 import AppButton from '../AppButton';
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import AppInput from '../AppInput';
 import { IUser } from 'src/pages/Admin/UserManagementPage/CustomerManagementPage';
 import rf from 'src/api/RequestFactory';
@@ -22,9 +22,9 @@ const ModalViewEditProfile: FC<IModalViewEditProfileProps> = (props) => {
   const handleChangeOption = async () => {
     setEditStatus(!editStatus);
     if (editStatus === false) {
-      console.log(dataBody);
       try {
         await rf.getRequest('UserRequest').updateProfile(dataBody);
+        window.location.reload();
         toastSuccess('Update Profile Successful');
       } catch (e: any) {
         console.log(e.message);

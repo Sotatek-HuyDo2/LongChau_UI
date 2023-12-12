@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AppDataTable, AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
 import 'src/styles/pages/DelistPage.scss';

@@ -10,7 +10,7 @@ import AppSelect from 'src/components/AppSelect';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { IBranch } from 'src/pages/Admin/BranchManagementPage';
 
-interface IModalAddNewBranchAdminProps {
+interface IModalAddNewStaffProps {
   open: boolean;
   onClose: () => void;
   onReload: () => void;
@@ -22,23 +22,20 @@ interface IDataBody {
   firstName: string;
   lastName: string;
   phone: string;
-  branchId: number;
 }
 
-const ModalAddNewBranchAdmin: FC<IModalAddNewBranchAdminProps> = (props) => {
+const ModalAddNewStaff: FC<IModalAddNewStaffProps> = (props) => {
   const initDataUser = {
     email: '',
     password: '',
     firstName: '',
     lastName: '',
     phone: '',
-    branchId: 1,
   };
   const { open, onClose, onReload } = props;
   const [dataUser, setDataUser] = useState<IDataBody>(initDataUser);
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   const [isEmailValid, setEmailValid] = useState(true);
-  const [listBranch, setListBranches] = useState<any>([]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailValue = e.target.value.trim();
@@ -48,38 +45,21 @@ const ModalAddNewBranchAdmin: FC<IModalAddNewBranchAdminProps> = (props) => {
     setEmailValid(emailRegex.test(emailValue));
   };
 
-  const createNewBranch = async () => {
+  const createNewStaff = async () => {
     try {
-      await rf.getRequest('UserRequest').createBranchAdminAccount(dataUser);
+      await rf.getRequest('UserRequest').createStaffAccount(dataUser);
       onClose();
       onReload();
-      toastSuccess('Tạo mới người dùng thành công');
+      toastSuccess('Tạo mới Staff thành công');
     } catch (e: any) {
       toastError(e.message);
     }
   };
-
-  const getDataBranch = async () => {
-    try {
-      const res = await rf.getRequest('BranchRequest').getBranchList();
-      const formatData = res.map((r: IBranch) => ({
-        value: r.id,
-        label: r.name,
-      }));
-      setListBranches(formatData);
-    } catch (e: any) {
-      toastError(e.message);
-    }
-  };
-  listBranch;
-  useEffectUnsafe(() => {
-    getDataBranch();
-  }, []);
 
   return (
     <BaseModal
       size="xl"
-      title="Tạo mới người dùng"
+      title="Tạo mới Staff"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -110,21 +90,6 @@ const ModalAddNewBranchAdmin: FC<IModalAddNewBranchAdminProps> = (props) => {
             onChange={(e: any) =>
               setDataUser({ ...dataUser, phone: e.target.value.trim() })
             }
-          />
-
-          <AppSelect
-            label="Chi Nhánh"
-            width={'full'}
-            options={listBranch}
-            value={dataUser.branchId}
-            onChange={(value: string) =>
-              setDataUser({
-                ...dataUser,
-                branchId: +value,
-              })
-            }
-            size="medium"
-            showFullName
           />
 
           <AppInput
@@ -162,7 +127,7 @@ const ModalAddNewBranchAdmin: FC<IModalAddNewBranchAdminProps> = (props) => {
             >
               Hủy
             </AppButton>
-            <AppButton flex={1} onClick={createNewBranch}>
+            <AppButton flex={1} onClick={createNewStaff}>
               Tạo mới
             </AppButton>
           </Flex>
@@ -172,4 +137,4 @@ const ModalAddNewBranchAdmin: FC<IModalAddNewBranchAdminProps> = (props) => {
   );
 };
 
-export default ModalAddNewBranchAdmin;
+export default ModalAddNewStaff;

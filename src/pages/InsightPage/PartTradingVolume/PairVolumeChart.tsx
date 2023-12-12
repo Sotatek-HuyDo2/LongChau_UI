@@ -1,6 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { AppDateRangePicker, AppSelect } from 'src/components';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import rf from 'src/api/RequestFactory';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { fillFullResolution, filterParams } from 'src/utils/helpers';
@@ -155,7 +155,6 @@ const PairVolumeChart = () => {
   const getPairs = async () => {
     try {
       const res = await rf.getRequest('MarketDataRequest').getAllPair();
-      console.log('data:', res.data);
       if (res.data) {
         const pairs = res.data.map((item: IPair) => {
           return {
@@ -164,7 +163,6 @@ const PairVolumeChart = () => {
           };
         });
         setPairs(pairs);
-        console.log('pairs:', pairs);
         setParams({
           ...params,
           startTime,

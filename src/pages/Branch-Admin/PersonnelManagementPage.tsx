@@ -1,57 +1,59 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
-import {
-  Box,
-  Flex,
-  InputGroup,
-  InputRightElement,
-  Tooltip,
-} from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
-import { MOCK_DATA_USER } from 'src/utils/constants';
+import { Box, Flex, InputGroup, InputRightElement } from '@chakra-ui/react';
 import { AppDataTable, AppButton } from 'src/components';
-import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseBranchAdminPage } from 'src/components/layouts';
 import '../../styles/pages/UserManagementPage.scss';
-import { LockIcon, UnlockIcon } from '@chakra-ui/icons';
-import { toastError, toastSuccess } from 'src/utils/notify';
-import ModalDelistConfirm from 'src/components/Modals/User/ModalChangeActiveConfirm';
+import { AddIcon } from '@chakra-ui/icons';
+import rf from 'src/api/RequestFactory';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import ModalAddNewStaff from 'src/components/Modals/User/ModalAddNewStaff';
+import ModalViewStaff from 'src/components/Modals/User/ModalViewStaff';
 
-interface IUser {
-  id: number;
-  email: string;
+export interface IAdmin {
+  userId: number;
   firstName: string;
   lastName: string;
-  role: string;
-  brandID: number;
+  branchId: number;
   phone: string;
   status: string;
 }
 
 const BranchAdminPersonnelManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [dataSearch, setDataSearch] = useState<IUser[]>(MOCK_DATA_USER);
-  const [status, setStatus] = useState('block');
-  const [openModalDelistConfirm, setOpenModalDelistConfirm] =
+  const [dataSearch, setDataSearch] = useState<IAdmin[]>([]);
+  const [openModalViewUser, setOpenModalViewUser] = useState<boolean>(false);
+  const [openModalAddNewStaff, setOpenModalAdddNewStaff] =
     useState<boolean>(false);
+  const dataRef = useRef<IAdmin[]>([]);
+  const [dataModal, setDataModal] = useState<IAdmin>({} as IAdmin);
+  const [params, setParams] = useState({});
 
-  const onToggleOpenModalDelistConfirm = () =>
-    setOpenModalDelistConfirm((prevState) => !prevState);
+  const handleOpenModalViewUser = async (id: number) => {
+    try {
+      const res = await rf.getRequest('UserRequest').getStaffByID(id);
+      setOpenModalViewUser(true);
+      setDataModal(res);
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
 
-  const dataRef = useRef<IUser[]>([]);
+  const onReload = () => {
+    setParams({ ...params });
+  };
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
 
     if (valueSearch) {
-      dataFilter = dataFilter.filter((item: IUser) =>
-        item.firstName.toLowerCase().includes(valueSearch.toLowerCase()),
+      dataFilter = dataFilter.filter((item: IAdmin) =>
+        item?.firstName.toLowerCase().includes(valueSearch?.toLowerCase()),
       );
 
       setDataSearch(dataFilter);
     }
-
     setDataSearch(dataFilter);
   };
 
@@ -59,49 +61,41 @@ const BranchAdminPersonnelManagementPage = () => {
     handleSearch();
   }, [valueSearch]);
 
-  const navigate = useNavigate();
-
-  const getUser = async () => {
+  const getBranchAdmin = async () => {
     try {
-      dataRef.current = MOCK_DATA_USER;
-      setDataSearch(MOCK_DATA_USER);
+      const res = await rf.getRequest('UserRequest').getStaff();
+      dataRef.current = res;
+      setDataSearch(res);
       return {
-        docs: dataSearch,
+        docs: res,
       };
     } catch (error) {
       return { docs: [] };
     }
   };
 
-  const handleSetStatus = () => {
-    if (status === 'block') {
-      toastSuccess('Welcome to LongChau!');
-      setStatus('unlock');
-    } else {
-      setStatus('block');
-    }
-  };
-
   const _renderHeaderTable = () => {
     return (
       <Flex>
+        <Box className="user--header-cell-body user--id">Stt</Box>
         <Box className="user--header-cell-body user--id">ID</Box>
-        <Box className="user--header-cell-body user--email">Email</Box>
         <Box className="user--header-cell-body user--name">Tên</Box>
-        <Box className="user--header-cell-body user--role">Quyền</Box>
         <Box className="user--header-cell-body user--phone">SDT</Box>
-        <Box className="user--header-cell-body user--status">Trạng thái</Box>
         <Box className="user--header-cell-body user--action">Chức năng</Box>
       </Flex>
     );
   };
 
-  const _renderContentTable = (data: IUser[]) => {
+  const _renderContentTable = (data: IAdmin[]) => {
     return (
       <Box>
-        {dataSearch.map((data: IUser, id: number) => {
+        {dataSearch.map((data: IAdmin, index: number) => {
           return (
-            <RowAddressTransactionTable data={data} key={`${id}-coin-table`} />
+            <RowAddressTransactionTable
+              data={data}
+              key={`${index}-coin-table`}
+              id={index + 1}
+            />
           );
         })}
       </Box>
@@ -109,66 +103,40 @@ const BranchAdminPersonnelManagementPage = () => {
   };
 
   const RowAddressTransactionTable: React.FC<{
-    data: IUser;
-  }> = ({ data }) => {
+    data: IAdmin;
+    id: number;
+  }> = ({ data, id }) => {
     return (
       <Flex className="user--row-wrap" direction={'column'}>
         <Flex>
           <Flex className="user--cell-body user--id">
-            <Box cursor={'pointer'}>{data?.id}</Box>
+            <Box cursor={'pointer'}>{id}</Box>
           </Flex>
-          <Box className="user--cell-body user--email">
-            {data?.email ? data?.email : '--'}
-          </Box>
+          <Flex className="user--cell-body user--id">
+            <Box cursor={'pointer'}>{data?.branchId}</Box>
+          </Flex>
           <Flex flexDirection="row" className="user--cell-body user--name">
-            {data?.firstName} {data?.lastName}
+            {data?.lastName} {data?.firstName}
           </Flex>
-          <Box className="user--cell-body user--role">
-            {data?.role ? data?.role : '--'}
-          </Box>
           <Box className="user--cell-body user--phone">
             {data?.phone ? data?.phone : '--'}
-          </Box>
-          <Box className="user--cell-body user--phone">
-            <Box className={`user--${data?.status.toLowerCase()}`}>
-              {data?.status === status ? (
-                <LockIcon onClick={handleSetStatus} />
-              ) : (
-                <UnlockIcon onClick={handleSetStatus} />
-              )}
-            </Box>
           </Box>
           <Box className="user--cell-body user--action" cursor={'pointer'}>
             <AppButton
               size={'sm'}
-              onClick={() => navigate(`/medical/${data.brandID}`)}
+              onClick={() => handleOpenModalViewUser(data.userId)}
             >
               Xem
             </AppButton>
-            <AppButton
-              size={'sm'}
-              bg={'yellow.100'}
-              ml={'3px'}
-              onClick={onToggleOpenModalDelistConfirm}
-            >
-              Sửa
-            </AppButton>
-            <AppButton
-              ml={'3px'}
-              size={'sm'}
-              bg={'red.100'}
-              onClick={onToggleOpenModalDelistConfirm}
-            >
-              Xóa
-            </AppButton>
           </Box>
         </Flex>
-        {/* {openModalDelistConfirm && (
-          <ModalDelistConfirm
-            open={openModalDelistConfirm}
-            onClose={onToggleOpenModalDelistConfirm}
+        {openModalViewUser && (
+          <ModalViewStaff
+            open={openModalViewUser}
+            onClose={() => setOpenModalViewUser(false)}
+            data={dataModal}
           />
-        )} */}
+        )}
       </Flex>
     );
   };
@@ -184,36 +152,55 @@ const BranchAdminPersonnelManagementPage = () => {
           gap={3}
           color={'#2167df'}
         >
-          Quản lý người dùng
+          Quản lý Staff
         </Flex>
         <Box className={'user__search'}>
-          <Flex alignItems={'center'}>
-            <Box className="user__search-input">
-              <InputGroup>
-                <AppInput
-                  color={'black'}
-                  placeholder="Nhập để tìm kiếm..."
-                  size="md"
-                  value={valueSearch}
-                  onChange={(e: any) => setValueSearch(e.target.value)}
-                />
-                <InputRightElement top={4}>
-                  <SearchExplorer />
-                </InputRightElement>
-              </InputGroup>
-            </Box>
+          <Flex justifyContent={'space-between'}>
+            <Flex alignItems={'center'}>
+              <Box className="user__search-input">
+                <InputGroup>
+                  <AppInput
+                    color={'black'}
+                    placeholder="Nhập để tìm kiếm..."
+                    size="md"
+                    value={valueSearch}
+                    onChange={(e: any) => setValueSearch(e.target.value)}
+                  />
+                  <InputRightElement top={4}>
+                    <SearchExplorer />
+                  </InputRightElement>
+                </InputGroup>
+              </Box>
+            </Flex>
+            <AppButton
+              size={'md'}
+              onClick={() => setOpenModalAdddNewStaff(true)}
+            >
+              <Flex justify={'center'} align={'start'} gap={1}>
+                <AddIcon />
+                Thêm Staff
+              </Flex>
+            </AppButton>
           </Flex>
         </Box>
 
         <Box mt={10} className="user-container">
           <AppDataTable
-            fetchData={getUser}
+            requestParams={params}
+            fetchData={getBranchAdmin}
             renderBody={_renderContentTable}
             renderHeader={_renderHeaderTable}
             size={10}
           />
         </Box>
       </Box>
+      {openModalAddNewStaff && (
+        <ModalAddNewStaff
+          open={openModalAddNewStaff}
+          onClose={() => setOpenModalAdddNewStaff(false)}
+          onReload={onReload}
+        />
+      )}
     </BaseBranchAdminPage>
   );
 };

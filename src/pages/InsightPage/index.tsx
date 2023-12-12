@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { BaseAdminPage } from 'src/components/layouts';
 import { AppTabs } from 'src/components';
 import 'src/styles/pages/UserManagement.scss';

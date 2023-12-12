@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { BaseAdminPage } from 'src/components/layouts';
 import { AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
@@ -239,6 +239,7 @@ const MedicalManagementPage = () => {
             open={openModalEditMedical}
             onClose={() => setOpenModalEditMedical(false)}
             data={dataModal}
+            onReload={onReload}
           />
         )}
         {openModalAddNewMedical && (

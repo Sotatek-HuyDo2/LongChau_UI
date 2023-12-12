@@ -6,55 +6,11 @@ export default class UserRequest extends BaseRequest {
     return config.api.baseUrlApi;
   }
 
+  // user
   register(params: any) {
     const url = `user-public/register`;
     return this.post(url, params);
   }
-
-  branchAdminRegister(params: any) {
-    const url = `user/branch-admin`;
-    return this.post(url, params);
-  }
-
-  //   staffRegister(params: any) {
-  //     const url = `/user/staff`;
-  //     return this.post(url, params);
-  //   }
-
-  getCustomer() {
-    const url = `user/customer`;
-    return this.get(url);
-  }
-
-  getCustomerByID(id: number | string) {
-    const url = `user/customer/${id}`;
-    return this.get(url);
-  }
-
-  getStaff() {
-    const url = `user/staff`;
-    return this.get(url);
-  }
-
-  getStaffByID(id: number | string) {
-    const url = `user/staff/${id}`;
-    return this.get(url);
-  }
-
-  getBranchAdmin() {
-    const url = `user/branch-admin`;
-    return this.get(url);
-  }
-
-  getBranchAdminByID(id: number | string) {
-    const url = `user/branch-admin/${id}`;
-    return this.get(url);
-  }
-
-  //   getBranchAdmin() {
-  //     const url = `/user/branch-admin`;
-  //     return this.get(url);
-  //   }
 
   getProfile() {
     const url = `user/profile`;
@@ -79,5 +35,45 @@ export default class UserRequest extends BaseRequest {
   deActiveUser(id: number) {
     const url = `user/deactivate/${id}`;
     return this.put(url);
+  }
+
+  createBranchAdminAccount(params: any) {
+    const url = `user/branch-admin`;
+    return this.post(url, params);
+  }
+
+  createStaffAccount(params: any) {
+    const url = `user/staff`;
+    return this.post(url, params);
+  }
+
+  getStaff() {
+    const url = `user/staff`;
+    return this.get(url);
+  }
+
+  getStaffByID(id: number | string) {
+    const url = `user/staff/${id}`;
+    return this.get(url);
+  }
+
+  getBranchAdmin() {
+    const url = `user/branch-admin`;
+    return this.get(url);
+  }
+
+  getBranchAdminByID(id: number | string) {
+    const url = `user/branch-admin/${id}`;
+    return this.get(url);
+  }
+
+  getCustomer() {
+    const url = `user/customer`;
+    return this.get(url);
+  }
+
+  getCustomerByID(id: number | string) {
+    const url = `user/customer/${id}`;
+    return this.get(url);
   }
 }

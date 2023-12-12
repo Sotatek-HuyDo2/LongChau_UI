@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import 'src/styles/components/Navbar.scss';
 import { Box, Flex } from '@chakra-ui/layout';
 import { useNavigate } from 'react-router';

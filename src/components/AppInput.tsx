@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 import { StyleProps, forwardRef } from '@chakra-ui/system';
-import React, { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
 import { useForceUpdate } from 'src/hooks';
 

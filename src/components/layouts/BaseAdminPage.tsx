@@ -1,5 +1,5 @@
 import { Box, Flex } from '@chakra-ui/layout';
-import React, { FC, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import { GuestAdminPage, SidebarAdmin } from 'src/components/layouts';
 
 interface IBasePage {

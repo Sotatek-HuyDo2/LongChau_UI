@@ -1,5 +1,5 @@
 import { Checkbox, CheckboxProps } from '@chakra-ui/react';
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 export interface IAppCheckbox extends CheckboxProps {
   label: string;

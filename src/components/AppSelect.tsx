@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useEffect, useRef, useState } from 'react';
+import { FC, useMemo, useEffect, useRef, useState } from 'react';
 import { Box, Flex, FormLabel } from '@chakra-ui/react';
 import 'src/styles/components/AppSelect.scss';
 import { ArrowDownIcon } from '../assets/icons';

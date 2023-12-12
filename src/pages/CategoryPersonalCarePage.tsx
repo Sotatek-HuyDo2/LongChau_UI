@@ -1,5 +1,5 @@
 import { Box, Divider, Flex, Image, Input, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeftIcon, CopyIcon } from 'src/assets/icons';
 import { BaseAdminPage } from 'src/components/layouts';

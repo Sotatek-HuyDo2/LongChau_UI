@@ -1,6 +1,6 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Flex, Image } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { clearUser } from 'src/store/user';

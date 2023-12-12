@@ -10,7 +10,6 @@ import { toastError, toastSuccess } from 'src/utils/notify';
 interface IModalAddNewUserProps {
   open: boolean;
   onClose: () => void;
-  // onConfirm: () => void;
 }
 
 interface IDataBody {
@@ -43,7 +42,7 @@ const ModalAddNewUser: FC<IModalAddNewUserProps> = (props) => {
 
   const createNewUser = async () => {
     try {
-      await rf.getRequest('UserRequest').branchAdminRegister(dataUser);
+      await rf.getRequest('UserRequest').createBranchAdminAccount(dataUser);
       onClose();
       toastSuccess('Tạo mới người dùng thành công');
     } catch (e: any) {

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import 'src/styles/components/Navbar.scss';
 import { Box, Flex } from '@chakra-ui/layout';
 import { useNavigate } from 'react-router';
 import { Overview } from 'src/assets/icons';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 
 interface MenuDropProps {

@@ -9,7 +9,7 @@ import {
   useForceUpdate,
 } from '@chakra-ui/react';
 import { forwardRef } from '@chakra-ui/system';
-import React, { ReactNode, useEffect, useState, useRef, useMemo } from 'react';
+import { ReactNode, useEffect, useState, useRef, useMemo } from 'react';
 
 import 'src/styles/components/AppAutoComplete.scss';
 import { CloseIcon } from '@chakra-ui/icons';

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { BaseAdminPage } from 'src/components/layouts';
 import { AppInput, AppButton, AppDatePicker } from 'src/components';

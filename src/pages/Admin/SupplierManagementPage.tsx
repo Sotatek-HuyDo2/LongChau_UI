@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
 import {
@@ -73,8 +73,8 @@ const SupplierManagementPage = () => {
       const res = await rf.getRequest('SupplierRequest').getSupplierDetail(id);
       setDataModal(res);
       setOpenModalEditSupplier(true);
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.log(e.message);
     }
   };
 

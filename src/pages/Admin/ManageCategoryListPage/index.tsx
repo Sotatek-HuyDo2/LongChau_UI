@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import React, { ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { BaseAdminPage } from 'src/components/layouts';
 import { AppTabs } from 'src/components';
 // import 'src/styles/pages/UserManagement.scss';
@@ -24,15 +24,15 @@ const ManageCategoryList = () => {
         setCateList(res);
       }
     } catch (e: any) {
-      console.log(e);
+      console.log(e.message);
     }
   };
 
   const getCateByID = async () => {
     try {
       await rf.getRequest('CategoryRequest').getDrugsTypeByCateID(1);
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.log(e.message);
     }
   };
 

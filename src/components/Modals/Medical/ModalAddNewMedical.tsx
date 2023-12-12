@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import 'src/styles/components/BaseModal.scss';
 import BaseModal from '../BaseModal';
 import AppButton from '../../AppButton';
@@ -9,7 +9,6 @@ import { toastError, toastSuccess } from 'src/utils/notify';
 import AppSelect from 'src/components/AppSelect';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { IBranch } from 'src/pages/Admin/BranchManagementPage';
-import { parseInt } from 'lodash';
 
 interface IModalAddNewMedicalProps {
   open: boolean;

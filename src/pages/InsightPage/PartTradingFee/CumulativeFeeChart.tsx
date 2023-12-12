@@ -1,6 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { AppDateRangePicker } from 'src/components';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface IParams {
   endTime?: number | null;

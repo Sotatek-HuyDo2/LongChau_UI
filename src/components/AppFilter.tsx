@@ -1,5 +1,5 @@
 import { Box, Flex, Image } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../styles/components/AppFilter.scss';
 import AppCheckbox from './AppCheckbox';
 import { ArrowLeftIcon, CheckIcon } from '@chakra-ui/icons';

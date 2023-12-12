@@ -8,7 +8,7 @@ import {
   Input,
   Text,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GuestAdminPage } from 'src/components/layouts';
 import '../styles/pages/LoginPage.scss';
 import { GoogleIcon } from 'src/assets/icons';

@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BaseAdminPage } from 'src/components/layouts';
 import 'src/styles/pages/MarketingPage.scss';
 import {
