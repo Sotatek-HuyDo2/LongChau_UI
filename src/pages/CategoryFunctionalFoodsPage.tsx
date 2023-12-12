@@ -20,14 +20,14 @@ const CategoryFunctionalFoodsPage = () => {
     return listBrand;
   };
 
-  const getListProductType = () => {
-    const listProductType = _.uniqBy(product, 'detail').map((item) => {
+  const getListDrugsType = () => {
+    const listDrugsType = _.uniqBy(product, 'detail').map((item) => {
       return item.detail.category;
     });
-    return _.unionBy(listProductType);
+    return _.unionBy(listDrugsType);
   };
 
-  const listProductType = getListProductType();
+  const listDrugsType = getListDrugsType();
 
   const getFilterType = (filterType: string) => {
     setFilterType(filterType);
@@ -56,14 +56,14 @@ const CategoryFunctionalFoodsPage = () => {
   useEffectUnsafe(() => {
     getListBrand();
     filterByPrice();
-    getListProductType();
+    getListDrugsType();
   }, [product, filterType]);
 
   return (
     <BaseHomePage>
       <Flex backgroundColor={'#f4f6f9'} flexDir={'column'} w={'full'}>
         <AppCategories
-          data={listProductType}
+          data={listDrugsType}
           title={'Thực Phẩm Chức Năng'}
           numInline={4}
         />

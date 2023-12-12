@@ -29,7 +29,7 @@ const ModalEditTypeProduct: FC<IModalEditTypeProductProps> = (props) => {
     try {
       await rf
         .getRequest('CategoryRequest')
-        .updateProductTypeByCate(categoriesID, typeId, {
+        .updateDrugsTypeByCate(categoriesID, typeId, {
           categoryId: categories,
           name: typeName,
         });

@@ -66,7 +66,7 @@ const ProductTyByCategory = (props: Props) => {
     try {
       const res = await rf
         .getRequest('CategoryRequest')
-        .getDrugsTypeByCateID(categoriesID);
+        .getAllDrugsTypeByCateID(categoriesID);
       dataRef.current = res;
       setDataSearch(res);
       return {
@@ -82,7 +82,7 @@ const ProductTyByCategory = (props: Props) => {
     try {
       const res = await rf
         .getRequest('CategoryRequest')
-        .getProductTypeByCateID(id);
+        .getDrugsTypeByCateID(id);
       setModalEditTypeProduct(true);
       setDataModal(res);
     } catch (error) {
@@ -97,7 +97,7 @@ const ProductTyByCategory = (props: Props) => {
 
   const deleteTypeProduct = async () => {
     try {
-      await rf.getRequest('CategoryRequest').deleteProductTypeByID(id);
+      await rf.getRequest('CategoryRequest').deleteDrugsTypeByID(id);
       onReload();
     } catch (error: any) {
       toastError(error.message);

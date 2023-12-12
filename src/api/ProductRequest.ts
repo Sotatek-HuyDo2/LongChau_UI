@@ -26,7 +26,7 @@ export default class ProductRequest extends BaseRequest {
   //   return this.get(url);
   // }
 
-  // getProductByProductTypeID(pro_type_id: number) {
+  // getProductByDrugsTypeID(pro_type_id: number) {
   //   const url = `/drugs/drugs-type/${pro_type_id}`;
   //   return this.get(url);
   // }

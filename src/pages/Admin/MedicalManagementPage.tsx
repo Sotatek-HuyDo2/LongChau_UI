@@ -85,6 +85,10 @@ const MedicalManagementPage = () => {
     }
   };
 
+  const onReload = () => {
+    setParams({ ...params });
+  };
+
   const handleSearch = () => {
     let dataFilter = dataRef.current;
 
@@ -241,6 +245,7 @@ const MedicalManagementPage = () => {
           <ModalAddNewMedical
             open={openModalAddNewMedical}
             onClose={() => setOpenModalAddNewMedical(false)}
+            onReload={onReload}
           />
         )}
       </Flex>

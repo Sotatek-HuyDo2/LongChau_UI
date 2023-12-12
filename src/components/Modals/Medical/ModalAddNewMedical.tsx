@@ -4,64 +4,134 @@ import BaseModal from '../BaseModal';
 import AppButton from '../../AppButton';
 import { FC, useState } from 'react';
 import AppInput from '../../AppInput';
-import { IMedical } from 'src/pages/Admin/MedicalManagementPage';
-import { formatTimestamp } from 'src/utils/format';
-import moment from 'moment';
-import { AppDatePicker } from '../../AppDatePicker';
+import rf from 'src/api/RequestFactory';
+import { toastError, toastSuccess } from 'src/utils/notify';
+import AppSelect from 'src/components/AppSelect';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import { IBranch } from 'src/pages/Admin/BranchManagementPage';
 
 interface IModalAddNewMedicalProps {
   open: boolean;
   onClose: () => void;
+  onReload: () => void;
 }
 
-interface IDataForm {
+interface IDataBody {
   name: string;
   typeId: number;
   supplierId: number;
   soldAsDose: boolean;
   sensitiveIngredients?: Array<string>;
   description: string;
-  // unit: EDrugsUnit;
+  unit: string;
   barcode: number;
   price: number;
   size: number;
 }
 
 const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
-  const initData = {
+  const initDataUser = {
     name: '',
     typeId: NaN,
     supplierId: NaN,
     soldAsDose: false,
     description: '',
+    unit: 'bottle',
     barcode: NaN,
     price: NaN,
     size: NaN,
   };
+  const { open, onClose, onReload } = props;
+  const [dataUser, setDataUser] = useState<IDataBody>(initDataUser);
+  const [listDrugsType, setListDrugsTypes] = useState<any>([]);
+  const [listCate, setListCate] = useState<any>([]);
+  const [categoriesId, setCategoriesId] = useState<number>(1);
 
-  const { open, onClose } = props;
-  const [dataForm, setDataForm] = useState<IDataForm>(initData);
+  const createNewBranch = async () => {
+    try {
+      await rf.getRequest('UserRequest').branchAdminRegister(dataUser);
+      onClose();
+      onReload();
+      toastSuccess('Tạo mới người dùng thành công');
+    } catch (e: any) {
+      toastError(e.message);
+    }
+  };
 
-  // const handleToChange = (date: any) => {
-  //   setDataForm({
-  //     ...dataForm,
-  //     toTimestamp: date,
-  //   });
+  const listUnit: { value: string; label: string }[] = [
+    {
+      value: 'bottle',
+      label: 'BOTTLE',
+    },
+    {
+      value: 'box',
+      label: 'BOX',
+    },
+    {
+      value: 'tube',
+      label: 'TUBE',
+    },
+    {
+      value: 'pellet',
+      label: 'PELLET',
+    },
+    {
+      value: 'blister',
+      label: 'BLISTER',
+    },
+  ];
 
-  // if (
-  //   dataForm.fromTimestamp &&
-  //   moment(date).valueOf() < moment(dataForm.fromTimestamp).valueOf()
-  // ) {
-  //   setFromError('The end time must be greater than the start time');
-  // } else if (date < moment().add(1, 'minute').valueOf()) {
-  //   setFromError('The end time must be greater than the current time');
-  // } else setFromError('');
-  // };
+  const asDoseList: { value: string; label: string }[] = [
+    {
+      value: 'true',
+      label: 'Có',
+    },
+    {
+      value: 'false',
+      label: 'Không',
+    },
+  ];
+
+  const getDataCate = async () => {
+    try {
+      const res = await rf.getRequest('CategoryRequest').getAllCate();
+      const formatData = res.map((r: any) => ({
+        value: r.id,
+        label: r.name,
+      }));
+      setListCate(formatData);
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+
+  const getDataDrugsType = async () => {
+    try {
+      const res = await rf
+        .getRequest('CategoryRequest')
+        .getAllDrugsTypeByCateID(categoriesId);
+      const formatData = res.map((r: IBranch) => ({
+        value: r.id,
+        label: r.name,
+      }));
+      setListDrugsTypes(formatData);
+    } catch (e: any) {
+      toastError(e.message);
+    }
+  };
+
+  useEffectUnsafe(() => {
+    getDataCate();
+  }, []);
+
+  useEffectUnsafe(() => {
+    getDataDrugsType();
+  }, [categoriesId]);
 
   return (
     <BaseModal
       size="xl"
-      title="Edit Medical Information"
+      title="Tạo mới thuốc"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -73,33 +143,102 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
           gap={'15px'}
           w={'full'}
         >
-          <Flex>
-            <AppInput label="Tên thuốc" />
-          </Flex>
-          {/* <Flex
-            w={'100%'}
-            pos={'relative'}
-            pt={5}
-            _disabled={{
-              pointerEvents: 'none',
-              opacity: 0.4,
+          <AppSelect
+            label="Bán theo đơn"
+            width={'full'}
+            options={asDoseList}
+            value={dataUser.soldAsDose + ''}
+            onChange={(value: string) => {
+              if (value === 'true') {
+                setDataUser({
+                  ...dataUser,
+                  soldAsDose: true,
+                });
+              } else {
+                setDataUser({
+                  ...dataUser,
+                  soldAsDose: false,
+                });
+              }
             }}
-          >
-            <AppDatePicker
-              placeholderText={'mm/dd/yyyy HH:mm:ss'}
-              type="isoDate"
-              onChange={handleToChange}
-              dateFormat={'h:mm aa'}
-            />
-            <Text color={'border.200'} pos={'absolute'} top={'-8px'}>
-              Ngày nhập
-            </Text>
-          </Flex> */}
-          <Flex gap={3}>
-            <AppInput label="Không gian" />
-            <AppInput label="Giá(VND)" />
-          </Flex>
+            size="medium"
+            showFullName
+          />
 
+          <AppInput
+            label="Tên"
+            onChange={(e: any) =>
+              setDataUser({ ...dataUser, name: e.target.value.trim() })
+            }
+          />
+
+          <AppSelect
+            label="Chi Nhánh"
+            width={'full'}
+            options={listUnit}
+            value={dataUser.unit}
+            onChange={(value: string) =>
+              setDataUser({
+                ...dataUser,
+                unit: value,
+              })
+            }
+            size="medium"
+            showFullName
+          />
+
+          <AppSelect
+            label="Loại"
+            width={'full'}
+            options={listCate}
+            value={categoriesId}
+            onChange={(value: string) => setCategoriesId(+value)}
+            size="medium"
+            showFullName
+          />
+
+          <AppSelect
+            label="Phân Loại"
+            width={'full'}
+            options={listDrugsType}
+            value={categoriesId}
+            onChange={(value: string) =>
+              setDataUser({
+                ...dataUser,
+                unit: value,
+              })
+            }
+            size="medium"
+            showFullName
+          />
+
+          <AppInput
+            label="Bar-code"
+            onChange={(e: any) =>
+              setDataUser({ ...dataUser, barcode: e.target.value.trim() })
+            }
+          />
+
+          <Flex gap={1}>
+            <AppInput
+              label="Giá (vnd)"
+              onChange={(e: any) =>
+                setDataUser({ ...dataUser, price: e.target.value.trim() })
+              }
+            />
+            <AppInput
+              label="Kích cỡ"
+              onChange={(e: any) =>
+                setDataUser({ ...dataUser, size: e.target.value.trim() })
+              }
+            />
+          </Flex>
+          <AppInput
+            label="Chi tiết"
+            onChange={(e: any) =>
+              setDataUser({ ...dataUser, description: e.target.value.trim() })
+            }
+          />
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton
               className="btn-outline-hover"
@@ -110,7 +249,9 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
             >
               Hủy
             </AppButton>
-            <AppButton flex={1}>Thêm mới</AppButton>
+            <AppButton flex={1} onClick={createNewBranch}>
+              Xác nhận
+            </AppButton>
           </Flex>
         </Flex>
       </Flex>

@@ -71,7 +71,7 @@ const ModalAddNewBranchAdmin: FC<IModalAddNewBranchAdminProps> = (props) => {
       toastError(e.message);
     }
   };
-
+  console.log(listBranch);
   useEffectUnsafe(() => {
     getDataBranch();
   }, []);

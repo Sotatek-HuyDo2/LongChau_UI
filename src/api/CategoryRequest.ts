@@ -21,28 +21,28 @@ export default class CategoryRequest extends BaseRequest {
     return this.get(url);
   }
 
-  getDrugsTypeByCateID(categoryId: number) {
+  getAllDrugsTypeByCateID(categoryId: number) {
     const url = `categories/${categoryId}/drug-types`;
     return this.get(url);
   }
 
   // TYPE PRODUCT
-  createProductTypeByCate(param: any) {
+  createDrugsTypeByCate(param: any) {
     const url = `categories/drug-types/create`;
     return this.post(url, param);
   }
 
-  updateProductTypeByCate(categoryId: number, id: number, param: any) {
+  updateDrugsTypeByCate(categoryId: number, id: number, param: any) {
     const url = `categories/${categoryId}/drug-types/${id}`;
     return this.put(url, param);
   }
 
-  getProductTypeByCateID(id: number) {
+  getDrugsTypeByCateID(id: number) {
     const url = `categories/drug-types/${id}`;
     return this.get(url);
   }
 
-  deleteProductTypeByID(id: number) {
+  deleteDrugsTypeByID(id: number) {
     const url = `categories/drug-types/${id}`;
     return this.delete(url);
   }

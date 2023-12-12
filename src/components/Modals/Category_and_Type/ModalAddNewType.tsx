@@ -22,7 +22,7 @@ const ModalAddNewTypeProduct: FC<IModalAddNewTypeProductProps> = (props) => {
     try {
       await rf
         .getRequest('CategoryRequest')
-        .createProductTypeByCate({ categoryId: categoriesID, name: typeName });
+        .createDrugsTypeByCate({ categoryId: categoriesID, name: typeName });
       onClose();
       onReload();
       toastSuccess('Tạo mới Branch thành công');
