@@ -1,106 +1,10 @@
-import {
-  Box,
-  Flex,
-  Image,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Flex, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
-
-const MOCK_MENU_TEST = [
-  {
-    cateID: 1,
-    cateName: 'Thực phẩm chức năng',
-    icon: true,
-    productType: [
-      {
-        productTypeID: 1,
-        productTypeName: 'test1',
-        link: '/',
-      },
-      {
-        productTypeID: 2,
-        productTypeName: 'test2',
-        link: '/admin',
-      },
-      {
-        productTypeID: 3,
-        productTypeName: 'Tắt cả',
-        link: '/category-functional-foods',
-      },
-    ],
-  },
-  {
-    cateID: 2,
-    cateName: 'Thiết bị y tế',
-    icon: true,
-    productType: [
-      {
-        productTypeID: 1,
-        productTypeName: 'test1',
-        link: '/',
-      },
-      {
-        productTypeID: 2,
-        productTypeName: 'test2',
-        link: '/',
-      },
-      {
-        productTypeID: 3,
-        productTypeName: 'Tất cả',
-        link: '/',
-      },
-    ],
-  },
-  {
-    cateID: 3,
-    cateName: 'Chăm sóc cá nhân',
-    icon: true,
-    productType: [
-      {
-        productTypeID: 1,
-        productTypeName: 'test1',
-        link: '/',
-      },
-      {
-        productTypeID: 2,
-        productTypeName: 'test2',
-        link: '/',
-      },
-      {
-        productTypeID: 3,
-        productTypeName: 'Tất cả',
-        link: '/',
-      },
-    ],
-  },
-  {
-    cateID: 4,
-    cateName: 'Thuốc',
-    icon: true,
-    productType: [
-      {
-        productTypeID: 1,
-        productTypeName: 'test1',
-        link: '/',
-      },
-      {
-        productTypeID: 2,
-        productTypeName: 'test2',
-        link: '/',
-      },
-      {
-        productTypeID: 3,
-        productTypeName: 'Tất cả',
-        link: '/category-medicine',
-      },
-    ],
-  },
-];
+import rf from 'src/api/RequestFactory';
+import { useState } from 'react';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import ProductTyByCategory from 'src/pages/Admin/ManageCategoryListPage/ProductTyByCategory.part';
 
 const MOCK_MENU = [
   {
@@ -109,7 +13,7 @@ const MOCK_MENU = [
     dataDrop: [
       {
         title: 'test1',
-        link: '/',
+        link: <ProductTyByCategory categoriesID={1} />,
       },
       {
         title: 'test2',
@@ -189,7 +93,40 @@ const MOCK_MENU = [
 
 const MenuFilter = () => {
   const navigate = useNavigate();
-  // const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [cateList, setCateList] = useState<any>([]);
+
+  const getAllCate = async () => {
+    try {
+      const res = await rf.getRequest('CategoryRequest').getAllCate();
+      if (res) {
+        setCateList(res);
+      }
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+
+  const getCateByID = async () => {
+    try {
+      await rf.getRequest('CategoryRequest').getDrugsTypeByCateID(1);
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+
+  const tabs = cateList.map((item: any) => ({
+    id: item.id,
+    name: item.name,
+    // content: <CategoryFunctionalFoods categoriesID={item.id} />,
+  }));
+
+  console.log(tabs);
+
+  useEffectUnsafe(() => {
+    getAllCate();
+    getCateByID();
+  }, []);
 
   return (
     <Flex backgroundColor={'white'} color={'black'} h={'50px'}>
@@ -213,17 +150,12 @@ const MenuFilter = () => {
                       pb="5px"
                       _hover={{
                         borderBottom: '1px solid #1250dc',
-                        transition: 'border-bottom 0.3s ease', // Thêm hiệu ứng transition
+                        transition: 'border-bottom 0.3s ease',
                       }}
-                      // onMouseEnter={onOpen}
-                      // onMouseLeave={onClose}
                       onClick={() => {
-                        // Kiểm tra xem menu.link có tồn tại và có phải là đường dẫn ngoài trang web hay không
                         if (menu.link && menu.link.startsWith('http')) {
-                          // Nếu đúng, mở liên kết trong một tab hoặc cửa sổ mới
                           window.open(menu.link, '_blank');
                         } else if (menu.link) {
-                          // Nếu không phải là đường dẫn ngoài trang web, thực hiện điều hướng bằng React Router hoặc cách bạn sử dụng để điều hướng trong ứng dụng của bạn.
                           navigate(menu.link);
                         }
                       }}
@@ -244,8 +176,6 @@ const MenuFilter = () => {
                         background={'white'}
                         outline={'none'}
                         border={'none'}
-                        // onMouseEnter={onOpen}
-                        // onMouseLeave={onClose}
                       >
                         {menu?.dataDrop.map((item) => {
                           return (

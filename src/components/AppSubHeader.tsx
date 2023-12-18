@@ -16,7 +16,7 @@ export interface ITabs {
   content: ReactNode;
 }
 
-interface IAppTabs {
+interface ISubHeader {
   defaultTab?: number;
   tabs: ITabs[];
   onChange?: (value: string) => void;
@@ -24,7 +24,7 @@ interface IAppTabs {
   overflow?: 'hidden' | 'auto';
 }
 
-const AppTabs: FC<IAppTabs> = ({
+const SubHeader: FC<ISubHeader> = ({
   defaultTab = 0,
   tabs,
   onChange,
@@ -77,4 +77,4 @@ const AppTabs: FC<IAppTabs> = ({
   );
 };
 
-export default AppTabs;
+export default SubHeader;
