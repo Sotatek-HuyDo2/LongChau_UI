@@ -30,13 +30,12 @@ export interface IMedical {
   barcode: number;
   createdAt: string;
   description: string;
-  dueDate: string;
   id: number;
   name: string;
   price: number;
-  sensitiveIngredients: null;
+  sensitiveIngredients?: null;
   size: number;
-  soldAsDose: false;
+  soldAsDose: boolean;
   supplierId: number;
   typeId: number;
   unit: string;
@@ -125,12 +124,17 @@ const MedicalManagementPage = () => {
       <Flex>
         <Box className="delist--header-cell-body delist--id">ID</Box>
         <Box className="delist--header-cell-body delist--name">Tên</Box>
-        <Box className="delist--header-cell-body delist--quality">số lượng</Box>
-        {/* <Box className="delist--header-cell-body delist--visit">Vị trí</Box> */}
+        <Box className="delist--header-cell-body delist--quality">
+          Kích Thước
+        </Box>
         <Box className="delist--header-cell-body delist--time">
           Thời gian nhập
         </Box>
         <Box className="delist--header-cell-body delist--price">Giá (VND)</Box>
+        <Box className="delist--header-cell-body delist--price">
+          Bán theo đơn
+        </Box>
+        <Box className="delist--header-cell-body delist--price">Định dạng</Box>
         <Box className="delist--header-cell-body delist--action">Action</Box>
       </Flex>
     );
@@ -181,9 +185,6 @@ const MedicalManagementPage = () => {
           >
             {data?.size ? data?.size : '--'}
           </Flex>
-          {/* <Box className="delist--cell-body delist--visit">
-            <Box>{data?.visit ? data?.visit : '--'}</Box>
-          </Box> */}
           <Flex flexDirection="row" className="delist--cell-body delist--time">
             {formatTimestamp(
               moment(data?.createdAt).valueOf(),
@@ -202,6 +203,13 @@ const MedicalManagementPage = () => {
               </Box>
             </Tooltip>
           </Box>
+          <Box className="delist--cell-body delist--price">
+            {data?.soldAsDose ? 'Có' : 'Không'}
+          </Box>
+          <Box className="delist--cell-body delist--price">
+            {data?.unit ? data?.unit : '--'}
+          </Box>
+
           <Box className="delist--cell-body delist--action" cursor={'pointer'}>
             <AppButton
               size={'sm'}
@@ -239,13 +247,6 @@ const MedicalManagementPage = () => {
             open={openModalEditMedical}
             onClose={() => setOpenModalEditMedical(false)}
             data={dataModal}
-            onReload={onReload}
-          />
-        )}
-        {openModalAddNewMedical && (
-          <ModalAddNewMedical
-            open={openModalAddNewMedical}
-            onClose={() => setOpenModalAddNewMedical(false)}
             onReload={onReload}
           />
         )}
@@ -307,6 +308,13 @@ const MedicalManagementPage = () => {
           />
         </Box>
       </Box>
+      {openModalAddNewMedical && (
+        <ModalAddNewMedical
+          open={openModalAddNewMedical}
+          onClose={() => setOpenModalAddNewMedical(false)}
+          onReload={onReload}
+        />
+      )}
     </BaseAdminPage>
   );
 };

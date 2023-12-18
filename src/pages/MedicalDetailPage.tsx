@@ -11,6 +11,7 @@ import { AddIcon, MinusIcon } from '@chakra-ui/icons';
 import { AppButton } from 'src/components';
 import rf from 'src/api/RequestFactory';
 import jwtDecode from 'jwt-decode';
+import Storage from 'src/utils/storage';
 
 interface IMedicalDetail {
   barcode: number;
@@ -75,7 +76,6 @@ const MedicalDetailPage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [amount, setAmount] = useState<number>(1);
-  const [role, setRole] = useState<string>('user');
   const [medicalDetail, setMedicalDetail] = useState<IMedicalDetail>();
   // const [totalAmount, setTotalAmount] = useState<number>(1);
   // const [totalAmount, setTotalAmount] = useState<number>(
@@ -85,13 +85,7 @@ const MedicalDetailPage = () => {
   //   setTotalAmount(amount * MOCK_INFO_Medical.price);
   // }, [amount]);
 
-  useEffectUnsafe(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const { role } = jwtDecode(token) as any;
-      setRole(role);
-    }
-  }, []);
+  const role = Storage.getRole();
 
   const handleNavigateToUserManagement = () => {
     navigate(-1);
@@ -184,68 +178,65 @@ const MedicalDetailPage = () => {
                 /> */}
               </Box>
             </Flex>
-            {!role ||
-              (role === 'customer' && (
-                <Flex
-                  flexDirection={'column'}
-                  color={'black'}
-                  py={'10px'}
-                  gap={'10px'}
-                  fontWeight={700}
-                >
-                  <Box>Chọn số lượng</Box>
-                  <Flex flexDirection={'row'}>
-                    <Flex flexDir={'row'} cursor={'pointer'}>
-                      <Flex
-                        px={'10px'}
+            {role && role === 'customer' && (
+              <Flex
+                flexDirection={'column'}
+                color={'black'}
+                py={'10px'}
+                gap={'10px'}
+                fontWeight={700}
+              >
+                <Box>Chọn số lượng</Box>
+                <Flex flexDirection={'row'}>
+                  <Flex flexDir={'row'} cursor={'pointer'}>
+                    <Flex
+                      px={'10px'}
+                      border={'1px solid #e5e7eb'}
+                      borderRadius={'20px 0px 0px 20px'}
+                      alignItems={'center'}
+                      onClick={() => setAmount(amount - 1)}
+                      _hover={
+                        amount !== 1
+                          ? {
+                              backgroundColor: '#a4a7b7',
+                              transition: 'background-color 0.3s',
+                            }
+                          : {}
+                      }
+                      as={'button'}
+                      disabled={amount === 1}
+                    >
+                      <MinusIcon
+                        boxSize={5}
+                        color={`${amount === 1 && '#a4a7b7'} `}
+                      />
+                    </Flex>
+                    <Flex>
+                      <Input
+                        w={'50px'}
+                        borderRadius={'none'}
                         border={'1px solid #e5e7eb'}
-                        borderRadius={'20px 0px 0px 20px'}
-                        alignItems={'center'}
-                        onClick={() => setAmount(amount - 1)}
-                        _hover={
-                          amount !== 1
-                            ? {
-                                backgroundColor: '#a4a7b7',
-                                transition: 'background-color 0.3s',
-                              }
-                            : {}
-                        }
-                        as={'button'}
-                        disabled={amount === 1}
-                      >
-                        <MinusIcon
-                          boxSize={5}
-                          color={`${amount === 1 && '#a4a7b7'} `}
-                        />
-                      </Flex>
-                      <Flex>
-                        <Input
-                          w={'50px'}
-                          borderRadius={'none'}
-                          border={'1px solid #e5e7eb'}
-                          textAlign={'center'}
-                          type="number"
-                          fontSize={18}
-                          onChange={(e) =>
-                            setAmount(Number(e.target.value || 1))
-                          }
-                          value={amount || 1}
-                        />
-                      </Flex>
-                      <Flex
-                        px={'10px'}
-                        border={'1px solid #e5e7eb'}
-                        borderRadius={'0 20px 20px 0px'}
-                        alignItems={'center'}
-                        onClick={() => setAmount(amount + 1)}
-                        _hover={{
-                          backgroundColor: '#a4a7b7',
-                          transition: 'background-color 0.3s',
-                        }}
-                      >
-                        <AddIcon boxSize={5} />
-                      </Flex>
-                      {/* <Flex
+                        textAlign={'center'}
+                        type="number"
+                        fontSize={18}
+                        onChange={(e) => setAmount(Number(e.target.value || 1))}
+                        value={amount || 1}
+                      />
+                    </Flex>
+                    <Flex
+                      px={'10px'}
+                      border={'1px solid #e5e7eb'}
+                      borderRadius={'0 20px 20px 0px'}
+                      alignItems={'center'}
+                      onClick={() => setAmount(amount + 1)}
+                      _hover={{
+                        backgroundColor: '#a4a7b7',
+                        transition: 'background-color 0.3s',
+                      }}
+                    >
+                      <AddIcon boxSize={5} />
+                    </Flex>
+                    {/* <Flex
                     alignItems={'center'}
                     gap={'10px'}
                     pl={'30px'}
@@ -253,13 +244,13 @@ const MedicalDetailPage = () => {
                   >
                     Ước Chừng: <Text>{totalAmount}</Text>
                   </Flex> */}
-                    </Flex>
                   </Flex>
-                  <Flex gap={'10px'} py={'10px'} justifyContent={'center'}>
-                    <AppButton w={'80%'} h={'60px'} borderRadius={'50px'}>
-                      Chọn Mua
-                    </AppButton>
-                    {/* <AppButton
+                </Flex>
+                <Flex gap={'10px'} py={'10px'} justifyContent={'center'}>
+                  <AppButton w={'80%'} h={'60px'} borderRadius={'50px'}>
+                    Chọn Mua
+                  </AppButton>
+                  {/* <AppButton
                   variant="formTrade"
                   w={'50%'}
                   h={'60px'}
@@ -268,34 +259,34 @@ const MedicalDetailPage = () => {
                 >
                   Tìm Nhà Thuốc
                 </AppButton> */}
-                  </Flex>
-                  <Flex
-                    gap={'15px'}
-                    py={'20px'}
-                    borderTop={'1px solid #dadfec'}
-                    justifyContent={'space-between'}
-                  >
-                    {MOCK_MEDICAL_SERVICE.map((item, index) => (
-                      <Flex
-                        flexDirection={'row'}
-                        alignItems={'center'}
-                        key={index}
-                        gap={'20px'}
-                      >
-                        <Image src={item.icon} w={'50px'} h={'50px'} />
-                        <Flex flexDir={'column'}>
-                          <Box fontSize={14} fontWeight={700}>
-                            {item.title}
-                          </Box>
-                          <Box fontSize={14} fontWeight={400}>
-                            {item.subTitle}
-                          </Box>
-                        </Flex>
-                      </Flex>
-                    ))}
-                  </Flex>
                 </Flex>
-              ))}
+                <Flex
+                  gap={'15px'}
+                  py={'20px'}
+                  borderTop={'1px solid #dadfec'}
+                  justifyContent={'space-between'}
+                >
+                  {MOCK_MEDICAL_SERVICE.map((item, index) => (
+                    <Flex
+                      flexDirection={'row'}
+                      alignItems={'center'}
+                      key={index}
+                      gap={'20px'}
+                    >
+                      <Image src={item.icon} w={'50px'} h={'50px'} />
+                      <Flex flexDir={'column'}>
+                        <Box fontSize={14} fontWeight={700}>
+                          {item.title}
+                        </Box>
+                        <Box fontSize={14} fontWeight={400}>
+                          {item.subTitle}
+                        </Box>
+                      </Flex>
+                    </Flex>
+                  ))}
+                </Flex>
+              </Flex>
+            )}
           </Flex>
         </Flex>
       </Flex>
@@ -303,7 +294,7 @@ const MedicalDetailPage = () => {
   };
   return (
     <>
-      {!role || role === 'customer' ? (
+      {role && role === 'customer' ? (
         <BaseHomePage>
           <Box backgroundColor={'#f4f6f9'}>
             <Box className="container-explorer" w={'1440px'} margin={'auto'}>

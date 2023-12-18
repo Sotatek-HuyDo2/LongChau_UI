@@ -81,13 +81,15 @@ const RouterCustom = () => {
         />
         <Route path={'category-medicine'} element={<CategoryMedicinePage />} />
 
-        <Route path={'medical/:id'} element={<MedicalDetailPage />} />
-
         <Route path={'profile'} element={<ProfilePart />} />
 
         <Route path={'profile/edit'} element={<ProfileEditPart />} />
 
         <Route path={'order'} element={<Order />} />
+      </Route>
+
+      <Route element={<PrivateRoute allowedRoles={['customer', 'admin']} />}>
+        <Route path={'medical/:id'} element={<MedicalDetailPage />} />
       </Route>
 
       {/* Staff */}

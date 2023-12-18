@@ -181,73 +181,75 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
               showFullName
             />
           </Box>
-
-          <Box zIndex={2001}>
-            <AppSelect
-              label="Bán theo đơn"
-              width={'full'}
-              options={asDoseList}
-              value={dataUser.soldAsDose + ''}
-              onChange={(value: string) => {
-                if (value === 'true') {
+          <Flex zIndex={2001} w={'full'} gap={1}>
+            <Box width={'full'}>
+              <AppSelect
+                label="Bán theo đơn"
+                width={'full'}
+                options={asDoseList}
+                value={dataUser.soldAsDose + ''}
+                onChange={(value: string) => {
+                  if (value === 'true') {
+                    setDataUser({
+                      ...dataUser,
+                      soldAsDose: true,
+                    });
+                  } else {
+                    setDataUser({
+                      ...dataUser,
+                      soldAsDose: false,
+                    });
+                  }
+                }}
+                size="medium"
+                showFullName
+              />
+            </Box>
+            <Box width={'full'}>
+              <AppSelect
+                label="Đơn vị"
+                options={listUnit}
+                value={dataUser.unit}
+                onChange={(value: string) =>
                   setDataUser({
                     ...dataUser,
-                    soldAsDose: true,
-                  });
-                } else {
-                  setDataUser({
-                    ...dataUser,
-                    soldAsDose: false,
-                  });
+                    unit: value,
+                  })
                 }
-              }}
-              size="medium"
-              showFullName
-            />
-          </Box>
-          <Box zIndex={2000}>
-            <AppSelect
-              label="Chi Nhánh"
-              width={'full'}
-              options={listUnit}
-              value={dataUser.unit}
-              onChange={(value: string) =>
-                setDataUser({
-                  ...dataUser,
-                  unit: value,
-                })
-              }
-              size="medium"
-              showFullName
-            />
-          </Box>
-          <Box zIndex={1999}>
-            <AppSelect
-              label="Loại"
-              width={'full'}
-              options={listCate}
-              value={categoriesId}
-              onChange={(value: string) => setCategoriesId(+value)}
-              size="medium"
-              showFullName
-            />
-          </Box>
-          <Box zIndex={1998}>
-            <AppSelect
-              label="Phân Loại"
-              width={'full'}
-              options={listDrugsType}
-              value={dataUser.typeId}
-              onChange={(value: string) =>
-                setDataUser({
-                  ...dataUser,
-                  typeId: +value,
-                })
-              }
-              size="medium"
-              showFullName
-            />
-          </Box>
+                size="medium"
+                showFullName
+              />
+            </Box>
+          </Flex>
+          <Flex zIndex={1999} gap={1}>
+            <Box width={'full'}>
+              <AppSelect
+                label="Loại"
+                width={'full'}
+                options={listCate}
+                value={categoriesId}
+                onChange={(value: string) => setCategoriesId(+value)}
+                size="medium"
+                showFullName
+              />
+            </Box>
+            <Box width={'full'}>
+              <AppSelect
+                label="Phân Loại"
+                width={'full'}
+                options={listDrugsType}
+                value={dataUser.typeId}
+                onChange={(value: string) =>
+                  setDataUser({
+                    ...dataUser,
+                    typeId: +value,
+                  })
+                }
+                size="medium"
+                showFullName
+              />
+            </Box>
+          </Flex>
           <AppInput
             label="Bar-code"
             onChange={(e: any) =>

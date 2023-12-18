@@ -106,7 +106,7 @@ const SidebarAdmin = () => {
               </Flex>
               {menu.pathChild && openDropdown && (
                 <Flex className="dropdown-menu" flexDir={'column'}>
-                  {menu.pathChild.map((childItem, childIndex) => (
+                  {menu.pathChild.map((childItem: any, childIndex) => (
                     <Flex
                       key={childIndex}
                       pl={'90px'}
