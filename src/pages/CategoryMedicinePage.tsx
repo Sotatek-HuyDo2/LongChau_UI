@@ -68,7 +68,7 @@ const CategoryMedicinePage = () => {
             <AppFilter data={getListBrand()} filterByPrice={getFilterType} />
           </Box>
           <Box w={'70%'}>
-            <AppListProduct data={dataFilter} />
+            <AppListProduct data={dataFilter as any} />
           </Box>
         </Flex>
       </Flex>

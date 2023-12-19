@@ -6,22 +6,18 @@ import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { ArrowLeftIcon, CheckIcon } from '@chakra-ui/icons';
 
 interface IProduct {
-  img: string;
-  medicineID: string;
+  barcode: number;
+  createdAt: string;
+  description: string;
+  id: number;
   name: string;
-  brand?: string;
-  quality?: number;
   price: number;
-  detail: {
-    unit: string;
-    category: string;
-    dosageForms?: string;
-    specifications?: string;
-    Producer?: string;
-    manufacturingCountry?: string;
-    ingredient?: string;
-    shortDescription?: string;
-  };
+  sensitiveIngredients?: null;
+  size: number;
+  soldAsDose: boolean;
+  supplierId: number;
+  typeId: number;
+  unit: string;
 }
 
 interface IAppListProductProps {
@@ -87,38 +83,41 @@ const AppListProduct = (props: IAppListProductProps) => {
       </Box>
       <Box className="product">
         {filteredProducts && filteredProducts.length > 0 ? (
-          filteredProducts.slice(0, visibleProducts).map((product) => {
-            return (
-              <Box
-                className="product__card"
-                onClick={() => navigate(`/medical/${product?.medicineID}`)}
-              >
-                <Box className="product__card-image">
-                  <Image src={product?.img} alt="hello" />
-                </Box>
-                <Box className="product__card-name">
-                  {product?.name ? product?.name : '--'}
-                </Box>
-                <Box className="product__card-price">
-                  {product?.price ? product?.price : '--'} /{' '}
-                  {product?.detail?.unit ? product?.detail?.unit : '--'}
-                </Box>
-                <Box className="product__card-unit">
-                  <Box
-                    backgroundColor={'blackAlpha.200'}
-                    display={'inline'}
-                    padding={'3px 5px'}
-                    color={'black'}
-                    borderRadius={'20px'}
-                  >
-                    {product?.detail?.specifications
-                      ? product?.detail?.specifications
-                      : product?.detail?.unit}
+          filteredProducts
+            .slice(0, visibleProducts)
+            .map((product, index: any) => {
+              return (
+                <Box
+                  key={index}
+                  className="product__card"
+                  // onClick={() => navigate(`/medical/${product?.medicineID}`)}
+                >
+                  <Box className="product__card-image">
+                    {/* <Image src={product?.img ? product?.img : ''} alt="hello" /> */}
+                  </Box>
+                  <Box className="product__card-name">
+                    {product?.name ? product?.name : '--'}
+                  </Box>
+                  <Box className="product__card-price">
+                    {/* {product?.price ? product?.price : '--'} /{' '}
+                    {product?.detail?.unit ? product?.detail?.unit : '--'} */}
+                  </Box>
+                  <Box className="product__card-unit">
+                    <Box
+                      backgroundColor={'blackAlpha.200'}
+                      display={'inline'}
+                      padding={'3px 5px'}
+                      color={'black'}
+                      borderRadius={'20px'}
+                    >
+                      {/* {product?.detail?.specifications
+                        ? product?.detail?.specifications
+                        : product?.detail?.unit} */}
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            );
-          })
+              );
+            })
         ) : (
           <Flex
             alignItems={'center'}

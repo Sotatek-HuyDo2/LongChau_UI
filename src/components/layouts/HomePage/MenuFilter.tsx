@@ -1,38 +1,37 @@
-import {
-  Flex,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from '@chakra-ui/react';
+import { Flex, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import rf from 'src/api/RequestFactory';
 import { useState } from 'react';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import ProductTyByCategory from 'src/pages/Admin/ManageCategoryListPage/ProductTyByCategory.part';
+import { useNavigate } from 'react-router-dom';
 
 const MenuFilter = () => {
   const [cateList, setCateList] = useState<any>([]);
+  const [visibleItems, setVisibleItems] = useState(6);
+  const navigate = useNavigate();
+
+  const handleShowMore = () => {
+    setVisibleItems((prevVisibleItems) => prevVisibleItems + 5);
+  };
+
+  const handleResetVisibleItems = () => {
+    setVisibleItems(6);
+  };
 
   const getAllDrugsTypeByCateID = async (id: number | string) => {
     try {
       const resType = await rf
         .getRequest('CategoryRequest')
         .getAllDrugsTypeByCateID(id);
-      const newTypeList = resType.map((item: any) => ({
+      let newTypeList = resType.map((item: any) => ({
+        typeSlug: item.slug,
         id: item.id,
         name: item.name,
-        content: <ProductTyByCategory categoriesID={1} />,
       }));
+      newTypeList = [{ typeSlug: '', id: 0, name: 'Tất cả' }, ...newTypeList];
       return newTypeList;
     } catch (e: any) {
       console.log('Error in getAllDrugsTypeByCateID:', e.message);
-      throw e; // Re-throw the error to propagate it to the caller if needed
     }
   };
 
@@ -41,25 +40,31 @@ const MenuFilter = () => {
       const res = await rf.getRequest('CategoryRequest').getAllCate();
       if (res) {
         const newCategory = res.map(async (item: any) => ({
+          cateSlug: item.slug,
           id: item.id,
           name: item.name,
           data: await getAllDrugsTypeByCateID(item.id),
+          icon: true,
         }));
         const resolvedCategories = await Promise.all(newCategory);
-        setCateList(resolvedCategories);
+        setCateList([
+          ...resolvedCategories,
+          {
+            name: 'Tìm kiếm địa chỉ',
+            link: '/pharmacy-system',
+            icon: false,
+          },
+          {
+            name: 'Thông tin nhà thuốc',
+            link: 'https://pharmacy-documentation.vercel.app/docs/intro',
+            icon: false,
+          },
+        ]);
       }
     } catch (e: any) {
       console.log('Error in getAllCate:', e.message);
     }
   };
-
-  console.log(cateList);
-
-  // const tabs = cateList.map((item: any) => ({
-  //   id: item.id,
-  //   name: item.name,
-  //   // content: <CategoryFunctionalFoods categoriesID={item.id} />,
-  // }));
 
   useEffectUnsafe(() => {
     getAllCate();
@@ -76,7 +81,7 @@ const MenuFilter = () => {
         {cateList.map((menu: any, index: any) => {
           return (
             <Flex key={index}>
-              {/* <Menu>
+              <Menu>
                 {({ isOpen }) => (
                   <>
                     <MenuButton
@@ -90,6 +95,11 @@ const MenuFilter = () => {
                         transition: 'border-bottom 0.3s ease',
                       }}
                       cursor="pointer"
+                      onClick={() => {
+                        menu.link && menu.link.startsWith('http')
+                          ? window.open(menu.link, '_blank')
+                          : navigate(menu.link);
+                      }}
                     >
                       <Flex alignItems={'center'} gap={'3px'}>
                         {menu.name}{' '}
@@ -107,70 +117,39 @@ const MenuFilter = () => {
                         outline={'none'}
                         border={'none'}
                       >
-                        {menu.data.map((item: any) => {
-                          return (
-                            <MenuItem>
+                        {menu.data
+                          .slice(0, visibleItems)
+                          .map((item: any, index: any) => (
+                            <MenuItem
+                              key={index}
+                              onClick={() => {
+                                navigate(
+                                  `/phan-loai/${menu.cateSlug}${
+                                    item.typeSlug ? `/${item.typeSlug}` : ''
+                                  }`,
+                                );
+                              }}
+                            >
                               <Flex alignItems={'center'}>{item?.name}</Flex>
                             </MenuItem>
-                          );
-                        })}
+                          ))}
+                        <Flex gap={1} justifyContent={'space-around'}>
+                          {menu.data.length > visibleItems && (
+                            <button onClick={handleShowMore}>Xem thêm</button>
+                          )}
+                          {visibleItems > 6 && (
+                            <button onClick={handleResetVisibleItems}>
+                              Ẩn
+                            </button>
+                          )}
+                        </Flex>
                       </MenuList>
                     ) : (
                       <></>
                     )}
                   </>
                 )}
-              </Menu> */}
-              {/* <Tabs
-                h={'full'}
-                display="flex"
-                flexDirection={'column'}
-                variant={'unstyled'}
-                colorScheme="transparent"
-                // defaultIndex={defaultTab}
-                className="app-tab"
-                isLazy
-                // overflow={overflow}
-              >
-                <TabList className="tab-list">
-                  <Flex
-                    justifyContent={'space-between'}
-                    alignItems="center"
-                    w="100%"
-                  >
-                    <Flex>
-                      {tabs.map((tab: ITabs) => {
-                        return (
-                          <Tab
-                            id={tab.id}
-                            key={tab.id}
-                            className="app-tab__name-tab"
-                            onClick={() => onChange && onChange(tab.id)}
-                          >
-                            {tab.name}
-                          </Tab>
-                        );
-                      })}
-                    </Flex>
-
-                    <Box>{rightElement ? rightElement() : ''}</Box>
-                  </Flex>
-                </TabList>
-
-                <TabPanels flex={1}>
-                  {tabs.map((tab: any) => {
-                    return (
-                      <TabPanel
-                        key={tab.id}
-                        h={'full'}
-                        className="app-tab__content-tab"
-                      >
-                        {tab.content}
-                      </TabPanel>
-                    );
-                  })}
-                </TabPanels>
-              </Tabs> */}
+              </Menu>
             </Flex>
           );
         })}

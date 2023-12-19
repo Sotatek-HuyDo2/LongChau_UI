@@ -1,11 +1,8 @@
-import { Box, Flex, Image, calc } from '@chakra-ui/react';
+import { Box, Flex, Image } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 import '../styles/components/AppCategories.scss';
-
-// interface IDataProps {
-//   name: string;
-//   quality?: number;
-// }
+import { useState } from 'react';
+import rf from 'src/api/RequestFactory';
 
 interface IAppCategoriesProps {
   data: Array<any>;
@@ -17,6 +14,11 @@ interface IAppCategoriesProps {
 const AppCategories = (props: IAppCategoriesProps) => {
   const { data, title, numInline = 6, showIcon = false } = props;
   const navigate = useNavigate();
+  const [visibleItems, setVisibleItems] = useState(7);
+
+  const handleShowMore = () => {
+    setVisibleItems((prevVisibleItems) => prevVisibleItems + 8);
+  };
 
   return (
     <Flex className="feature-container">
@@ -28,9 +30,10 @@ const AppCategories = (props: IAppCategoriesProps) => {
           {title}
         </Flex>
         <Flex flexWrap={'wrap'} gap={'20px'}>
-          {data.map((item) => {
+          {data.slice(0, visibleItems).map((item: any, index: any) => {
             return (
               <Flex
+                key={index}
                 className="feature-category--item"
                 w={`calc(100% / ${numInline} - 20px);`}
                 onClick={() => navigate(`/category-medicine/${item.name}`)}
@@ -40,13 +43,22 @@ const AppCategories = (props: IAppCategoriesProps) => {
                     'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png'
                   }
                 />
-                <Box className="feature-category--item-name">{item}</Box>
+                <Box className="feature-category--item-name">{item.name}</Box>
                 <Box className="feature-category--item-quality">
-                  {item?.quality} sản phẩm
+                  {data.length} sản phẩm
                 </Box>
               </Flex>
             );
           })}
+          {data.length > visibleItems && (
+            <Flex
+              className="feature-category--item"
+              w={`calc(100% / ${numInline} - 20px);`}
+              onClick={handleShowMore}
+            >
+              <Box className="feature-category--item-name">Xem thêm</Box>
+            </Flex>
+          )}
         </Flex>
       </Flex>
     </Flex>

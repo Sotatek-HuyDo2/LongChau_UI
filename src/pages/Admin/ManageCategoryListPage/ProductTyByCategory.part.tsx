@@ -62,7 +62,7 @@ const ProductTyByCategory = (props: Props) => {
     handleSearch();
   }, [valueSearch]);
 
-  const getCategory = async () => {
+  const getAllDrugsTypeByCateId = async () => {
     try {
       const res = await rf
         .getRequest('CategoryRequest')
@@ -105,7 +105,7 @@ const ProductTyByCategory = (props: Props) => {
   };
 
   useEffectUnsafe(() => {
-    getCategory();
+    getAllDrugsTypeByCateId();
   }, []);
 
   const _renderHeaderTable = () => {
@@ -226,7 +226,7 @@ const ProductTyByCategory = (props: Props) => {
       <Box mt={10} className="category-container">
         <AppDataTable
           requestParams={params}
-          fetchData={getCategory}
+          fetchData={getAllDrugsTypeByCateId}
           renderBody={_renderContentTable}
           renderHeader={_renderHeaderTable}
           size={10}

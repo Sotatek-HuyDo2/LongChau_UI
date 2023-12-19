@@ -76,9 +76,15 @@ const RouterCustom = () => {
         <Route path={'pharmacy-system'} element={<PharmacySystemPage />} />
 
         <Route
-          path={'category-functional-foods'}
+          path={'phan-loai/:categorySlug/:typeSlug'}
           element={<CategoryFunctionalFoodsPage />}
         />
+
+        <Route
+          path={'phan-loai/:categorySlug'}
+          element={<CategoryFunctionalFoodsPage />}
+        />
+
         <Route path={'category-medicine'} element={<CategoryMedicinePage />} />
 
         <Route path={'profile'} element={<ProfilePart />} />
@@ -86,6 +92,11 @@ const RouterCustom = () => {
         <Route path={'profile/edit'} element={<ProfileEditPart />} />
 
         <Route path={'order'} element={<Order />} />
+
+        {/* <Route
+          path={'admin/category-management/category-functional-foods'}
+          element={<CategoryFunctionalFoods />}
+        /> */}
       </Route>
 
       <Route element={<PrivateRoute allowedRoles={['customer', 'admin']} />}>

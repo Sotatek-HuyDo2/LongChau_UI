@@ -43,10 +43,10 @@ const AppFilter = (props: IAppFilterProps) => {
         </Box>
         <Box className="app-filter__price">
           <Box className="app-filter__price-title">Giá bán</Box>
-          {priceRanges.map((price) => (
+          {priceRanges.map((price: any, index: any) => (
             <Box
               pos={'relative'}
-              key={price}
+              key={index}
               className={`app-filter__price-item ${
                 selectedPrice === price ? 'active' : ''
               }`}

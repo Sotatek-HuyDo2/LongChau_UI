@@ -21,15 +21,15 @@ export default class ProductRequest extends BaseRequest {
     return this.get(url);
   }
 
-  // getProductByCateID(cate_id: number) {
-  //   const url = `/drugs/category/${cate_id}`;
-  //   return this.get(url);
-  // }
+  getDrugsByCateID(cate_id: number) {
+    const url = `drugs/category/${cate_id}`;
+    return this.get(url);
+  }
 
-  // getProductByDrugsTypeID(pro_type_id: number) {
-  //   const url = `/drugs/drugs-type/${pro_type_id}`;
-  //   return this.get(url);
-  // }
+  getAllDrugsByTypeID(drugsType_id: number) {
+    const url = `drugs/drugs-type/${drugsType_id}`;
+    return this.get(url);
+  }
 
   deleteProduct(id: number) {
     const url = `drugs/${id}`;
