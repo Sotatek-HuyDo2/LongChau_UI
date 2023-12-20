@@ -105,9 +105,7 @@ const AppListProduct = (props: IAppListProductProps) => {
                     {product?.name ? product?.name : '--'}
                   </Box>
                   <Box className="product__card-price">
-                    {product?.price
-                      ? `${formatNumber(product?.price)}vnđ`
-                      : '--'}{' '}
+                    {product?.price ? `${formatNumber(product?.price)}đ` : '--'}{' '}
                     / {product?.unit ? drugsType[product?.unit] : '--'}
                   </Box>
                   <Box className="product__card-unit">
@@ -118,6 +116,7 @@ const AppListProduct = (props: IAppListProductProps) => {
                       color={'black'}
                       borderRadius={'20px'}
                     >
+                      {drugsType[product?.unit]}
                       {/* {product?.detail?.specifications
                         ? product?.detail?.specifications
                         : product?.detail?.unit} */}

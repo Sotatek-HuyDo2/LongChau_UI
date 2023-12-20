@@ -93,8 +93,8 @@ const _formatLargeNumberIfNeed = (number: string, digits = 0) => {
   if (new BigNumber(number).comparedTo(1000000) < 0) {
     return commaNumber(
       new BigNumber(Number(number).toFixed(digits)).toString(),
-      ',',
       '.',
+      ',',
     );
   }
   const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;

@@ -13,35 +13,29 @@ import rf from 'src/api/RequestFactory';
 
 const CategoryFunctionalFoodsPage = () => {
   const { categorySlug, typeSlug } = useParams();
-  const [product, setProduct] = useState(MOCK_MEDICAL_PRODUCT_LIST);
   const [filterType, setFilterType] = useState<string>('');
   const [cateId, setCateId] = useState<number>();
   const [typeId, setTypeId] = useState<number>();
   const [typeList, setTypeList] = useState<any>([]);
   const [productList, setProductList] = useState<any>([]);
-
-  const getListBrand = () => {
-    const listBrand = _.uniqBy(productList, 'supplierId').map((item: any) => {
-      return item.supplierId;
-    });
-    return listBrand;
-  };
+  const [supplierList, setSupplierList] = useState<any>([]);
 
   const getListSupplier = async () => {
     try {
       const res = await rf.getRequest('SupplierRequest').getSupplier();
-      console.log(res);
+      const listSupplierId = _.uniqBy(productList, 'supplierId').map(
+        (item: any) => {
+          return item.supplierId;
+        },
+      );
+      const listSupplier = res.filter((item: any) =>
+        listSupplierId.includes(item.id),
+      );
+      setSupplierList(listSupplier);
     } catch (err: any) {
       console.log(err.message);
     }
   };
-
-  // const getListDrugsType = () => {
-  //   const listDrugsType = _.uniqBy(product, 'detail').map((item) => {
-  //     return item.detail.category;
-  //   });
-  //   return _.unionBy(listDrugsType);
-  // };
 
   const getFilterType = (filterType: string) => {
     setFilterType(filterType);
@@ -66,11 +60,6 @@ const CategoryFunctionalFoodsPage = () => {
   };
 
   const dataFilter = filterByPrice();
-
-  useEffectUnsafe(() => {
-    getListBrand();
-    filterByPrice();
-  }, [product, filterType]);
 
   const getAllCateId = async () => {
     try {
@@ -108,12 +97,17 @@ const CategoryFunctionalFoodsPage = () => {
   };
 
   useEffectUnsafe(() => {
+    filterByPrice();
+  }, [filterType]);
+
+  useEffectUnsafe(() => {
     getAllDrugsTypeByCateId();
     getAllDrugsByCateId();
   }, [cateId]);
 
   useEffectUnsafe(() => {
     getAllCateId();
+    getListSupplier();
   }, [categorySlug, typeSlug]);
 
   return (
@@ -126,7 +120,7 @@ const CategoryFunctionalFoodsPage = () => {
         />
         <Flex w={'1440px'} m={'auto'} justifyContent={'space-between'}>
           <Box w={'25%'}>
-            <AppFilter data={getListBrand()} filterByPrice={getFilterType} />
+            <AppFilter data={supplierList} filterByPrice={getFilterType} />
           </Box>
           <Box w={'70%'}>
             <AppListProduct data={dataFilter} />

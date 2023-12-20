@@ -19,7 +19,7 @@ const priceRanges = [
 const AppFilter = (props: IAppFilterProps) => {
   const { data, filterByPrice } = props;
   const [visibleCheckbox, setVisibleCheckbox] = useState(1);
-  const [selectedPrice, setSelectedPrice] = useState(null);
+  const [selectedPrice, setSelectedPrice] = useState<string>('Dưới 100.000đ');
 
   const handleShowMore = () => {
     setVisibleCheckbox(visibleCheckbox + 4);
@@ -53,14 +53,14 @@ const AppFilter = (props: IAppFilterProps) => {
               onClick={() => handleFilterClick(price)}
             >
               {price}{' '}
-              {/* {selectedPrice === price && (
+              {selectedPrice === price && (
                 <CheckIcon
                   boxSize={4}
                   position={'absolute'}
                   right={'5px'}
                   top={1}
                 />
-              )} */}
+              )}
             </Box>
           ))}
         </Box>
@@ -68,21 +68,22 @@ const AppFilter = (props: IAppFilterProps) => {
           <Box className="app-filter__brand-title">Thương hiệu</Box>
           <AppCheckbox
             label={'Tất cả'}
-            checked={false}
+            value={'Tất cả'}
+            defaultChecked={true}
             size="lg"
             fontWeight={400}
-            // onChange={() => {}}
+            onChange={(e) => console.log(e.target.value)}
           />
-          {data.slice(0, visibleCheckbox).map((item, index) => {
+          {data.slice(0, visibleCheckbox).map((item: any, index) => {
             return (
               <Flex>
                 <AppCheckbox
                   key={index}
-                  label={item}
+                  label={item?.name}
                   checked={false}
                   size="lg"
                   fontWeight={400}
-                  // onChange={() => {}}
+                  onChange={(e) => console.log(e)}
                 />
               </Flex>
             );
