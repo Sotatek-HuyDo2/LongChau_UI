@@ -21,10 +21,19 @@ const CategoryFunctionalFoodsPage = () => {
   const [productList, setProductList] = useState<any>([]);
 
   const getListBrand = () => {
-    const listBrand = _.uniqBy(product, 'brand').map((item) => {
-      return item.brand;
+    const listBrand = _.uniqBy(productList, 'supplierId').map((item: any) => {
+      return item.supplierId;
     });
     return listBrand;
+  };
+
+  const getListSupplier = async () => {
+    try {
+      const res = await rf.getRequest('SupplierRequest').getSupplier();
+      console.log(res);
+    } catch (err: any) {
+      console.log(err.message);
+    }
   };
 
   // const getListDrugsType = () => {

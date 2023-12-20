@@ -4,6 +4,7 @@ import '../styles/components/AppListProduct.scss';
 import { useState } from 'react';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { ArrowLeftIcon, CheckIcon } from '@chakra-ui/icons';
+import { formatNumber } from 'src/utils/format';
 
 interface IProduct {
   barcode: number;
@@ -58,6 +59,11 @@ const AppListProduct = (props: IAppListProductProps) => {
     setVisibleProducts(8);
   };
 
+  const drugsType: { [key: string]: string } = {
+    tube: 'ống',
+    box: 'hộp',
+  };
+
   return (
     <Flex className="product-container">
       <Box className="product-filter">
@@ -90,7 +96,7 @@ const AppListProduct = (props: IAppListProductProps) => {
                 <Box
                   key={index}
                   className="product__card"
-                  // onClick={() => navigate(`/medical/${product?.medicineID}`)}
+                  onClick={() => navigate(`/medical/${product?.id}`)}
                 >
                   <Box className="product__card-image">
                     {/* <Image src={product?.img ? product?.img : ''} alt="hello" /> */}
@@ -99,8 +105,10 @@ const AppListProduct = (props: IAppListProductProps) => {
                     {product?.name ? product?.name : '--'}
                   </Box>
                   <Box className="product__card-price">
-                    {/* {product?.price ? product?.price : '--'} /{' '}
-                    {product?.detail?.unit ? product?.detail?.unit : '--'} */}
+                    {product?.price
+                      ? `${formatNumber(product?.price)}vnđ`
+                      : '--'}{' '}
+                    / {product?.unit ? drugsType[product?.unit] : '--'}
                   </Box>
                   <Box className="product__card-unit">
                     <Box

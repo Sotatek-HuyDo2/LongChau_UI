@@ -1,8 +1,7 @@
-import { Box, Flex, Image } from '@chakra-ui/react';
+import { Box, Flex, Image, Tooltip } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 import '../styles/components/AppCategories.scss';
 import { useState } from 'react';
-import rf from 'src/api/RequestFactory';
 
 interface IAppCategoriesProps {
   data: Array<any>;
@@ -43,7 +42,14 @@ const AppCategories = (props: IAppCategoriesProps) => {
                     'https://cdn.nhathuoclongchau.com.vn/unsafe/24x24/https://cms-prod.s3-sgn09.fptcloud.com/smalls/than_kinh_nao_level_2_b0cc93af6f.png'
                   }
                 />
-                <Box className="feature-category--item-name">{item.name}</Box>
+                <Tooltip
+                  className="tooltip-app"
+                  hasArrow
+                  placement="top"
+                  label={item.name}
+                >
+                  <Box className="feature-category--item-name">{item.name}</Box>
+                </Tooltip>
                 <Box className="feature-category--item-quality">
                   {data.length} sản phẩm
                 </Box>
