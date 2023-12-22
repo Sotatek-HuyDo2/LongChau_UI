@@ -53,7 +53,7 @@ const ModalAddNewBranchAdmin: FC<IModalAddNewBranchAdminProps> = (props) => {
       await rf.getRequest('UserRequest').createBranchAdminAccount(dataUser);
       onClose();
       onReload();
-      toastSuccess('Tạo mới người dùng thành công');
+      toastSuccess('Thêm mới quản lý chi nhánh thành công');
     } catch (e: any) {
       toastError(e.message);
     }
@@ -79,7 +79,7 @@ const ModalAddNewBranchAdmin: FC<IModalAddNewBranchAdminProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Tạo mới người dùng"
+      title="Thêm mới quản lý chi nhánh"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -163,7 +163,7 @@ const ModalAddNewBranchAdmin: FC<IModalAddNewBranchAdminProps> = (props) => {
               Hủy
             </AppButton>
             <AppButton flex={1} onClick={createNewBranch}>
-              Tạo mới
+              Thêm mới
             </AppButton>
           </Flex>
         </Flex>

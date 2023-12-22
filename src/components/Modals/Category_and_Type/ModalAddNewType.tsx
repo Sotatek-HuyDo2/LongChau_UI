@@ -25,7 +25,7 @@ const ModalAddNewTypeProduct: FC<IModalAddNewTypeProductProps> = (props) => {
         .createDrugsTypeByCate({ categoryId: categoriesID, name: typeName });
       onClose();
       onReload();
-      toastSuccess('Tạo mới Branch thành công');
+      toastSuccess('Thêm mới Branch thành công');
     } catch (e: any) {
       toastError(e.message);
     }
@@ -34,7 +34,7 @@ const ModalAddNewTypeProduct: FC<IModalAddNewTypeProductProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Tạo loại thuốc mới"
+      title="Thêm mới phân loại thuốc"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -47,7 +47,7 @@ const ModalAddNewTypeProduct: FC<IModalAddNewTypeProductProps> = (props) => {
           w={'full'}
         >
           <AppInput
-            label="Tên loại thuốc"
+            label="Tên phân loại thuốc"
             onChange={(e) => setTypeName(e.target.value)}
           />
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>

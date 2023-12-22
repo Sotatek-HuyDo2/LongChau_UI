@@ -32,7 +32,7 @@ const ModalAddNewBranch: FC<IModalAddNewBranchProps> = (props) => {
       await rf.getRequest('BranchRequest').createBranchAdmin(dataForm);
       onClose();
       onReload();
-      toastSuccess('Tạo mới Branch thành công');
+      toastSuccess('Thêm mới Branch thành công');
     } catch (e: any) {
       toastError(e.message);
     }
@@ -41,7 +41,7 @@ const ModalAddNewBranch: FC<IModalAddNewBranchProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Tạo chi nhánh mới"
+      title="Thêm mới chi nhánh"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -54,7 +54,7 @@ const ModalAddNewBranch: FC<IModalAddNewBranchProps> = (props) => {
           w={'full'}
         >
           <AppInput
-            label="Tên cở sở"
+            label="Tên chi nhánh"
             onChange={(e) => setDataForm({ ...dataForm, name: e.target.value })}
           />
           <AppInput

@@ -50,7 +50,7 @@ const ModalAddNewStaff: FC<IModalAddNewStaffProps> = (props) => {
       await rf.getRequest('UserRequest').createStaffAccount(dataUser);
       onClose();
       onReload();
-      toastSuccess('Tạo mới Staff thành công');
+      toastSuccess('Thêm mới Staff thành công');
     } catch (e: any) {
       toastError(e.message);
     }
@@ -59,7 +59,7 @@ const ModalAddNewStaff: FC<IModalAddNewStaffProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Tạo mới Staff"
+      title="Thêm mới Staff"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -128,7 +128,7 @@ const ModalAddNewStaff: FC<IModalAddNewStaffProps> = (props) => {
               Hủy
             </AppButton>
             <AppButton flex={1} onClick={createNewStaff}>
-              Tạo mới
+              Thêm mới
             </AppButton>
           </Flex>
         </Flex>

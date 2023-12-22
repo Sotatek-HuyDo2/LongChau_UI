@@ -39,7 +39,7 @@ const ModalEditSupplier: FC<IModalEditSupplierProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Sửa nhà cung cấp mới"
+      title="Sửa nhà cung cấp"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"

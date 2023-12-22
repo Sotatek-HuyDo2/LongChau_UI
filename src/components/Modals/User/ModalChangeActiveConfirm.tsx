@@ -49,7 +49,7 @@ const ModalChangeActiveConfirm: FC<IModalChangeActiveConfirmProps> = (
               Hủy
             </AppButton>
             <AppButton flex={1} onClick={onConfirm}>
-              Tạo mới
+              Thay đổi
             </AppButton>
           </Flex>
         </Flex>

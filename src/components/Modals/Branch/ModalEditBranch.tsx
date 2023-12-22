@@ -51,7 +51,7 @@ const ModalEditBranch: FC<IModalEditBranchProps> = (props) => {
           w={'full'}
         >
           <AppInput
-            label="Tên cở sở"
+            label="Tên chi nhánh"
             defaultValue={dataForm.name}
             onChange={(e) => setDataForm({ ...dataForm, name: e.target.value })}
           />
@@ -73,7 +73,7 @@ const ModalEditBranch: FC<IModalEditBranchProps> = (props) => {
               Hủy
             </AppButton>
             <AppButton flex={1} onClick={editBranch}>
-              Thêm mới
+              Sửa
             </AppButton>
           </Flex>
         </Flex>

@@ -150,23 +150,9 @@ const StaffManagementPage = () => {
             >
               Xem
             </AppButton>
-            <AppButton
-              size={'sm'}
-              bg={'yellow.100'}
-              ml={'3px'}
-              onClick={() => handleOpenModalEditUser(data.id)}
-            >
-              Sửa
-            </AppButton>
           </Box>
         </Flex>
-        {/* {openModalEditUser && (
-          <ModalEditUser
-            open={openModalEditUser}
-            onClose={() => setOpenModalEditUser(false)}
-            data={dataModal}
-          />
-        )}
+        {/* 
         {openModalViewUser && (
           <ModalViewUser
             open={openModalViewUser}

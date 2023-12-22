@@ -34,7 +34,7 @@ const ModalAddNewSupplier: FC<IModalAddNewSupplierProps> = (props) => {
       await rf.getRequest('SupplierRequest').createSupplier(dataForm);
       onClose();
       onReload();
-      toastSuccess('Tạo mới nhà cung cấp thành công');
+      toastSuccess('Thêm mới nhà cung cấp thành công');
     } catch (e: any) {
       toastError(e.message);
     }
@@ -43,7 +43,7 @@ const ModalAddNewSupplier: FC<IModalAddNewSupplierProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Tạo nhà cung cấp mới"
+      title="Thêm mới nhà cung cấp"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"

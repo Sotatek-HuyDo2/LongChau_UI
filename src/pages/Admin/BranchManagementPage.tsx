@@ -222,7 +222,7 @@ const BranchManagementPage = () => {
             >
               <Flex justify={'center'} align={'start'} gap={1}>
                 <AddIcon />
-                Thêm Branch
+                Thêm chi nhánh
               </Flex>
             </AppButton>
           </Flex>

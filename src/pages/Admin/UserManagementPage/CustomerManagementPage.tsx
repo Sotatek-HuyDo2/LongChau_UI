@@ -63,13 +63,13 @@ const CustomerManagementPage = () => {
     try {
       if (status === 'inactive') {
         await rf.getRequest('UserRequest').deActiveUser(userId);
-        toastSuccess('Inactive user successfully!');
+        toastSuccess('Khóa tài khoản thành công!');
         setParams({ ...params });
         setOpenModalChangeActiveConfirm(false);
       } else {
         await rf.getRequest('UserRequest').activeUser(userId);
         setParams({ ...params });
-        toastSuccess('Active user successfully!');
+        toastSuccess('Mở khóa tài khoàn thành công!');
         setOpenModalChangeActiveConfirm(false);
       }
     } catch (e: any) {
@@ -193,7 +193,7 @@ const CustomerManagementPage = () => {
                 bg={'red.100'}
                 onClick={() => handleActive(data.userId, data?.status)}
               >
-                Deactivate
+                Khóa tài khoản
               </AppButton>
             ) : (
               <AppButton
@@ -202,7 +202,7 @@ const CustomerManagementPage = () => {
                 bg={'green.100'}
                 onClick={() => handleActive(data.userId, data?.status)}
               >
-                Activate
+                Mở khóa tài khoản
               </AppButton>
             )}
           </Box>

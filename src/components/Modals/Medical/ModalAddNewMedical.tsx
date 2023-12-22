@@ -53,7 +53,7 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
       await rf.getRequest('ProductRequest').createProduct(dataUser);
       onClose();
       onReload();
-      toastSuccess('Tạo mới thuốc thành công');
+      toastSuccess('Thêm mới thuốc thành công');
     } catch (e: any) {
       toastError(e.message);
     }
@@ -146,7 +146,7 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Tạo mới thuốc"
+      title="Thêm mới thuốc"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -167,7 +167,7 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
 
           <Box zIndex={2002}>
             <AppSelect
-              label="Chi nhánh"
+              label="Nhà cung cấp"
               width={'full'}
               options={listSupplier}
               value={dataUser.supplierId}
@@ -181,7 +181,7 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
               showFullName
             />
           </Box>
-          <Flex zIndex={2001} w={'full'} gap={1}>
+          <Flex zIndex={2001} w={'full'} gap={3}>
             <Box width={'full'}>
               <AppSelect
                 label="Bán theo đơn"
@@ -221,7 +221,7 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
               />
             </Box>
           </Flex>
-          <Flex zIndex={1999} gap={1}>
+          <Flex zIndex={1999} gap={3}>
             <Box width={'full'}>
               <AppSelect
                 label="Loại"
@@ -259,7 +259,7 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
               })
             }
           />
-          <Flex gap={1}>
+          <Flex gap={3}>
             <AppInput
               label="Giá (vnd)"
               onChange={(e: any) =>
@@ -290,7 +290,7 @@ const ModalAddNewMedical: FC<IModalAddNewMedicalProps> = (props) => {
               Hủy
             </AppButton>
             <AppButton flex={1} onClick={createNewBranch}>
-              Tạo mới
+              Thêm mới
             </AppButton>
           </Flex>
         </Flex>

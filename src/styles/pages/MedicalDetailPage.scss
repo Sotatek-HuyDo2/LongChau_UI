@@ -34,18 +34,18 @@
   border: 1px solid $Line2;
   border-radius: 8px;
   max-height: 500px;
-  overflow-y: auto; /* Tạo thanh cuộn dọc nếu nội dung vượt quá max-height */
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
-    width: 2px; /* Đặt độ rộng của thanh cuộn */
+    width: 2px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: $Blue-150; /* Đặt màu nền cho "nút kéo" */
-    border-radius: 4px; /* Đặt góc bo tròn cho "nút kéo" */
+    background-color: $Blue-150;
+    border-radius: 4px;
   }
 
   &::-webkit-scrollbar-track {
-    background-color: #f1f1f1; /* Đặt màu nền cho phần track của thanh cuộn */
+    background-color: #f1f1f1;
   }
 }

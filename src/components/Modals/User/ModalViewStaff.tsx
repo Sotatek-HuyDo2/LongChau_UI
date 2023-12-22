@@ -17,7 +17,7 @@ const ModalViewStaff: FC<IModalViewStaffProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Tạo mới người dùng"
+      title="Thông tin người dùng"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"

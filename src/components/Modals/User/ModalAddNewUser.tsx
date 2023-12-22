@@ -44,7 +44,7 @@ const ModalAddNewUser: FC<IModalAddNewUserProps> = (props) => {
     try {
       await rf.getRequest('UserRequest').createBranchAdminAccount(dataUser);
       onClose();
-      toastSuccess('Tạo mới người dùng thành công');
+      toastSuccess('Thêm mới người dùng thành công');
     } catch (e: any) {
       toastError(e.message);
     }
@@ -54,7 +54,7 @@ const ModalAddNewUser: FC<IModalAddNewUserProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Tạo mới người dùng"
+      title="Thêm mới người dùng"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -123,7 +123,7 @@ const ModalAddNewUser: FC<IModalAddNewUserProps> = (props) => {
               Hủy
             </AppButton>
             <AppButton flex={1} onClick={createNewUser}>
-              Tạo mới
+              Thêm mới
             </AppButton>
           </Flex>
         </Flex>

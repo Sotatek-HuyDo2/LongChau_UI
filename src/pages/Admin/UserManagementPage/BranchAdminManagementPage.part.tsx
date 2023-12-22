@@ -15,6 +15,7 @@ import rf from 'src/api/RequestFactory';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import ModalAddNewBranchAdmin from 'src/components/Modals/User/ModalAddNewBranchAdmin';
 import ModalViewBranchAdmin from 'src/components/Modals/User/ModalViewBranchAdmin';
+import ModalEditBranchAdmin from 'src/components/Modals/User/ModalEditBranchAdmin';
 
 export interface IAdmin {
   userId: number;
@@ -34,6 +35,8 @@ const BranchAdminManagementPage = () => {
     useState<boolean>(false);
   const [openModalViewBranchAdmin, setOpenModalViewBranchAdmin] =
     useState<boolean>(false);
+  const [openModalEditBranchAdmin, setOpenModalEditBranchAdmin] =
+    useState<boolean>(false);
   const dataRef = useRef<IAdmin[]>([]);
   const [dataModal, setDataModal] = useState<IAdmin>({} as IAdmin);
   const [params, setParams] = useState({});
@@ -42,6 +45,16 @@ const BranchAdminManagementPage = () => {
     try {
       const res = await rf.getRequest('UserRequest').getBranchAdminByID(userId);
       setOpenModalViewBranchAdmin(true);
+      setDataModal(res);
+    } catch (error) {
+      return { docs: [] };
+    }
+  };
+
+  const handleOpenModalEditBranchAdmin = async (userId: number) => {
+    try {
+      const res = await rf.getRequest('UserRequest').getBranchAdminByID(userId);
+      setOpenModalEditBranchAdmin(true);
       setDataModal(res);
     } catch (error) {
       return { docs: [] };
@@ -142,6 +155,14 @@ const BranchAdminManagementPage = () => {
             >
               Xem
             </AppButton>
+            <AppButton
+              ml={'3px'}
+              size={'sm'}
+              bg={'yellow.100'}
+              onClick={() => handleOpenModalEditBranchAdmin(data.userId)}
+            >
+              Sang nhượng
+            </AppButton>
           </Box>
         </Flex>
 
@@ -149,6 +170,13 @@ const BranchAdminManagementPage = () => {
           <ModalViewBranchAdmin
             open={openModalViewBranchAdmin}
             onClose={() => setOpenModalViewBranchAdmin(false)}
+            data={dataModal}
+          />
+        )}
+        {openModalEditBranchAdmin && (
+          <ModalEditBranchAdmin
+            open={openModalEditBranchAdmin}
+            onClose={() => setOpenModalEditBranchAdmin(false)}
             data={dataModal}
           />
         )}
@@ -179,7 +207,7 @@ const BranchAdminManagementPage = () => {
           <AppButton size={'md'} onClick={() => setOpenModalAddNewUser(true)}>
             <Flex justify={'center'} align={'start'} gap={1}>
               <AddIcon />
-              Thêm Branch Admin
+              Thêm quản lý chi nhánh
             </Flex>
           </AppButton>
         </Flex>

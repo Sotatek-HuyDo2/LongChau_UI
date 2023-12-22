@@ -242,14 +242,6 @@ const MedicalManagementPage = () => {
             onConfirm={deleteMedical}
           />
         )}
-        {openModalEditMedical && (
-          <ModalEditMedical
-            open={openModalEditMedical}
-            onClose={() => setOpenModalEditMedical(false)}
-            data={dataModal}
-            onReload={onReload}
-          />
-        )}
       </Flex>
     );
   };
@@ -312,6 +304,14 @@ const MedicalManagementPage = () => {
         <ModalAddNewMedical
           open={openModalAddNewMedical}
           onClose={() => setOpenModalAddNewMedical(false)}
+          onReload={onReload}
+        />
+      )}
+      {openModalEditMedical && (
+        <ModalEditMedical
+          open={openModalEditMedical}
+          onClose={() => setOpenModalEditMedical(false)}
+          data={dataModal}
           onReload={onReload}
         />
       )}

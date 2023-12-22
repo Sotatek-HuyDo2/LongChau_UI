@@ -59,7 +59,7 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
     //   await rf.getRequest('ProductRequest').createProduct(dataUser);
     //   onClose();
     //   onReload();
-    //   toastSuccess('Tạo mới thuốc thành công');
+    //   toastSuccess('Sửa thuốc thành công');
     // } catch (e: any) {
     //   toastError(e.message);
     // }
@@ -152,7 +152,7 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Tạo mới thuốc"
+      title="Sửa thuốc"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -172,47 +172,48 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
             }
           />
 
-          <Box zIndex={2002}>
-            <AppSelect
-              label="Chi nhánh"
-              width={'full'}
-              options={listSupplier}
-              value={dataUser.supplierId}
-              onChange={(value: string) =>
-                setDataUser({
-                  ...dataUser,
-                  supplierId: +value,
-                })
-              }
-              size="medium"
-              showFullName
-            />
-          </Box>
-
-          <Box zIndex={2001}>
-            <AppSelect
-              label="Bán theo đơn"
-              width={'full'}
-              options={asDoseList}
-              value={dataUser.soldAsDose + ''}
-              onChange={(value: string) => {
-                if (value === 'true') {
+          <Flex gap={3} zIndex={2001}>
+            <Box w={'full'} zIndex={2002}>
+              <AppSelect
+                label="Chi nhánh"
+                width={'full'}
+                options={listSupplier}
+                value={dataUser.supplierId}
+                onChange={(value: string) =>
                   setDataUser({
                     ...dataUser,
-                    soldAsDose: true,
-                  });
-                } else {
-                  setDataUser({
-                    ...dataUser,
-                    soldAsDose: false,
-                  });
+                    supplierId: +value,
+                  })
                 }
-              }}
-              size="medium"
-              showFullName
-            />
-          </Box>
-          <Box zIndex={2000}>
+                size="medium"
+                showFullName
+              />
+            </Box>
+            <Box w={'full'}>
+              <AppSelect
+                label="Bán theo đơn"
+                width={'full'}
+                options={asDoseList}
+                value={dataUser.soldAsDose + ''}
+                onChange={(value: string) => {
+                  if (value === 'true') {
+                    setDataUser({
+                      ...dataUser,
+                      soldAsDose: true,
+                    });
+                  } else {
+                    setDataUser({
+                      ...dataUser,
+                      soldAsDose: false,
+                    });
+                  }
+                }}
+                size="medium"
+                showFullName
+              />
+            </Box>
+          </Flex>
+          <Box w={'full'} zIndex={2000}>
             <AppSelect
               label="Chi Nhánh"
               width={'full'}
@@ -265,7 +266,7 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
               })
             }
           />
-          <Flex gap={1}>
+          <Flex gap={3}>
             <AppInput
               label="Giá (vnd)"
               value={dataUser.price}
@@ -299,7 +300,7 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
               Hủy
             </AppButton>
             <AppButton flex={1} onClick={createNewBranch}>
-              Tạo mới
+              Sửa
             </AppButton>
           </Flex>
         </Flex>
