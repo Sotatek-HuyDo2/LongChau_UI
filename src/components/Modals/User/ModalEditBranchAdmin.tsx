@@ -30,7 +30,7 @@ const ModalEditBranchAdmin: FC<IModalEditBranchAdminProps> = (props) => {
           gap={'15px'}
           w={'full'}
         >
-          <Flex gap={1}>
+          <Flex gap={3}>
             <AppInput label="Tên" value={data.firstName} />
             <AppInput label="Họ" value={data.lastName} />
           </Flex>
