@@ -3,7 +3,6 @@ import { Box, Flex } from '@chakra-ui/react';
 import BaseHomePage from 'src/components/layouts/HomePage/BaseHomePage';
 import AppCategories from 'src/components/AppCategories';
 import AppListProduct from 'src/components/AppListProduct';
-import { MOCK_MEDICAL_PRODUCT_LIST } from 'src/utils/constants';
 import { AppFilter } from 'src/components';
 import { useState } from 'react';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
@@ -60,6 +59,23 @@ const CategoryFunctionalFoodsPage = () => {
   };
 
   const dataFilter = filterByPrice();
+
+  const getAllDrugType = async () => {
+    try {
+      if (typeSlug) {
+        const res = await rf.getRequest('CategoryRequest').getAllCate();
+        if (res) {
+          res.map((item: any) => {
+            if (item.slug === typeSlug) {
+              setCateId(item.id);
+            }
+          });
+        }
+      }
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
 
   const getAllCateId = async () => {
     try {
