@@ -9,24 +9,34 @@ import { toastError, toastSuccess } from 'src/utils/notify';
 import AppSelect from 'src/components/AppSelect';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
-interface IModalUpdateSizeTotalRackProps {
+interface IModalDeleteDrugFromTotalRackProps {
   open: boolean;
   onClose: () => void;
   onReload: () => void;
-  size?: number;
+  drugId: number;
 }
 
-const ModalUpdateSizeTotalRack: FC<IModalUpdateSizeTotalRackProps> = (
+interface IDataForm {
+  rackId: number;
+  drugId: number;
+  quantity: number;
+}
+
+const ModalDeleteDrugFromTotalRack: FC<IModalDeleteDrugFromTotalRackProps> = (
   props,
 ) => {
-  const { open, onClose, onReload, size } = props;
-  const [capacity, setCapacity] = useState(size);
+  const { open, onClose, onReload, drugId } = props;
+  const initData = {
+    rackId: 1,
+    drugId: drugId,
+    quantity: NaN,
+  };
+  const [dataForm, setDataForm] = useState<IDataForm>(initData);
+  const [drugs, setDrugs] = useState<any>([]);
 
   const addDrugsToRack = async () => {
     try {
-      await rf
-        .getRequest('RackRequest')
-        .updateSizeTotalRack({ capacity, rackId: 1 });
+      await rf.getRequest('RackRequest').deleteDrugsFromRack(dataForm);
       onClose();
       onReload();
       toastSuccess('Thêm mới thuốc vào kho thành công');
@@ -35,10 +45,27 @@ const ModalUpdateSizeTotalRack: FC<IModalUpdateSizeTotalRackProps> = (
     }
   };
 
+  const getAllDrugs = async () => {
+    try {
+      const res = await rf.getRequest('ProductRequest').getProduct();
+      const formatData = res.map((r: any) => ({
+        value: r.id,
+        label: r.name,
+      }));
+      setDrugs(formatData);
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+
+  useEffectUnsafe(() => {
+    getAllDrugs();
+  }, []);
+
   return (
     <BaseModal
       size="xl"
-      title="Sửa kích thước kho"
+      title="Bỏ bớt thuốc khỏi kho"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -50,13 +77,27 @@ const ModalUpdateSizeTotalRack: FC<IModalUpdateSizeTotalRackProps> = (
           gap={'15px'}
           w={'full'}
         >
-          <AppInput
-            label="Kích thước"
-            type="number"
-            value={capacity}
-            onChange={(e: any) => {
-              setCapacity(+e.target.value);
+          <AppSelect
+            label="Thuốc"
+            width={'full'}
+            options={drugs}
+            value={drugId || ''}
+            onChange={(value: string) => {
+              setDataForm({
+                ...dataForm,
+                drugId: +value,
+              });
             }}
+            size="medium"
+            showFullName
+          />
+
+          <AppInput
+            label="Số lượng"
+            type="number"
+            onChange={(e) =>
+              setDataForm({ ...dataForm, quantity: +e.target.value })
+            }
           />
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton
@@ -69,7 +110,7 @@ const ModalUpdateSizeTotalRack: FC<IModalUpdateSizeTotalRackProps> = (
               Hủy
             </AppButton>
             <AppButton flex={1} onClick={addDrugsToRack}>
-              Sửa
+              Xác nhận
             </AppButton>
           </Flex>
         </Flex>
@@ -78,4 +119,4 @@ const ModalUpdateSizeTotalRack: FC<IModalUpdateSizeTotalRackProps> = (
   );
 };
 
-export default ModalUpdateSizeTotalRack;
+export default ModalDeleteDrugFromTotalRack;

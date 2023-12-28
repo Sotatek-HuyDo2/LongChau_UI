@@ -13,6 +13,8 @@ interface IModalEditBranchProps {
   data: any;
   id: number | string;
   onReload: () => void;
+  capacity: number;
+  rackId: number;
 }
 
 interface IDataForm {
@@ -21,12 +23,17 @@ interface IDataForm {
 }
 
 const ModalEditBranch: FC<IModalEditBranchProps> = (props) => {
-  const { open, onClose, data, id, onReload } = props;
+  const { open, onClose, data, id, onReload, capacity, rackId } = props;
   const [dataForm, setDataForm] = useState<IDataForm>(data);
+  const [capacity2, setCapacity2] = useState<number>(capacity);
 
   const editBranch = async () => {
     try {
       await rf.getRequest('BranchRequest').updateBranchAdminInfo(id, dataForm);
+      await rf.getRequest('RackRequest').updateCapacityBranchWareHouse({
+        rackId: +rackId,
+        capacity: capacity2,
+      });
       onClose();
       onReload();
       toastSuccess('Sửa chi nhánh thành công');
@@ -38,7 +45,7 @@ const ModalEditBranch: FC<IModalEditBranchProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Edit Medical Information"
+      title="Sửa thông tin chi nhánh"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -61,6 +68,12 @@ const ModalEditBranch: FC<IModalEditBranchProps> = (props) => {
             onChange={(e) =>
               setDataForm({ ...dataForm, address: e.target.value })
             }
+          />
+          <AppInput
+            label="Sức chứa"
+            type="number"
+            defaultValue={capacity2}
+            onChange={(e) => setCapacity2(+e.target.value)}
           />
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton

@@ -11,6 +11,11 @@ export default class RackRequest extends BaseRequest {
     return this.get(url);
   }
 
+  getRackBranch() {
+    const url = `rack/branch-warehouse`;
+    return this.get(url);
+  }
+
   addDrugsToRack(param: any) {
     const url = `rack/add-drugs`;
     return this.put(url, param);
@@ -21,7 +26,22 @@ export default class RackRequest extends BaseRequest {
     return this.put(url, param);
   }
 
-  //   getBranchRack() {
+  updateCapacityBranchWareHouse(param: any) {
+    const url = `rack/branch-warehouse`;
+    return this.put(url, param);
+  }
+
+  createBranchWareHouse(branchId: number | string, param: any) {
+    const url = `rack/branch-warehouse/${branchId}`;
+    return this.post(url, param);
+  }
+
+  deleteDrugsFromRack(param: any) {
+    const url = `rack/remove-drugs`;
+    return this.put(url, param);
+  }
+
+  //   getBranchWareHouse() {
   //     const url = `rack/branch`;
   //     return this.get(url);
   //   }

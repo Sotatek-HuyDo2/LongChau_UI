@@ -8,7 +8,6 @@ import {
   InputRightElement,
   Tooltip,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
@@ -16,6 +15,7 @@ import rf from 'src/api/RequestFactory';
 import { AddIcon } from '@chakra-ui/icons';
 import ModalAddNewBranch from 'src/components/Modals/Branch/ModalAddNewBranch';
 import ModalEditBranch from 'src/components/Modals/Branch/ModalEditBranch';
+import ModalDistributionDrugFromTotalRack from 'src/components/Modals/Rack/ModalDistributionDrugFromTotalRack';
 
 export interface IBranch {
   id: string;
@@ -23,17 +23,35 @@ export interface IBranch {
   address: string;
 }
 
+interface IBranch2 {
+  branch: {
+    id: string;
+    name: string;
+    address: string;
+  };
+  capacity: number;
+  capacityUsed: number;
+  rackId: number;
+}
+
 const BranchManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [dataSearch, setDataSearch] = useState<IBranch[]>([]);
+  const [dataSearch, setDataSearch] = useState<IBranch2[]>([]);
   const [openModalAddNewBranch, setOpenModalAddNewBranch] =
     useState<boolean>(false);
   const [openModalEditBranch, setOpenModalEditBranch] =
     useState<boolean>(false);
+  const [
+    openModalDistributionDrugFromTotalRack,
+    setOpenModalDistributionDrugFromTotalRack,
+  ] = useState<boolean>(false);
   const [dataModal, setDataModal] = useState();
   const [params, setParams] = useState({});
+  const [id, setId] = useState<string>('');
+  const [capacity, setCapacity] = useState<number>(NaN);
+  const [rackId, setRackId] = useState<number>(NaN);
 
-  const dataRef = useRef<IBranch[]>([]);
+  const dataRef = useRef<IBranch2[]>([]);
 
   const onReload = () => {
     setParams({ ...params });
@@ -43,15 +61,23 @@ const BranchManagementPage = () => {
     let dataFilter = dataRef.current;
 
     if (valueSearch) {
-      dataFilter = dataFilter.filter((item: IBranch) =>
-        item.name.toLowerCase().includes(valueSearch.toLowerCase()),
+      dataFilter = dataFilter.filter((item: IBranch2) =>
+        item.branch.name.toLowerCase().includes(valueSearch.toLowerCase()),
       );
       setDataSearch(dataFilter);
     }
     setDataSearch(dataFilter);
   };
 
-  const handleUpdate = async (id: number | string) => {
+  const handleDistibuted = (rackId: number) => {
+    setRackId(rackId);
+    setOpenModalDistributionDrugFromTotalRack(true);
+  };
+
+  const handleUpdate = async (id: string, capacity: number, rackId: number) => {
+    setId(id);
+    setRackId(rackId);
+    setCapacity(capacity);
     try {
       const res = await rf.getRequest('BranchRequest').getBranchAdminDetail(id);
       setDataModal(res);
@@ -67,7 +93,7 @@ const BranchManagementPage = () => {
 
   const getDataTable = async () => {
     try {
-      const res = await rf.getRequest('BranchRequest').getBranchList();
+      const res = await rf.getRequest('RackRequest').getRackBranch();
       dataRef.current = res;
       setDataSearch(res);
       return {
@@ -87,7 +113,7 @@ const BranchManagementPage = () => {
           Địa chỉ
         </Box>
         <Box className="category--header-cell-body category--quality">
-          Sức chứa
+          Trạng thái
         </Box>
 
         <Box className="category--header-cell-body category--action">
@@ -97,10 +123,10 @@ const BranchManagementPage = () => {
     );
   };
 
-  const _renderContentTable = (data: IBranch[]) => {
+  const _renderContentTable = (data: IBranch2[]) => {
     return (
       <Box>
-        {dataSearch.map((data: IBranch, index: number) => {
+        {dataSearch.map((data: IBranch2, index: number) => {
           return (
             <RowAddressTransactionTable
               data={data}
@@ -114,20 +140,20 @@ const BranchManagementPage = () => {
   };
 
   const RowAddressTransactionTable: React.FC<{
-    data: IBranch;
+    data: IBranch2;
     id: number;
   }> = ({ data, id }) => {
     return (
       <Flex className="category--row-wrap" direction={'column'}>
         <Flex>
           <Flex className="category--cell-body category--id">
-            <Box cursor={'pointer'}>{data.id}</Box>
+            <Box cursor={'pointer'}>{data.branch.id}</Box>
           </Flex>
           <Box className="category--cell-body category--id">
             <Tooltip
               hasArrow
               className="tooltip-app"
-              label={data.name ? data.name : ''}
+              label={data.branch.name ? data.branch.name : ''}
               placement="top"
             >
               <Box
@@ -137,7 +163,7 @@ const BranchManagementPage = () => {
                 maxW="550px"
                 cursor="pointer"
               >
-                {data.name ? data.name : '--'}
+                {data.branch.name ? data.branch.name : '--'}
               </Box>
             </Tooltip>
           </Box>
@@ -145,13 +171,15 @@ const BranchManagementPage = () => {
             flexDirection="row"
             className="category--cell-body category--quality"
           >
-            {data?.address ? data?.address : '--'}
+            {data?.branch.address ? data?.branch.address : '--'}
           </Flex>
           <Flex
             flexDirection="row"
             className="category--cell-body category--quality"
           >
-            {data?.address ? data?.address : '--'}
+            {data?.capacity
+              ? `${data?.capacityUsed} / ${data?.capacity}`
+              : '--'}
           </Flex>
           <Box
             className="category--cell-body category--action"
@@ -159,40 +187,24 @@ const BranchManagementPage = () => {
           >
             <AppButton
               size={'sm'}
-              // onClick={() => navigate(`/medical/${data.id}`)}
-            >
-              Xem
-            </AppButton>
-            <AppButton
-              size={'sm'}
               bg={'yellow.100'}
               ml={'3px'}
-              onClick={() => handleUpdate(data.id)}
+              onClick={() =>
+                handleUpdate(data.branch.id, data.capacity, data.rackId)
+              }
             >
               Sửa
             </AppButton>
             <AppButton
               size={'sm'}
               ml={'3px'}
-
-              // onClick={() => navigate(`/medical/${data.id}`)}
+              // onClick={() => navigate(`/medical/${data.branch.id}`)}
+              onClick={() => handleDistibuted(data.rackId)}
             >
               Phân phối thuốc
             </AppButton>
-            {/* <AppButton ml={'3px'} size={'sm'} bg={'red.100'}>
-              Xóa
-            </AppButton> */}
           </Box>
         </Flex>
-        {openModalEditBranch && (
-          <ModalEditBranch
-            open={openModalEditBranch}
-            onClose={() => setOpenModalEditBranch(false)}
-            data={dataModal}
-            id={data.id}
-            onReload={onReload}
-          />
-        )}
       </Flex>
     );
   };
@@ -255,6 +267,25 @@ const BranchManagementPage = () => {
             open={openModalAddNewBranch}
             onClose={() => setOpenModalAddNewBranch(false)}
             onReload={onReload}
+          />
+        )}
+        {openModalEditBranch && (
+          <ModalEditBranch
+            open={openModalEditBranch}
+            onClose={() => setOpenModalEditBranch(false)}
+            data={dataModal}
+            id={id}
+            capacity={capacity}
+            onReload={onReload}
+            rackId={rackId}
+          />
+        )}
+        {openModalDistributionDrugFromTotalRack && (
+          <ModalDistributionDrugFromTotalRack
+            open={openModalDistributionDrugFromTotalRack}
+            onClose={() => setOpenModalDistributionDrugFromTotalRack(false)}
+            onReload={onReload}
+            rackId2={rackId}
           />
         )}
       </Box>

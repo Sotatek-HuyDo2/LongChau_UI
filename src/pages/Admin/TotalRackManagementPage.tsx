@@ -3,6 +3,7 @@ import { AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
 import {
   Box,
+  Center,
   Flex,
   InputGroup,
   InputRightElement,
@@ -16,26 +17,41 @@ import { AddIcon } from '@chakra-ui/icons';
 import ModalEditBranch from 'src/components/Modals/Branch/ModalEditBranch';
 import ModalAddDrugToTotalRack from 'src/components/Modals/Rack/ModalAddDrugToTotalRack';
 import ModalUpdateSizeTotalRack from 'src/components/Modals/Rack/ModalUpdateSizeTotalRack';
+import ModalDeleteDrugFromTotalRack from 'src/components/Modals/Rack/ModalDeleteDrugFromTotalRack';
 
-export interface IBranch {
-  id: string;
+export interface IMedical {
+  barcode: number;
+  createdAt: string;
+  description: string;
+  id: number;
   name: string;
-  address: string;
+  price: number;
+  sensitiveIngredients?: null;
+  size: number;
+  soldAsDose: boolean;
+  supplierId: number;
+  typeId: number;
+  unit: string;
+  quantity: number;
 }
 
 const TotalRackManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [dataSearch, setDataSearch] = useState<IBranch[]>([]);
+  const [dataSearch, setDataSearch] = useState<IMedical[]>([]);
   const [openModalAddDrugToTotalRack, setOpenModalAddDrugToTotalRack] =
-    useState<boolean>(false);
-  const [openModalEditBranch, setOpenModalEditBranch] =
     useState<boolean>(false);
   const [openModalUpdateSizeTotalRack, setOpenModalUpdateSizeTotalRack] =
     useState<boolean>(false);
-  const [dataModal, setDataModal] = useState();
+  const [
+    openModalDeleteDrugsFromTotalRack,
+    setOpenModalDeleteDrugsFromTotalRank,
+  ] = useState<boolean>(false);
   const [params, setParams] = useState({});
+  const [capacity, setCapacity] = useState<number>();
+  const [capacityUsed, setCapacityUsed] = useState<number>();
+  const [id, setId] = useState<number>(NaN);
 
-  const dataRef = useRef<IBranch[]>([]);
+  const dataRef = useRef<IMedical[]>([]);
 
   const onReload = () => {
     setParams({ ...params });
@@ -45,22 +61,12 @@ const TotalRackManagementPage = () => {
     let dataFilter = dataRef.current;
 
     if (valueSearch) {
-      dataFilter = dataFilter.filter((item: IBranch) =>
+      dataFilter = dataFilter.filter((item: IMedical) =>
         item.name.toLowerCase().includes(valueSearch.toLowerCase()),
       );
       setDataSearch(dataFilter);
     }
     setDataSearch(dataFilter);
-  };
-
-  const handleUpdate = async (id: number | string) => {
-    try {
-      const res = await rf.getRequest('BranchRequest').getBranchAdminDetail(id);
-      setDataModal(res);
-      setOpenModalEditBranch(true);
-    } catch (e: any) {
-      console.log(e.message);
-    }
   };
 
   useEffectUnsafe(() => {
@@ -70,14 +76,22 @@ const TotalRackManagementPage = () => {
   const getDataTable = async () => {
     try {
       const res = await rf.getRequest('RackRequest').getTotalRack();
-      dataRef.current = res;
-      setDataSearch(res);
+      dataRef.current = res.drugs;
+      setDataSearch(res.drugs);
+      setCapacity(res.capacity);
+      setCapacityUsed(res.capacityUsed);
+
       return {
-        docs: res,
+        docs: res.drugs,
       };
     } catch (error) {
       return { docs: [] };
     }
+  };
+
+  const handleDeleteDrugFromTotalRack = async (id: number) => {
+    setId(id);
+    setOpenModalDeleteDrugsFromTotalRank(true);
   };
 
   const _renderHeaderTable = () => {
@@ -100,10 +114,10 @@ const TotalRackManagementPage = () => {
     );
   };
 
-  const _renderContentTable = (data: IBranch[]) => {
+  const _renderContentTable = (data: IMedical[]) => {
     return (
       <Box>
-        {dataSearch.map((data: IBranch, index: number) => {
+        {dataSearch.map((data: IMedical, index: number) => {
           return (
             <RowAddressTransactionTable
               data={data}
@@ -117,7 +131,7 @@ const TotalRackManagementPage = () => {
   };
 
   const RowAddressTransactionTable: React.FC<{
-    data: IBranch;
+    data: IMedical;
     id: number;
   }> = ({ data, id }) => {
     return (
@@ -148,13 +162,13 @@ const TotalRackManagementPage = () => {
             flexDirection="row"
             className="category--cell-body category--quality"
           >
-            {data?.address ? data?.address : '--'}
+            {data?.size ? data?.size : '--'}
           </Flex>
           <Flex
             flexDirection="row"
             className="category--cell-body category--quality"
           >
-            {data?.address ? data?.address : '--'}
+            {data?.quantity ? data?.quantity : '--'}
           </Flex>
           <Box
             className="category--cell-body category--action"
@@ -164,21 +178,12 @@ const TotalRackManagementPage = () => {
               size={'sm'}
               bg={'yellow.100'}
               ml={'3px'}
-              onClick={() => handleUpdate(data.id)}
+              onClick={() => handleDeleteDrugFromTotalRack(data.id)}
             >
               Bỏ thuốc
             </AppButton>
           </Box>
         </Flex>
-        {openModalEditBranch && (
-          <ModalEditBranch
-            open={openModalEditBranch}
-            onClose={() => setOpenModalEditBranch(false)}
-            data={dataModal}
-            id={data.id}
-            onReload={onReload}
-          />
-        )}
       </Flex>
     );
   };
@@ -198,7 +203,7 @@ const TotalRackManagementPage = () => {
         </Flex>
         <Box className={'category__search'}>
           <Flex justifyContent={'space-between'}>
-            <Flex>
+            <Flex alignItems={'center'} gap={1}>
               {/* <Box className={'category__search-title'}>Chi nhánh:</Box> */}
               <Box className="category__search-input">
                 <InputGroup>
@@ -213,6 +218,13 @@ const TotalRackManagementPage = () => {
                     <SearchExplorer />
                   </InputRightElement>
                 </InputGroup>
+              </Box>
+              <Box color={'black'} fontWeight={700}>
+                <AppButton size={'md'} bg={'green.100'}>
+                  <Flex justify={'center'} align={'start'} gap={1}>
+                    {`${capacityUsed} / ${capacity}`}
+                  </Flex>
+                </AppButton>
               </Box>
             </Flex>
             <Flex gap={1}>
@@ -259,6 +271,15 @@ const TotalRackManagementPage = () => {
             open={openModalUpdateSizeTotalRack}
             onClose={() => setOpenModalUpdateSizeTotalRack(false)}
             onReload={onReload}
+            size={capacity}
+          />
+        )}
+        {openModalDeleteDrugsFromTotalRack && (
+          <ModalDeleteDrugFromTotalRack
+            open={openModalDeleteDrugsFromTotalRack}
+            onClose={() => setOpenModalDeleteDrugsFromTotalRank(false)}
+            onReload={onReload}
+            drugId={id}
           />
         )}
       </Box>

@@ -6,6 +6,7 @@ import { FC, useState } from 'react';
 import AppInput from '../../AppInput';
 import rf from 'src/api/RequestFactory';
 import { toastError, toastSuccess } from 'src/utils/notify';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
 interface IModalAddNewBranchProps {
   open: boolean;
@@ -26,17 +27,37 @@ const ModalAddNewBranch: FC<IModalAddNewBranchProps> = (props) => {
 
   const { open, onClose, onReload } = props;
   const [dataForm, setDataForm] = useState<IDataForm>(initData);
+  const [capacity, setCapacity] = useState<number>();
+  const [branchId, setBranchId] = useState<number | string>();
 
   const createNewBranch = async () => {
     try {
       await rf.getRequest('BranchRequest').createBranchAdmin(dataForm);
+      const branchs = await rf.getRequest('BranchRequest').getBranchList();
+      const lastBranch = branchs.at(-1);
+      if (lastBranch && lastBranch.id) {
+        await rf
+          .getRequest('RackRequest')
+          .createBranchWareHouse(+lastBranch.id, { capacity: capacity });
+      }
       onClose();
       onReload();
-      toastSuccess('Thêm mới Branch thành công');
+      toastSuccess('Thêm mới chi nhánh thành công');
     } catch (e: any) {
       toastError(e.message);
     }
   };
+
+  // const addRackToBranch = async () => {
+  //   try {
+  //     await rf.getRequest('BranchRequest').createBranchWareHouse(branchId, capacity);
+  //     toastSuccess('Thêm mới kho cho chi nhánh thành công');
+  //   } catch (e: any) {}
+  // };
+
+  // useEffectUnsafe(() => {
+  //   addRackToBranch();
+  // }, [branchId]);
 
   return (
     <BaseModal
@@ -62,6 +83,10 @@ const ModalAddNewBranch: FC<IModalAddNewBranchProps> = (props) => {
             onChange={(e) =>
               setDataForm({ ...dataForm, address: e.target.value })
             }
+          />
+          <AppInput
+            label="Kích cỡ kho"
+            onChange={(e) => setCapacity(+e.target.value)}
           />
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton
