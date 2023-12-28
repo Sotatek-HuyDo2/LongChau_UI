@@ -43,6 +43,11 @@ const MENUS = [
     ],
   },
   {
+    name: 'Quản lý kho tổng',
+    path: '/admin/total-rack-management',
+    icon: <Overview />,
+  },
+  {
     name: 'Thống kê',
     path: '/admin/statistical',
     icon: <Overview />,

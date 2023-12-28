@@ -8,14 +8,14 @@ import {
   InputRightElement,
   Tooltip,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
 import rf from 'src/api/RequestFactory';
 import { AddIcon } from '@chakra-ui/icons';
-import ModalAddNewBranch from 'src/components/Modals/Branch/ModalAddNewBranch';
 import ModalEditBranch from 'src/components/Modals/Branch/ModalEditBranch';
+import ModalAddDrugToTotalRack from 'src/components/Modals/Rack/ModalAddDrugToTotalRack';
+import ModalUpdateSizeTotalRack from 'src/components/Modals/Rack/ModalUpdateSizeTotalRack';
 
 export interface IBranch {
   id: string;
@@ -23,12 +23,14 @@ export interface IBranch {
   address: string;
 }
 
-const BranchManagementPage = () => {
+const TotalRackManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
   const [dataSearch, setDataSearch] = useState<IBranch[]>([]);
-  const [openModalAddNewBranch, setOpenModalAddNewBranch] =
+  const [openModalAddDrugToTotalRack, setOpenModalAddDrugToTotalRack] =
     useState<boolean>(false);
   const [openModalEditBranch, setOpenModalEditBranch] =
+    useState<boolean>(false);
+  const [openModalUpdateSizeTotalRack, setOpenModalUpdateSizeTotalRack] =
     useState<boolean>(false);
   const [dataModal, setDataModal] = useState();
   const [params, setParams] = useState({});
@@ -67,7 +69,7 @@ const BranchManagementPage = () => {
 
   const getDataTable = async () => {
     try {
-      const res = await rf.getRequest('BranchRequest').getBranchList();
+      const res = await rf.getRequest('RackRequest').getTotalRack();
       dataRef.current = res;
       setDataSearch(res);
       return {
@@ -81,15 +83,16 @@ const BranchManagementPage = () => {
   const _renderHeaderTable = () => {
     return (
       <Flex>
-        <Box className="category--header-cell-body category--id">ID</Box>
-        <Box className="category--header-cell-body category--id">Tên</Box>
-        <Box className="category--header-cell-body category--quality">
-          Địa chỉ
+        <Box className="category--header-cell-body category--id">ID thuốc</Box>
+        <Box className="category--header-cell-body category--name">
+          Tên thuốc
         </Box>
         <Box className="category--header-cell-body category--quality">
-          Sức chứa
+          Kích thước
         </Box>
-
+        <Box className="category--header-cell-body category--quality">
+          Số lượng
+        </Box>
         <Box className="category--header-cell-body category--action">
           Action
         </Box>
@@ -123,7 +126,7 @@ const BranchManagementPage = () => {
           <Flex className="category--cell-body category--id">
             <Box cursor={'pointer'}>{data.id}</Box>
           </Flex>
-          <Box className="category--cell-body category--id">
+          <Box className="category--cell-body category--name">
             <Tooltip
               hasArrow
               className="tooltip-app"
@@ -159,29 +162,12 @@ const BranchManagementPage = () => {
           >
             <AppButton
               size={'sm'}
-              // onClick={() => navigate(`/medical/${data.id}`)}
-            >
-              Xem
-            </AppButton>
-            <AppButton
-              size={'sm'}
               bg={'yellow.100'}
               ml={'3px'}
               onClick={() => handleUpdate(data.id)}
             >
-              Sửa
+              Bỏ thuốc
             </AppButton>
-            <AppButton
-              size={'sm'}
-              ml={'3px'}
-
-              // onClick={() => navigate(`/medical/${data.id}`)}
-            >
-              Phân phối thuốc
-            </AppButton>
-            {/* <AppButton ml={'3px'} size={'sm'} bg={'red.100'}>
-              Xóa
-            </AppButton> */}
           </Box>
         </Flex>
         {openModalEditBranch && (
@@ -208,7 +194,7 @@ const BranchManagementPage = () => {
           gap={3}
           color={'#2167df'}
         >
-          Quản lý chi nhánh
+          Quản lý kho tổng
         </Flex>
         <Box className={'category__search'}>
           <Flex justifyContent={'space-between'}>
@@ -229,15 +215,26 @@ const BranchManagementPage = () => {
                 </InputGroup>
               </Box>
             </Flex>
-            <AppButton
-              size={'md'}
-              onClick={() => setOpenModalAddNewBranch(true)}
-            >
-              <Flex justify={'center'} align={'start'} gap={1}>
-                <AddIcon />
-                Thêm chi nhánh
-              </Flex>
-            </AppButton>
+            <Flex gap={1}>
+              <AppButton
+                size={'md'}
+                onClick={() => setOpenModalUpdateSizeTotalRack(true)}
+                bg={'yellow.100'}
+              >
+                <Flex justify={'center'} align={'start'} gap={1}>
+                  Cập nhật
+                </Flex>
+              </AppButton>
+              <AppButton
+                size={'md'}
+                onClick={() => setOpenModalAddDrugToTotalRack(true)}
+              >
+                <Flex justify={'center'} align={'start'} gap={1}>
+                  <AddIcon />
+                  Thêm thuốc
+                </Flex>
+              </AppButton>
+            </Flex>
           </Flex>
         </Box>
 
@@ -250,10 +247,17 @@ const BranchManagementPage = () => {
             size={10}
           />
         </Box>
-        {openModalAddNewBranch && (
-          <ModalAddNewBranch
-            open={openModalAddNewBranch}
-            onClose={() => setOpenModalAddNewBranch(false)}
+        {openModalAddDrugToTotalRack && (
+          <ModalAddDrugToTotalRack
+            open={openModalAddDrugToTotalRack}
+            onClose={() => setOpenModalAddDrugToTotalRack(false)}
+            onReload={onReload}
+          />
+        )}
+        {openModalUpdateSizeTotalRack && (
+          <ModalUpdateSizeTotalRack
+            open={openModalUpdateSizeTotalRack}
+            onClose={() => setOpenModalUpdateSizeTotalRack(false)}
             onReload={onReload}
           />
         )}
@@ -262,4 +266,4 @@ const BranchManagementPage = () => {
   );
 };
 
-export default BranchManagementPage;
+export default TotalRackManagementPage;

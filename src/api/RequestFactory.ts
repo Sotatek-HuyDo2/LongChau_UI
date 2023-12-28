@@ -4,6 +4,7 @@ import BranchRequest from './BranchRequest';
 import SupplierRequest from './SupplierRequest';
 import ProductRequest from './ProductRequest';
 import CategoryRequest from './CategoryRequest';
+import RackRequest from './RackRequest';
 
 const requestMap = {
   AuthRequest,
@@ -12,6 +13,7 @@ const requestMap = {
   SupplierRequest,
   ProductRequest,
   CategoryRequest,
+  RackRequest,
 };
 
 const instances = {};

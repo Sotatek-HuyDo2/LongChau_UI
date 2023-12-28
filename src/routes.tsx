@@ -28,6 +28,7 @@ import RegisterPage from './pages/RegisterPage';
 import ProfileEditPart from './pages/UserProfilePage/EditProfile';
 import CustomerManagementPage from './pages/Admin/UserManagementPage/CustomerManagementPage';
 import UserManagerList from './pages/Admin/UserManagementPage';
+import TotalRackManagementPage from './pages/Admin/TotalRackManagementPage';
 
 /**
  * Main App routes.
@@ -149,6 +150,15 @@ const RouterCustom = () => {
         />
 
         <Route path={'user-management'} element={<UserManagerList />} />
+
+        <Route
+          path={'total-rack-management'}
+          element={<TotalRackManagementPage />}
+        />
+        {/* <Route
+          path={'general-warehouse-management'}
+          element={<GeneralWarehouseManagementPage />}
+        /> */}
 
         <Route path={'statistical'} element={<Statistical />} />
       </Route>
