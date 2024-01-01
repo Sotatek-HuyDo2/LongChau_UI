@@ -3,7 +3,6 @@ import { AppInput } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
 import {
   Box,
-  Center,
   Flex,
   InputGroup,
   InputRightElement,
@@ -14,7 +13,6 @@ import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseAdminPage } from 'src/components/layouts';
 import rf from 'src/api/RequestFactory';
 import { AddIcon } from '@chakra-ui/icons';
-import ModalEditBranch from 'src/components/Modals/Branch/ModalEditBranch';
 import ModalAddDrugToTotalRack from 'src/components/Modals/Rack/ModalAddDrugToTotalRack';
 import ModalUpdateSizeTotalRack from 'src/components/Modals/Rack/ModalUpdateSizeTotalRack';
 import ModalDeleteDrugFromTotalRack from 'src/components/Modals/Rack/ModalDeleteDrugFromTotalRack';

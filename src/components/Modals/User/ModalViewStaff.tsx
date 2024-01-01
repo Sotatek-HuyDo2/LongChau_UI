@@ -29,12 +29,12 @@ const ModalViewStaff: FC<IModalViewStaffProps> = (props) => {
           gap={'15px'}
           w={'full'}
         >
-          <AppInput label="Chi Nhánh" value={data.branchName} disabled />
+          <AppInput label="Chi Nhánh" value={data.branchName} />
           <Flex gap={3}>
-            <AppInput label="Tên" value={data.firstName} disabled />
-            <AppInput label="Họ" value={data.lastName} disabled />
+            <AppInput label="Tên" value={data.firstName} />
+            <AppInput label="Họ" value={data.lastName} />
           </Flex>
-          <AppInput label="Số điện thoại" value={data.phone} disabled />
+          <AppInput label="Số điện thoại" value={data.phone} />
 
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton

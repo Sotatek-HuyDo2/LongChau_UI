@@ -82,7 +82,7 @@ const MenuDrop = ({ dropTitle, dropItem = LIST_ITEM }: MenuDropProps) => {
 
 const MENUS = [
   {
-    name: 'Quản lý tổng kho',
+    name: 'Quản lý kho chi nhánh',
     path: '/branch-admin',
     icon: <Overview />,
     pathChild: [

@@ -8,34 +8,31 @@ import {
   InputRightElement,
   Tooltip,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
-import { MOCK_CATEGORY_MEDICINE } from 'src/utils/constants';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { BaseBranchAdminPage } from 'src/components/layouts';
-
-interface IGeneralWarehouse {
-  categoryID: string;
-  name: string;
-  quality: number;
-}
+import rf from 'src/api/RequestFactory';
+import ModalDeleteDrugFromBranchWarehouse from 'src/components/Modals/Rack/ModalDeleteDrugFromBranchWarehouse';
 
 const BranchAdminGeneralWarehouseManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
-  const [dataSearch, setDataSearch] = useState<IGeneralWarehouse[]>(
-    MOCK_CATEGORY_MEDICINE,
-  );
-
-  const dataRef = useRef<IGeneralWarehouse[]>([]);
+  const [dataSearch, setDataSearch] = useState<any[]>([]);
+  const dataRef = useRef<any[]>([]);
+  const [
+    openModalDeleteDrugsFromBranchWarehouse,
+    setOpenModalDeleteDrugsFromBranchWarehouse,
+  ] = useState<boolean>(false);
+  const [drugId, setDrugId] = useState<number>(NaN);
+  const [rackId, setRackId] = useState<number>(NaN);
+  const [params, setParams] = useState<any>({});
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
 
     if (valueSearch) {
-      dataFilter = dataFilter.filter((item: IGeneralWarehouse) =>
+      dataFilter = dataFilter.filter((item: any) =>
         item.name.toLowerCase().includes(valueSearch.toLowerCase()),
       );
-
       setDataSearch(dataFilter);
     }
 
@@ -46,14 +43,22 @@ const BranchAdminGeneralWarehouseManagementPage = () => {
     handleSearch();
   }, [valueSearch]);
 
-  const navigate = useNavigate();
+  const handleDeleteDrugsFromBranchWarehouse = (id: number) => {
+    setDrugId(id);
+    setOpenModalDeleteDrugsFromBranchWarehouse(true);
+  };
 
-  const getCategory = async () => {
+  const onReload = () => setParams(params);
+
+  const getDataTable = async () => {
     try {
-      dataRef.current = MOCK_CATEGORY_MEDICINE;
-      setDataSearch(MOCK_CATEGORY_MEDICINE);
+      const res = await rf.getRequest('RackRequest').getMyRackBranch();
+      dataRef.current = res.drugs;
+      setDataSearch(res.drugs);
+      setRackId(res.id);
+
       return {
-        docs: dataSearch,
+        docs: res.drugs,
       };
     } catch (error) {
       return { docs: [] };
@@ -75,10 +80,10 @@ const BranchAdminGeneralWarehouseManagementPage = () => {
     );
   };
 
-  const _renderContentTable = (data: IGeneralWarehouse[]) => {
+  const _renderContentTable = (data: any[]) => {
     return (
       <Box>
-        {dataSearch.map((data: IGeneralWarehouse, id: number) => {
+        {dataSearch.map((data: any, id: number) => {
           return (
             <RowAddressTransactionTable data={data} key={`${id}-coin-table`} />
           );
@@ -88,13 +93,13 @@ const BranchAdminGeneralWarehouseManagementPage = () => {
   };
 
   const RowAddressTransactionTable: React.FC<{
-    data: IGeneralWarehouse;
+    data: any;
   }> = ({ data }) => {
     return (
       <Flex className="category--row-wrap" direction={'column'}>
         <Flex>
           <Flex className="category--cell-body category--id">
-            <Box cursor={'pointer'}>{data.categoryID}</Box>
+            <Box cursor={'pointer'}>{data.id}</Box>
           </Flex>
           <Box className="category--cell-body category--name">
             <Tooltip
@@ -118,7 +123,7 @@ const BranchAdminGeneralWarehouseManagementPage = () => {
             flexDirection="row"
             className="category--cell-body category--quality"
           >
-            {data?.quality ? data?.quality : '--'}
+            {data?.quantity ? data?.quantity : '--'}
           </Flex>
           <Box
             className="category--cell-body category--action"
@@ -126,15 +131,11 @@ const BranchAdminGeneralWarehouseManagementPage = () => {
           >
             <AppButton
               size={'sm'}
-              onClick={() => navigate(`/medical/${data.categoryID}`)}
+              bg={'yellow.100'}
+              ml={'3px'}
+              onClick={() => handleDeleteDrugsFromBranchWarehouse(data.id)}
             >
-              Xem
-            </AppButton>
-            <AppButton size={'sm'} bg={'yellow.100'} ml={'3px'}>
-              Sửa
-            </AppButton>
-            <AppButton ml={'3px'} size={'sm'} bg={'red.100'}>
-              Xóa
+              Bỏ Thuốc
             </AppButton>
           </Box>
         </Flex>
@@ -153,7 +154,7 @@ const BranchAdminGeneralWarehouseManagementPage = () => {
           gap={3}
           color={'#2167df'}
         >
-          Quản lý tổng kho
+          Quản lý kho chi nhánh
         </Flex>
         <Box className={'category__search'}>
           <Flex alignItems={'center'}>
@@ -176,14 +177,24 @@ const BranchAdminGeneralWarehouseManagementPage = () => {
         </Box>
 
         <Box mt={10} className="category-container">
-          {/* <AppDataTable
-          fetchData={getCategory}
-          renderBody={_renderContentTable}
-          renderHeader={_renderHeaderTable}
-          size={10}
-        /> */}
+          <AppDataTable
+            requestParams={params}
+            fetchData={getDataTable}
+            renderBody={_renderContentTable}
+            renderHeader={_renderHeaderTable}
+            size={10}
+          />
         </Box>
       </Box>
+      {openModalDeleteDrugsFromBranchWarehouse && (
+        <ModalDeleteDrugFromBranchWarehouse
+          open={openModalDeleteDrugsFromBranchWarehouse}
+          onClose={() => setOpenModalDeleteDrugsFromBranchWarehouse(false)}
+          drugId={drugId}
+          rackId={rackId}
+          onReload={onReload}
+        />
+      )}
     </BaseBranchAdminPage>
   );
 };
