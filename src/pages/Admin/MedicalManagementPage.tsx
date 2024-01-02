@@ -277,6 +277,7 @@ const MedicalManagementPage = () => {
                 </InputGroup>
               </Box>
             </Flex>
+            <Box>tesst</Box>
             <AppButton
               size={'md'}
               onClick={() => setOpenModalAddNewMedical(true)}
