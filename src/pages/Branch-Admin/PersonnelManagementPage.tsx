@@ -10,6 +10,8 @@ import rf from 'src/api/RequestFactory';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import ModalAddNewStaff from 'src/components/Modals/User/ModalAddNewStaff';
 import ModalViewStaff from 'src/components/Modals/User/ModalViewStaff';
+import ModalDeleteConfirm from 'src/components/Modals/ModalDeleteConfirm';
+import { toastError, toastSuccess } from 'src/utils/notify';
 
 export interface IAdmin {
   userId: number;
@@ -29,6 +31,9 @@ const BranchAdminPersonnelManagementPage = () => {
   const dataRef = useRef<IAdmin[]>([]);
   const [dataModal, setDataModal] = useState<IAdmin>({} as IAdmin);
   const [params, setParams] = useState({});
+  const [id, setId] = useState<number>();
+  const [openModalDeleteConfirm, setOpenModalDeleteConfirm] =
+    useState<boolean>(false);
 
   const handleOpenModalViewUser = async (id: number) => {
     try {
@@ -38,6 +43,11 @@ const BranchAdminPersonnelManagementPage = () => {
     } catch (e: any) {
       console.log(e.message);
     }
+  };
+
+  const handleDelete = (id: number) => {
+    setId(id);
+    setOpenModalDeleteConfirm(true);
   };
 
   const onReload = () => {
@@ -60,6 +70,17 @@ const BranchAdminPersonnelManagementPage = () => {
   useEffectUnsafe(() => {
     handleSearch();
   }, [valueSearch]);
+
+  const deleteStaff = async () => {
+    try {
+      await rf.getRequest('UserRequest').deleteStaff(id);
+      toastSuccess('Xóa staff thành công!');
+      setParams({ ...params });
+      setOpenModalDeleteConfirm(false);
+    } catch (e: any) {
+      toastError(e.message);
+    }
+  };
 
   const getBranchAdmin = async () => {
     try {
@@ -128,6 +149,14 @@ const BranchAdminPersonnelManagementPage = () => {
             >
               Xem
             </AppButton>
+            <AppButton
+              size={'sm'}
+              ml={'3px'}
+              bg={'red.100'}
+              onClick={() => handleDelete(data.userId)}
+            >
+              Xóa
+            </AppButton>
           </Box>
         </Flex>
         {openModalViewUser && (
@@ -135,6 +164,14 @@ const BranchAdminPersonnelManagementPage = () => {
             open={openModalViewUser}
             onClose={() => setOpenModalViewUser(false)}
             data={dataModal}
+          />
+        )}
+        {openModalDeleteConfirm && (
+          <ModalDeleteConfirm
+            open={openModalDeleteConfirm}
+            onClose={() => setOpenModalDeleteConfirm(false)}
+            onConfirm={deleteStaff}
+            text="staff"
           />
         )}
       </Flex>

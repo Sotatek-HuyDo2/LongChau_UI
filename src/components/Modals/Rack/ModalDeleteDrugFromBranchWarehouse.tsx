@@ -42,7 +42,7 @@ const ModalDeleteDrugFromBranchWarehouse: FC<
         .deleteDrugsFromBranchWareHouse({ ...dataForm, rackId: rackId });
       onClose();
       onReload();
-      toastSuccess('Thêm mới thuốc vào kho thành công');
+      toastSuccess('Xóa thuốc thành công');
     } catch (e: any) {
       toastError(e.message);
     }

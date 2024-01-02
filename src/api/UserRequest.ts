@@ -57,6 +57,11 @@ export default class UserRequest extends BaseRequest {
     return this.get(url);
   }
 
+  deleteStaff(id: number) {
+    const url = `user/staff/${id}`;
+    return this.delete(url);
+  }
+
   getBranchAdmin() {
     const url = `user/branch-admin`;
     return this.get(url);

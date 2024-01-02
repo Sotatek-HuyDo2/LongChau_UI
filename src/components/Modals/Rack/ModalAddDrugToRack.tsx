@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import 'src/styles/components/BaseModal.scss';
 import BaseModal from '../BaseModal';
 import AppButton from '../../AppButton';
@@ -9,7 +9,7 @@ import { toastError, toastSuccess } from 'src/utils/notify';
 import AppSelect from 'src/components/AppSelect';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
-interface IModalAddDrugToTotalRackProps {
+interface IModalAddDrugToRackProps {
   open: boolean;
   onClose: () => void;
   onReload: () => void;
@@ -21,20 +21,22 @@ interface IDataForm {
   quantity: number;
 }
 
-const ModalAddDrugToTotalRack: FC<IModalAddDrugToTotalRackProps> = (props) => {
+const ModalAddDrugToRack: FC<IModalAddDrugToRackProps> = (props) => {
   const initData = {
-    rackId: 1,
-    drugId: 1,
+    rackId: NaN,
+    drugId: NaN,
     quantity: 10,
   };
 
   const { open, onClose, onReload } = props;
   const [dataForm, setDataForm] = useState<IDataForm>(initData);
+  const [racks, setRacks] = useState<any>([]);
   const [drugs, setDrugs] = useState<any>([]);
-
   const addDrugsToRack = async () => {
     try {
-      await rf.getRequest('RackRequest').addDrugsToRack(dataForm);
+      await rf
+        .getRequest('RackRequest')
+        .addDrugsToRackOfMyBranch({ ...dataForm });
       onClose();
       onReload();
       toastSuccess('Thêm mới thuốc vào kho thành công');
@@ -43,27 +45,41 @@ const ModalAddDrugToTotalRack: FC<IModalAddDrugToTotalRackProps> = (props) => {
     }
   };
 
-  const getAllDrugs = async () => {
+  const getAllRack = async () => {
     try {
-      const res = await rf.getRequest('ProductRequest').getProduct();
-      const formatData = res.map((r: any) => ({
+      const res = await rf.getRequest('RackRequest').getAllRackOfMyBranch();
+      const rackList = res.map((r: any) => ({
+        value: r.rackId,
+        label: r.rackId,
+      }));
+      setRacks(rackList);
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+
+  const getAllDrugsMyHouse = async () => {
+    try {
+      const res = await rf.getRequest('RackRequest').getMyRackBranch();
+      const drugsMyHouse = res.drugs.map((r: any) => ({
         value: r.id,
         label: r.name,
       }));
-      setDrugs(formatData);
+      setDrugs(drugsMyHouse);
     } catch (e: any) {
       console.log(e.message);
     }
   };
 
   useEffectUnsafe(() => {
-    getAllDrugs();
+    getAllRack();
+    getAllDrugsMyHouse();
   }, []);
 
   return (
     <BaseModal
       size="xl"
-      title="Thêm thuốc vào kho"
+      title="Thêm thuốc vào ô chứa"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -75,6 +91,23 @@ const ModalAddDrugToTotalRack: FC<IModalAddDrugToTotalRackProps> = (props) => {
           gap={'15px'}
           w={'full'}
         >
+          <Box zIndex={2000}>
+            <AppSelect
+              label="Thuốc"
+              width={'full'}
+              options={racks}
+              value={dataForm.rackId || ''}
+              onChange={(value: string) => {
+                setDataForm({
+                  ...dataForm,
+                  rackId: +value,
+                });
+              }}
+              size="medium"
+              showFullName
+            />
+          </Box>
+
           <AppSelect
             label="Thuốc"
             width={'full'}
@@ -117,4 +150,4 @@ const ModalAddDrugToTotalRack: FC<IModalAddDrugToTotalRackProps> = (props) => {
   );
 };
 
-export default ModalAddDrugToTotalRack;
+export default ModalAddDrugToRack;

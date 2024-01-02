@@ -9,7 +9,7 @@ import { toastError, toastSuccess } from 'src/utils/notify';
 import AppSelect from 'src/components/AppSelect';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
-interface IModalAddDrugToTotalRackProps {
+interface IModalAddDrugToBranchWarehouseProps {
   open: boolean;
   onClose: () => void;
   onReload: () => void;
@@ -21,7 +21,9 @@ interface IDataForm {
   quantity: number;
 }
 
-const ModalAddDrugToTotalRack: FC<IModalAddDrugToTotalRackProps> = (props) => {
+const ModalAddDrugToBranchWarehouse: FC<IModalAddDrugToBranchWarehouseProps> = (
+  props,
+) => {
   const initData = {
     rackId: 1,
     drugId: 1,
@@ -34,7 +36,7 @@ const ModalAddDrugToTotalRack: FC<IModalAddDrugToTotalRackProps> = (props) => {
 
   const addDrugsToRack = async () => {
     try {
-      await rf.getRequest('RackRequest').addDrugsToRack(dataForm);
+      // await rf.getRequest('RackRequest').addDrugsToRack(dataForm);
       onClose();
       onReload();
       toastSuccess('Thêm mới thuốc vào kho thành công');
@@ -117,4 +119,4 @@ const ModalAddDrugToTotalRack: FC<IModalAddDrugToTotalRackProps> = (props) => {
   );
 };
 
-export default ModalAddDrugToTotalRack;
+export default ModalAddDrugToBranchWarehouse;

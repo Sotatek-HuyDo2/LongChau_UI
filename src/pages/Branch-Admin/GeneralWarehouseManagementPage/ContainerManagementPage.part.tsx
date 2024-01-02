@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { AppInput } from 'src/components';
+import { AppInput, AppSelect } from 'src/components';
 import { SearchExplorer } from 'src/assets/icons';
 import {
   Box,
@@ -10,11 +10,14 @@ import {
 } from '@chakra-ui/react';
 import { AppDataTable, AppButton } from 'src/components';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import { BaseBranchAdminPage } from 'src/components/layouts';
 import rf from 'src/api/RequestFactory';
 import ModalDeleteDrugFromBranchWarehouse from 'src/components/Modals/Rack/ModalDeleteDrugFromBranchWarehouse';
+import { AddIcon } from '@chakra-ui/icons';
+import ModalAddDrugToBranchWarehouse from 'src/components/Modals/Rack/ModalAddDrugToBranchWarehouse';
+import ModalAddNewRack from 'src/components/Modals/Rack/ModalAddNewRack';
+import ModalAddDrugToRack from 'src/components/Modals/Rack/ModalAddDrugToRack';
 
-const BranchAdminGeneralWarehouseManagementPage = () => {
+const ContainerManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<string>('');
   const [dataSearch, setDataSearch] = useState<any[]>([]);
   const dataRef = useRef<any[]>([]);
@@ -25,6 +28,13 @@ const BranchAdminGeneralWarehouseManagementPage = () => {
   const [drugId, setDrugId] = useState<number>(NaN);
   const [rackId, setRackId] = useState<number>(NaN);
   const [params, setParams] = useState<any>({});
+  const [capacity, setCapacity] = useState<any>('--');
+  const [capacityUsed, setCapacityUsed] = useState<any>('--');
+  const [racks, setRacks] = useState<any>([]);
+  const [openModalAddNewRackForMyBranch, setOpenModalAddNewRackForMyBranch] =
+    useState<boolean>(false);
+  const [openModalAddDrugsForMyRack, setOpenModalAddDrugsForMyRack] =
+    useState<boolean>(false);
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
@@ -52,10 +62,17 @@ const BranchAdminGeneralWarehouseManagementPage = () => {
 
   const getDataTable = async () => {
     try {
-      const res = await rf.getRequest('RackRequest').getMyRackBranch();
+      const res = await rf.getRequest('RackRequest').getAllRackOfMyBranch();
       dataRef.current = res.drugs;
       setDataSearch(res.drugs);
       setRackId(res.id);
+      const rackList = res.map((item: any) => {
+        return {
+          value: item.rackId,
+          label: item.rackId,
+        };
+      });
+      setRacks(rackList);
 
       return {
         docs: res.drugs,
@@ -68,7 +85,7 @@ const BranchAdminGeneralWarehouseManagementPage = () => {
   const _renderHeaderTable = () => {
     return (
       <Flex>
-        <Box className="category--header-cell-body category--id">ID</Box>
+        <Box className="category--header-cell-body category--id">ID thuốc</Box>
         <Box className="category--header-cell-body category--name">Tên</Box>
         <Box className="category--header-cell-body category--quality">
           số lượng(thuốc)
@@ -144,35 +161,63 @@ const BranchAdminGeneralWarehouseManagementPage = () => {
   };
 
   return (
-    <BaseBranchAdminPage>
+    <>
       <Box className="category" w="full">
-        <Flex
-          fontSize="24px"
-          as="b"
-          mr={'30px'}
-          alignItems={'center'}
-          gap={3}
-          color={'#2167df'}
-        >
-          Quản lý kho chi nhánh
-        </Flex>
         <Box className={'category__search'}>
-          <Flex alignItems={'center'}>
-            <Box className={'category__search-title'}>Tổng kho:</Box>
-            <Box className="category__search-input">
-              <InputGroup>
-                <AppInput
-                  color={'black'}
-                  placeholder="Nhập để tìm kiếm..."
-                  size="md"
-                  value={valueSearch}
-                  onChange={(e: any) => setValueSearch(e.target.value)}
+          <Flex alignItems={'center'} justifyContent={'space-between'}>
+            <Flex gap={1}>
+              <Box className="category__search-input">
+                <InputGroup>
+                  <AppInput
+                    color={'black'}
+                    placeholder="Nhập để tìm kiếm..."
+                    size="md"
+                    value={valueSearch}
+                    onChange={(e: any) => setValueSearch(e.target.value)}
+                  />
+                  <InputRightElement top={4}>
+                    <SearchExplorer />
+                  </InputRightElement>
+                </InputGroup>
+              </Box>
+              <Box color={'black'} fontWeight={700}>
+                <AppButton size={'md'} bg={'green.100'}>
+                  <Flex justify={'center'} align={'start'} gap={1}>
+                    {`${capacityUsed} / ${capacity}`}
+                  </Flex>
+                </AppButton>
+              </Box>
+            </Flex>
+            <Flex gap={1}>
+              <Box>
+                <AppSelect
+                  width={'full'}
+                  options={racks}
+                  value={''}
+                  onChange={(value: string) => setRackId(+value)}
+                  size="medium"
+                  showFullName
                 />
-                <InputRightElement top={4}>
-                  <SearchExplorer />
-                </InputRightElement>
-              </InputGroup>
-            </Box>
+              </Box>
+              <AppButton
+                size={'md'}
+                onClick={() => setOpenModalAddDrugsForMyRack(true)}
+              >
+                <Flex justify={'center'} align={'start'} gap={1}>
+                  <AddIcon />
+                  Thêm thuốc
+                </Flex>
+              </AppButton>
+              <AppButton
+                size={'md'}
+                onClick={() => setOpenModalAddNewRackForMyBranch(true)}
+              >
+                <Flex justify={'center'} align={'start'} gap={1}>
+                  <AddIcon />
+                  Thêm ô chứa
+                </Flex>
+              </AppButton>
+            </Flex>
           </Flex>
         </Box>
 
@@ -195,8 +240,22 @@ const BranchAdminGeneralWarehouseManagementPage = () => {
           onReload={onReload}
         />
       )}
-    </BaseBranchAdminPage>
+      {openModalAddNewRackForMyBranch && (
+        <ModalAddNewRack
+          open={openModalAddNewRackForMyBranch}
+          onClose={() => setOpenModalAddNewRackForMyBranch(false)}
+          onReload={onReload}
+        />
+      )}
+      {openModalAddDrugsForMyRack && (
+        <ModalAddDrugToRack
+          open={openModalAddDrugsForMyRack}
+          onClose={() => setOpenModalAddDrugsForMyRack(false)}
+          onReload={onReload}
+        />
+      )}
+    </>
   );
 };
 
-export default BranchAdminGeneralWarehouseManagementPage;
+export default ContainerManagementPage;

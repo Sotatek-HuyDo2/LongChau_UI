@@ -259,8 +259,6 @@ const MedicalManagementPage = () => {
         >
           Quản lý thuốc
         </Flex>
-        <Box>test push</Box>
-
         <Box className={'delist__search'}>
           <Flex justifyContent={'space-between'}>
             <Flex alignItems={'center'}>

@@ -8,14 +8,15 @@ interface IModalDeleteConfirmProps {
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
+  text?: string;
 }
 
 const ModalDeleteConfirm: FC<IModalDeleteConfirmProps> = (props) => {
-  const { open, onClose, onConfirm } = props;
+  const { open, onClose, onConfirm, text } = props;
   return (
     <BaseModal
       size="xl"
-      title="Delete confirmation"
+      title={'Xóa dữ liệu ' + (text ? text : '')}
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -28,7 +29,7 @@ const ModalDeleteConfirm: FC<IModalDeleteConfirmProps> = (props) => {
           w={'full'}
         >
           <Box className="delist-confirm--para" m={'auto'} fontSize={18}>
-            Do you want to delete?
+            Bạn có chắc chắn về hành động của mình?
           </Box>
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton

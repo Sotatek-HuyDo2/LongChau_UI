@@ -69,7 +69,7 @@ const BranchManagementPage = () => {
     setDataSearch(dataFilter);
   };
 
-  const handleDistibuted = (rackId: number) => {
+  const handleDistributed = (rackId: number) => {
     setRackId(rackId);
     setOpenModalDistributionDrugFromTotalRack(true);
   };
@@ -199,7 +199,7 @@ const BranchManagementPage = () => {
               size={'sm'}
               ml={'3px'}
               // onClick={() => navigate(`/medical/${data.branch.id}`)}
-              onClick={() => handleDistibuted(data.rackId)}
+              onClick={() => handleDistributed(data.rackId)}
             >
               Phân phối thuốc
             </AppButton>

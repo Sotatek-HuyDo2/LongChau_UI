@@ -9,35 +9,25 @@ import { toastError, toastSuccess } from 'src/utils/notify';
 import AppSelect from 'src/components/AppSelect';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
-interface IModalAddDrugToTotalRackProps {
+interface IModalAddNewRackProps {
   open: boolean;
   onClose: () => void;
   onReload: () => void;
 }
 
-interface IDataForm {
-  rackId: number;
-  drugId: number;
-  quantity: number;
-}
-
-const ModalAddDrugToTotalRack: FC<IModalAddDrugToTotalRackProps> = (props) => {
-  const initData = {
-    rackId: 1,
-    drugId: 1,
-    quantity: 10,
-  };
-
+const ModalAddNewRack: FC<IModalAddNewRackProps> = (props) => {
   const { open, onClose, onReload } = props;
-  const [dataForm, setDataForm] = useState<IDataForm>(initData);
-  const [drugs, setDrugs] = useState<any>([]);
+  const [capacity, setCapacity] = useState<any>();
 
-  const addDrugsToRack = async () => {
+  const createNewRack = async () => {
     try {
-      await rf.getRequest('RackRequest').addDrugsToRack(dataForm);
+      await rf
+        .getRequest('RackRequest')
+        .createRackForMyBranch({ capacity: capacity });
+      window.location.reload();
       onClose();
       onReload();
-      toastSuccess('Thêm mới thuốc vào kho thành công');
+      toastSuccess('Thêm mới ô chứa thành công');
     } catch (e: any) {
       toastError(e.message);
     }
@@ -45,12 +35,12 @@ const ModalAddDrugToTotalRack: FC<IModalAddDrugToTotalRackProps> = (props) => {
 
   const getAllDrugs = async () => {
     try {
-      const res = await rf.getRequest('ProductRequest').getProduct();
+      const res = await rf.getRequest('ProductRequest').createBranchWareHouse();
       const formatData = res.map((r: any) => ({
         value: r.id,
         label: r.name,
       }));
-      setDrugs(formatData);
+      // setDrugs(formatData);
     } catch (e: any) {
       console.log(e.message);
     }
@@ -63,7 +53,7 @@ const ModalAddDrugToTotalRack: FC<IModalAddDrugToTotalRackProps> = (props) => {
   return (
     <BaseModal
       size="xl"
-      title="Thêm thuốc vào kho"
+      title="Thêm ô chứa"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -75,27 +65,10 @@ const ModalAddDrugToTotalRack: FC<IModalAddDrugToTotalRackProps> = (props) => {
           gap={'15px'}
           w={'full'}
         >
-          <AppSelect
-            label="Thuốc"
-            width={'full'}
-            options={drugs}
-            value={dataForm.drugId || ''}
-            onChange={(value: string) => {
-              setDataForm({
-                ...dataForm,
-                drugId: +value,
-              });
-            }}
-            size="medium"
-            showFullName
-          />
-
           <AppInput
-            label="Số lượng"
+            label="Kích cỡ"
             type="number"
-            onChange={(e) =>
-              setDataForm({ ...dataForm, quantity: +e.target.value })
-            }
+            onChange={(e) => setCapacity(+e.target.value)}
           />
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton
@@ -107,7 +80,7 @@ const ModalAddDrugToTotalRack: FC<IModalAddDrugToTotalRackProps> = (props) => {
             >
               Hủy
             </AppButton>
-            <AppButton flex={1} onClick={addDrugsToRack}>
+            <AppButton flex={1} onClick={createNewRack}>
               Thêm mới
             </AppButton>
           </Flex>
@@ -117,4 +90,4 @@ const ModalAddDrugToTotalRack: FC<IModalAddDrugToTotalRackProps> = (props) => {
   );
 };
 
-export default ModalAddDrugToTotalRack;
+export default ModalAddNewRack;

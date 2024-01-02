@@ -19,7 +19,6 @@ import HomePage from './pages/HomePage';
 import PharmacySystemPage from './pages/PharmacySystemPage';
 import CategoryFunctionalFoodsPage from './pages/CategoryFunctionalFoodsPage';
 import CategoryMedicinePage from './pages/CategoryMedicinePage';
-import BranchAdminGeneralWarehouseManagementPage from './pages/Branch-Admin/GeneralWarehouseManagementPage';
 import StaffCustomerManagementPage from './pages/Staff/UserManagementPage';
 import BranchAdminPersonnelManagementPage from './pages/Branch-Admin/PersonnelManagementPage';
 import ProfilePart from './pages/UserProfilePage/Profile';
@@ -29,6 +28,7 @@ import ProfileEditPart from './pages/UserProfilePage/EditProfile';
 import CustomerManagementPage from './pages/Admin/UserManagementPage/CustomerManagementPage';
 import UserManagerList from './pages/Admin/UserManagementPage';
 import TotalRackManagementPage from './pages/Admin/TotalRackManagementPage';
+import GeneralWarehouseManagerList from './pages/Branch-Admin/GeneralWarehouseManagementPage';
 
 /**
  * Main App routes.
@@ -122,7 +122,7 @@ const RouterCustom = () => {
         path={'/branch-admin'}
         element={<PrivateRoute allowedRoles={['branch_admin']} />}
       >
-        <Route index element={<BranchAdminGeneralWarehouseManagementPage />} />
+        <Route index element={<GeneralWarehouseManagerList />} />
 
         <Route
           path={'personnel-management'}

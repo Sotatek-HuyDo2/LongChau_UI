@@ -32,20 +32,18 @@ interface IDataBody {
 }
 
 const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
-  const initDataUser = {
-    name: '',
-    typeId: NaN,
-    supplierId: NaN,
-    soldAsDose: false,
-    description: '',
-    unit: 'bottle',
-    barcode: NaN,
-    price: NaN,
-    size: NaN,
-  };
+  // const initDataUser = {
+  //   name: '',
+  //   typeId: NaN,
+  //   supplierId: NaN,
+  //   soldAsDose: false,
+  //   description: '',
+  //   unit: 'bottle',
+  //   barcode: NaN,
+  //   price: NaN,
+  //   size: NaN,
+  // };
   const { open, onClose, onReload, data } = props;
-  data;
-
   const [dataUser, setDataUser] = useState<IDataBody>(data);
   const [listDrugsType, setListDrugsTypes] = useState<any>([]);
   const [listCate, setListCate] = useState<any>([]);
@@ -53,8 +51,6 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
   const [categoriesId, setCategoriesId] = useState<number>(1);
 
   const createNewBranch = async () => {
-    dataUser;
-
     // try {
     //   await rf.getRequest('ProductRequest').createProduct(dataUser);
     //   onClose();
@@ -171,24 +167,24 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
               setDataUser({ ...dataUser, name: e.target.value.trim() })
             }
           />
+          <Box w={'full'} zIndex={2002}>
+            <AppSelect
+              label="Nhà cung cấp"
+              width={'full'}
+              options={listSupplier}
+              value={dataUser.supplierId}
+              onChange={(value: string) =>
+                setDataUser({
+                  ...dataUser,
+                  supplierId: +value,
+                })
+              }
+              size="medium"
+              showFullName
+            />
+          </Box>
 
           <Flex gap={3} zIndex={2001}>
-            <Box w={'full'} zIndex={2002}>
-              <AppSelect
-                label="Chi nhánh"
-                width={'full'}
-                options={listSupplier}
-                value={dataUser.supplierId}
-                onChange={(value: string) =>
-                  setDataUser({
-                    ...dataUser,
-                    supplierId: +value,
-                  })
-                }
-                size="medium"
-                showFullName
-              />
-            </Box>
             <Box w={'full'}>
               <AppSelect
                 label="Bán theo đơn"
@@ -212,50 +208,53 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
                 showFullName
               />
             </Box>
+            <Box w={'full'} zIndex={2000}>
+              <AppSelect
+                label="Đơn vị"
+                width={'full'}
+                options={listUnit}
+                value={dataUser.unit}
+                onChange={(value: string) =>
+                  setDataUser({
+                    ...dataUser,
+                    unit: value,
+                  })
+                }
+                size="medium"
+                showFullName
+              />
+            </Box>
           </Flex>
-          <Box w={'full'} zIndex={2000}>
-            <AppSelect
-              label="Chi Nhánh"
-              width={'full'}
-              options={listUnit}
-              value={dataUser.unit}
-              onChange={(value: string) =>
-                setDataUser({
-                  ...dataUser,
-                  unit: value,
-                })
-              }
-              size="medium"
-              showFullName
-            />
-          </Box>
-          {/* <Box zIndex={1999}>
-            <AppSelect
-              label="Loại"
-              width={'full'}
-              options={listCate}
-              value={dataUser.supplierId}
-              onChange={(value: string) => setCategoriesId(+value)}
-              size="medium"
-              showFullName
-            />
-          </Box> */}
-          <Box zIndex={1998}>
-            <AppSelect
-              label="Phân Loại"
-              width={'full'}
-              options={listDrugsType}
-              value={dataUser.typeId}
-              onChange={(value: string) =>
-                setDataUser({
-                  ...dataUser,
-                  typeId: +value,
-                })
-              }
-              size="medium"
-              showFullName
-            />
-          </Box>
+
+          <Flex gap={3} zIndex={2001}>
+            <Box zIndex={1999} w={'full'}>
+              <AppSelect
+                label="Loại"
+                width={'full'}
+                options={listCate}
+                value={dataUser.supplierId}
+                onChange={(value: string) => setCategoriesId(+value)}
+                size="medium"
+                showFullName
+              />
+            </Box>
+            <Box zIndex={1998} w={'full'}>
+              <AppSelect
+                label="Phân Loại"
+                width={'full'}
+                options={listDrugsType}
+                value={dataUser.typeId}
+                onChange={(value: string) =>
+                  setDataUser({
+                    ...dataUser,
+                    typeId: +value,
+                  })
+                }
+                size="medium"
+                showFullName
+              />
+            </Box>
+          </Flex>
           <AppInput
             label="Bar-code"
             value={dataUser.barcode}
