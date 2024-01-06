@@ -29,6 +29,8 @@ import CustomerManagementPage from './pages/Admin/UserManagementPage/CustomerMan
 import UserManagerList from './pages/Admin/UserManagementPage';
 import TotalRackManagementPage from './pages/Admin/TotalRackManagementPage';
 import GeneralWarehouseManagerList from './pages/Branch-Admin/GeneralWarehouseManagementPage';
+import CreatedOrderManagementPage from './pages/Staff/CreatedOrderManagementPage';
+import ApprovedOrderManagementPage from './pages/Staff/ApprovedOrderManagementPage';
 
 /**
  * Main App routes.
@@ -70,6 +72,10 @@ const RouterCustom = () => {
 
       <Route path={'/register'} element={<RegisterPage />} />
 
+      <Route element={<PrivateRoute allowedRoles={['customer', 'admin']} />}>
+        <Route path={'medical/:id'} element={<MedicalDetailPage />} />
+      </Route>
+
       {/* Customer */}
       <Route path={'/'} element={<PrivateRoute allowedRoles={['customer']} />}>
         <Route index element={<HomePage />} />
@@ -100,20 +106,24 @@ const RouterCustom = () => {
         /> */}
       </Route>
 
-      <Route element={<PrivateRoute allowedRoles={['customer', 'admin']} />}>
-        <Route path={'medical/:id'} element={<MedicalDetailPage />} />
-      </Route>
-
       {/* Staff */}
       <Route
         path={'/staff'}
         element={<PrivateRoute allowedRoles={['staff']} />}
       >
         <Route index element={<StaffCustomerManagementPage />} />
-
         <Route
           path={'general-warehouse-management'}
           element={<GeneralWarehouseManagementPage />}
+        />
+        <Route
+          path={'created-ordered-management'}
+          element={<CreatedOrderManagementPage />}
+        />
+
+        <Route
+          path={'approved-ordered-management'}
+          element={<ApprovedOrderManagementPage />}
         />
       </Route>
 
@@ -162,33 +172,6 @@ const RouterCustom = () => {
 
         <Route path={'statistical'} element={<Statistical />} />
       </Route>
-
-      {/* 
-        <Route path={'admin'} element={<SupplierManagementPage />} />
-      <Route
-        path={'admin/category-management/category-functional-foods'}
-        element={<CategoryFunctionalFoods />}
-      />
-
-      <Route
-        path={'admin/category-management/category-medicine'}
-        element={<CategoryMedicine />}
-      />
-
-      <Route
-        path={'admin/category-management/category-personal-care'}
-        element={<CategoryPersonalCare />}
-      />
-
-      <Route
-        path={'admin/category-management/category-medical-equipment'}
-        element={<CategoryMedicalEquipment />}
-      /> */}
-
-      {/* <Route
-        path={'admin/general-warehouse-management'}
-        element={<GeneralWarehouseManagementPage />}
-      /> */}
     </Routes>
   );
 };

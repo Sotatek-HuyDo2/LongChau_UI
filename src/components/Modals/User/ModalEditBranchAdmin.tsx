@@ -1,8 +1,8 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import 'src/styles/components/BaseModal.scss';
 import BaseModal from '../BaseModal';
 import AppButton from '../../AppButton';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import AppInput from '../../AppInput';
 import { IAdmin } from 'src/pages/Admin/UserManagementPage/BranchAdminManagementPage.part';
 
@@ -12,13 +12,41 @@ interface IModalEditBranchAdminProps {
   data: IAdmin;
 }
 
+interface IDataBody {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  branchId: number;
+}
+
 const ModalEditBranchAdmin: FC<IModalEditBranchAdminProps> = (props) => {
+  const initDataUser = {
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    phone: '',
+    branchId: 1,
+  };
   const { open, onClose, data } = props;
+  const [dataUser, setDataUser] = useState<IDataBody>(initDataUser);
+  const [isEmailValid, setEmailValid] = useState(true);
+  const [passwordConfirm, setPasswordConfirm] = useState<string>('');
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const emailValue = e.target.value.trim();
+    setDataUser({ ...dataUser, email: emailValue });
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setEmailValid(emailRegex.test(emailValue));
+  };
 
   return (
     <BaseModal
       size="xl"
-      title="Sang nhượng quyền quản lý chi nhánh"
+      title="Thay quản lý chi nhánh"
       isOpen={open}
       onClose={onClose}
       className="modal-languages"
@@ -30,13 +58,51 @@ const ModalEditBranchAdmin: FC<IModalEditBranchAdminProps> = (props) => {
           gap={'15px'}
           w={'full'}
         >
+          <Box color={'black'}>Từ quản lý</Box>
           <Flex gap={3}>
             <AppInput label="Tên" value={data.firstName} />
             <AppInput label="Họ" value={data.lastName} />
           </Flex>
           <AppInput label="Chi nhánh" value={data.branchName} />
 
-          <AppInput label="Số điện thoại" value={data.phone} />
+          <Box color={'black'}>Sang quản lý</Box>
+
+          <Flex gap={3}>
+            <AppInput label="Tên" />
+            <AppInput label="Họ" />
+          </Flex>
+          <AppInput
+            label="Số điện thoại"
+            onChange={(e: any) =>
+              setDataUser({ ...dataUser, phone: e.target.value.trim() })
+            }
+          />
+          <AppInput
+            type="email"
+            label="Email"
+            onChange={handleEmailChange}
+            isInvalid={!isEmailValid}
+          />
+          <Text color={'red.500'}>{!isEmailValid && 'Email không hợp lệ'}</Text>
+
+          <Flex gap={3}>
+            <AppInput
+              type="password"
+              label="Mật khẩu"
+              onChange={(e: any) =>
+                setDataUser({ ...dataUser, password: e.target.value })
+              }
+            />
+            <AppInput
+              type="password"
+              label="Xác nhận mật khẩu"
+              onChange={(e: any) => setPasswordConfirm(e.target.value)}
+              disabled={!dataUser.password}
+            />
+          </Flex>
+          {passwordConfirm && passwordConfirm !== dataUser.password && (
+            <Text color={'red.500'}>Mật khẩu không khớp</Text>
+          )}
 
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton

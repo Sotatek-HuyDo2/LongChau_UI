@@ -13,7 +13,6 @@ import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import rf from 'src/api/RequestFactory';
 import ModalDeleteDrugFromBranchWarehouse from 'src/components/Modals/Rack/ModalDeleteDrugFromBranchWarehouse';
 import { AddIcon } from '@chakra-ui/icons';
-import ModalAddDrugToBranchWarehouse from 'src/components/Modals/Rack/ModalAddDrugToBranchWarehouse';
 import ModalAddNewRack from 'src/components/Modals/Rack/ModalAddNewRack';
 import ModalAddDrugToRack from 'src/components/Modals/Rack/ModalAddDrugToRack';
 
@@ -35,6 +34,8 @@ const ContainerManagementPage = () => {
     useState<boolean>(false);
   const [openModalAddDrugsForMyRack, setOpenModalAddDrugsForMyRack] =
     useState<boolean>(false);
+
+  const [dataTable, setDataTable] = useState<any>([]);
 
   const handleSearch = () => {
     let dataFilter = dataRef.current;
@@ -63,22 +64,33 @@ const ContainerManagementPage = () => {
   const getDataTable = async () => {
     try {
       const res = await rf.getRequest('RackRequest').getAllRackOfMyBranch();
-      dataRef.current = res.drugs;
-      setDataSearch(res.drugs);
-      setRackId(res.id);
-      const rackList = res.map((item: any) => {
-        return {
-          value: item.rackId,
-          label: item.rackId,
-        };
-      });
+      const rackList = res.map((item: any) => ({
+        value: item.rackId,
+        label: item.rackId,
+      }));
       setRacks(rackList);
-
+      setRackId(res[0]?.rackId);
+      setCapacity(res[0]?.capacity);
+      setCapacityUsed(res[0]?.capacityUsed);
+      dataRef.current = res[0].drugs;
+      setDataSearch(res[0].drugs);
       return {
-        docs: res.drugs,
+        docs: res[0].drugs,
       };
     } catch (error) {
-      return { docs: [] };
+      console.error(error);
+    }
+  };
+
+  const handleSelect = async (rackId: number) => {
+    setRackId(rackId);
+    const res = await rf.getRequest('RackRequest').getAllRackOfMyBranch();
+    if (res.length > 0) {
+      const dataByRackId = res.find((item: any) => item.rackId === rackId);
+      setCapacity(dataByRackId.capacity);
+      setCapacityUsed(dataByRackId.capacityUsed);
+      setDataSearch(dataByRackId.drugs);
+      dataRef.current = dataByRackId.drugs;
     }
   };
 
@@ -100,7 +112,7 @@ const ContainerManagementPage = () => {
   const _renderContentTable = (data: any[]) => {
     return (
       <Box>
-        {dataSearch.map((data: any, id: number) => {
+        {dataSearch?.map((data: any, id: number) => {
           return (
             <RowAddressTransactionTable data={data} key={`${id}-coin-table`} />
           );
@@ -193,8 +205,8 @@ const ContainerManagementPage = () => {
                 <AppSelect
                   width={'full'}
                   options={racks}
-                  value={''}
-                  onChange={(value: string) => setRackId(+value)}
+                  value={rackId}
+                  onChange={(value: string) => handleSelect(+value)}
                   size="medium"
                   showFullName
                 />

@@ -36,8 +36,8 @@ export default class ProductRequest extends BaseRequest {
     return this.delete(url);
   }
 
-  // updateProductInfo(param: any, id: number) {
-  //   const url = `/drugs/${id}`;
-  //   return this.put(url, param);
-  // }
+  updateProductInfo(id: number, param: any) {
+    const url = `drugs/${id}`;
+    return this.put(url, param);
+  }
 }

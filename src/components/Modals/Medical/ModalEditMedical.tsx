@@ -19,6 +19,7 @@ interface IModalEditMedicalProps {
 }
 
 interface IDataBody {
+  id: number;
   name: string;
   typeId: number;
   supplierId: number;
@@ -29,36 +30,28 @@ interface IDataBody {
   barcode: number;
   price: number;
   size: number;
+  categoryId: number;
 }
 
 const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
-  // const initDataUser = {
-  //   name: '',
-  //   typeId: NaN,
-  //   supplierId: NaN,
-  //   soldAsDose: false,
-  //   description: '',
-  //   unit: 'bottle',
-  //   barcode: NaN,
-  //   price: NaN,
-  //   size: NaN,
-  // };
   const { open, onClose, onReload, data } = props;
   const [dataUser, setDataUser] = useState<IDataBody>(data);
   const [listDrugsType, setListDrugsTypes] = useState<any>([]);
   const [listCate, setListCate] = useState<any>([]);
   const [listSupplier, setListSupplier] = useState<any>([]);
-  const [categoriesId, setCategoriesId] = useState<number>(1);
+  const [categoriesId, setCategoriesId] = useState<number>(data.categoryId);
 
   const createNewBranch = async () => {
-    // try {
-    //   await rf.getRequest('ProductRequest').createProduct(dataUser);
-    //   onClose();
-    //   onReload();
-    //   toastSuccess('Sửa thuốc thành công');
-    // } catch (e: any) {
-    //   toastError(e.message);
-    // }
+    try {
+      await rf
+        .getRequest('ProductRequest')
+        .updateProductInfo(dataUser.id, dataUser);
+      onClose();
+      onReload();
+      toastSuccess('Sửa thuốc thành công');
+    } catch (e: any) {
+      toastError(e.message);
+    }
   };
 
   const getDataSupplier = async () => {
@@ -184,7 +177,7 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
             />
           </Box>
 
-          <Flex gap={3} zIndex={2001}>
+          <Flex gap={3} zIndex={2005}>
             <Box w={'full'}>
               <AppSelect
                 label="Bán theo đơn"
@@ -232,8 +225,14 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
                 label="Loại"
                 width={'full'}
                 options={listCate}
-                value={dataUser.supplierId}
-                onChange={(value: string) => setCategoriesId(+value)}
+                value={categoriesId}
+                onChange={(value: string) => {
+                  setCategoriesId(+value);
+                  // setDataUser({
+                  //   ...dataUser,
+                  //   unit: value,
+                  // });
+                }}
                 size="medium"
                 showFullName
               />
@@ -243,7 +242,7 @@ const ModalEditMedical: FC<IModalEditMedicalProps> = (props) => {
                 label="Phân Loại"
                 width={'full'}
                 options={listDrugsType}
-                value={dataUser.typeId}
+                value={dataUser?.typeId}
                 onChange={(value: string) =>
                   setDataUser({
                     ...dataUser,

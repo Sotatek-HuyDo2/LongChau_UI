@@ -102,12 +102,12 @@ const TotalRackManagementPage = () => {
         <Box className="category--header-cell-body category--quality">
           Kích thước
         </Box>
-        <Box className="category--header-cell-body category--quality">
+        <Box className="category--header-cell-body category--action">
           Số lượng
         </Box>
-        <Box className="category--header-cell-body category--action">
+        {/* <Box className="category--header-cell-body category--action">
           Action
-        </Box>
+        </Box> */}
       </Flex>
     );
   };
@@ -164,11 +164,11 @@ const TotalRackManagementPage = () => {
           </Flex>
           <Flex
             flexDirection="row"
-            className="category--cell-body category--quality"
+            className="category--cell-body category--action"
           >
             {data?.quantity ? data?.quantity : '--'}
           </Flex>
-          <Box
+          {/* <Box
             className="category--cell-body category--action"
             cursor={'pointer'}
           >
@@ -180,7 +180,7 @@ const TotalRackManagementPage = () => {
             >
               Bỏ thuốc
             </AppButton>
-          </Box>
+          </Box> */}
         </Flex>
       </Flex>
     );

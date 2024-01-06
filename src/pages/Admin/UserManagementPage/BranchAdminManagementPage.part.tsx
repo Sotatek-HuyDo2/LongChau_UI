@@ -161,7 +161,7 @@ const BranchAdminManagementPage = () => {
               bg={'yellow.100'}
               onClick={() => handleOpenModalEditBranchAdmin(data.userId)}
             >
-              Sang nhượng
+              Thay quản lý
             </AppButton>
           </Box>
         </Flex>
@@ -170,13 +170,6 @@ const BranchAdminManagementPage = () => {
           <ModalViewBranchAdmin
             open={openModalViewBranchAdmin}
             onClose={() => setOpenModalViewBranchAdmin(false)}
-            data={dataModal}
-          />
-        )}
-        {openModalEditBranchAdmin && (
-          <ModalEditBranchAdmin
-            open={openModalEditBranchAdmin}
-            onClose={() => setOpenModalEditBranchAdmin(false)}
             data={dataModal}
           />
         )}
@@ -204,12 +197,12 @@ const BranchAdminManagementPage = () => {
               </InputGroup>
             </Box>
           </Flex>
-          <AppButton size={'md'} onClick={() => setOpenModalAddNewUser(true)}>
+          {/* <AppButton size={'md'} onClick={() => setOpenModalAddNewUser(true)}>
             <Flex justify={'center'} align={'start'} gap={1}>
               <AddIcon />
               Thêm quản lý chi nhánh
             </Flex>
-          </AppButton>
+          </AppButton> */}
         </Flex>
       </Box>
 
@@ -227,6 +220,13 @@ const BranchAdminManagementPage = () => {
           onReload={onReload}
           open={openModalAddNewUser}
           onClose={() => setOpenModalAddNewUser(false)}
+        />
+      )}
+      {openModalEditBranchAdmin && (
+        <ModalEditBranchAdmin
+          open={openModalEditBranchAdmin}
+          onClose={() => setOpenModalEditBranchAdmin(false)}
+          data={dataModal}
         />
       )}
     </Box>

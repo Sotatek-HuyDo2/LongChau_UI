@@ -81,12 +81,12 @@ const WarehouseManagementPage = () => {
       <Flex>
         <Box className="category--header-cell-body category--id">ID thuốc</Box>
         <Box className="category--header-cell-body category--name">Tên</Box>
-        <Box className="category--header-cell-body category--quality">
+        <Box className="category--header-cell-body category--action">
           số lượng(thuốc)
         </Box>
-        <Box className="category--header-cell-body category--action">
+        {/* <Box className="category--header-cell-body category--action">
           Action
-        </Box>
+        </Box> */}
       </Flex>
     );
   };
@@ -132,11 +132,11 @@ const WarehouseManagementPage = () => {
           </Box>
           <Flex
             flexDirection="row"
-            className="category--cell-body category--quality"
+            className="category--cell-body category--action"
           >
             {data?.quantity ? data?.quantity : '--'}
           </Flex>
-          <Box
+          {/* <Box
             className="category--cell-body category--action"
             cursor={'pointer'}
           >
@@ -148,7 +148,7 @@ const WarehouseManagementPage = () => {
             >
               Bỏ Thuốc
             </AppButton>
-          </Box>
+          </Box> */}
         </Flex>
       </Flex>
     );

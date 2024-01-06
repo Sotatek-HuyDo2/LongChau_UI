@@ -93,7 +93,7 @@ const ModalAddDrugToRack: FC<IModalAddDrugToRackProps> = (props) => {
         >
           <Box zIndex={2000}>
             <AppSelect
-              label="Thuốc"
+              label="Ô chứa"
               width={'full'}
               options={racks}
               value={dataForm.rackId || ''}

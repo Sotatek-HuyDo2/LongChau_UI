@@ -3,129 +3,120 @@ import 'src/styles/components/Navbar.scss';
 import { Box, Flex } from '@chakra-ui/layout';
 import { useNavigate } from 'react-router';
 import { Overview } from 'src/assets/icons';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { ChevronRightIcon } from '@chakra-ui/icons';
-
-interface MenuDropProps {
-  dropTitle: string;
-  dropItem?: Array<{ name: string; path: string }> | undefined;
-}
-
-const LIST_ITEM = [
-  {
-    name: 'Thực phẩm chức năng',
-    path: '/admin/category-management/category-functional-foods',
-  },
-  { name: 'Thuốc', path: '/admin/category-management/category-medicine' },
-  {
-    name: 'Chăm sóc cá nhân',
-    path: '/admin/category-management/category-personal-care',
-  },
-  {
-    name: 'Thiết bị y tế',
-    path: '/admin/category-management/category-medical-equipment',
-  },
-];
-
-const MenuDrop = ({ dropTitle, dropItem = LIST_ITEM }: MenuDropProps) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const navigate2 = useNavigate();
-  const handleOpen = () => {
-    setOpen(!open);
-  };
-
-  return (
-    <Flex className="sidebar-drop" flexDirection="column">
-      <Flex
-        className="sidebar-drop__title"
-        onClick={handleOpen}
-        align="center"
-        gap="20px"
-      >
-        <Overview />
-        {dropTitle}
-        <ChevronRightIcon
-          className={`sidebar-drop__icon ${open ? 'active' : ''}`}
-        />
-      </Flex>
-      <Flex
-        pt={'3px'}
-        flexDirection="column"
-        justifyContent={'end'}
-        zIndex={'1111'}
-        ml="45px"
-      >
-        {dropItem.map((item, index) => (
-          <Box
-            pt={'3px'}
-            key={index}
-            className={`sidebar-drop__item ${open ? 'active' : ''}`}
-            onClick={() => {
-              navigate2(item?.path);
-            }}
-          >
-            <Flex
-              alignItems="center"
-              height={'100%'}
-              className={`sidebar-drop__item-title ${
-                location.pathname.includes(item.path) ? 'active' : ''
-              }`}
-            >
-              {item.name}
-            </Flex>
-          </Box>
-        ))}
-      </Flex>
-    </Flex>
-  );
-};
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
 const MENUS = [
   {
-    name: 'Quản lý khách hàng',
+    name: 'Quản lý đơn hàng',
     path: '/staff',
     icon: <Overview />,
   },
   {
     name: 'Quản lý đơn hàng',
-    path: '/staff/order-management',
     icon: <Overview />,
-    component: <MenuDrop dropTitle="Quản lý đơn hàng" dropItem={LIST_ITEM} />,
-  },
-  {
-    name: 'Xử lý đơn hàng',
-    path: '/staff/order-processing',
-    icon: <Overview />,
-    // component: <MenuDrop dropTitle="Thống kê" dropItem={LIST_ITEM} />,
+    pathChild: [
+      {
+        name: 'Đơn hàng đã chia',
+        path: '/staff/user-management',
+      },
+      {
+        name: 'Đơn hàng đã được tạo',
+        path: '/staff/created-ordered-management',
+      },
+      {
+        name: 'Đơn hàng được xác nhận',
+        path: '/staff/approved-ordered-management',
+      },
+      {
+        name: 'Đơn hàng đang vận chuyển',
+        path: '/staff/customer-management',
+      },
+      {
+        name: 'Đơn hàng đã hoàn thành',
+        path: '/staff/customer-management',
+      },
+      {
+        name: 'Đơn hàng bị từ chối/hủy',
+        path: '/staff/customer-management',
+      },
+    ],
   },
 ];
 
 const SidebarStaff = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [openDropdown, setOpenDropdown] = useState(false);
+
+  useEffectUnsafe(() => {
+    const hasChildPaths = MENUS.some((menu) =>
+      menu.pathChild?.some((item) => location.pathname === item.path),
+    );
+
+    setOpenDropdown(hasChildPaths);
+  }, [location.pathname]);
 
   return (
     <Box className="nav-bar">
       <Box className="nav-bar__menu">
         {MENUS.map((menu, index) => {
+          const isActive =
+            location.pathname === menu.path ||
+            (menu.pathChild &&
+              menu.pathChild.some((item) =>
+                location.pathname.includes(item.path),
+              ));
+
           return (
-            <Flex
-              userSelect="none"
-              key={index}
-              className={
-                !menu.component
-                  ? `nav-bar__menu-item ${
-                      location.pathname === menu.path ? 'active' : ''
-                    }`
-                  : 'nav-bar__menu-drop'
-              }
-              onClick={() => {
-                menu.component ? '' : navigate(menu.path || '/staff');
-              }}
-            >
-              <Box>{menu.component ? null : menu.icon}</Box>
-              <Box>{menu.component ? menu.component : menu.name}</Box>
-            </Flex>
+            <>
+              <Flex
+                userSelect="none"
+                key={index}
+                className={`nav-bar__menu-item ${isActive ? 'active' : ''}`}
+                onClick={() => {
+                  if (menu.pathChild) {
+                    setOpenDropdown(!openDropdown);
+                  } else {
+                    navigate(menu.path || '/staff');
+                    setOpenDropdown(false);
+                  }
+                }}
+              >
+                <Flex flexDir={'column'}>
+                  <Flex alignItems={'center'}>
+                    <Box>{menu.icon}</Box>
+                    <Box>
+                      {menu.name}{' '}
+                      {menu.pathChild && (
+                        <ChevronRightIcon
+                          className={`sidebar-drop__icon ${
+                            openDropdown ? 'active' : ''
+                          }`}
+                        />
+                      )}
+                    </Box>
+                  </Flex>
+                </Flex>
+              </Flex>
+              {menu.pathChild && openDropdown && (
+                <Flex className="dropdown-menu" flexDir={'column'}>
+                  {menu.pathChild.map((childItem: any, childIndex) => (
+                    <Flex
+                      key={childIndex}
+                      pl={'90px'}
+                      className={`nav-bar__menu-item ${
+                        location.pathname === childItem.path ? 'active' : ''
+                      }`}
+                      onClick={() => navigate(childItem?.path)}
+                    >
+                      <Box>{childItem.name}</Box>
+                    </Flex>
+                  ))}
+                </Flex>
+              )}
+            </>
           );
         })}
       </Box>

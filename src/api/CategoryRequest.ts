@@ -6,11 +6,6 @@ export default class CategoryRequest extends BaseRequest {
     return config.api.baseUrlApi;
   }
 
-  // createProduct(param: any) {
-  //   const url = `/product/create`;
-  //   return this.post(url, param);
-  // }
-
   getAllCate() {
     const url = `categories`;
     return this.get(url);

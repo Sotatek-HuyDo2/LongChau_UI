@@ -46,7 +46,7 @@ const Header = () => {
   }, []);
   return (
     <Flex className="header" justifyContent={'space-between'}>
-      <Box>LongChau Dashboard</Box>
+      <Box>Hust Pharmacy Dashboard</Box>
 
       {accessToken ? (
         <Box>
