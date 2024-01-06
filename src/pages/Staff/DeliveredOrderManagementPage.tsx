@@ -10,7 +10,7 @@ import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import rf from 'src/api/RequestFactory';
 import moment from 'moment';
 import ModalViewOrder from 'src/components/Modals/Order/ModalViewOrder';
-
+import { toastError, toastSuccess } from 'src/utils/notify';
 export interface IData {
   id: number;
   status: string;
@@ -34,7 +34,7 @@ const typeStatus: { [key: string]: string } = {
   rejected: 'Đã bị hủy',
 };
 
-const SplitedOrderManagementPage = () => {
+const DeliveredOrderManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<number>();
   const [dataSearch, setDataSearch] = useState<IData[]>([]);
   const dataRef = useRef<IData[]>([]);
@@ -45,6 +45,17 @@ const SplitedOrderManagementPage = () => {
   const handleViewOrder = (id: number) => {
     setId(id);
     setOpenModalViewOrder(true);
+  };
+
+  const handleChangeStatusOrder = async (id: number) => {
+    try {
+      await rf
+        .getRequest('OrderRequest')
+        .changeStatusOrder(id, { status: 'done' });
+      toastSuccess('Đơn hàng đã hoàn thành');
+    } catch (err: any) {
+      toastError(err.message);
+    }
   };
 
   const onReload = () => {
@@ -63,7 +74,7 @@ const SplitedOrderManagementPage = () => {
 
   const getDataTable = async () => {
     try {
-      const res = await rf.getRequest('OrderRequest').getDoneOrder();
+      const res = await rf.getRequest('OrderRequest').getDeliveredOrder();
       dataRef.current = res;
       setDataSearch(res);
       return {
@@ -144,6 +155,15 @@ const SplitedOrderManagementPage = () => {
             <AppButton size={'sm'} onClick={() => handleViewOrder(data.id)}>
               Xem
             </AppButton>
+
+            <AppButton
+              size={'sm'}
+              bg={'green.100'}
+              ml={'3px'}
+              onClick={() => handleChangeStatusOrder(data.id)}
+            >
+              Hoàn thành
+            </AppButton>
           </Box>
         </Flex>
       </Flex>
@@ -161,7 +181,7 @@ const SplitedOrderManagementPage = () => {
           gap={3}
           color={'#2167df'}
         >
-          Quản lý đơn hàng đã chia
+          Quản lý đơn hàng đang vận chuyển
         </Flex>
         <Box className={'delist__search'}>
           <Flex justifyContent={'space-between'}>
@@ -206,4 +226,4 @@ const SplitedOrderManagementPage = () => {
   );
 };
 
-export default SplitedOrderManagementPage;
+export default DeliveredOrderManagementPage;

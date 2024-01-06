@@ -31,6 +31,10 @@ import TotalRackManagementPage from './pages/Admin/TotalRackManagementPage';
 import GeneralWarehouseManagerList from './pages/Branch-Admin/GeneralWarehouseManagementPage';
 import CreatedOrderManagementPage from './pages/Staff/CreatedOrderManagementPage';
 import ApprovedOrderManagementPage from './pages/Staff/ApprovedOrderManagementPage';
+import SplitedOrderManagementPage from './pages/Staff/SplitedOrderManagementPage';
+import DeliveredOrderManagementPage from './pages/Staff/DeliveredOrderManagementPage';
+import DoneOrderManagementPage from './pages/Staff/DoneOrderManagementPage';
+import RejectOrderManagementPage from './pages/Staff/RejectOrderManagementPage';
 
 /**
  * Main App routes.
@@ -116,6 +120,12 @@ const RouterCustom = () => {
           path={'general-warehouse-management'}
           element={<GeneralWarehouseManagementPage />}
         />
+
+        <Route
+          path={'splited-ordered-management'}
+          element={<SplitedOrderManagementPage />}
+        />
+
         <Route
           path={'created-ordered-management'}
           element={<CreatedOrderManagementPage />}
@@ -124,6 +134,21 @@ const RouterCustom = () => {
         <Route
           path={'approved-ordered-management'}
           element={<ApprovedOrderManagementPage />}
+        />
+
+        <Route
+          path={'delivered-ordered-management'}
+          element={<DeliveredOrderManagementPage />}
+        />
+
+        <Route
+          path={'done-ordered-management'}
+          element={<DoneOrderManagementPage />}
+        />
+
+        <Route
+          path={'rejected-ordered-management'}
+          element={<RejectOrderManagementPage />}
         />
       </Route>
 

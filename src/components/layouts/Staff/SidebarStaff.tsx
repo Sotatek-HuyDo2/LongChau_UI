@@ -19,7 +19,7 @@ const MENUS = [
     pathChild: [
       {
         name: 'Đơn hàng đã chia',
-        path: '/staff/user-management',
+        path: '/staff/splited-ordered-management',
       },
       {
         name: 'Đơn hàng đã được tạo',
@@ -31,15 +31,15 @@ const MENUS = [
       },
       {
         name: 'Đơn hàng đang vận chuyển',
-        path: '/staff/customer-management',
+        path: '/staff/delivered-ordered-management',
       },
       {
         name: 'Đơn hàng đã hoàn thành',
-        path: '/staff/customer-management',
+        path: '/staff/done-ordered-management',
       },
       {
         name: 'Đơn hàng bị từ chối/hủy',
-        path: '/staff/customer-management',
+        path: '/staff/rejected-ordered-management',
       },
     ],
   },

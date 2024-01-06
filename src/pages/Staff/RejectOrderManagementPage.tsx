@@ -10,6 +10,7 @@ import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import rf from 'src/api/RequestFactory';
 import moment from 'moment';
 import ModalViewOrder from 'src/components/Modals/Order/ModalViewOrder';
+import { toastError, toastSuccess } from 'src/utils/notify';
 
 export interface IData {
   id: number;
@@ -34,7 +35,7 @@ const typeStatus: { [key: string]: string } = {
   rejected: 'Đã bị hủy',
 };
 
-const SplitedOrderManagementPage = () => {
+const RejectOrderManagementPage = () => {
   const [valueSearch, setValueSearch] = useState<number>();
   const [dataSearch, setDataSearch] = useState<IData[]>([]);
   const dataRef = useRef<IData[]>([]);
@@ -63,7 +64,7 @@ const SplitedOrderManagementPage = () => {
 
   const getDataTable = async () => {
     try {
-      const res = await rf.getRequest('OrderRequest').getDoneOrder();
+      const res = await rf.getRequest('OrderRequest').getRejectedOrder();
       dataRef.current = res;
       setDataSearch(res);
       return {
@@ -161,7 +162,7 @@ const SplitedOrderManagementPage = () => {
           gap={3}
           color={'#2167df'}
         >
-          Quản lý đơn hàng đã chia
+          Quản lý đơn hàng đã bị hủy
         </Flex>
         <Box className={'delist__search'}>
           <Flex justifyContent={'space-between'}>
@@ -206,4 +207,4 @@ const SplitedOrderManagementPage = () => {
   );
 };
 
-export default SplitedOrderManagementPage;
+export default RejectOrderManagementPage;

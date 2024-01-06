@@ -97,7 +97,7 @@ const CreatedOrderManagementPage = () => {
 
   const getDataTable = async () => {
     try {
-      const res = await rf.getRequest('OrderRequest').getApprovedOrder();
+      const res = await rf.getRequest('OrderRequest').getCreatedOrder();
       dataRef.current = res;
       setDataSearch(res);
       return {
