@@ -72,6 +72,11 @@ export default class UserRequest extends BaseRequest {
     return this.get(url);
   }
 
+  updateBranchAdminByID(id: number | string) {
+    const url = `user/branch-admin/${id}transfer`;
+    return this.put(url);
+  }
+
   getCustomer() {
     const url = `user/customer`;
     return this.get(url);

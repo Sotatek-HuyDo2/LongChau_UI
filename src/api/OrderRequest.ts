@@ -40,4 +40,14 @@ export default class OrderRequest extends BaseRequest {
     const url = `order/${id}`;
     return this.put(url, param);
   }
+
+  createOrderSplit(id: number, param: any) {
+    const url = `order/${id}/split`;
+    return this.post(url, param);
+  }
+
+  createOrderServe(id: number, param: any) {
+    const url = `order/${id}/serve`;
+    return this.post(url, param);
+  }
 }
