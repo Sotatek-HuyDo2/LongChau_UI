@@ -68,7 +68,7 @@ const MenuDrop = ({ dropTitle, dropItem = LIST_ITEM }: MenuDropProps) => {
               alignItems="center"
               height={'100%'}
               className={`sidebar-drop__item-title ${
-                location.pathname.includes(item.path) ? 'active' : ''
+                location.pathname.includes(item?.path) ? 'active' : ''
               }`}
             >
               {item.name}
@@ -103,7 +103,10 @@ const MENUS = [
     name: 'Thống kê',
     path: '/branch-admin/statistical',
     icon: <Overview />,
-    component: <MenuDrop dropTitle="Thống kê" dropItem={LIST_ITEM} />,
+    pathChild: [
+      '/branch-admin/create-notification',
+      '/branch-admin/create-push-notification',
+    ],
   },
 ];
 
@@ -119,28 +122,21 @@ const SidebarBranchAdmin = () => {
             <Flex
               userSelect="none"
               key={index}
-              className={
-                !menu.component
-                  ? `nav-bar__menu-item ${
-                      location.pathname === menu.path ||
-                      menu?.pathChild?.some((item) =>
-                        location.pathname.includes(item),
-                      )
-                        ? 'active'
-                        : ''
-                    }`
-                  : 'nav-bar__menu-drop'
-              }
+              className={`nav-bar__menu-item ${
+                location.pathname === menu.path ||
+                menu?.pathChild?.some((item) =>
+                  location.pathname.includes(item),
+                )
+                  ? 'active'
+                  : ''
+              }`}
               onClick={() => {
-                menu.component
-                  ? ''
-                  : navigate(
-                      menu.path || '/branch-admin/general-warehouse-management',
-                    );
+                navigate(
+                  menu.path || '/branch-admin/general-warehouse-management',
+                );
               }}
             >
-              <Box>{menu.component ? null : menu.icon}</Box>
-              <Box>{menu.component ? menu.component : menu.name}</Box>
+              <Box>{menu.name}</Box>
             </Flex>
           );
         })}

@@ -15,6 +15,7 @@ import GeneralWarehouseManagementPage from './pages/Admin/GeneralWarehouseManage
 import BranchManagementPage from './pages/Admin/BranchManagementPage';
 import SupplierManagementPage from './pages/Admin/SupplierManagementPage';
 import Statistical from './pages/Admin/Statistical';
+import BranchStatistical from './pages/Branch-Admin/BranchStatistical';
 import HomePage from './pages/HomePage';
 import PharmacySystemPage from './pages/PharmacySystemPage';
 import CategoryFunctionalFoodsPage from './pages/CategoryFunctionalFoodsPage';
@@ -164,7 +165,11 @@ const RouterCustom = () => {
           element={<BranchAdminPersonnelManagementPage />}
         />
 
-        <Route path={'statistical'} element={<Statistical />} />
+        <Route
+          path={'statistical'}
+          key={'branch-admin-statistical'}
+          element={<BranchStatistical />}
+        />
       </Route>
 
       {/* Admin */}
