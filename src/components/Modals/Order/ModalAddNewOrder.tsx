@@ -10,6 +10,8 @@ import AppSelect from 'src/components/AppSelect';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { AddIcon } from '@chakra-ui/icons';
 import _ from 'lodash';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store';
 
 interface IModalAddNewOrderProps {
   open: boolean;
@@ -18,31 +20,28 @@ interface IModalAddNewOrderProps {
 }
 
 interface IDataForm {
-  rackId: number;
-  drugId: number;
+  branchId: number;
   userId: number;
-  quantity: number;
+  drugs: { drugId: number; quantity: number }[];
 }
 
 const ModalAddNewOrder: FC<IModalAddNewOrderProps> = (props) => {
-  const initData = {
-    rackId: NaN,
-    drugId: NaN,
-    quantity: 10,
-    userId: NaN,
-  };
-
   const { open, onClose, onReload } = props;
-  const [dataForm, setDataForm] = useState<IDataForm>(initData);
-  const [selectData, setSelectData] = useState<any>([]);
+  const [dataForm, setDataForm] = useState<IDataForm>(null!);
+  // const [selectData, setSelectData] = useState<any>([]);
   const [drugs, setDrugs] = useState<any>([]);
   const [dataCustomer, setDataCustomer] = useState<any>([]);
 
+  const dataUser = useSelector((state: RootState) => state.user.userProfile);
+
   const addDrugsToRack = async () => {
     try {
-      await rf
-        .getRequest('RackRequest')
-        .addDrugsToRackOfMyBranch({ ...dataForm });
+      const payload = {
+        ...dataForm,
+        branchId: dataUser.branchId,
+        drugs: dataDrug,
+      };
+      await rf.getRequest('OrderRequest').createdOrder(payload);
       onClose();
       onReload();
       toastSuccess('Thêm mới thuốc vào kho thành công');
@@ -51,18 +50,18 @@ const ModalAddNewOrder: FC<IModalAddNewOrderProps> = (props) => {
     }
   };
 
-  const getAllBranch = async () => {
-    try {
-      const res = await rf.getRequest('BranchRequest').getBranchList();
-      const selectData = res.map((r: any) => ({
-        value: r.id,
-        label: r.name,
-      }));
-      setSelectData(selectData);
-    } catch (e: any) {
-      console.log(e.message);
-    }
-  };
+  // const getAllBranch = async () => {
+  //   try {
+  //     const res = await rf.getRequest('BranchRequest').getBranchList();
+  //     const selectData = res.map((r: any) => ({
+  //       value: r.id,
+  //       label: r.name,
+  //     }));
+  //     setSelectData(selectData);
+  //   } catch (e: any) {
+  //     console.log(e.message);
+  //   }
+  // };
 
   const getAllDrugsOrder = async () => {
     try {
@@ -92,12 +91,14 @@ const ModalAddNewOrder: FC<IModalAddNewOrderProps> = (props) => {
   };
 
   useEffectUnsafe(() => {
-    getAllBranch();
+    // getAllBranch();
     getAllDrugsOrder();
     getAllCustomer();
   }, []);
 
-  const [addDrug, setAddDrug] = useState(false);
+  const [dataDrug, setDataDrug] = useState<
+    { drugId: number | null; quantity: number | null }[]
+  >([{ drugId: null, quantity: null }]);
 
   return (
     <BaseModal
@@ -120,7 +121,7 @@ const ModalAddNewOrder: FC<IModalAddNewOrderProps> = (props) => {
                 label="Người dùng"
                 width={'full'}
                 options={dataCustomer}
-                value={dataForm.userId || ''}
+                value={dataForm?.userId || ''}
                 onChange={(value: string) => {
                   setDataForm({
                     ...dataForm,
@@ -133,75 +134,49 @@ const ModalAddNewOrder: FC<IModalAddNewOrderProps> = (props) => {
             </Box>
           </Flex>
 
-          <Flex alignContent={'end'} alignItems={'end'} gap={3}>
-            <Box w={'60%'}>
-              <AppSelect
-                label="Thuốc"
-                width={'full'}
-                options={drugs}
-                value={dataForm.drugId || ''}
-                onChange={(value: string) => {
-                  setDataForm({
-                    ...dataForm,
-                    drugId: +value,
-                  });
+          {dataDrug.map((item, index) => (
+            <Flex key={index} alignContent={'end'} alignItems={'end'} gap={3}>
+              <Box w={'60%'}>
+                <AppSelect
+                  label="Thuốc"
+                  width={'full'}
+                  options={drugs}
+                  value={item?.drugId || ''}
+                  onChange={(value: string) => {
+                    const newData = dataDrug;
+                    newData[index].drugId = +value;
+                    setDataDrug(newData);
+                  }}
+                  size="medium"
+                  showFullName
+                />
+              </Box>
+              <Box>
+                <AppInput
+                  size="md"
+                  label="Số lượng"
+                  type="number"
+                  onChange={(e) => {
+                    const newData = dataDrug;
+                    newData[index].quantity = +e.target.value;
+                    setDataDrug(newData);
+                  }}
+                />
+              </Box>
+
+              <AppButton
+                variant="primary"
+                onClick={() => {
+                  setDataDrug((prevData) => [
+                    ...prevData,
+                    { drugId: null, quantity: null },
+                  ]);
                 }}
-                size="medium"
-                showFullName
-              />
-            </Box>
-            <Box>
-              <AppInput
-                size="md"
-                label="Số lượng"
-                type="number"
-                onChange={(e) =>
-                  setDataForm({ ...dataForm, quantity: +e.target.value })
-                }
-              />
-            </Box>
-
-            <AppButton variant="primary" onClick={() => setAddDrug(true)}>
-              <AddIcon paddingRight={1} /> Thêm Thuốc
-            </AppButton>
-          </Flex>
-
-          {addDrug && (
-            <>
-              <Flex alignContent={'end'} alignItems={'end'} gap={3}>
-                <Box w={'60%'}>
-                  <AppSelect
-                    label="Thuốc"
-                    width={'full'}
-                    options={drugs}
-                    value={dataForm.drugId || ''}
-                    onChange={(value: string) => {
-                      setDataForm({
-                        ...dataForm,
-                        drugId: +value,
-                      });
-                    }}
-                    size="medium"
-                    showFullName
-                  />
-                </Box>
-                <Box>
-                  <AppInput
-                    size="md"
-                    label="Số lượng"
-                    type="number"
-                    onChange={(e) =>
-                      setDataForm({ ...dataForm, quantity: +e.target.value })
-                    }
-                  />
-                </Box>
-
-                <AppButton variant="primary" onClick={() => setAddDrug(true)}>
-                  <AddIcon paddingRight={1} /> Thêm Thuốc
-                </AppButton>
-              </Flex>
-            </>
-          )}
+              >
+                <AddIcon paddingRight={1} /> Thêm Thuốc
+              </AppButton>
+            </Flex>
+          ))}
 
           <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
             <AppButton

@@ -6,6 +6,11 @@ export default class OrderRequest extends BaseRequest {
     return config.api.baseUrlApi;
   }
 
+  createdOrder(params: any) {
+    const url = `order/create`;
+    return this.post(url, params);
+  }
+
   getCreatedOrder() {
     const url = `order/created-orders`;
     return this.get(url);
