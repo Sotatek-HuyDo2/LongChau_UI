@@ -44,8 +44,10 @@
       padding-bottom: 10px;
     }
     .slider-item--name {
+      padding-top: 10px;
+      text-align: center;
       margin: auto;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 600;
       color: $Blue-500;
     }
@@ -73,12 +75,12 @@
     }
 
     .slider-prev {
-      top: 107px;
+      top: 48%;
       left: -8px;
     }
 
     .slider-next {
-      top: 107px;
+      top: 48%;
       right: -18px;
     }
   }
@@ -135,6 +137,10 @@
           opacity: 0.8;
           transform: scale(1.05);
           transition: opacity 0.3s, transform 0.3s;
+        }
+
+        &.active {
+          border-color: #00ff00; /* Màu xanh lá cây làm ví dụ */
         }
       }
     }

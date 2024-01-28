@@ -13,6 +13,7 @@ import rf from 'src/api/RequestFactory';
 import Storage from 'src/utils/storage';
 
 interface IMedicalDetail {
+  img: string;
   barcode: number;
   createdAt: string;
   description: string;
@@ -138,9 +139,13 @@ const MedicalDetailPage = () => {
 
     return (
       <Flex px={'40px'} mt={10} className="explorer-table">
-        <Flex w={'full'} justifyContent={'space-between'}>
-          <Box pr={5}>
-            <Image src={medicalDetail.img} borderRadius={'10px'} />
+        <Flex w={'full'} justifyContent={'space-between'} pb={6}>
+          <Box m={'auto'} w={'40%'}>
+            <Image
+              w={'full'}
+              src={medicalDetail?.img ? medicalDetail?.img : ''}
+              borderRadius={'10px'}
+            />
           </Box>
           <Flex w={'54%'} flexDirection={'column'}>
             <Flex className="info-list" gap={'10px'} flexDirection={'column'}>

@@ -471,4 +471,12 @@ export const MOCK_FeatureCategories = [
     quality: 10,
   },
 ];
+
+export const drugsType: { [key: string]: string } = {
+  tube: 'ống',
+  box: 'hộp',
+  pellet: 'viên',
+  bottle: 'chai',
+  blister: 'gói',
+};
 export const TO_BE_ANNOUCED_TEXT = 'TBA';

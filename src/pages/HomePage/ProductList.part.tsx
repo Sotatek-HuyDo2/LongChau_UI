@@ -1,26 +1,26 @@
 import { Box, Flex, Image } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
-import { MOCK_MEDICAL_PRODUCT_LIST } from 'src/utils/constants';
+import { MOCK_MEDICAL_PRODUCT_LIST, drugsType } from 'src/utils/constants';
 import { useNavigate } from 'react-router';
+import rf from 'src/api/RequestFactory';
+import _ from 'lodash';
+import { formatNumber } from 'src/utils/format';
 
 interface IMedicalProduct {
   img: string;
-  medicineID: string;
+  barcode: number;
+  createdAt: string;
+  description: string;
+  id: number;
   name: string;
-  brand?: string;
-  quality?: number;
   price: number;
-  detail: {
-    unit: string;
-    category: string;
-    dosageForms?: string;
-    specifications?: string;
-    Producer?: string;
-    manufacturingCountry?: string;
-    ingredient?: string;
-    shortDescription?: string;
-  };
+  sensitiveIngredients?: null;
+  size: number;
+  soldAsDose: boolean;
+  supplierId: number;
+  typeId: number;
+  unit: string;
 }
 
 const ProductList = () => {
@@ -29,10 +29,9 @@ const ProductList = () => {
 
   const getAllProduct = async () => {
     try {
-      setProducts(MOCK_MEDICAL_PRODUCT_LIST);
-      //   return {
-      //     docs: dataSearch,
-      //   };
+      const res = await rf.getRequest('ProductRequest').getProduct();
+      // const randomProducts = _.sampleSize(res, 18);
+      setProducts(res.slice(0, 18));
     } catch (error) {
       return { docs: [] };
     }
@@ -52,37 +51,38 @@ const ProductList = () => {
       <Box className="product">
         {products?.map((product, index) => {
           return (
-            <Flex
+            <Box
               key={index}
-              className="product--card"
-              flexDirection={'column'}
-              gap={'10px'}
-              onClick={() => navigate(`/medical/${product?.medicineID}`)}
+              className="product__card"
+              w={`calc(100% / 6 - 20px)`}
+              onClick={() => navigate(`/medical/${product?.id}`)}
             >
-              <Box className="product--card-image" w={128} height={128}>
-                <Image src={product?.img} alt="hello" />
+              <Box className="product__card-image">
+                <Image src={product?.img ? product?.img : ''} alt="hello" />
               </Box>
-              <Box className="product--card-name">
+              <Box className="product__card-name">
                 {product?.name ? product?.name : '--'}
               </Box>
-              <Box className="product--card-price">
-                {product?.price ? product?.price : '--'} /{' '}
-                {product?.detail?.unit ? product?.detail?.unit : '--'}
+              <Box className="product__card-price">
+                {product?.price ? `${formatNumber(product?.price)}đ` : '--'} /{' '}
+                {product?.unit ? drugsType[product?.unit] : '--'}
               </Box>
-              <Box className="product--card-unit">
-                <Box
-                  backgroundColor={'blackAlpha.200'}
-                  display={'inline'}
-                  padding={'3px 5px'}
-                  color={'black'}
-                  borderRadius={'20px'}
-                >
-                  {product?.detail?.specifications
-                    ? product?.detail?.specifications
-                    : product?.detail?.unit}
+              {product.unit != '' ? (
+                <Box className="product__card-unit">
+                  <Box
+                    backgroundColor={'blackAlpha.200'}
+                    display={'inline'}
+                    padding={'3px 5px'}
+                    color={'black'}
+                    borderRadius={'20px'}
+                  >
+                    {drugsType[product?.unit]}
+                  </Box>
                 </Box>
-              </Box>
-            </Flex>
+              ) : (
+                <></>
+              )}
+            </Box>
           );
         })}
       </Box>
