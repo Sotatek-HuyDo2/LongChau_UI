@@ -3,50 +3,17 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
+import rf from 'src/api/RequestFactory';
 
-const MOCK_BRAND_DEMO = [
-  {
-    id: 1,
-    branchName: 'Labwell',
-    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/425x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/smalls/Lab_Well_1_51c1e18f18.png',
-  },
-  {
-    id: 1,
-    branchName: 'Labwell',
-    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/425x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/smalls/Lab_Well_1_51c1e18f18.png',
-  },
-  {
-    id: 1,
-    branchName: 'Labwell',
-    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/425x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/smalls/Lab_Well_1_51c1e18f18.png',
-  },
-  {
-    id: 1,
-    branchName: 'Labwell',
-    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/425x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/smalls/Lab_Well_1_51c1e18f18.png',
-  },
-  {
-    id: 1,
-    branchName: 'Labwell',
-    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/425x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/smalls/Lab_Well_1_51c1e18f18.png',
-  },
-  {
-    id: 1,
-    branchName: 'Labwell',
-    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/425x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/smalls/Lab_Well_1_51c1e18f18.png',
-  },
-  {
-    id: 1,
-    branchName: 'Labwell',
-    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/425x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/smalls/Lab_Well_1_51c1e18f18.png',
-  },
-  {
-    id: 1,
-    branchName: 'Labwell',
-    img: 'https://cdn.nhathuoclongchau.com.vn/unsafe/425x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/smalls/Lab_Well_1_51c1e18f18.png',
-  },
-];
+interface IBrand {
+  email: string;
+  id: number;
+  img: string;
+  name: string;
+  phone: string;
+}
 
 const FavoriteBrand = () => {
   const sliderRef = useRef<any>(null);
@@ -95,38 +62,49 @@ const FavoriteBrand = () => {
     ],
   };
 
-  // const [products, setProducts] = useState<IMedicalProduct[]>([]);
+  const [brands, setBrands] = useState<IBrand[]>([]);
+  const getAllProduct = async () => {
+    try {
+      const res = await rf.getRequest('SupplierRequest').getSupplier();
 
-  // const getAllProduct = async () => {
-  //   try {
-  //     setProducts(MOCK_MEDICAL_PRODUCT_LIST);
-  //     //   return {
-  //     //     docs: dataSearch,
-  //     //   };
-  //   } catch (error) {
-  //     return { docs: [] };
-  //   }
-  // };
+      setBrands(res);
+    } catch (error) {
+      return { docs: [] };
+    }
+  };
 
-  // useEffectUnsafe(() => {
-  //   getAllProduct();
-  // }, []);
+  useEffectUnsafe(() => {
+    getAllProduct();
+  }, []);
 
   return (
     <Flex className="favorite-brand-container">
       <Flex className="favorite-brand--title">
         <Image src="https://cdn.nhathuoclongchau.com.vn/unsafe/28x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/smalls/thuong_hieu_yeu_thich_e0c23dded6.png" />
-        Danh mục nổi bật
+        Thương hiệu yêu thích
       </Flex>
       <Slider ref={sliderRef} {...settings}>
-        {MOCK_BRAND_DEMO.map((item, index) => {
+        {brands?.map((item, index) => {
           return (
-            <Flex className="slider-item" key={index}>
+            <Flex className="slider-item" key={index} m={'auto'}>
               <Flex className="slider-item--image" flexDirection={'column'}>
-                <Image w={'200px'} margin={'auto'} src={item.img} alt="brand" />
-                <Box className="slider-item--name">
-                  {item?.branchName ? item.branchName : '--'}{' '}
-                </Box>
+                <Image
+                  boxSize="200px" // Đặt kích thước cố định cho ảnh
+                  margin={'auto'}
+                  src={item.img}
+                  alt="brand"
+                />
+                <Flex
+                  maxW={'250px'}
+                  className="slider-item--name"
+                  flexDirection="column"
+                  justifyContent="center" // Canh giữa chiều dọc
+                  minHeight="70px"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                >
+                  {item?.name ? item.name : '--'}
+                </Flex>
               </Flex>
             </Flex>
           );

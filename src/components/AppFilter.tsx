@@ -19,7 +19,7 @@ const priceRanges = [
 const AppFilter = (props: IAppFilterProps) => {
   const { data, filterByPrice } = props;
   const [visibleCheckbox, setVisibleCheckbox] = useState(1);
-  const [selectedPrice, setSelectedPrice] = useState<string>('Dưới 100.000đ');
+  const [selectedPrice, setSelectedPrice] = useState<string>('');
 
   const handleShowMore = () => {
     setVisibleCheckbox(visibleCheckbox + 4);
@@ -64,7 +64,7 @@ const AppFilter = (props: IAppFilterProps) => {
             </Box>
           ))}
         </Box>
-        <Box className="app-filter__brand">
+        {/* <Box className="app-filter__brand">
           <Box className="app-filter__brand-title">Thương hiệu</Box>
           <AppCheckbox
             label={'Tất cả'}
@@ -105,7 +105,7 @@ const AppFilter = (props: IAppFilterProps) => {
               Ẩn
             </Box>
           )}
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );

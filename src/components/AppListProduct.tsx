@@ -5,8 +5,10 @@ import { useState } from 'react';
 import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 import { ArrowLeftIcon, CheckIcon } from '@chakra-ui/icons';
 import { formatNumber } from 'src/utils/format';
+import { drugsType } from 'src/utils/constants';
 
 interface IProduct {
+  img: string;
   barcode: number;
   createdAt: string;
   description: string;
@@ -59,11 +61,6 @@ const AppListProduct = (props: IAppListProductProps) => {
     setVisibleProducts(8);
   };
 
-  const drugsType: { [key: string]: string } = {
-    tube: 'ống',
-    box: 'hộp',
-  };
-
   return (
     <Flex className="product-container">
       <Box className="product-filter">
@@ -96,10 +93,11 @@ const AppListProduct = (props: IAppListProductProps) => {
                 <Box
                   key={index}
                   className="product__card"
+                  w={`calc(100% / 4 - 20px)`}
                   onClick={() => navigate(`/medical/${product?.id}`)}
                 >
                   <Box className="product__card-image">
-                    {/* <Image src={product?.img ? product?.img : ''} alt="hello" /> */}
+                    <Image src={product?.img ? product?.img : ''} alt="hello" />
                   </Box>
                   <Box className="product__card-name">
                     {product?.name ? product?.name : '--'}
@@ -108,20 +106,21 @@ const AppListProduct = (props: IAppListProductProps) => {
                     {product?.price ? `${formatNumber(product?.price)}đ` : '--'}{' '}
                     / {product?.unit ? drugsType[product?.unit] : '--'}
                   </Box>
-                  <Box className="product__card-unit">
-                    <Box
-                      backgroundColor={'blackAlpha.200'}
-                      display={'inline'}
-                      padding={'3px 5px'}
-                      color={'black'}
-                      borderRadius={'20px'}
-                    >
-                      {drugsType[product?.unit]}
-                      {/* {product?.detail?.specifications
-                        ? product?.detail?.specifications
-                        : product?.detail?.unit} */}
+                  {product.unit != '' ? (
+                    <Box className="product__card-unit">
+                      <Box
+                        backgroundColor={'blackAlpha.200'}
+                        display={'inline'}
+                        padding={'3px 5px'}
+                        color={'black'}
+                        borderRadius={'20px'}
+                      >
+                        {drugsType[product?.unit]}
+                      </Box>
                     </Box>
-                  </Box>
+                  ) : (
+                    <></>
+                  )}
                 </Box>
               );
             })

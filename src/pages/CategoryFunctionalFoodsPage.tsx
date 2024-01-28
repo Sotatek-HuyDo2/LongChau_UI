@@ -18,23 +18,35 @@ const CategoryFunctionalFoodsPage = () => {
   const [typeList, setTypeList] = useState<any>([]);
   const [productList, setProductList] = useState<any>([]);
   const [supplierList, setSupplierList] = useState<any>([]);
+  const [cateName, setCateName] = useState<string>('');
+  const [typeName, setTypeName] = useState<string>('');
 
-  const getListSupplier = async () => {
-    try {
-      const res = await rf.getRequest('SupplierRequest').getSupplier();
-      const listSupplierId = _.uniqBy(productList, 'supplierId').map(
-        (item: any) => {
-          return item.supplierId;
-        },
-      );
-      const listSupplier = res.filter((item: any) =>
-        listSupplierId.includes(item.id),
-      );
-      setSupplierList(listSupplier);
-    } catch (err: any) {
-      console.log(err.message);
-    }
+  //format text "Thuc pham chuc nang" to "Thuc Pham Chuc Nang"
+  const formatText = (text: string) => {
+    return text
+      .split(' ')
+      .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
+      .join(' ');
   };
+
+  console.log('typeSlug', typeSlug);
+
+  // const getListSupplier = async () => {
+  //   try {
+  //     const res = await rf.getRequest('SupplierRequest').getSupplier();
+  //     const listSupplierId = _.uniqBy(productList, 'supplierId').map(
+  //       (item: any) => {
+  //         return item.supplierId;
+  //       },
+  //     );
+  //     const listSupplier = res.filter((item: any) =>
+  //       listSupplierId.includes(item.id),
+  //     );
+  //     setSupplierList(listSupplier);
+  //   } catch (err: any) {
+  //     console.log(err.message);
+  //   }
+  // };
 
   const getFilterType = (filterType: string) => {
     setFilterType(filterType);
@@ -63,14 +75,17 @@ const CategoryFunctionalFoodsPage = () => {
   const getAllDrugType = async () => {
     try {
       if (typeSlug) {
-        const res = await rf.getRequest('CategoryRequest').getAllCate();
-        if (res) {
-          res.map((item: any) => {
-            if (item.slug === typeSlug) {
-              setCateId(item.id);
-            }
-          });
-        }
+        const res = await rf
+          .getRequest('ProductRequest')
+          .getAllDrugsByTypeID(typeId);
+        console.log(res);
+        // if (res) {
+        //   res.map((item: any) => {
+        //     if (item.slug === typeSlug) {
+        //       setTypeId(item.id);
+        //     }
+        //   });
+        // }
       }
     } catch (e: any) {
       console.log(e.message);
@@ -85,6 +100,27 @@ const CategoryFunctionalFoodsPage = () => {
           res.map((item: any) => {
             if (item.slug === categorySlug) {
               setCateId(item.id);
+              setCateName(item.name);
+            }
+          });
+        }
+      }
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  };
+
+  const getAllTypeId = async () => {
+    try {
+      if (typeSlug) {
+        const res = await rf
+          .getRequest('CategoryRequest')
+          .getAllDrugsTypeByCateID(cateId);
+        if (res) {
+          res.map((item: any) => {
+            if (item.slug === typeSlug) {
+              setTypeId(item.id);
+              setTypeName(item.name);
             }
           });
         }
@@ -122,8 +158,16 @@ const CategoryFunctionalFoodsPage = () => {
   }, [cateId]);
 
   useEffectUnsafe(() => {
+    getAllTypeId();
+  }, [typeSlug]);
+
+  useEffectUnsafe(() => {
+    getAllDrugType();
+  }, [typeId]);
+
+  useEffectUnsafe(() => {
     getAllCateId();
-    getListSupplier();
+    // getListSupplier();
   }, [categorySlug, typeSlug]);
 
   return (
@@ -131,7 +175,8 @@ const CategoryFunctionalFoodsPage = () => {
       <Flex backgroundColor={'#f4f6f9'} flexDir={'column'} w={'full'}>
         <AppCategories
           data={typeList}
-          title={'Thực Phẩm Chức Năng'}
+          title={formatText(cateName)}
+          typeName={typeName}
           numInline={4}
         />
         <Flex w={'1440px'} m={'auto'} justifyContent={'space-between'}>
