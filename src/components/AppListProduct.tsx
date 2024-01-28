@@ -11,6 +11,7 @@ interface IProduct {
   createdAt: string;
   description: string;
   id: number;
+  img: string;
   name: string;
   price: number;
   sensitiveIngredients?: null;
@@ -62,6 +63,9 @@ const AppListProduct = (props: IAppListProductProps) => {
   const drugsType: { [key: string]: string } = {
     tube: 'ống',
     box: 'hộp',
+    bottle: 'chai',
+    pellet: 'viên',
+    blister: 'vỉ',
   };
 
   return (
@@ -99,7 +103,7 @@ const AppListProduct = (props: IAppListProductProps) => {
                   onClick={() => navigate(`/medical/${product?.id}`)}
                 >
                   <Box className="product__card-image">
-                    {/* <Image src={product?.img ? product?.img : ''} alt="hello" /> */}
+                    <Image src={product?.img ? product?.img : ''} alt="hello" />
                   </Box>
                   <Box className="product__card-name">
                     {product?.name ? product?.name : '--'}

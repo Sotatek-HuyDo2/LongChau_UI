@@ -4,7 +4,9 @@ import BaseModal from '../BaseModal';
 import AppButton from '../../AppButton';
 import { FC, useState } from 'react';
 import AppInput from '../../AppInput';
+import rf from 'src/api/RequestFactory';
 import { IAdmin } from 'src/pages/Admin/UserManagementPage/BranchAdminManagementPage.part';
+import { toastError } from 'src/utils/notify';
 
 interface IModalEditBranchAdminProps {
   open: boolean;
@@ -43,6 +45,17 @@ const ModalEditBranchAdmin: FC<IModalEditBranchAdminProps> = (props) => {
     setEmailValid(emailRegex.test(emailValue));
   };
 
+  const handleConfirm = async () => {
+    console.log(dataUser);
+    try {
+      await rf
+        .getRequest('UserRequest')
+        .updateBranchAdminByID(data.userId, dataUser);
+    } catch (e: any) {
+      toastError(e.message);
+    }
+  };
+
   return (
     <BaseModal
       size="xl"
@@ -68,8 +81,18 @@ const ModalEditBranchAdmin: FC<IModalEditBranchAdminProps> = (props) => {
           <Box color={'black'}>Sang quản lý</Box>
 
           <Flex gap={3}>
-            <AppInput label="Tên" />
-            <AppInput label="Họ" />
+            <AppInput
+              label="Tên"
+              onChange={(e: any) =>
+                setDataUser({ ...dataUser, firstName: e.target.value })
+              }
+            />
+            <AppInput
+              label="Họ"
+              onChange={(e: any) =>
+                setDataUser({ ...dataUser, lastName: e.target.value })
+              }
+            />
           </Flex>
           <AppInput
             label="Số điện thoại"
@@ -118,7 +141,7 @@ const ModalEditBranchAdmin: FC<IModalEditBranchAdminProps> = (props) => {
               className="btn-outline-hover"
               flex={1}
               variant="primary"
-              onClick={onClose}
+              onClick={handleConfirm}
               w={'100%'}
             >
               Xác Nhận

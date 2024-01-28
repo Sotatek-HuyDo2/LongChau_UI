@@ -34,17 +34,17 @@ const ModalServeOrder: FC<IModalServeOrderProps> = (props) => {
   const [dataForm, setDataForm] = useState<IDataForm>(initData);
   const [racks, setRacks] = useState<any>([]);
   const [drugs, setDrugs] = useState<any>([]);
-  const addDrugsToRack = async () => {
-    // try {
-    //   await rf
-    //     .getRequest('RackRequest')
-    //     .addDrugsToRackOfMyBranch({ ...dataForm });
-    //   onClose();
-    //   onReload();
-    //   toastSuccess('Thêm mới thuốc vào kho thành công');
-    // } catch (e: any) {
-    //   toastError(e.message);
-    // }
+
+  const serveOrder = async () => {
+    try {
+      console.log(dataForm);
+      //request body la 1 mang cac dataform nay
+      const reqBody = [dataForm];
+      await rf.getRequest('OrderRequest').createOrderServe(orderId, reqBody);
+      toastSuccess('Đáp ứng đơn thuốc thành công');
+    } catch (e: any) {
+      toastError(e.message);
+    }
   };
 
   const getAllRack = async () => {
@@ -63,9 +63,10 @@ const ModalServeOrder: FC<IModalServeOrderProps> = (props) => {
   const getAllDrugsOrder = async () => {
     try {
       const res = await rf.getRequest('OrderRequest').getOrderById(orderId);
+      // console.log(res);
       const dataSelect2 = res.drugsWithQuantity.map((r: any) => ({
         value: r.drugId,
-        label: r.name,
+        label: r.drugName,
       }));
       setDrugs(dataSelect2);
     } catch (e: any) {
@@ -252,8 +253,8 @@ const ModalServeOrder: FC<IModalServeOrderProps> = (props) => {
             >
               Hủy
             </AppButton>
-            <AppButton flex={1} onClick={addDrugsToRack}>
-              Thêm mới
+            <AppButton flex={1} onClick={serveOrder}>
+              Đáp ứng
             </AppButton>
           </Flex>
         </Flex>
