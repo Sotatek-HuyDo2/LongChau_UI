@@ -27,20 +27,21 @@ const ModalServeOrder: FC<IModalServeOrderProps> = (props) => {
   const initData = {
     rackId: NaN,
     drugId: NaN,
-    quantity: 10,
+    quantity: 0,
   };
 
   const { open, onClose, onReload, orderId } = props;
-  const [dataForm, setDataForm] = useState<IDataForm>(initData);
+  const [dataForm, setDataForm] = useState<IDataForm[]>([initData]);
   const [racks, setRacks] = useState<any>([]);
   const [drugs, setDrugs] = useState<any>([]);
 
   const serveOrder = async () => {
     try {
-      console.log(dataForm);
-      //request body la 1 mang cac dataform nay
-      const reqBody = [dataForm];
-      await rf.getRequest('OrderRequest').createOrderServe(orderId, reqBody);
+      const payload = dataForm.filter((field) =>
+        Object.keys(field).every((e) => (field as any)[e]),
+      );
+
+      await rf.getRequest('OrderRequest').createOrderServe(orderId, payload);
       toastSuccess('Đáp ứng đơn thuốc thành công');
     } catch (e: any) {
       toastError(e.message);
@@ -78,8 +79,7 @@ const ModalServeOrder: FC<IModalServeOrderProps> = (props) => {
     getAllDrugsOrder();
   }, []);
 
-  const [addOrder, setAddOrder] = useState(false);
-  const [addDrug, setAddDrug] = useState(false);
+  const [_, setToggleLoading] = useState<boolean>(false);
 
   return (
     <BaseModal
@@ -89,42 +89,54 @@ const ModalServeOrder: FC<IModalServeOrderProps> = (props) => {
       onClose={onClose}
       className="modal-languages"
     >
-      <Flex alignItems="center">
+      {dataForm.map((item, index) => (
         <Flex
+          key={index}
           className="delist-confirm"
           flexDirection={'column'}
           gap={'15px'}
           w={'full'}
         >
-          <Box zIndex={2000}>
+          {index > 0 && (
+            <Box
+              w={'full'}
+              borderBottom={'1px solid rgba(0, 0, 0, .2)'}
+              my={4}
+            />
+          )}
+          <Box pos={'relative'}>
             <AppSelect
               label="Ô chứa"
               width={'full'}
               options={racks}
-              value={dataForm.rackId || ''}
+              value={item?.rackId || ''}
               onChange={(value: string) => {
-                setDataForm({
-                  ...dataForm,
-                  rackId: +value,
-                });
+                const newData = dataForm;
+                newData[index].rackId = +value;
+                setDataForm(() => newData);
+                setToggleLoading((loading) => !loading);
               }}
               size="medium"
               showFullName
             />
           </Box>
-
-          <Flex alignContent={'end'} alignItems={'end'} gap={3}>
+          <Flex
+            alignContent={'end'}
+            alignItems={'end'}
+            gap={3}
+            pos={'relative'}
+          >
             <Box w={'60%'}>
               <AppSelect
                 label="Thuốc"
                 width={'full'}
                 options={drugs}
-                value={dataForm.drugId || ''}
+                value={item?.drugId || ''}
                 onChange={(value: string) => {
-                  setDataForm({
-                    ...dataForm,
-                    drugId: +value,
-                  });
+                  const newData = dataForm;
+                  newData[index].drugId = +value;
+                  setDataForm(newData);
+                  setToggleLoading((loading) => !loading);
                 }}
                 size="medium"
                 showFullName
@@ -135,128 +147,40 @@ const ModalServeOrder: FC<IModalServeOrderProps> = (props) => {
                 size="md"
                 label="Số lượng"
                 type="number"
-                onChange={(e) =>
-                  setDataForm({ ...dataForm, quantity: +e.target.value })
-                }
+                onChange={(e) => {
+                  const newData = dataForm;
+                  newData[index].quantity = +e.target.value;
+                  setDataForm(newData);
+                  // setToggleLoading((loading) => !loading);
+                }}
               />
             </Box>
-
-            <AppButton variant="primary" onClick={() => setAddDrug(true)}>
-              <AddIcon paddingRight={1} /> Thêm Thuốc
-            </AppButton>
-          </Flex>
-
-          {addDrug && (
-            <>
-              <Flex alignContent={'end'} alignItems={'end'} gap={3}>
-                <Box w={'60%'}>
-                  <AppSelect
-                    label="Thuốc"
-                    width={'full'}
-                    options={drugs}
-                    value={dataForm.drugId || ''}
-                    onChange={(value: string) => {
-                      setDataForm({
-                        ...dataForm,
-                        drugId: +value,
-                      });
-                    }}
-                    size="medium"
-                    showFullName
-                  />
-                </Box>
-                <Box>
-                  <AppInput
-                    size="md"
-                    label="Số lượng"
-                    type="number"
-                    onChange={(e) =>
-                      setDataForm({ ...dataForm, quantity: +e.target.value })
-                    }
-                  />
-                </Box>
-
-                <AppButton variant="primary" onClick={() => setAddDrug(true)}>
-                  <AddIcon paddingRight={1} /> Thêm Thuốc
-                </AppButton>
-              </Flex>
-            </>
-          )}
-
-          <AppButton variant="primary" onClick={() => setAddOrder(true)}>
-            <AddIcon paddingRight={1} /> Thêm ô chứa
-          </AppButton>
-          {addOrder && (
-            <>
-              <Box zIndex={2000}>
-                <AppSelect
-                  label="Ô chứa"
-                  width={'full'}
-                  options={racks}
-                  value={dataForm.rackId || ''}
-                  onChange={(value: string) => {
-                    setDataForm({
-                      ...dataForm,
-                      rackId: +value,
-                    });
-                  }}
-                  size="medium"
-                  showFullName
-                />
-              </Box>
-
-              <Flex alignContent={'end'} alignItems={'end'} gap={3}>
-                <Box w={'60%'}>
-                  <AppSelect
-                    label="Thuốc"
-                    width={'full'}
-                    options={drugs}
-                    value={dataForm.drugId || ''}
-                    onChange={(value: string) => {
-                      setDataForm({
-                        ...dataForm,
-                        drugId: +value,
-                      });
-                    }}
-                    size="medium"
-                    showFullName
-                  />
-                </Box>
-                <Box>
-                  <AppInput
-                    size="md"
-                    label="Số lượng"
-                    type="number"
-                    onChange={(e) =>
-                      setDataForm({ ...dataForm, quantity: +e.target.value })
-                    }
-                  />
-                </Box>
-
-                <AppButton variant="primary" onClick={() => setAddDrug(true)}>
-                  <AddIcon paddingRight={1} /> Thêm Thuốc
-                </AppButton>
-              </Flex>
-              <AppButton variant="primary" onClick={() => setAddOrder(true)}>
-                <AddIcon paddingRight={1} /> Thêm ô chứa
-              </AppButton>
-            </>
-          )}
-          <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={3}>
-            <AppButton
-              className="btn-outline-hover"
-              flex={1}
-              variant="primary"
-              onClick={onClose}
-              w={'100%'}
-            >
-              Hủy
-            </AppButton>
-            <AppButton flex={1} onClick={serveOrder}>
-              Đáp ứng
-            </AppButton>
           </Flex>
         </Flex>
+      ))}
+
+      <Flex justify={'center'} mt={6}>
+        <AppButton
+          variant="primary"
+          onClick={() => setDataForm((prevData) => [...prevData, initData])}
+        >
+          <AddIcon paddingRight={1} /> Thêm ô chứa
+        </AppButton>
+      </Flex>
+
+      <Flex justifyContent={'space-around'} gap={'10px'} pb={6} mt={8}>
+        <AppButton
+          className="btn-outline-hover"
+          flex={1}
+          variant="primary"
+          onClick={onClose}
+          w={'100%'}
+        >
+          Hủy
+        </AppButton>
+        <AppButton flex={1} onClick={serveOrder}>
+          Đáp ứng
+        </AppButton>
       </Flex>
     </BaseModal>
   );
