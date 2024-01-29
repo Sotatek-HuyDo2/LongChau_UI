@@ -45,6 +45,7 @@ const ApprovedOrderManagementPage = () => {
   const [dataSearch, setDataSearch] = useState<IData[]>([]);
   const dataRef = useRef<IData[]>([]);
   const [id, setId] = useState<number>(NaN);
+  const [userId, setUserId] = useState<number>(NaN);
   const [params, setParams] = useState<any>();
   const [dataModal, setDataModal] = useState<IData>({} as IData);
 
@@ -64,8 +65,9 @@ const ApprovedOrderManagementPage = () => {
     setOpenModalServeOrder(true);
   };
 
-  const handleSplitedOrder = (id: number) => {
+  const handleSplitedOrder = (id: number, userId: number) => {
     setId(id);
+    setUserId(userId);
     setOpenModalSplitedOrder(true);
   };
 
@@ -178,7 +180,7 @@ const ApprovedOrderManagementPage = () => {
               size={'sm'}
               bg={'green.100'}
               ml={'3px'}
-              onClick={() => handleSplitedOrder(data.id)}
+              onClick={() => handleSplitedOrder(data.id, data.userId)}
             >
               Chia đơn
             </AppButton>
@@ -252,6 +254,7 @@ const ApprovedOrderManagementPage = () => {
           open={openModalSplitedOrder}
           onClose={() => setOpenModalSplitedOrder(false)}
           orderId={id}
+          userId={userId}
           onReload={onReload}
         />
       )}

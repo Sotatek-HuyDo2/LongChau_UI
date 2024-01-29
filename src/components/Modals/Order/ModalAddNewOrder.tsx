@@ -44,7 +44,7 @@ const ModalAddNewOrder: FC<IModalAddNewOrderProps> = (props) => {
       await rf.getRequest('OrderRequest').createdOrder(payload);
       onClose();
       onReload();
-      toastSuccess('Thêm mới thuốc vào kho thành công');
+      toastSuccess('Thêm mới thành công');
     } catch (e: any) {
       toastError(e.message);
     }

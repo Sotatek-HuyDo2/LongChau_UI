@@ -67,7 +67,7 @@ const ModalViewOrder: FC<IModalViewOrderProps> = (props) => {
               <AppInput
                 size="md"
                 label="Tên thuốc"
-                value={drug.name ? drug.name : `drugTest ${index + 1}`}
+                value={drug.drugName ? drug.drugName : `drugTest ${index + 1}`}
               />
               <AppInput
                 size="md"

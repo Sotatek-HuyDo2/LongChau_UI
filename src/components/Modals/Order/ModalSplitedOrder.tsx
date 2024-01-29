@@ -15,33 +15,43 @@ interface IModalSplitedOrderProps {
   onClose: () => void;
   onReload: () => void;
   orderId: number;
+  userId: number;
 }
 
 interface IDataForm {
-  rackId: number;
+  branchId: number;
   drugId: number;
   quantity: number;
 }
 
 const ModalSplitedOrder: FC<IModalSplitedOrderProps> = (props) => {
   const initData = {
-    rackId: NaN,
+    branchId: NaN,
     drugId: NaN,
     quantity: 10,
   };
 
-  const { open, onClose, onReload, orderId } = props;
+  const { open, onClose, onReload, orderId, userId } = props;
   const [dataForm, setDataForm] = useState<IDataForm>(initData);
   const [selectData, setSelectData] = useState<any>([]);
   const [drugs, setDrugs] = useState<any>([]);
-  const addDrugsToRack = async () => {
+  const splitOrder = async () => {
     try {
-      await rf
-        .getRequest('RackRequest')
-        .addDrugsToRackOfMyBranch({ ...dataForm });
-      onClose();
-      onReload();
-      toastSuccess('Thêm mới thuốc vào kho thành công');
+      //request body la 1 mang cac object nay
+      console.log({
+        userId,
+        branchId: dataForm.branchId,
+        drugs: [{ drugId: dataForm.drugId, quantity: dataForm.quantity }],
+      });
+      const reqBody = [
+        {
+          userId,
+          branchId: dataForm.branchId,
+          drugs: [{ drugId: dataForm.drugId, quantity: dataForm.quantity }],
+        },
+      ];
+      await rf.getRequest('OrderRequest').createOrderSplit(orderId, reqBody);
+      toastSuccess('Chia đơn thành công');
     } catch (e: any) {
       toastError(e.message);
     }
@@ -65,7 +75,7 @@ const ModalSplitedOrder: FC<IModalSplitedOrderProps> = (props) => {
       const res = await rf.getRequest('OrderRequest').getOrderById(orderId);
       const dataSelect2 = res.drugsWithQuantity.map((r: any) => ({
         value: r.drugId,
-        label: r.name,
+        label: r.drugName,
       }));
       setDrugs(dataSelect2);
     } catch (e: any) {
@@ -101,11 +111,11 @@ const ModalSplitedOrder: FC<IModalSplitedOrderProps> = (props) => {
               label="Chi nhánh"
               width={'full'}
               options={selectData}
-              value={dataForm.rackId || ''}
+              value={dataForm.branchId || ''}
               onChange={(value: string) => {
                 setDataForm({
                   ...dataForm,
-                  rackId: +value,
+                  branchId: +value,
                 });
               }}
               size="medium"
@@ -193,11 +203,11 @@ const ModalSplitedOrder: FC<IModalSplitedOrderProps> = (props) => {
                   label="Chi nhánh"
                   width={'full'}
                   options={selectData}
-                  value={dataForm.rackId || ''}
+                  value={dataForm.branchId || ''}
                   onChange={(value: string) => {
                     setDataForm({
                       ...dataForm,
-                      rackId: +value,
+                      branchId: +value,
                     });
                   }}
                   size="medium"
@@ -249,7 +259,7 @@ const ModalSplitedOrder: FC<IModalSplitedOrderProps> = (props) => {
             >
               Hủy
             </AppButton>
-            <AppButton flex={1} onClick={addDrugsToRack}>
+            <AppButton flex={1} onClick={splitOrder}>
               Chia đơn
             </AppButton>
           </Flex>

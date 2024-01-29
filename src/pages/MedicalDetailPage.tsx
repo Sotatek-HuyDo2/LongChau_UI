@@ -10,7 +10,6 @@ import BaseHomePage from 'src/components/layouts/HomePage/BaseHomePage';
 import { AddIcon, MinusIcon } from '@chakra-ui/icons';
 import { AppButton } from 'src/components';
 import rf from 'src/api/RequestFactory';
-import jwtDecode from 'jwt-decode';
 import Storage from 'src/utils/storage';
 
 interface IMedicalDetail {
@@ -28,6 +27,17 @@ interface IMedicalDetail {
   supplierId: number;
   typeId: number;
   unit: string;
+}
+
+interface IDrugType {
+  id: number;
+  categoryId: number;
+  name: string;
+}
+
+interface ISupplier {
+  id: number;
+  name: string;
 }
 
 interface CustomLabelBoxProps {
@@ -78,6 +88,8 @@ const MedicalDetailPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [amount, setAmount] = useState<number>(1);
   const [medicalDetail, setMedicalDetail] = useState<IMedicalDetail>();
+  const [drugTypeDetail, setDrugTypeDetail] = useState<IDrugType>();
+  const [supplier, setSupplier] = useState<ISupplier>();
   // const [totalAmount, setTotalAmount] = useState<number>(1);
   // const [totalAmount, setTotalAmount] = useState<number>(
   //   MOCK_INFO_Medical.price,
@@ -96,6 +108,12 @@ const MedicalDetailPage = () => {
     try {
       const res = await rf.getRequest('ProductRequest').getProductDetail(id);
       setMedicalDetail(res);
+      const [drugType, supplier] = await Promise.all([
+        rf.getRequest('CategoryRequest').getDrugsTypeByCateID(res.typeId),
+        rf.getRequest('SupplierRequest').getSupplierDetail(res.supplierId),
+      ]);
+      setDrugTypeDetail(drugType);
+      setSupplier(supplier);
       setIsLoading(false);
     } catch (error) {
       return { docs: [] };
@@ -157,11 +175,11 @@ const MedicalDetailPage = () => {
                     marginTop: '4px',
                   }}
                 />
-                {/* <CustomLabelBox
+                <CustomLabelBox
                   label="Danh mục"
-                  value={medicalDetail.detail.category}
+                  value={drugTypeDetail?.name}
                   borderShow
-                /> */}
+                />
                 {/* <CustomLabelBox
                   label="Dạng bào chế"
                   value={medicalDetail.detail.dosageForms}
@@ -177,10 +195,7 @@ const MedicalDetailPage = () => {
                   value={medicalDetail.detail.manufacturingCountry}
                   borderShow
                 /> */}
-                {/* <CustomLabelBox
-                  label="Nhà sản xuất"
-                  value={medicalDetail.detail.Producer}
-                /> */}
+                <CustomLabelBox label="Nhà sản xuất" value={supplier?.name} />
               </Box>
             </Flex>
             {role && role === 'customer' && (
