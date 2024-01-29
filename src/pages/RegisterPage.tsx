@@ -56,10 +56,10 @@ const RegisterPage = () => {
         localStorage.setItem('token', res.access_token);
         const userRole: IUser = jwt_decode(res.access_token);
         if (userRole?.role === 'admin') {
-          toastSuccess('Welcome to LongChau Admin!');
+          toastSuccess('Welcome to Hust Pharmacy Admin!');
           navigate('/admin');
         } else {
-          toastSuccess('Welcome to LongChau!');
+          toastSuccess('Welcome to Hust Pharmacy!');
           navigate('/');
         }
       }

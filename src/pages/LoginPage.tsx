@@ -43,16 +43,16 @@ const LoginPage = () => {
       }
 
       if (role === 'admin') {
-        toastSuccess('Welcome to LongChau Dashboard!');
+        toastSuccess('Welcome to Hust Pharmacy Dashboard!');
         navigate('/admin');
       } else if (role === 'branch_admin') {
-        toastSuccess('Welcome to LongChau Dashboard!');
+        toastSuccess('Welcome to Hust Pharmacy Dashboard!');
         navigate('/branch-admin');
       } else if (role === 'staff') {
-        toastSuccess('Welcome to LongChau Dashboard!');
+        toastSuccess('Welcome to Hust Pharmacy Dashboard!');
         navigate('/staff');
       } else {
-        toastSuccess('Welcome to LongChau!');
+        toastSuccess('Welcome to Hust Pharmacy!');
         navigate('/');
       }
     } catch (e: any) {

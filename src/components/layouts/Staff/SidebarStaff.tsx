@@ -9,7 +9,7 @@ import { useEffectUnsafe } from 'src/hooks/useEffectUnsafe';
 
 const MENUS = [
   {
-    name: 'Quản lý đơn hàng',
+    name: 'Quản lý khách hàng',
     path: '/staff',
     icon: <Overview />,
   },
