@@ -225,26 +225,24 @@ const FooterHomePage = () => {
             color={'#4a4f63'}
           >
             <Box>
-              © 2007 - 2022 Công ty Cổ Phần Dược Phẩm FPT Long Châu Số ĐKKD
-              0315275368 cấp ngày 17/09/2018 tại Sở Kế hoạch Đầu tư TPHCM
+              © 2018 - 2023 Công ty Cổ Phần Dược Phẩm Hust Pharmacy Số ĐKKD
+              0123456789 cấp ngày 17/09/2023 tại Đại học Bách Khoa Hà Nội.
             </Box>
             <Flex flexWrap={'nowrap'} gap={'3px'}>
-              <li>
-                Địa chỉ: 379-381 Hai Bà Trưng, P. Võ Thị Sáu, Q.3, TP. HCM
-              </li>
+              <li>Địa chỉ: Số 1 Đại Cồ Việt, Hai Bà Trưng, Hà Nội</li>
               <li>
                 Số điện thoại:{' '}
                 <a href="#" style={{ color: '#1250dc' }}>
-                  (028)73023456
+                  (012)3456789
                 </a>
               </li>
               <li>
                 Email:{' '}
                 <a href="#" style={{ color: '#1250dc' }}>
-                  sale@nhathuoclongchau.com.vn
+                  minh.vc184155@sis.hust.edu.vn
                 </a>
               </li>
-              <li>Người quản lý nội dung: Nguyễn Bạch Điệp</li>
+              <li>Người quản lý nội dung: Vũ Công Minh</li>
             </Flex>
           </Flex>
 

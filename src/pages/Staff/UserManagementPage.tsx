@@ -68,7 +68,7 @@ const StaffCustomerManagementPage = () => {
 
   const handleSetStatus = () => {
     if (status === 'block') {
-      toastSuccess('Welcome to LongChau!');
+      toastSuccess('Welcome to Hust Pharmacy!');
       setStatus('unlock');
     } else {
       setStatus('block');
