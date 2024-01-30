@@ -11,6 +11,7 @@ import { AddIcon, MinusIcon } from '@chakra-ui/icons';
 import { AppButton } from 'src/components';
 import rf from 'src/api/RequestFactory';
 import Storage from 'src/utils/storage';
+import { toastSuccess } from 'src/utils/notify';
 
 interface IMedicalDetail {
   img: string;
@@ -267,7 +268,12 @@ const MedicalDetailPage = () => {
                   </Flex>
                 </Flex>
                 <Flex gap={'10px'} py={'10px'} justifyContent={'center'}>
-                  <AppButton w={'80%'} h={'60px'} borderRadius={'50px'}>
+                  <AppButton
+                    w={'80%'}
+                    h={'60px'}
+                    borderRadius={'50px'}
+                    onClick={onSelectBuy}
+                  >
                     Chọn Mua
                   </AppButton>
                   {/* <AppButton
@@ -312,6 +318,27 @@ const MedicalDetailPage = () => {
       </Flex>
     );
   };
+
+  const onSelectBuy = () => {
+    let dataSave = [];
+    const itemPrev = localStorage.getItem('listOrderDrugs');
+
+    if (itemPrev) {
+      dataSave = [
+        ...JSON.parse(itemPrev).filter(
+          (item: any) => item.id !== medicalDetail?.id,
+        ),
+        { ...medicalDetail, amount },
+      ];
+    } else {
+      dataSave = [{ ...medicalDetail, amount }];
+    }
+
+    localStorage.setItem('listOrderDrugs', JSON.stringify(dataSave));
+
+    toastSuccess('Chọn thuốc thành công');
+  };
+
   return (
     <>
       {role && role === 'customer' ? (
