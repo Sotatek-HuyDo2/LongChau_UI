@@ -46,11 +46,24 @@ const Order = () => {
     getAllBranch();
   }, []);
 
-  const onBuyNow = () => {
+  const onBuyNow = async () => {
     if (!selectBranch) {
       toastError('Vui lòng chọn chi nhánh');
       return;
     }
+    const orderDrugs: any[] = JSON.parse(
+      localStorage.getItem('listOrderDrugs') as any,
+    );
+    const drugs = orderDrugs.map((orderDrug) => {
+      return { drugId: orderDrug.id, quantity: orderDrug.quantity };
+    });
+    const myProfile = await rf.getRequest('UserRequest').getProfile();
+    const newOrder = {
+      userId: myProfile.userId,
+      branchId: selectBranch,
+      drugs,
+    };
+    await rf.getRequest('OrderRequest').createdOrder(newOrder);
     localStorage.removeItem('listOrderDrugs');
     toastSuccess('Mua hàng thành công');
     setTimeout(() => {

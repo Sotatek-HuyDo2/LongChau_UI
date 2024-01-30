@@ -27,7 +27,7 @@ const NoProduct = () => {
           Chưa có sản phẩm nào trong giỏ hàng
         </Text>
         <br /> Cùng mua sắm hàng ngàn sản phẩm <br />
-        tại nhà thuốc FPT Long Châu nhé!
+        tại nhà thuốc Hust Pharmacy nhé!
       </Box>
       <AppButton
         onClick={() => navigate('/')}

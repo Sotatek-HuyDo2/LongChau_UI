@@ -102,7 +102,7 @@ const CategoryPersonalCarePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [amount, setAmount] = useState<number>(1);
+  const [quantity, setQuantity] = useState<number>(1);
 
   const [role, setRole] = useState<string>('user');
 
@@ -129,8 +129,8 @@ const CategoryPersonalCarePage = () => {
     MOCK_INFO_Medical.price,
   );
   useEffectUnsafe(() => {
-    setTotalAmount(amount * MOCK_INFO_Medical.price);
-  }, [amount]);
+    setTotalAmount(quantity * MOCK_INFO_Medical.price);
+  }, [quantity]);
 
   const _renderContent = () => {
     if (isLoading) {
@@ -217,9 +217,9 @@ const CategoryPersonalCarePage = () => {
                     border={'1px solid #e5e7eb'}
                     borderRadius={'20px 0px 0px 20px'}
                     alignItems={'center'}
-                    onClick={() => setAmount(amount - 1)}
+                    onClick={() => setQuantity(quantity - 1)}
                     _hover={
-                      amount !== 1
+                      quantity !== 1
                         ? {
                             backgroundColor: '#a4a7b7',
                             transition: 'background-color 0.3s',
@@ -227,11 +227,11 @@ const CategoryPersonalCarePage = () => {
                         : {}
                     }
                     as={'button'}
-                    disabled={amount === 1}
+                    disabled={quantity === 1}
                   >
                     <MinusIcon
                       boxSize={5}
-                      color={`${amount === 1 && '#a4a7b7'} `}
+                      color={`${quantity === 1 && '#a4a7b7'} `}
                     />
                   </Flex>
                   <Input
@@ -241,15 +241,15 @@ const CategoryPersonalCarePage = () => {
                     textAlign={'center'}
                     type="number"
                     fontSize={18}
-                    onChange={(e) => setAmount(Number(e.target.value || 1))}
-                    value={amount || 1}
+                    onChange={(e) => setQuantity(Number(e.target.value || 1))}
+                    value={quantity || 1}
                   />
                   <Flex
                     px={'10px'}
                     border={'1px solid #e5e7eb'}
                     borderRadius={'0 20px 20px 0px'}
                     alignItems={'center'}
-                    onClick={() => setAmount(amount + 1)}
+                    onClick={() => setQuantity(quantity + 1)}
                     _hover={{
                       backgroundColor: '#a4a7b7',
                       transition: 'background-color 0.3s',

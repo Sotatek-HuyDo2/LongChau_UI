@@ -328,10 +328,10 @@ const MedicalDetailPage = () => {
         ...JSON.parse(itemPrev).filter(
           (item: any) => item.id !== medicalDetail?.id,
         ),
-        { ...medicalDetail, amount },
+        { ...medicalDetail, quantity: amount },
       ];
     } else {
-      dataSave = [{ ...medicalDetail, amount }];
+      dataSave = [{ ...medicalDetail, quantity: amount }];
     }
 
     localStorage.setItem('listOrderDrugs', JSON.stringify(dataSave));
