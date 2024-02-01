@@ -110,10 +110,14 @@ const Order = () => {
                         cursor={'pointer'}
                         onClick={() => {
                           const newData = dataDrugs;
-                          newData[index].amount = item.amount - 1;
-                          if (newData[index].amount <= 0)
-                            newData[index].amount = 0;
+                          newData[index].quantity = item.quantity - 1;
+                          if (newData[index].quantity <= 0)
+                            newData[index].quantity = 0;
                           setDataDrugs(newData);
+                          localStorage.setItem(
+                            'listOrderDrugs',
+                            JSON.stringify(newData),
+                          );
                           setToggleLoading((toggle) => !toggle);
                         }}
                       />
@@ -125,21 +129,30 @@ const Order = () => {
                         textAlign={'center'}
                         type="number"
                         fontSize={18}
+                        defaultValue={dataDrugs[index].quantity}
                         onChange={(e) => {
                           const newData = dataDrugs;
-                          newData[index].amount = +e.target.value;
+                          newData[index].quantity = +e.target.value;
                           setDataDrugs(newData);
+                          localStorage.setItem(
+                            'listOrderDrugs',
+                            JSON.stringify(newData),
+                          );
                           setToggleLoading((toggle) => !toggle);
                         }}
-                        value={item.amount}
+                        value={item.quantity}
                       />
                       <AddIcon
                         boxSize={5}
                         cursor={'pointer'}
                         onClick={() => {
                           const newData = dataDrugs;
-                          newData[index].amount = item.amount + 1;
+                          newData[index].quantity = item.quantity + 1;
                           setDataDrugs(newData);
+                          localStorage.setItem(
+                            'listOrderDrugs',
+                            JSON.stringify(newData),
+                          );
                           setToggleLoading((toggle) => !toggle);
                         }}
                       />
